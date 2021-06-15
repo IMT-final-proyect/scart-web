@@ -1,11 +1,15 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { Provider } from 'react-redux';
+import store from "./redux/store";
+import App from "./routes/App";
 
-const App = () => (
-  <h1>My React and TypeScript App!</h1>
-);
 
 ReactDOM.render(
-  <App />,
-  document.getElementById("root")
+  <React.StrictMode>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </React.StrictMode>,
+  document.getElementById('root')
 );
