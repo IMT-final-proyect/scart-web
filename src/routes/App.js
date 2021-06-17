@@ -36,6 +36,7 @@ const App = () => {
         <BrowserRouter>
             <Switch>
                 <Route exact path={ROUTES.login} component={Login} />
+                <Route exact path='/' component={Login} />
                 <Route component={NotFound} />
             </Switch>
         </BrowserRouter>
