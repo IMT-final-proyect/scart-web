@@ -2,8 +2,17 @@
     "name": "scart-web",
     "version": "0.0.1",
     "dependencies": {
+        "@material-ui/core": "^4.11.4",
+        "@material-ui/icons": "^4.11.2",
+        "@reduxjs/toolkit": "^1.6.0",
+        "axios": "^0.21.1",
         "react": "^17.0.2",
-        "react-dom": "^17.0.2"
+        "react-dom": "^17.0.2",
+        "react-redux": "^7.2.4",
+        "react-router-dom": "^5.2.0",
+        "redux": "^4.1.0",
+        "redux-saga": "^1.1.3",
+        "redux-thunk": "^2.3.0"
     },
     "scripts": {
         "start": "webpack serve --open",
@@ -24,12 +33,16 @@
         "@typescript-eslint/eslint-plugin": "^4.26.1",
         "@typescript-eslint/parser": "^4.26.1",
         "babel-loader": "^8.2.2",
+        "css-loader": "^5.2.6",
         "eslint": "^7.28.0",
         "eslint-plugin-react": "^7.24.0",
         "eslint-plugin-react-hooks": "^4.2.0",
+        "file-loader": "^6.2.0",
         "fork-ts-checker-webpack-plugin": "^6.2.10",
+        "mini-css-extract-plugin": "^1.6.0",
         "ts-node": "^10.0.0",
         "typescript": "^4.3.2",
+        "url-loader": "^4.1.1",
         "webpack": "^5.38.1",
         "webpack-cli": "^4.7.2",
         "webpack-dev-server": "^3.11.2"
