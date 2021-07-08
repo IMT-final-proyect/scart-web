@@ -21,9 +21,8 @@ export interface userState {
 
 // Payload of the post login action
 interface postLoginPayload {
+   user: IUSER;
    accessToken: string;
-   tokenType: string;
-   expiresIn: number;
    refreshToken: string;
 }
 
@@ -83,12 +82,11 @@ export default userSlice.reducer;
 
 export const postLogin = (
    { username, password }: { username: string; password: string },
-   failureCallback = (error = '') => {},
 ): AppThunk => async (dispatch) => {
       dispatch(postLoginRequest);
       try{
-         const response : AxiosResponse<IUSER> = await Axios.post('url');
-         dispatch(postLoginSuccess(response));
+         const response : AxiosResponse<postLoginPayload> = await Axios.post('url');
+         dispatch(postLoginSuccess(response.data));
       }
       catch(error){
          console.error('Could not log in user ',username,'.',error.message);

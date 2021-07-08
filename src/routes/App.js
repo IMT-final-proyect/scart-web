@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
-// import BaseLayout from '../core/base-layout/base-layout';
-import Login from '../screens/login/Login';
+
 import NotFound from '../screens/not found/NotFound';
 import { ROUTES } from './routes';
 // import { setUserData, setSession, } from '../redux/actions/userActions';
+
+import Login from '../screens/login/Login';
+import ContractorHome from '../screens/contractor/ContractorHome'
 
 const App = () => {
     // const isLoggedIn = (user) => {
@@ -37,6 +39,7 @@ const App = () => {
             <Switch>
                 <Route exact path={ROUTES.login} component={Login} />
                 <Route exact path='/' component={Login} />
+                <Route exact path={ROUTES.contractor} component={ContractorHome} />
                 <Route component={NotFound} />
             </Switch>
         </BrowserRouter>
