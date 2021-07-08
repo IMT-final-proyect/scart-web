@@ -1,9 +1,12 @@
 import React, { useCallback, useState } from 'react';
-import { Grid, Card, Typography, makeStyles, Container, Theme, Button, TextField, InputAdornment, IconButton } from '@material-ui/core';
+import { Grid, Card, Typography, makeStyles, Theme, Button, TextField, InputAdornment, IconButton } from '@material-ui/core';
 import CardContent from '@material-ui/core/CardContent';
 import ClearIcon from '@material-ui/icons/Clear';
 import globalColors from '../../utils/styles/globalColors';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
+import { useDispatch } from 'react-redux';
+import { postLogin } from '../../redux/slices/userSlice';
+import { AppThunkDispatch } from '../../redux/store';
 
 const useStyles = makeStyles((theme: Theme) => ({
     container:{
@@ -43,6 +46,7 @@ const Login = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false)
+    const dispatch = useDispatch<AppThunkDispatch>();
 
     const _onChangeUsername = useCallback((event) => {
         setUsername(event.target.value);
@@ -63,8 +67,7 @@ const Login = () => {
     }
 
     const _onLogIn = () => {
-        console.log('Log In with ',username, password);
-        
+        dispatch(postLogin({username, password}));
     }
 
     return(

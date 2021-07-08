@@ -1,8 +1,10 @@
 import { createAction, createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState } from './rootReducer';
+import Axios, {AxiosResponse} from 'Axios';
+import { RootState } from '../rootReducer';
+import { AppThunk } from '../store';
 
- //Patient interface
- export interface USER {
+ //user interface
+ export interface IUSER {
    id: number;
    name: string,
    surname: string,
@@ -12,7 +14,7 @@ import { RootState } from './rootReducer';
 // User reducer state interface
 export interface userState {
    // Provider's data
-   data: USER|null;
+   data: IUSER|null;
    // Authentication and authorization data
    token: { accessToken: string|null; refreshToken: string|null };
 }
@@ -34,9 +36,7 @@ const initialState: userState = {
 
 // Clean state action, this will be defined in another slices
 export const cleanState = createAction('cleanState');
-export const getUserDataRequest = createAction('user/getUserDataRequest');
-export const getUserDataFailure = createAction('user/getUserDataFailure');
-export const postLoginRequest = createAction('user/postLoginRequest');
+export const postLoginRequest = createAction('postLoginRequest')
 export const postResetPasswordRequest = createAction('user/postResetPasswordRequest');
 export const postResetPasswordSuccess = createAction('user/postResetPasswordSuccess');
 export const postResetPasswordFailure = createAction('user/postResetPasswordFailure');
@@ -67,15 +67,10 @@ const userSlice = createSlice({
          state.data = initialState.data;
          state.token = initialState.token;
       },
-      // Indicates a get user data request has finished successfully
-      getUserDataSuccess(state, action: PayloadAction<USER>) {
-         state.data = action.payload;
-      },
    },
 });
 
 const {
-   getUserDataSuccess,
    postLoginSuccess,
    postLogoutSuccess,
    postLoginFailure,
@@ -85,3 +80,18 @@ export const { setToken } = userSlice.actions;
 
 // User's slice reducer
 export default userSlice.reducer;
+
+export const postLogin = (
+   { username, password }: { username: string; password: string },
+   failureCallback = (error = '') => {},
+): AppThunk => async (dispatch) => {
+      dispatch(postLoginRequest);
+      try{
+         const response : AxiosResponse<IUSER> = await Axios.post('url');
+         dispatch(postLoginSuccess(response));
+      }
+      catch(error){
+         console.error('Could not log in user ',username,'.',error.message);
+         dispatch(postLoginFailure);
+      }
+   };

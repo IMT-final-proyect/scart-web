@@ -1,6 +1,6 @@
 //file for merge all reducers before send to the store
 import { combineReducers } from 'redux';
-import userReducer from './userSlice';
+import userReducer from './slices/userSlice';
 // import headerReducer from './headerReducer';
 // import requestStateReducer from './requestStateReducer';
 
