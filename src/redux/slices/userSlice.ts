@@ -1,5 +1,5 @@
 import { createAction, createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import Axios, {AxiosResponse} from 'Axios';
+import Axios, {AxiosResponse} from 'axios';
 import { RootState } from '../rootReducer';
 import { AppThunk } from '../store';
 
