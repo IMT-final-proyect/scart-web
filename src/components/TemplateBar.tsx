@@ -1,24 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import clsx from 'clsx';
 
-import { AppBar, Divider, Drawer, IconButton, makeStyles, Theme, Toolbar, Typography, useTheme } from '@material-ui/core';
-import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import { AppBar, Divider, Drawer, makeStyles, Theme, Toolbar, Typography, useTheme } from '@material-ui/core';
+
+import { drawerWidth, headerSize } from '../utils/constants';
 
 
-const drawerWidth = 240;
+
 
 const useStyles = makeStyles((theme: Theme) => ({
     customizeToolbar:{
-        minHeight: 40,
-        height: 40,
+        minHeight: headerSize,
+        height: headerSize,
     },
-    titleOpen:{
+    title:{
         marginLeft: drawerWidth,
-    },
-    titleClose:{
-        marginLeft: 0,
     },
     menuButton: {
         marginRight: theme.spacing(2),
@@ -66,7 +62,7 @@ interface Props {
 
 const TemplateBar = (props : Props) => {
     const classes = useStyles();
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(true);
     const theme = useTheme();
 
     const handleDrawerOpen = () => {
@@ -81,7 +77,7 @@ const TemplateBar = (props : Props) => {
         <>
         <AppBar>
             <Toolbar className={classes.customizeToolbar}>
-                <IconButton 
+                {/* <IconButton 
                     edge="start" 
                     color="inherit" 
                     aria-label="menu" 
@@ -89,8 +85,8 @@ const TemplateBar = (props : Props) => {
                     className={clsx(classes.menuButton, open && classes.hide)}
                     >
                     <MenuIcon />
-                </IconButton>
-                <Typography variant="h6" className={clsx(open ? classes.titleOpen : classes.titleClose)}>
+                </IconButton> */}
+                <Typography variant="h6" className={classes.title}>
                     {props.title}
                 </Typography>
             </Toolbar>
@@ -99,15 +95,13 @@ const TemplateBar = (props : Props) => {
             className={classes.drawer}
             variant="persistent"
             anchor="left"
-            open={open}
+            open={true}
             classes={{
             paper: classes.drawerPaper,
             }}
         >
             <div className={classes.drawerHeader}>
-            <IconButton onClick={handleDrawerClose}>
-                {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-            </IconButton>
+            {/* nombre de usuario */}
             </div>
             <Divider />
             {props.ButtonList}

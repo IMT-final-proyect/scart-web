@@ -6,7 +6,7 @@ import { ROUTES } from './routes';
 // import { setUserData, setSession, } from '../redux/actions/userActions';
 
 import Login from '../screens/login/Login';
-import ContractorHome from '../screens/contractor/ContractorHome'
+import ContractorNavigator from '../screens/contractor/navigation/ContractorNavigator'
 
 const App = () => {
     // const isLoggedIn = (user) => {
@@ -39,7 +39,7 @@ const App = () => {
             <Switch>
                 <Route exact path={ROUTES.login} component={Login} />
                 <Route exact path='/' component={Login} />
-                <Route exact path={ROUTES.contractor} component={ContractorHome} />
+                <Route path={ROUTES.contractor} component={ContractorNavigator} />
                 <Route component={NotFound} />
             </Switch>
         </BrowserRouter>
