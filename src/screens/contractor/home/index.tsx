@@ -5,6 +5,8 @@ import { Card } from '@material-ui/core';
 import DoneIcon from '@material-ui/icons/Done';
 import CloseIcon from '@material-ui/icons/Close';
 import TimerIcon from '@material-ui/icons/Timer';
+import DriveEtaIcon from '@material-ui/icons/DriveEta';
+import PersonIcon from '@material-ui/icons/Person';
 
 import { drawerWidth, headerSize } from '../../../utils/constants';
 import colors from '../../../utils/styles/globalColors';
@@ -129,11 +131,13 @@ const Home = () => {
                     </div>
                     <div className={classes.details}>
                         <div>
+                            <PersonIcon />
                             <text>
                                 Conductores
                             </text>
                         </div>
                         <div>
+                            <DriveEtaIcon />
                             <text>
                                 Vehiculos
                             </text>

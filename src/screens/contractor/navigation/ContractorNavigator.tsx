@@ -4,12 +4,13 @@ import { Button, makeStyles, Theme } from '@material-ui/core';
 import HomeIcon from '@material-ui/icons/Home';
 import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
 import StarIcon from '@material-ui/icons/Star';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
 
 import TemplateBar from '../../../components/TemplateBar';
-import Home from '../home/Home';
-import Resources from '../resources/Resources';
 import { ROUTES } from './routes';
+import Home from '../home';
+import Resources from '../resources';
+import Documentation from '../documentation';
 
 const useStyles = makeStyles((theme: Theme) => ({
     container:{
@@ -26,26 +27,16 @@ const useStyles = makeStyles((theme: Theme) => ({
         paddingTop: '3%',
         paddingRight: '5%',
     },
-    content: {
-
-    },
-    toolbar: {
-
-    },
 }));
 
 const ContractorHome = () => {
     const classes = useStyles();
-
-    const _onClickButtonList = (url: string) => {
-        console.log(url);
-    }
-
     const ButtonList = (
         <>
             <Button 
                 className = {classes.button}
-                onClick = {() => {_onClickButtonList(ROUTES.home)}}
+                component={Link}
+                to={'/contratista'+ROUTES.home}
             >
                 <div className={classes.icon}>
                     <HomeIcon/>
@@ -54,7 +45,8 @@ const ContractorHome = () => {
             </Button>
             <Button 
                 className = {classes.button}
-                onClick = {() => {_onClickButtonList(ROUTES.resources)}}
+                component={Link}
+                to={'/contratista'+ROUTES.resources}
             >
                 <div className={classes.icon}>
                     <StarIcon/>
@@ -63,7 +55,8 @@ const ContractorHome = () => {
             </Button>
             <Button 
                 className = {classes.button}
-                onClick = {() => {_onClickButtonList('documentacion')}}
+                component={Link}
+                to={'/contratista'+ROUTES.documentacion}
             >
                 <div className={classes.icon}>
                     <InsertDriveFileIcon/>
@@ -79,14 +72,12 @@ const ContractorHome = () => {
             title='Home'
             ButtonList = {ButtonList}
         />
-        <main className={classes.content}>
-          <div className={classes.toolbar} />
         <Switch>
-            <Route path={ROUTES.home} component={Home} />
-            <Route path={ROUTES.resources} component={Resources} />
-            <Route path='/' component={Home} />
+            <Route path={'/contratista'+ROUTES.home} component={Home} />
+            <Route path={'/contratista'+ROUTES.resources} component={Resources} />
+            <Route path={'/contratista'+ROUTES.documentacion} component={Documentation} />
+            <Route path={'/contratista'} component= {Home} />
         </Switch>
-        </main>
     </BrowserRouter>
     )
 }
