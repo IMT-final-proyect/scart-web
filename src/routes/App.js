@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 
-import NotFound from '../screens/not found/NotFound';
+import NotFound from '../screens/not found';
 import { ROUTES } from './routes';
 // import { setUserData, setSession, } from '../redux/actions/userActions';
 
-import Login from '../screens/login/Login';
+import Login from '../screens/login';
 import ContractorNavigator from '../screens/contractor/navigation/ContractorNavigator'
 
 const App = () => {
