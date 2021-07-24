@@ -14,7 +14,6 @@ import barras from '../../../assets/images/barras.PNG';
 
 const useStyles = makeStyles((theme: Theme) => ({
     container:{
-        marginTop: headerSize,
         marginLeft: drawerWidth,
     },
     cardContainer:{

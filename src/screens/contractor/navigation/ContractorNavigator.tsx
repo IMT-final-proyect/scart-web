@@ -10,6 +10,7 @@ import TemplateBar from '../../../components/TemplateBar';
 import { ROUTES } from './routes';
 import Home from '../home';
 import Resources from '../resources';
+import ResourceDetails from '../resources/resourceDetails'
 import Documentation from '../documentation';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -73,10 +74,11 @@ const ContractorHome = () => {
             ButtonList = {ButtonList}
         />
         <Switch>
-            <Route path={'/contratista'+ROUTES.home} component={Home} />
-            <Route path={'/contratista'+ROUTES.resources} component={Resources} />
-            <Route path={'/contratista'+ROUTES.documentacion} component={Documentation} />
-            <Route path={'/contratista'} component= {Home} />
+            <Route exact path={ROUTES.root+ROUTES.home} component={Home} />
+            <Route exact path={ROUTES.root+ROUTES.resources} component={Resources} />
+            <Route exact path={ROUTES.root+ROUTES.documentacion} component={Documentation} />
+            <Route exact path={ROUTES.root+ROUTES.resource} component={ResourceDetails} />
+            <Route path={ROUTES.root} component= {Home} />
         </Switch>
     </BrowserRouter>
     )

@@ -7,7 +7,7 @@ import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 
 import { drawerWidth, headerSize } from '../../../utils/constants';
 import globalColors from '../../../utils/styles/globalColors';
-import Resource from './components/resource';
+import Resource from './components/resourceRow';
 
 const conductores = [
     {
@@ -53,7 +53,6 @@ const autos = [
 
 const useStyles = makeStyles((theme: Theme) => ({
     container:{
-        marginTop: headerSize,
         marginLeft: drawerWidth,
     },
     cardContainer:{
@@ -97,10 +96,10 @@ const useStyles = makeStyles((theme: Theme) => ({
         display: 'flex',
         flex: 1,
         justifyContent: 'space-between',
-        marginTop: '2%',
+        alignItems: 'center'
     },
     footerText:{
-        marginLeft: '3%',
+        marginLeft: '5%',
     },
     arrowsContainer:{
         marginRight: '3%',
@@ -119,12 +118,23 @@ const Resources = () => {
         console.log("add driver");
     }
 
+    const handleBackward = () => {
+
+    }
+    const handleFoward = () => {
+
+    }
+
     const footer = (
         <div className={classes.footer}>
             <text className={classes.footerText}>1-5 of 13</text>
             <div className={classes.arrowsContainer}>
-                <ArrowBackIosIcon />
-                <ArrowForwardIosIcon />
+                <Button onClick={handleBackward}>
+                    <ArrowBackIosIcon />
+                </Button>
+                <Button onClick={handleFoward}>
+                    <ArrowForwardIosIcon />
+                </Button>
             </div>
         </div>
     )
