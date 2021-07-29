@@ -97,19 +97,19 @@ const Home = () => {
                         <div className={classes.row}>
                             <DoneIcon className={classes.done}/>
                             <text>
-                                Validos
+                                Validos: 40
                             </text>
                         </div>
                         <div className={classes.row}>
                             <TimerIcon className={classes.wait}/>
                             <text>
-                                Pendientes
+                                Pendientes: 2
                             </text>
                         </div>
                         <div className={classes.row}>
                             <CloseIcon className={classes.wrong}/>
                             <text>
-                                Vencidos
+                                Vencidos: 3
                             </text>
                         </div>
                     </div>
@@ -124,7 +124,7 @@ const Home = () => {
                                 Total
                             </Typography>
                             <Typography variant="h3" className={classes.counterText}>
-                                35
+                                57
                             </Typography>
                         </div>
                     </div>
@@ -132,13 +132,13 @@ const Home = () => {
                         <div>
                             <PersonIcon />
                             <text>
-                                Conductores
+                                Conductores: 45
                             </text>
                         </div>
                         <div>
                             <DriveEtaIcon />
                             <text>
-                                Vehiculos
+                                Vehiculos: 12
                             </text>
                         </div>
                     </div>
