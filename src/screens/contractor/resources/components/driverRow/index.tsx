@@ -8,6 +8,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         display: 'flex',
         flex: 1,
         justifyContent: 'space-between',
+        marginTop: '1%',
         marginRight: '3%',
         marginLeft: '3%',
     },
@@ -32,7 +33,7 @@ interface Props{
     }
 
 } 
-const Resource = ({ driver, car }: Props) => {
+const Driver = ({ driver, car }: Props) => {
     const classes = useStyles();
     return(
         <div className={classes.container}>
@@ -53,4 +54,4 @@ const Resource = ({ driver, car }: Props) => {
     )
 }
 
-export default Resource;
+export default Driver;

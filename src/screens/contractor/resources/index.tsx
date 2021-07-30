@@ -8,6 +8,8 @@ import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import { drawerWidth, headerSize } from '../../../utils/constants';
 import globalColors from '../../../utils/styles/globalColors';
 import Resource from './components/resourceRow';
+import { Link } from 'react-router-dom';
+import { ROUTES } from '../navigation/routes';
 
 const conductores = [
     {
@@ -104,6 +106,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     arrowsContainer:{
         marginRight: '3%',
     },
+    button:{
+        display: 'flex',
+        flexDirection: 'row',
+    }
 }));
 
 
@@ -165,11 +171,17 @@ const Resources = () => {
                             Acciones
                         </text>
                     </div>
-                    {conductores.map((conductor) => 
-                        <Resource 
-                            key={conductor.id}
-                            driver={conductor}
-                        />)
+                    {conductores.map((conductor) =>
+                        <Button 
+                            className = {classes.button}
+                            component={Link}
+                            to={'/contratista'+ROUTES.resource}
+                        >  
+                            <Resource 
+                                key={conductor.id}
+                                driver={conductor}
+                            />
+                        </Button>)
                     }
                     {footer}
                 </Card>
@@ -196,11 +208,17 @@ const Resources = () => {
                             Acciones
                         </text>
                     </div>
-                    {autos.map((auto) => 
+                    {autos.map((auto) =>
+                        <Button 
+                            className = {classes.button}
+                            component={Link}
+                            to={'/contratista'+ROUTES.resource}
+                        > 
                             <Resource 
                                 key={auto.id}
                                 car={auto}
-                            />)
+                            />
+                        </Button>)
                     }
                     {footer}
                 </Card>
