@@ -13,6 +13,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         marginLeft: '3%',
     },
     data:{
+        width: '150px',
         justifyContent: 'start',
     },
     iconsContainer:{
@@ -21,30 +22,23 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 interface Props{
-    driver?: {
-        nombre: string,
-        documento: string,
-        fnac: string
-    }
-    car?: {
-        marca: string,
-        modelo: string,
-        patente: string
-    }
+    name: string,
+    document: string,
+    birthday: string
 
 } 
-const Driver = ({ driver, car }: Props) => {
+const Driver = ({ name, document, birthday }: Props) => {
     const classes = useStyles();
     return(
         <div className={classes.container}>
             <div className={classes.data}>
-                <text> {driver ? driver?.nombre : car?.marca} </text>
+                <text> {name} </text>
             </div>
             <div className={classes.data}>
-                <text> {driver ? driver?.documento : car?.modelo} </text>
+                <text> {document} </text>
             </div>
             <div className={classes.data}>
-                <text> {driver ? driver?.fnac : car?.patente} </text>
+                <text> {birthday} </text>
             </div>
             <div className={classes.iconsContainer}>
                 <CreateIcon />

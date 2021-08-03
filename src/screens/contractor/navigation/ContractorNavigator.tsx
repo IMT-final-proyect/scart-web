@@ -11,6 +11,7 @@ import { ROUTES } from './routes';
 import Home from '../home';
 import Resources from '../resources';
 import DriverDetails from '../resources/driverDetails'
+import VehicleDetails from '../resources/vehicleDetails'
 import Documentation from '../documentation';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -77,7 +78,8 @@ const ContractorHome = () => {
             <Route exact path={ROUTES.root+ROUTES.home} component={Home} />
             <Route exact path={ROUTES.root+ROUTES.resources} component={Resources} />
             <Route exact path={ROUTES.root+ROUTES.documentacion} component={Documentation} />
-            <Route exact path={ROUTES.root+ROUTES.resource} component={DriverDetails} />
+            <Route exact path={ROUTES.root+ROUTES.driver} component={DriverDetails} />
+            <Route exact path={ROUTES.root+ROUTES.vehicle} component={VehicleDetails} />
             <Route path={ROUTES.root} component= {Home} />
         </Switch>
     </BrowserRouter>

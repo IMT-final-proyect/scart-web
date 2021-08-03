@@ -7,7 +7,8 @@ import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 
 import { drawerWidth, headerSize } from '../../../utils/constants';
 import globalColors from '../../../utils/styles/globalColors';
-import Resource from './components/resourceRow';
+import Driver from './components/driverRow';
+import Vehicle from './components/vehicleRow';
 import { Link } from 'react-router-dom';
 import { ROUTES } from '../navigation/routes';
 
@@ -20,7 +21,7 @@ const conductores = [
     },
     {
         'id': '2',
-        'nombre': 'Tinchota Belcic',
+        'nombre': 'Tincho Belcic',
         'documento': '39988948',
         'fnac': '30/08/93',
     },
@@ -175,11 +176,13 @@ const Resources = () => {
                         <Button 
                             className = {classes.button}
                             component={Link}
-                            to={'/contratista'+ROUTES.resource}
+                            to={'/contratista'+ROUTES.driver}
                         >  
-                            <Resource 
+                            <Driver 
                                 key={conductor.id}
-                                driver={conductor}
+                                name={conductor.nombre}
+                                document={conductor.documento}
+                                birthday={conductor.fnac}
                             />
                         </Button>)
                     }
@@ -212,11 +215,13 @@ const Resources = () => {
                         <Button 
                             className = {classes.button}
                             component={Link}
-                            to={'/contratista'+ROUTES.resource}
+                            to={'/contratista'+ROUTES.vehicle}
                         > 
-                            <Resource 
+                            <Vehicle 
                                 key={auto.id}
-                                car={auto}
+                                brand={auto.marca}
+                                model={auto.modelo}
+                                plate={auto.patente}
                             />
                         </Button>)
                     }

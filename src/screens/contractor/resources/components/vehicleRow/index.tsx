@@ -7,12 +7,12 @@ const useStyles = makeStyles((theme: Theme) => ({
     container:{
         display: 'flex',
         flex: 1,
-        justifyContent: 'space-between',
         marginRight: '3%',
         marginLeft: '3%',
     },
     data:{
-        justifyContent: 'start',
+        width: '220px',
+        justifyContent: 'space-between',
     },
     iconsContainer:{
         justifyContent: 'space-between',
@@ -20,30 +20,22 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 interface Props{
-    driver?: {
-        nombre: string,
-        documento: string,
-        fnac: string
-    }
-    car?: {
-        marca: string,
-        modelo: string,
-        patente: string
-    }
-
+    brand: string,
+    model: string,
+    plate: string
 } 
-const Resource = ({ driver, car }: Props) => {
+const Vehicle = ({ brand, model, plate}: Props) => {
     const classes = useStyles();
     return(
         <div className={classes.container}>
             <div className={classes.data}>
-                <text> {driver ? driver?.nombre : car?.marca} </text>
+                <text> {brand} </text>
             </div>
             <div className={classes.data}>
-                <text> {driver ? driver?.documento : car?.modelo} </text>
+                <text> {model} </text>
             </div>
             <div className={classes.data}>
-                <text> {driver ? driver?.fnac : car?.patente} </text>
+                <text> {plate} </text>
             </div>
             <div className={classes.iconsContainer}>
                 <CreateIcon />
@@ -53,4 +45,4 @@ const Resource = ({ driver, car }: Props) => {
     )
 }
 
-export default Resource;
+export default Vehicle;

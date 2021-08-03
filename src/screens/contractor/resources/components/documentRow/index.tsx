@@ -5,13 +5,13 @@ const useStyles = makeStyles((theme: Theme) => ({
     container:{
         display: 'flex',
         flex: 1,
-        justifyContent: 'space-between',
         marginTop: '1%',
         marginRight: '3%',
         marginLeft: '3%',
     },
     data:{
-        justifyContent: 'start',
+        width: '150px',
+        marginRight: 'space-between',
     },
     iconsContainer:{
         justifyContent: 'space-between',
