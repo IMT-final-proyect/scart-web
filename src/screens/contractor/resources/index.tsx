@@ -26,9 +26,9 @@ const conductores = [
     },
     {
         'id': '3',
-        'nombre': 'Boca Juniors',
+        'nombre': 'Lucas Pratto',
         'documento': '09122018',
-        'fnac': '01/01/2000',
+        'fnac': '01/01/1986',
     },
 ]
 

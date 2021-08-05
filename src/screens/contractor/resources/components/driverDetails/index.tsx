@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Card, makeStyles, Theme } from "@material-ui/core"
+import { Button, Card, Grid, makeStyles, Theme } from "@material-ui/core"
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 
@@ -61,49 +61,35 @@ const document = [
 
 const useStyles = makeStyles((theme: Theme) => ({
     container:{
+<<<<<<< HEAD:src/screens/contractor/resources/components/driverDetails/index.tsx
+=======
+        marginLeft: drawerWidth,
+        paddingTop: headerSize
+>>>>>>> feature/GIT-6:src/screens/contractor/resources/driverDetails/index.tsx
     },
     cardContainer:{
-        display: 'flex',
-        flexDirection: 'column',
-        flex: 1,
-        marginRight: '3%',
-        marginLeft: '3%',
+        padding: '2.5%'
     },
-    topCardContainer:{
-        display: 'flex',
-        flex: 1,
-        marginTop: '7%',
+    top:{
         marginRight: '3%',
         marginLeft: '3%',
     },
     botCardContainer:{
-        display: 'flex',
-        flex: 1,
         marginTop: '1%',
         marginRight: '3%',
         marginLeft: '3%',
         marginBottom: '3%'
     },
     dataContainer:{
-        display: 'flex',
-        flexDirection: 'row',
         marginTop: '2.5%',
         marginLeft: '7.5%'
     },
     leftData:{
-        display: 'flex',
-        flex: 1,
-        flexDirection: 'column',
     },
     rightData:{
-        display: 'flex',
-        flex: 1,
-        flexDirection: 'column',
         marginLeft: '40%',
     },
     dataFieldContainer:{
-        display: 'flex',
-        flexDirection: 'row'
     },
     dataField:{
         marginBottom: '10%',
@@ -122,8 +108,6 @@ const useStyles = makeStyles((theme: Theme) => ({
         height: 100,
     },
     titleContainer:{
-        display: 'flex',
-        flex:1,
         justifyContent: 'space-between',
 
     },
@@ -134,8 +118,6 @@ const useStyles = makeStyles((theme: Theme) => ({
         marginLeft: '3%',
     },
     header:{
-        display: 'flex',
-        flex:1,
         justifyContent: 'space-between',
         marginLeft: '3%',
         marginRight: '3%',
@@ -145,8 +127,6 @@ const useStyles = makeStyles((theme: Theme) => ({
         fontSize: 12,
     },
     footer:{
-        display: 'flex',
-        flex: 1,
         justifyContent: 'space-between',
         alignItems: 'center'
     },
@@ -183,102 +163,47 @@ const DriverDetails = () => {
     )
 
     return (
-        <div className={classes.container}>
+        <Grid className={classes.container}>
             <Card className={classes.cardContainer}>
-                <Card className={classes.topCardContainer}>
-                    <div className={classes.imageContainer}>
-                        <img src={image} className={classes.image} />
-                    </div>
-                    <div className={classes.dataContainer}>
-                        <div className={classes.leftData}>
-                            <div className={classes.dataFieldContainer}>
-                                <text className={classes.dataField}> Nombre: </text>
-                                <text className={classes.data}> Lucas </text>
+                <Grid
+                    container
+                    direction={'row'}
+                >
+                    <img src={image} className={classes.image} />
+                    <Grid className={classes.top}>
+                                <div className={classes.dataFieldContainer}>
+                                    <text className={classes.dataField}> Nombre: </text>
+                                    <text className={classes.data}> Lucas </text>
+                                </div>
+                                <div className={classes.dataFieldContainer}>
+                                    <text className={classes.dataField}> DNI: </text>
+                                    <text className={classes.data}> 912201831 </text>
+                                </div>
+                                <div className={classes.dataFieldContainer}>
+                                    <text className={classes.dataField}> Telefono: </text>
+                                    <text className={classes.data}> +542234484492 </text>
+                                </div>
+                        </Grid>
+                        <Grid>
+                            <div>
+                                <div>
+                                    <text className={classes.dataField}> Apellido: </text>
+                                    <text className={classes.data}> Pratto </text>
+                                </div>
+                                <div className={classes.dataFieldContainer}>
+                                    <text className={classes.dataField}> Email: </text>
+                                    <text className={classes.data}> osopratto@hotmail.com </text>
+                                </div>
+                                <div className={classes.dataFieldContainer}>
+                                    <text className={classes.dataField}> Fecha de Nac.: </text>
+                                    <text className={classes.data}> 04/06/1988 </text>
+                                </div>
                             </div>
-                            <div className={classes.dataFieldContainer}>
-                                <text className={classes.dataField}> DNI: </text>
-                                <text className={classes.data}> 912201831 </text>
-                            </div>
-                            <div className={classes.dataFieldContainer}>
-                                <text className={classes.dataField}> Telefono: </text>
-                                <text className={classes.data}> +542234484492 </text>
-                            </div>
-                        </div>
-                        <div className={classes.rightData}>
-                        <div className={classes.dataFieldContainer}>
-                                <text className={classes.dataField}> Apellido: </text>
-                                <text className={classes.data}> Pratto </text>
-                            </div>
-                            <div className={classes.dataFieldContainer}>
-                                <text className={classes.dataField}> Email: </text>
-                                <text className={classes.data}> osopratto@hotmail.com </text>
-                            </div>
-                            <div className={classes.dataFieldContainer}>
-                                <text className={classes.dataField}> Fecha de Nac.: </text>
-                                <text className={classes.data}> 04/06/1988 </text>
-                            </div>
-                        </div>
-                    </div>
-                </Card>
-                <div className={classes.botCardContainer}>
-                    <Card className={classes.cardContainer}>
-                        <div className={classes.titleContainer}>
-                            <text className={classes.textTitle}>
-                                Vehiculos Conducidos
-                            </text>
-                        </div>
-                        <div className={classes.header}>
-                            <text className={classes.headerText}>
-                                Marca
-                            </text>
-                            <text className={classes.headerText}>
-                                Modelo
-                            </text>
-                            <text className={classes.headerText}>
-                                Patente
-                            </text>
-                            <text className={classes.headerText}>
-                                Acciones
-                            </text>
-                        </div>
-                        {autos.map((auto) =>
-                                <Vehicle 
-                                    key={auto.id}
-                                    brand={auto.marca}
-                                    model={auto.modelo}
-                                    plate={auto.patente}
-                                />)
-                        }
-                        {footer}
-                    </Card>
-                    <Card className={classes.cardContainer}>
-                    <div className={classes.titleContainer}>
-                            <text className={classes.textTitle}>
-                                Documentos
-                            </text>
-                        </div>
-                        <div className={classes.header}>
-                            <text className={classes.headerText}>
-                                Nombre
-                            </text>
-                            <text className={classes.headerText}>
-                                Vigencia
-                            </text>
-                            <text className={classes.headerText}>
-                                Estado
-                            </text>
-                        </div>
-                        {document.map((document) => 
-                                <Document 
-                                    key={document.id}
-                                    document={document}
-                                />)
-                        }
-                        {footer}
-                    </Card>
-                </div>
+                        </Grid>
+                    </Grid>
             </Card>
-        </div>
+
+        </Grid>
     )
 }
 
