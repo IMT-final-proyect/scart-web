@@ -3,11 +3,12 @@ import { Button, Card, makeStyles, Theme } from "@material-ui/core"
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 
-import globalColors from "../../../../utils/styles/globalColors" 
-import { drawerWidth, headerSize } from '../../../../utils/constants';
-import image from '../../../../assets/images/pratto.jpg'
-import Vehicle from '../components/vehicleRow';
-import Document from '../components/documentRow';
+import globalColors from "../../../../../utils/styles/globalColors" 
+import { headerSize } from '../../../../../utils/constants';
+import image from '../../../../../assets/images/pratto.jpg'
+import Driver from '../driverRow';
+import Vehicle from '../vehicleRow'
+import Document from '../documentRow';
 
 
 const autos = [
@@ -34,27 +35,32 @@ const autos = [
 const document = [
     {
         'id':'1',
-        'nombre':'Seguro',
+        'nombre':'Constancia de cuil',
         'vigencia': '01/01/2022',
         'estado':'Vigente'
     },
     {
         'id':'2',
-        'nombre':'VTV',
+        'nombre':'Licencia de conducir',
         'vigencia': '30/01/2022',
         'estado':'Vigente'
     },
     {
         'id':'3',
-        'nombre':'Habilitacion',
+        'nombre':'Cedula Verde',
         'vigencia': '04/05/2022',
+        'estado':'Vigente'
+    },
+    {
+        'id':'4',
+        'nombre':'Seguro',
+        'vigencia': '10/01/2022',
         'estado':'Vigente'
     },
 ]
 
 const useStyles = makeStyles((theme: Theme) => ({
     container:{
-        marginLeft: drawerWidth,
     },
     cardContainer:{
         display: 'flex',
@@ -65,12 +71,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     topCardContainer:{
         display: 'flex',
-        flexDirection: 'column',
         flex: 1,
-        marginTop: '5%',
+        marginTop: '7%',
         marginRight: '3%',
         marginLeft: '3%',
-        paddingTop: '1%',
     },
     botCardContainer:{
         display: 'flex',
@@ -81,8 +85,10 @@ const useStyles = makeStyles((theme: Theme) => ({
         marginBottom: '3%'
     },
     dataContainer:{
-        marginBottom: '1%',
-        marginLeft: '1%'
+        display: 'flex',
+        flexDirection: 'row',
+        marginTop: '2.5%',
+        marginLeft: '7.5%'
     },
     leftData:{
         display: 'flex',
@@ -97,7 +103,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     dataFieldContainer:{
         display: 'flex',
-        flexDirection: 'column'
+        flexDirection: 'row'
     },
     dataField:{
         marginBottom: '10%',
@@ -152,7 +158,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
 }));
 
-const VehicleDetails = () => {
+const DriverDetails = () => {
     const classes = useStyles();
 
     const handleBackward = () => {
@@ -180,18 +186,37 @@ const VehicleDetails = () => {
         <div className={classes.container}>
             <Card className={classes.cardContainer}>
                 <Card className={classes.topCardContainer}>
-                    <div className={classes.dataFieldContainer}>
-                        <div className={classes.dataContainer}>
-                            <text className={classes.dataField}> Marca: </text>
-                            <text className={classes.data}> Mercedes Benz </text>
+                    <div className={classes.imageContainer}>
+                        <img src={image} className={classes.image} />
+                    </div>
+                    <div className={classes.dataContainer}>
+                        <div className={classes.leftData}>
+                            <div className={classes.dataFieldContainer}>
+                                <text className={classes.dataField}> Nombre: </text>
+                                <text className={classes.data}> Lucas </text>
+                            </div>
+                            <div className={classes.dataFieldContainer}>
+                                <text className={classes.dataField}> DNI: </text>
+                                <text className={classes.data}> 912201831 </text>
+                            </div>
+                            <div className={classes.dataFieldContainer}>
+                                <text className={classes.dataField}> Telefono: </text>
+                                <text className={classes.data}> +542234484492 </text>
+                            </div>
                         </div>
-                        <div className={classes.dataContainer}>
-                            <text className={classes.dataField}> Modelo: </text>
-                            <text className={classes.data}> W12 E 2021 </text>
-                        </div>
-                        <div className={classes.dataContainer}>
-                            <text className={classes.dataField}> Patente: </text>
-                            <text className={classes.data}> 111 ADDD 1111 </text>
+                        <div className={classes.rightData}>
+                        <div className={classes.dataFieldContainer}>
+                                <text className={classes.dataField}> Apellido: </text>
+                                <text className={classes.data}> Pratto </text>
+                            </div>
+                            <div className={classes.dataFieldContainer}>
+                                <text className={classes.dataField}> Email: </text>
+                                <text className={classes.data}> osopratto@hotmail.com </text>
+                            </div>
+                            <div className={classes.dataFieldContainer}>
+                                <text className={classes.dataField}> Fecha de Nac.: </text>
+                                <text className={classes.data}> 04/06/1988 </text>
+                            </div>
                         </div>
                     </div>
                 </Card>
@@ -199,7 +224,7 @@ const VehicleDetails = () => {
                     <Card className={classes.cardContainer}>
                         <div className={classes.titleContainer}>
                             <text className={classes.textTitle}>
-                                Conductores
+                                Vehiculos Conducidos
                             </text>
                         </div>
                         <div className={classes.header}>
@@ -257,4 +282,4 @@ const VehicleDetails = () => {
     )
 }
 
-export default VehicleDetails;
+export default DriverDetails;

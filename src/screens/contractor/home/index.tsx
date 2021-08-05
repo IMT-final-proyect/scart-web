@@ -8,13 +8,12 @@ import TimerIcon from '@material-ui/icons/Timer';
 import DriveEtaIcon from '@material-ui/icons/DriveEta';
 import PersonIcon from '@material-ui/icons/Person';
 
-import { drawerWidth, headerSize } from '../../../utils/constants';
+import { headerSize } from '../../../utils/constants';
 import colors from '../../../utils/styles/globalColors';
 import barras from '../../../assets/images/barras.PNG';
 
 const useStyles = makeStyles((theme: Theme) => ({
     container:{
-        marginLeft: drawerWidth,
     },
     cardContainer:{
         display: 'flex',
