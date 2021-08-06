@@ -12,9 +12,11 @@ const useStyles = makeStyles((theme: Theme) => ({
     card:{
         marginTop: '5%',
         marginInline: '2%',
+        paddingLeft: '1%',
+        paddingRight: '1%',
     },
     titleContainer:{
-
+        
     },
     textTitle:{
         fontSize:20,
@@ -25,10 +27,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     circleIcon:{
         marginTop: '3%',
         marginBottom: '3%',
-        marginRight: '3%',
-    },
-    header:{
-        marginLeft: '3%',
         marginRight: '3%',
     },
     headerText:{
@@ -45,6 +43,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         marginRight: '3%',
     },
     button:{
+        height: '35px',
     },
     paper: {}
 }));

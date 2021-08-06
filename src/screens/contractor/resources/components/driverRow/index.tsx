@@ -1,25 +1,7 @@
 import React from 'react';
-import { makeStyles, Theme } from '@material-ui/core';
+import { Grid, makeStyles, Theme } from '@material-ui/core';
 import CreateIcon from '@material-ui/icons/Create';
 import DeleteIcon from '@material-ui/icons/Delete';
-
-const useStyles = makeStyles((theme: Theme) => ({
-    container:{
-        display: 'flex',
-        flex: 1,
-        justifyContent: 'space-between',
-        marginTop: '1%',
-        marginRight: '3%',
-        marginLeft: '3%',
-    },
-    data:{
-        width: '150px',
-        justifyContent: 'start',
-    },
-    iconsContainer:{
-        justifyContent: 'space-between',
-    },
-}));
 
 interface Props{
     name: string,
@@ -28,23 +10,22 @@ interface Props{
 
 } 
 const Driver = ({ name, document, birthday }: Props) => {
-    const classes = useStyles();
     return(
-        <div className={classes.container}>
-            <div className={classes.data}>
-                <text> {name} </text>
-            </div>
-            <div className={classes.data}>
-                <text> {document} </text>
-            </div>
-            <div className={classes.data}>
-                <text> {birthday} </text>
-            </div>
-            <div className={classes.iconsContainer}>
-                <CreateIcon />
-                <DeleteIcon />
-            </div>
-        </div>
+        <Grid container direction="row" justifyContent='space-between'>
+                <Grid item xs={3} >
+                    <text> {name} </text>
+                </Grid>
+                <Grid item xs={3} >
+                    <text> {document} </text>
+                </Grid>
+                <Grid item xs={3} >
+                    <text> {birthday} </text>
+                </Grid>
+                <Grid item xs={1} >
+                    <CreateIcon />
+                    <DeleteIcon />
+                </Grid>
+        </Grid>
     )
 }
 

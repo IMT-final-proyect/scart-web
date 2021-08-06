@@ -73,9 +73,9 @@ const Resources = () => {
     }
 
     const footer = (
-        <Grid container className={classes.footer}>
-            <text className={classes.footerText}>1-5 of 13</text>
-            <Grid className={classes.arrowsContainer}>
+        <Grid container className={classes.titleContainer} justifyContent='space-between'>
+                <text className={classes.footerText}>1-5 of 13</text>
+            <Grid>
                 <Button onClick={handleBackward}>
                     <ArrowBackIosIcon />
                 </Button>
@@ -88,88 +88,100 @@ const Resources = () => {
 
     return (
         <Grid container className={classes.container} direction='row' justifyContent='space-between'>
-            <Card className={classes.card}>
-                <Grid item className={classes.titleContainer}>
-                    <text className={classes.textTitle}>
-                        Conductores
-                    </text>
-                    <Button onClick={addDriver}>
-                        <AddCircleIcon className={classes.circleIcon}/>
-                    </Button>
-                </Grid>
-                <Grid container className={classes.header} justifyContent='space-between'>
-                    <text className={classes.headerText}>
-                        Conductor
-                    </text>
-                    <text className={classes.headerText}>
-                        Documento
-                    </text>
-                    <text className={classes.headerText}>
-                        Fecha Nac.
-                    </text>
-                    <text className={classes.headerText}>
-                        Acciones
-                    </text>
-                </Grid>
-                <Grid container direction='column' >
-                    {conductores.map((conductor) =>
-                        <Button 
-                            className = {classes.button}
-                            component={Link}
-                            to={'/contratista'+ROUTES.driver}
-                        >  
-                            <Driver 
-                                key={conductor.id}
-                                name={conductor.nombre}
-                                document={conductor.documento}
-                                birthday={conductor.fnac}
-                            />
-                        </Button>)
-                    }
-                </Grid>
-                {footer}
-            </Card>
-            <Card className={classes.card}>
-                <Grid item className={classes.titleContainer}>
-                    <text className={classes.textTitle}>
-                        Vehiculos
-                    </text>
-                    <Button onClick={addDriver}>
-                        <AddCircleIcon className={classes.circleIcon}/>
-                    </Button>
-                </Grid>
-                <Grid container className={classes.header} justifyContent='space-between'>
-                    <text className={classes.headerText}>
-                        Marca
-                    </text>
-                    <text className={classes.headerText}>
-                        Modelo
-                    </text>
-                    <text className={classes.headerText}>
-                        Patente
-                    </text>
-                    <text className={classes.headerText}>
-                        Acciones
-                    </text>
-                </Grid>
-                <Grid container direction='column' >
-                    {autos.map((auto) =>
-                        <Button 
-                            className = {classes.button}
-                            component={Link}
-                            to={'/contratista'+ROUTES.vehicle}
-                        > 
-                            <Vehicle 
-                                key={auto.id}
-                                brand={auto.marca}
-                                model={auto.modelo}
-                                plate={auto.patente}
-                            />
-                        </Button>)
-                    }
+            <Grid item xs={6}>
+                <Card className={classes.card}>
+                    <Grid container className={classes.titleContainer} justifyContent='space-between'>
+                        <text className={classes.textTitle}>
+                            Conductores
+                        </text>
+                        <Button onClick={addDriver}>
+                            <AddCircleIcon className={classes.circleIcon}/>
+                        </Button>
+                    </Grid>
+                    <Grid container justifyContent='space-between'>
+                        <Grid item xs={3}>
+                            <text className={classes.headerText}>
+                                Conductor
+                            </text>
+                        </Grid>
+                        <Grid item xs={3}>
+                            <text className={classes.headerText}>
+                                Documento
+                            </text>
+                        </Grid>
+                        <Grid item xs={3}>
+                            <text className={classes.headerText}>
+                                Fecha Nac.
+                            </text>
+                        </Grid>
+                        <Grid item xs={1}>
+                            <text className={classes.headerText}>
+                                Acciones
+                            </text>
+                        </Grid>
+                    </Grid>
+                    <Grid container direction='column' justifyContent='space-between' >
+                        {conductores.map((conductor) =>
+                                <Button
+                                    className={classes.button}
+                                    component={Link}
+                                    to={'/contratista'+ROUTES.driver}
+                                >  
+                                    <Driver 
+                                        key={conductor.id}
+                                        name={conductor.nombre}
+                                        document={conductor.documento}
+                                        birthday={conductor.fnac}
+                                    />
+                                </Button>)
+                        }
+                    </Grid>
                     {footer}
-                </Grid>
-            </Card>
+                </Card>
+            </Grid>
+            <Grid item xs={6}>
+                <Card className={classes.card}>
+                    <Grid container className={classes.titleContainer} justifyContent='space-between'>
+                        <text className={classes.textTitle}>
+                            Vehiculos
+                        </text>
+                        <Button onClick={addDriver}>
+                            <AddCircleIcon className={classes.circleIcon}/>
+                        </Button>
+                    </Grid>
+                    <Grid container justifyContent='space-between'>
+                        <text className={classes.headerText}>
+                            Marca
+                        </text>
+                        <text className={classes.headerText}>
+                            Modelo
+                        </text>
+                        <text className={classes.headerText}>
+                            Patente
+                        </text>
+                        <text className={classes.headerText}>
+                            Acciones
+                        </text>
+                    </Grid>
+                    <Grid container direction='column' >
+                        {autos.map((auto) =>
+                            <Button 
+                                className = {classes.button}
+                                component={Link}
+                                to={'/contratista'+ROUTES.vehicle}
+                            > 
+                                <Vehicle 
+                                    key={auto.id}
+                                    brand={auto.marca}
+                                    model={auto.modelo}
+                                    plate={auto.patente}
+                                />
+                            </Button>)
+                        }
+                        {footer}
+                    </Grid>
+                </Card>
+            </Grid>
         </Grid>
     )
 }

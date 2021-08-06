@@ -61,11 +61,6 @@ const document = [
 
 const useStyles = makeStyles((theme: Theme) => ({
     container:{
-<<<<<<< HEAD:src/screens/contractor/resources/components/driverDetails/index.tsx
-=======
-        marginLeft: drawerWidth,
-        paddingTop: headerSize
->>>>>>> feature/GIT-6:src/screens/contractor/resources/driverDetails/index.tsx
     },
     cardContainer:{
         padding: '2.5%'
@@ -202,7 +197,6 @@ const DriverDetails = () => {
                         </Grid>
                     </Grid>
             </Card>
-
         </Grid>
     )
 }

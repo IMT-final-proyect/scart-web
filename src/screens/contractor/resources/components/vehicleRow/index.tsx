@@ -1,23 +1,7 @@
 import React from 'react';
-import { makeStyles, Theme } from '@material-ui/core';
+import { Grid, makeStyles, Theme } from '@material-ui/core';
 import CreateIcon from '@material-ui/icons/Create';
 import DeleteIcon from '@material-ui/icons/Delete';
-
-const useStyles = makeStyles((theme: Theme) => ({
-    container:{
-        display: 'flex',
-        flex: 1,
-        marginRight: '3%',
-        marginLeft: '3%',
-    },
-    data:{
-        width: '220px',
-        justifyContent: 'space-between',
-    },
-    iconsContainer:{
-        justifyContent: 'space-between',
-    },
-}));
 
 interface Props{
     brand: string,
@@ -25,23 +9,22 @@ interface Props{
     plate: string
 } 
 const Vehicle = ({ brand, model, plate}: Props) => {
-    const classes = useStyles();
     return(
-        <div className={classes.container}>
-            <div className={classes.data}>
+        <Grid container direction="row" justifyContent='space-between'>
+            <Grid item xs={3} >
                 <text> {brand} </text>
-            </div>
-            <div className={classes.data}>
+            </Grid>
+            <Grid item xs={3} >
                 <text> {model} </text>
-            </div>
-            <div className={classes.data}>
+            </Grid>
+            <Grid item xs={3} >
                 <text> {plate} </text>
-            </div>
-            <div className={classes.iconsContainer}>
+            </Grid>
+            <Grid item xs={1} >
                 <CreateIcon />
                 <DeleteIcon />
-            </div>
-        </div>
+            </Grid>
+    </Grid>
     )
 }
 
