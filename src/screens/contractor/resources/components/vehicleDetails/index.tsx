@@ -13,42 +13,42 @@ import Document from '../documentRow';
 const autos = [
     {
         'id': '1',
-        'marca': 'BMW',
-        'modelo': '2015',
-        'patente': 'DIC912',
+        'brand': 'BMW',
+        'model': '2015',
+        'plate': 'DIC912',
     },
     {
         'id': '2',
-        'marca': 'Ferrari',
-        'modelo': '2020',
-        'patente': 'LEC016',
+        'brand': 'Ferrari',
+        'model': '2020',
+        'plate': 'LEC016',
     },
     {
         'id': '3',
-        'marca': 'Aston Martin',
-        'modelo': '2021',
-        'patente': 'VET005',
+        'brand': 'Aston Martin',
+        'model': '2021',
+        'plate': 'VET005',
     },
 ]
 
 const document = [
     {
         'id':'1',
-        'nombre':'Seguro',
-        'vigencia': '01/01/2022',
-        'estado':'Vigente'
+        'name':'Seguro',
+        'expiration': '01/01/2022',
+        'state':'Vigente'
     },
     {
         'id':'2',
-        'nombre':'VTV',
-        'vigencia': '30/01/2022',
-        'estado':'Vigente'
+        'name':'VTV',
+        'expiration': '30/01/2022',
+        'state':'Vigente'
     },
     {
         'id':'3',
-        'nombre':'Habilitacion',
-        'vigencia': '04/05/2022',
-        'estado':'Vigente'
+        'name':'Habilitacion',
+        'expiration': '04/05/2022',
+        'state':'Vigente'
     },
 ]
 
@@ -181,15 +181,15 @@ const VehicleDetails = () => {
                 <Card className={classes.topCardContainer}>
                     <div className={classes.dataFieldContainer}>
                         <div className={classes.dataContainer}>
-                            <text className={classes.dataField}> Marca: </text>
+                            <text className={classes.dataField}> brand: </text>
                             <text className={classes.data}> Mercedes Benz </text>
                         </div>
                         <div className={classes.dataContainer}>
-                            <text className={classes.dataField}> Modelo: </text>
+                            <text className={classes.dataField}> model: </text>
                             <text className={classes.data}> W12 E 2021 </text>
                         </div>
                         <div className={classes.dataContainer}>
-                            <text className={classes.dataField}> Patente: </text>
+                            <text className={classes.dataField}> plate: </text>
                             <text className={classes.data}> 111 ADDD 1111 </text>
                         </div>
                     </div>
@@ -203,13 +203,13 @@ const VehicleDetails = () => {
                         </div>
                         <div className={classes.header}>
                             <text className={classes.headerText}>
-                                Marca
+                                brand
                             </text>
                             <text className={classes.headerText}>
-                                Modelo
+                                model
                             </text>
                             <text className={classes.headerText}>
-                                Patente
+                                plate
                             </text>
                             <text className={classes.headerText}>
                                 Acciones
@@ -218,9 +218,9 @@ const VehicleDetails = () => {
                         {autos.map((auto) =>
                                 <Vehicle 
                                     key={auto.id}
-                                    brand={auto.marca}
-                                    model={auto.modelo}
-                                    plate={auto.patente}
+                                    brand={auto.brand}
+                                    model={auto.model}
+                                    plate={auto.plate}
                                 />)
                         }
                         {footer}
@@ -233,19 +233,21 @@ const VehicleDetails = () => {
                         </div>
                         <div className={classes.header}>
                             <text className={classes.headerText}>
-                                Nombre
+                                name
                             </text>
                             <text className={classes.headerText}>
-                                Vigencia
+                                expiration
                             </text>
                             <text className={classes.headerText}>
-                                Estado
+                                state
                             </text>
                         </div>
                         {document.map((document) => 
                                 <Document 
                                     key={document.id}
-                                    document={document}
+                                    name={document.name}
+                                    expiration={document.expiration}
+                                    state={document.state}
                                 />)
                         }
                         {footer}

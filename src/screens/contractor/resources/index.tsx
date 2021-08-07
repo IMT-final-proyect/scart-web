@@ -72,6 +72,7 @@ const Resources = () => {
 
     }
 
+    //in case of pagination
     const footer = (
         <Grid container className={classes.titleContainer} justifyContent='space-between'>
                 <text className={classes.footerText}>1-5 of 13</text>
@@ -99,44 +100,35 @@ const Resources = () => {
                         </Button>
                     </Grid>
                     <Grid container justifyContent='space-between'>
-                        <Grid item xs={3}>
-                            <text className={classes.headerText}>
-                                Conductor
-                            </text>
-                        </Grid>
-                        <Grid item xs={3}>
-                            <text className={classes.headerText}>
-                                Documento
-                            </text>
-                        </Grid>
-                        <Grid item xs={3}>
-                            <text className={classes.headerText}>
-                                Fecha Nac.
-                            </text>
-                        </Grid>
-                        <Grid item xs={1}>
-                            <text className={classes.headerText}>
-                                Acciones
-                            </text>
-                        </Grid>
+                        <text className={classes.headerText}>
+                            Conductor
+                        </text>
+                        <text className={classes.headerText}>
+                            Documento
+                        </text>
+                        <text className={classes.headerText}>
+                            Fecha Nac.
+                        </text>
+                        <text className={classes.headerText}>
+                            Acciones
+                        </text>
                     </Grid>
                     <Grid container direction='column' justifyContent='space-between' >
                         {conductores.map((conductor) =>
-                                <Button
-                                    className={classes.button}
-                                    component={Link}
-                                    to={'/contratista'+ROUTES.driver}
-                                >  
-                                    <Driver 
-                                        key={conductor.id}
-                                        name={conductor.nombre}
-                                        document={conductor.documento}
-                                        birthday={conductor.fnac}
-                                    />
-                                </Button>)
+                            <Button
+                                className={classes.button}
+                                component={Link}
+                                to={'/contratista'+ROUTES.driver}
+                            >  
+                                <Driver 
+                                    key={conductor.id}
+                                    name={conductor.nombre}
+                                    document={conductor.documento}
+                                    birthday={conductor.fnac}
+                                />
+                            </Button>)
                         }
                     </Grid>
-                    {footer}
                 </Card>
             </Grid>
             <Grid item xs={6}>
@@ -178,7 +170,6 @@ const Resources = () => {
                                 />
                             </Button>)
                         }
-                        {footer}
                     </Grid>
                 </Card>
             </Grid>

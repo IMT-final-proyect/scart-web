@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     cardContainer:{
     },
     card:{
-        marginTop: '5%',
+        marginTop: '7%',
         marginInline: '2%',
         paddingLeft: '1%',
         paddingRight: '1%',
@@ -30,6 +30,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         marginRight: '3%',
     },
     headerText:{
+        marginBottom: '2%',
         color: globalColors.darkGrey,
         fontSize: 12,
     },
