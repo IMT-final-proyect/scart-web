@@ -3,7 +3,7 @@ import clsx from 'clsx';
 
 import { AppBar, Divider, Drawer, makeStyles, Theme, Toolbar, Typography, useTheme } from '@material-ui/core';
 
-import { drawerWidth, headerSize } from '../utils/constants';
+import { headerSize } from '../utils/constants';
 
 
 
@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         height: headerSize,
     },
     title:{
-        marginLeft: drawerWidth,
+        marginLeft: theme.spacing(2),
     },
     menuButton: {
         marginRight: theme.spacing(2),
@@ -22,37 +22,22 @@ const useStyles = makeStyles((theme: Theme) => ({
     hide: {
         display: 'none',
     },
-    drawer: {
-        width: drawerWidth,
-        flexShrink: 0,
-      },
-      drawerPaper: {
-        width: drawerWidth,
-      },
-      drawerHeader: {
-        display: 'flex',
-        alignItems: 'center',
-        padding: theme.spacing(0, 1),
-        // necessary for content to be below app bar
-        ...theme.mixins.toolbar,
-        justifyContent: 'flex-end',
-      },
-      content: {
-        flexGrow: 1,
-        padding: theme.spacing(3),
-        transition: theme.transitions.create('margin', {
-          easing: theme.transitions.easing.sharp,
-          duration: theme.transitions.duration.leavingScreen,
-        }),
-        marginLeft: -drawerWidth,
-      },
-      contentShift: {
-        transition: theme.transitions.create('margin', {
-          easing: theme.transitions.easing.easeOut,
-          duration: theme.transitions.duration.enteringScreen,
-        }),
-        marginLeft: 0,
-      },
+    
+    content: {
+      flexGrow: 1,
+      padding: theme.spacing(3),
+      transition: theme.transitions.create('margin', {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen,
+      }),
+    },
+    contentShift: {
+      transition: theme.transitions.create('margin', {
+        easing: theme.transitions.easing.easeOut,
+        duration: theme.transitions.duration.enteringScreen,
+      }),
+      marginLeft: 0,
+    },
 }));
 
 interface Props {
@@ -77,35 +62,12 @@ const TemplateBar = (props : Props) => {
         <>
         <AppBar>
             <Toolbar className={classes.customizeToolbar}>
-                {/* <IconButton 
-                    edge="start" 
-                    color="inherit" 
-                    aria-label="menu" 
-                    onClick={handleDrawerOpen}
-                    className={clsx(classes.menuButton, open && classes.hide)}
-                    >
-                    <MenuIcon />
-                </IconButton> */}
                 <Typography variant="h6" className={classes.title}>
                     {props.title}
                 </Typography>
+                {props.ButtonList}
             </Toolbar>
         </AppBar>
-        <Drawer
-            className={classes.drawer}
-            variant="persistent"
-            anchor="left"
-            open={true}
-            classes={{
-            paper: classes.drawerPaper,
-            }}
-        >
-            <div className={classes.drawerHeader}>
-            {/* nombre de usuario */}
-            </div>
-            <Divider />
-            {props.ButtonList}
-      </Drawer>
         </>
     )
 }

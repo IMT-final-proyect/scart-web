@@ -3,65 +3,57 @@ import { Button, Card, makeStyles, Theme } from "@material-ui/core"
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 
-import globalColors from "../../../../utils/styles/globalColors" 
-import { drawerWidth, headerSize } from '../../../../utils/constants';
+import globalColors from "../../../../../utils/styles/globalColors" 
+import { headerSize } from '../../../../../utils/constants';
 import image from '../../../../assets/images/pratto.jpg'
-import Driver from '../components/driverRow';
-import Vehicle from '../components/vehicleRow'
-import Document from '../components/documentRow';
+import Vehicle from '../vehicleRow';
+import Document from '../documentRow';
 
 
 const autos = [
     {
         'id': '1',
-        'marca': 'BMW',
-        'modelo': '2015',
-        'patente': 'DIC912',
+        'brand': 'BMW',
+        'model': '2015',
+        'plate': 'DIC912',
     },
     {
         'id': '2',
-        'marca': 'Ferrari',
-        'modelo': '2020',
-        'patente': 'LEC016',
+        'brand': 'Ferrari',
+        'model': '2020',
+        'plate': 'LEC016',
     },
     {
         'id': '3',
-        'marca': 'Aston Martin',
-        'modelo': '2021',
-        'patente': 'VET005',
+        'brand': 'Aston Martin',
+        'model': '2021',
+        'plate': 'VET005',
     },
 ]
 
 const document = [
     {
         'id':'1',
-        'nombre':'Constancia de cuil',
-        'vigencia': '01/01/2022',
-        'estado':'Vigente'
+        'name':'Seguro',
+        'expiration': '01/01/2022',
+        'state':'Vigente'
     },
     {
         'id':'2',
-        'nombre':'Licencia de conducir',
-        'vigencia': '30/01/2022',
-        'estado':'Vigente'
+        'name':'VTV',
+        'expiration': '30/01/2022',
+        'state':'Vigente'
     },
     {
         'id':'3',
-        'nombre':'Cedula Verde',
-        'vigencia': '04/05/2022',
-        'estado':'Vigente'
-    },
-    {
-        'id':'4',
-        'nombre':'Seguro',
-        'vigencia': '10/01/2022',
-        'estado':'Vigente'
+        'name':'Habilitacion',
+        'expiration': '04/05/2022',
+        'state':'Vigente'
     },
 ]
 
 const useStyles = makeStyles((theme: Theme) => ({
     container:{
-        marginLeft: drawerWidth,
     },
     cardContainer:{
         display: 'flex',
@@ -72,10 +64,12 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     topCardContainer:{
         display: 'flex',
+        flexDirection: 'column',
         flex: 1,
-        marginTop: '7%',
+        marginTop: '5%',
         marginRight: '3%',
         marginLeft: '3%',
+        paddingTop: '1%',
     },
     botCardContainer:{
         display: 'flex',
@@ -86,10 +80,8 @@ const useStyles = makeStyles((theme: Theme) => ({
         marginBottom: '3%'
     },
     dataContainer:{
-        display: 'flex',
-        flexDirection: 'row',
-        marginTop: '2.5%',
-        marginLeft: '7.5%'
+        marginBottom: '1%',
+        marginLeft: '1%'
     },
     leftData:{
         display: 'flex',
@@ -104,7 +96,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     dataFieldContainer:{
         display: 'flex',
-        flexDirection: 'row'
+        flexDirection: 'column'
     },
     dataField:{
         marginBottom: '10%',
@@ -159,7 +151,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
 }));
 
-const DriverDetails = () => {
+const VehicleDetails = () => {
     const classes = useStyles();
 
     const handleBackward = () => {
@@ -187,37 +179,18 @@ const DriverDetails = () => {
         <div className={classes.container}>
             <Card className={classes.cardContainer}>
                 <Card className={classes.topCardContainer}>
-                    <div className={classes.imageContainer}>
-                        <img src={image} className={classes.image} />
-                    </div>
-                    <div className={classes.dataContainer}>
-                        <div className={classes.leftData}>
-                            <div className={classes.dataFieldContainer}>
-                                <text className={classes.dataField}> Nombre: </text>
-                                <text className={classes.data}> Lucas </text>
-                            </div>
-                            <div className={classes.dataFieldContainer}>
-                                <text className={classes.dataField}> DNI: </text>
-                                <text className={classes.data}> 912201831 </text>
-                            </div>
-                            <div className={classes.dataFieldContainer}>
-                                <text className={classes.dataField}> Telefono: </text>
-                                <text className={classes.data}> +542234484492 </text>
-                            </div>
+                    <div className={classes.dataFieldContainer}>
+                        <div className={classes.dataContainer}>
+                            <text className={classes.dataField}> brand: </text>
+                            <text className={classes.data}> Mercedes Benz </text>
                         </div>
-                        <div className={classes.rightData}>
-                        <div className={classes.dataFieldContainer}>
-                                <text className={classes.dataField}> Apellido: </text>
-                                <text className={classes.data}> Pratto </text>
-                            </div>
-                            <div className={classes.dataFieldContainer}>
-                                <text className={classes.dataField}> Email: </text>
-                                <text className={classes.data}> osopratto@hotmail.com </text>
-                            </div>
-                            <div className={classes.dataFieldContainer}>
-                                <text className={classes.dataField}> Fecha de Nac.: </text>
-                                <text className={classes.data}> 04/06/1988 </text>
-                            </div>
+                        <div className={classes.dataContainer}>
+                            <text className={classes.dataField}> model: </text>
+                            <text className={classes.data}> W12 E 2021 </text>
+                        </div>
+                        <div className={classes.dataContainer}>
+                            <text className={classes.dataField}> plate: </text>
+                            <text className={classes.data}> 111 ADDD 1111 </text>
                         </div>
                     </div>
                 </Card>
@@ -225,18 +198,18 @@ const DriverDetails = () => {
                     <Card className={classes.cardContainer}>
                         <div className={classes.titleContainer}>
                             <text className={classes.textTitle}>
-                                Vehiculos Conducidos
+                                Conductores
                             </text>
                         </div>
                         <div className={classes.header}>
                             <text className={classes.headerText}>
-                                Marca
+                                brand
                             </text>
                             <text className={classes.headerText}>
-                                Modelo
+                                model
                             </text>
                             <text className={classes.headerText}>
-                                Patente
+                                plate
                             </text>
                             <text className={classes.headerText}>
                                 Acciones
@@ -245,9 +218,9 @@ const DriverDetails = () => {
                         {autos.map((auto) =>
                                 <Vehicle 
                                     key={auto.id}
-                                    brand={auto.marca}
-                                    model={auto.modelo}
-                                    plate={auto.patente}
+                                    brand={auto.brand}
+                                    model={auto.model}
+                                    plate={auto.plate}
                                 />)
                         }
                         {footer}
@@ -260,19 +233,21 @@ const DriverDetails = () => {
                         </div>
                         <div className={classes.header}>
                             <text className={classes.headerText}>
-                                Nombre
+                                name
                             </text>
                             <text className={classes.headerText}>
-                                Vigencia
+                                expiration
                             </text>
                             <text className={classes.headerText}>
-                                Estado
+                                state
                             </text>
                         </div>
                         {document.map((document) => 
                                 <Document 
                                     key={document.id}
-                                    document={document}
+                                    name={document.name}
+                                    expiration={document.expiration}
+                                    state={document.state}
                                 />)
                         }
                         {footer}
@@ -283,4 +258,4 @@ const DriverDetails = () => {
     )
 }
 
-export default DriverDetails;
+export default VehicleDetails;

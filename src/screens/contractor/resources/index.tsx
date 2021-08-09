@@ -1,16 +1,15 @@
 import React from 'react';
 
-import { Button, Card, makeStyles, Theme } from '@material-ui/core';
+import { Button, Card, Grid, Paper } from '@material-ui/core';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 
-import { drawerWidth, headerSize } from '../../../utils/constants';
-import globalColors from '../../../utils/styles/globalColors';
 import Driver from './components/driverRow';
 import Vehicle from './components/vehicleRow';
 import { Link } from 'react-router-dom';
 import { ROUTES } from '../navigation/routes';
+import useStyles from './styles';
 
 const conductores = [
     {
@@ -27,9 +26,9 @@ const conductores = [
     },
     {
         'id': '3',
-        'nombre': 'Boca Juniors',
+        'nombre': 'Lucas Pratto',
         'documento': '09122018',
-        'fnac': '01/01/2000',
+        'fnac': '01/01/1986',
     },
 ]
 
@@ -54,65 +53,6 @@ const autos = [
     },
 ]
 
-const useStyles = makeStyles((theme: Theme) => ({
-    container:{
-        marginLeft: drawerWidth,
-    },
-    cardContainer:{
-        display: 'flex',
-        flex: 1,
-    },
-    card:{
-        flex: 1,
-        marginTop: '5%',
-        marginInline: '2%',
-    },
-    titleContainer:{
-        display: 'flex',
-        flex:1,
-        justifyContent: 'space-between',
-
-    },
-    textTitle:{
-        fontSize:20,
-        marginTop: '3%',
-        marginBottom: '3%',
-        marginLeft: '3%',
-    },
-    circleIcon:{
-        marginTop: '3%',
-        marginBottom: '3%',
-        marginRight: '3%',
-    },
-    header:{
-        display: 'flex',
-        flex:1,
-        justifyContent: 'space-between',
-        marginLeft: '3%',
-        marginRight: '3%',
-    },
-    headerText:{
-        color: globalColors.darkGrey,
-        fontSize: 12,
-    },
-    footer:{
-        display: 'flex',
-        flex: 1,
-        justifyContent: 'space-between',
-        alignItems: 'center'
-    },
-    footerText:{
-        marginLeft: '5%',
-    },
-    arrowsContainer:{
-        marginRight: '3%',
-    },
-    button:{
-        display: 'flex',
-        flexDirection: 'row',
-    }
-}));
-
 
 const Resources = () => {
     const classes = useStyles();
@@ -132,33 +72,34 @@ const Resources = () => {
 
     }
 
+    //in case of pagination
     const footer = (
-        <div className={classes.footer}>
-            <text className={classes.footerText}>1-5 of 13</text>
-            <div className={classes.arrowsContainer}>
+        <Grid container className={classes.titleContainer} justifyContent='space-between'>
+                <text className={classes.footerText}>1-5 of 13</text>
+            <Grid>
                 <Button onClick={handleBackward}>
                     <ArrowBackIosIcon />
                 </Button>
                 <Button onClick={handleFoward}>
                     <ArrowForwardIosIcon />
                 </Button>
-            </div>
-        </div>
+            </Grid>
+        </Grid>
     )
 
     return (
-        <div className={classes.container}>
-            <div className={classes.cardContainer}>
+        <Grid container className={classes.container} direction='row' justifyContent='space-between'>
+            <Grid item xs={6}>
                 <Card className={classes.card}>
-                    <div className={classes.titleContainer}>
+                    <Grid container className={classes.titleContainer} justifyContent='space-between'>
                         <text className={classes.textTitle}>
                             Conductores
                         </text>
                         <Button onClick={addDriver}>
                             <AddCircleIcon className={classes.circleIcon}/>
                         </Button>
-                    </div>
-                    <div className={classes.header}>
+                    </Grid>
+                    <Grid container justifyContent='space-between'>
                         <text className={classes.headerText}>
                             Conductor
                         </text>
@@ -171,33 +112,36 @@ const Resources = () => {
                         <text className={classes.headerText}>
                             Acciones
                         </text>
-                    </div>
-                    {conductores.map((conductor) =>
-                        <Button 
-                            className = {classes.button}
-                            component={Link}
-                            to={'/contratista'+ROUTES.driver}
-                        >  
-                            <Driver 
-                                key={conductor.id}
-                                name={conductor.nombre}
-                                document={conductor.documento}
-                                birthday={conductor.fnac}
-                            />
-                        </Button>)
-                    }
-                    {footer}
+                    </Grid>
+                    <Grid container direction='column' justifyContent='space-between' >
+                        {conductores.map((conductor) =>
+                            <Button
+                                className={classes.button}
+                                component={Link}
+                                to={'/contratista'+ROUTES.driver}
+                            >  
+                                <Driver 
+                                    key={conductor.id}
+                                    name={conductor.nombre}
+                                    document={conductor.documento}
+                                    birthday={conductor.fnac}
+                                />
+                            </Button>)
+                        }
+                    </Grid>
                 </Card>
+            </Grid>
+            <Grid item xs={6}>
                 <Card className={classes.card}>
-                    <div className={classes.titleContainer}>
+                    <Grid container className={classes.titleContainer} justifyContent='space-between'>
                         <text className={classes.textTitle}>
-                            Conductores
+                            Vehiculos
                         </text>
-                        <Button onClick={addCar}>
+                        <Button onClick={addDriver}>
                             <AddCircleIcon className={classes.circleIcon}/>
                         </Button>
-                    </div>
-                    <div className={classes.header}>
+                    </Grid>
+                    <Grid container justifyContent='space-between'>
                         <text className={classes.headerText}>
                             Marca
                         </text>
@@ -210,25 +154,26 @@ const Resources = () => {
                         <text className={classes.headerText}>
                             Acciones
                         </text>
-                    </div>
-                    {autos.map((auto) =>
-                        <Button 
-                            className = {classes.button}
-                            component={Link}
-                            to={'/contratista'+ROUTES.vehicle}
-                        > 
-                            <Vehicle 
-                                key={auto.id}
-                                brand={auto.marca}
-                                model={auto.modelo}
-                                plate={auto.patente}
-                            />
-                        </Button>)
-                    }
-                    {footer}
+                    </Grid>
+                    <Grid container direction='column' >
+                        {autos.map((auto) =>
+                            <Button 
+                                className = {classes.button}
+                                component={Link}
+                                to={'/contratista'+ROUTES.vehicle}
+                            > 
+                                <Vehicle 
+                                    key={auto.id}
+                                    brand={auto.marca}
+                                    model={auto.modelo}
+                                    plate={auto.patente}
+                                />
+                            </Button>)
+                        }
+                    </Grid>
                 </Card>
-            </div>
-        </div>
+            </Grid>
+        </Grid>
     )
 }
 

@@ -1,5 +1,7 @@
 import React from 'react';
-import { makeStyles, Theme } from '@material-ui/core';
+import { Grid, makeStyles, Theme } from '@material-ui/core';
+import CreateIcon from '@material-ui/icons/Create';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 const useStyles = makeStyles((theme: Theme) => ({
     container:{
@@ -19,27 +21,28 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 interface Props{
-    document: {
-        nombre: string,
-        vigencia: string,
-        estado: string
-    }
-
+    name: string,
+    expiration: string,
+    state: string
 } 
-const Document = ({ document }: Props) => {
+const Document = ({ name, expiration, state }: Props) => {
     const classes = useStyles();
     return(
-        <div className={classes.container}>
-            <div className={classes.data}>
-                <text> {document.nombre} </text>
-            </div>
-            <div className={classes.data}>
-                <text> {document.vigencia} </text>
-            </div>
-            <div className={classes.data}>
-                <text> {document.estado} </text>
-            </div>
-        </div>
+        <Grid container direction="row" justifyContent='space-between'>
+            <Grid item xs={3} >
+                <text> {name} </text>
+            </Grid>
+            <Grid item xs={3} >
+                <text> {expiration} </text>
+            </Grid>
+            <Grid item xs={3} >
+                <text> {state} </text>
+            </Grid>
+            <Grid item xs={1} >
+                <CreateIcon />
+                <DeleteIcon />
+            </Grid>
+    </Grid>
     )
 }
 

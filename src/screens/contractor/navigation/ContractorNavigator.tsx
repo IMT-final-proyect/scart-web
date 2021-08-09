@@ -10,8 +10,8 @@ import TemplateBar from '../../../components/TemplateBar';
 import { ROUTES } from './routes';
 import Home from '../home';
 import Resources from '../resources';
-import DriverDetails from '../resources/driverDetails'
-import VehicleDetails from '../resources/vehicleDetails'
+import DriverDetails from '../resources/components/driverDetails'
+import VehicleDetails from '../resources/components/vehicleDetails'
 import Documentation from '../documentation';
 
 const useStyles = makeStyles((theme: Theme) => ({
