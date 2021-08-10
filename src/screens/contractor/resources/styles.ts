@@ -9,11 +9,42 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     cardContainer:{
     },
-    card:{
-        marginTop: '7%',
-        marginInline: '2%',
-        paddingLeft: '1%',
-        paddingRight: '1%',
+    rightCard:{
+        marginTop: '10%',
+        paddingLeft: '2.5%',
+        paddingRight: '2.5%',
+        paddingBottom: '2.5%',
+        [theme.breakpoints.up('xs')]: {
+            width: '130%',
+            marginLeft: '2.5%',
+        },
+        [theme.breakpoints.up('sm')]: {
+            width: '730px',
+        },
+        [theme.breakpoints.up('md')]: {
+            width: '95%',
+            marginRight: '2.5%',
+        },
+    },
+    leftCard:{
+        marginTop: '10%',
+        marginLeft: '2.5%',
+        paddingRight: '2.5%',
+        paddingLeft: '2.5%',
+        paddingBottom: '2.5%',
+        [theme.breakpoints.up('xs')]: {
+            width: '130%',
+            marginLeft: '2.5%',
+        },
+        [theme.breakpoints.up('sm')]: {
+            width: '730px',
+        },
+        [theme.breakpoints.up('md')]: {
+            width: '95%',
+        },
+        [theme.breakpoints.down('sm')]: {
+            marginTop: '17%'
+        },
     },
     titleContainer:{
         
@@ -23,6 +54,9 @@ const useStyles = makeStyles((theme: Theme) => ({
         marginTop: '3%',
         marginBottom: '3%',
         marginLeft: '3%',
+        [theme.breakpoints.down('sm')]: {
+            fontSize: 15,
+        },
     },
     circleIcon:{
         marginTop: '3%',

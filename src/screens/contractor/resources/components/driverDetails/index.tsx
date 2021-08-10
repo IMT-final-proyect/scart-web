@@ -1,13 +1,7 @@
 import React from 'react';
-import { Button, Card, Grid, Hidden, makeStyles, Theme } from "@material-ui/core"
+import { Button, Card, Grid, Hidden } from "@material-ui/core"
 import AddCircleIcon from '@material-ui/icons/AddCircle';
-import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
-
-import globalColors from "../../../../../utils/styles/globalColors" 
-import { headerSize } from '../../../../../utils/constants';
 import image from '../../../../../assets/images/pratto.jpg'
-import Driver from '../driverRow';
 import Vehicle from '../vehicleRow'
 import Document from '../documentRow';
 import useStyles from './styles' 
@@ -125,18 +119,26 @@ const DriverDetails = () => {
                             </text>
                         </Grid>
                         <Grid container justifyContent='space-between'>
-                            <text className={classes.headerText}>
-                                Conductor
-                            </text>
-                            <text className={classes.headerText}>
-                                Documento
-                            </text>
-                            <text className={classes.headerText}>
-                                Fecha Nac.
-                            </text>
-                            <text className={classes.headerText}>
-                                Acciones
-                            </text>
+                            <Grid item xs={3} className={classes.headerText}>
+                                <text className={classes.headerText}>
+                                    Conductor
+                                </text>
+                            </Grid>
+                            <Grid item xs={3} className={classes.headerText}>
+                                <text className={classes.headerText}>
+                                    Documento
+                                </text>
+                            </Grid>
+                            <Grid item xs={3} className={classes.headerText}>
+                                <text className={classes.headerText}>
+                                    Fecha Nac.
+                                </text>
+                            </Grid>
+                            <Grid item xs={2} className={classes.headerText}>
+                                <text className={classes.headerText}>
+                                    Acciones
+                                </text>
+                            </Grid>
                         </Grid>
                         <Grid container direction='column' justifyContent='space-between' >
                             {autos.map((auto) =>
@@ -154,25 +156,33 @@ const DriverDetails = () => {
                     <Card className={classes.rightCard}>
                         <Grid container className={classes.titleContainer} justifyContent='space-between'>
                             <text className={classes.textTitle}>
-                                Vehiculos
+                                Documentación
                             </text>
                             <Button onClick={() => console.log('xd')}>
                                 <AddCircleIcon className={classes.circleIcon}/>
                             </Button>
                         </Grid>
                         <Grid container justifyContent='space-between'>
-                            <text className={classes.headerText}>
-                                Marca
-                            </text>
-                            <text className={classes.headerText}>
-                                Modelo
-                            </text>
-                            <text className={classes.headerText}>
-                                Patente
-                            </text>
-                            <text className={classes.headerText}>
-                                Acciones
-                            </text>
+                            <Grid item xs={3} className={classes.headerText}>
+                                <text className={classes.headerText}>
+                                    Marca
+                                </text>
+                            </Grid>
+                            <Grid item xs={3} className={classes.headerText}>
+                                <text className={classes.headerText}>
+                                    Modelo
+                                </text>
+                            </Grid>
+                            <Grid item xs={3} className={classes.headerText}>
+                                <text className={classes.headerText}>
+                                    Patente
+                                </text>
+                            </Grid>
+                            <Grid item xs={2} className={classes.headerText}>
+                                <text className={classes.headerText}>
+                                    Acciones
+                                </text>
+                            </Grid>
                         </Grid>
                         <Grid container direction='column' >
                             {documents.map((document) =>

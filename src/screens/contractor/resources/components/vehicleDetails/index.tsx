@@ -1,13 +1,11 @@
 import React from 'react';
-import { Button, Card, makeStyles, Theme } from "@material-ui/core"
-import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 
-import globalColors from "../../../../../utils/styles/globalColors" 
-import { headerSize } from '../../../../../utils/constants';
-import image from '../../../../assets/images/pratto.jpg'
+import { Button, Card, Grid } from "@material-ui/core"
+import AddCircleIcon from '@material-ui/icons/AddCircle';
+
 import Vehicle from '../vehicleRow';
 import Document from '../documentRow';
+import useStyles from './styles';
 
 
 const autos = [
@@ -31,7 +29,7 @@ const autos = [
     },
 ]
 
-const document = [
+const documents = [
     {
         'id':'1',
         'name':'Seguro',
@@ -52,209 +50,109 @@ const document = [
     },
 ]
 
-const useStyles = makeStyles((theme: Theme) => ({
-    container:{
-    },
-    cardContainer:{
-        display: 'flex',
-        flexDirection: 'column',
-        flex: 1,
-        marginRight: '3%',
-        marginLeft: '3%',
-    },
-    topCardContainer:{
-        display: 'flex',
-        flexDirection: 'column',
-        flex: 1,
-        marginTop: '5%',
-        marginRight: '3%',
-        marginLeft: '3%',
-        paddingTop: '1%',
-    },
-    botCardContainer:{
-        display: 'flex',
-        flex: 1,
-        marginTop: '1%',
-        marginRight: '3%',
-        marginLeft: '3%',
-        marginBottom: '3%'
-    },
-    dataContainer:{
-        marginBottom: '1%',
-        marginLeft: '1%'
-    },
-    leftData:{
-        display: 'flex',
-        flex: 1,
-        flexDirection: 'column',
-    },
-    rightData:{
-        display: 'flex',
-        flex: 1,
-        flexDirection: 'column',
-        marginLeft: '40%',
-    },
-    dataFieldContainer:{
-        display: 'flex',
-        flexDirection: 'column'
-    },
-    dataField:{
-        marginBottom: '10%',
-        color: globalColors.darkGrey
-    },
-    data:{
-        marginLeft: '5%',
-        fontWeight: 'bold'
-    },
-    imageContainer:{
-        marginLeft: '5%',
-        marginTop: '2%'
-    },
-    image:{
-        borderRadius: '50%',
-        height: 100,
-    },
-    titleContainer:{
-        display: 'flex',
-        flex:1,
-        justifyContent: 'space-between',
-
-    },
-    textTitle:{
-        fontSize:20,
-        marginTop: '3%',
-        marginBottom: '3%',
-        marginLeft: '3%',
-    },
-    header:{
-        display: 'flex',
-        flex:1,
-        justifyContent: 'space-between',
-        marginLeft: '3%',
-        marginRight: '3%',
-    },
-    headerText:{
-        color: globalColors.darkGrey,
-        fontSize: 12,
-    },
-    footer:{
-        display: 'flex',
-        flex: 1,
-        justifyContent: 'space-between',
-        alignItems: 'center'
-    },
-    footerText:{
-        marginLeft: '5%',
-    },
-    arrowsContainer:{
-        marginRight: '3%',
-    },
-}));
-
 const VehicleDetails = () => {
     const classes = useStyles();
 
-    const handleBackward = () => {
-
-    }
-    const handleFoward = () => {
-
-    }
-
-    const footer = (
-        <div className={classes.footer}>
-            <text className={classes.footerText}>1-5 of 13</text>
-            <div className={classes.arrowsContainer}>
-                <Button onClick={handleBackward}>
-                    <ArrowBackIosIcon />
-                </Button>
-                <Button onClick={handleFoward}>
-                    <ArrowForwardIosIcon />
-                </Button>
-            </div>
-        </div>
-    )
-
     return (
-        <div className={classes.container}>
+        <Grid container className={classes.container} direction='column' justifyContent='space-between'>
             <Card className={classes.cardContainer}>
-                <Card className={classes.topCardContainer}>
-                    <div className={classes.dataFieldContainer}>
+                <Grid container justifyContent='space-between'>
+                    <Grid item xs={6}>
                         <div className={classes.dataContainer}>
-                            <text className={classes.dataField}> brand: </text>
+                            <text className={classes.dataField}> Marca: </text>
                             <text className={classes.data}> Mercedes Benz </text>
                         </div>
                         <div className={classes.dataContainer}>
-                            <text className={classes.dataField}> model: </text>
+                            <text className={classes.dataField}> Modelo: </text>
                             <text className={classes.data}> W12 E 2021 </text>
                         </div>
                         <div className={classes.dataContainer}>
-                            <text className={classes.dataField}> plate: </text>
+                            <text className={classes.dataField}> Patente: </text>
                             <text className={classes.data}> 111 ADDD 1111 </text>
                         </div>
-                    </div>
-                </Card>
-                <div className={classes.botCardContainer}>
-                    <Card className={classes.cardContainer}>
-                        <div className={classes.titleContainer}>
+                    </Grid>
+                </Grid>
+            </Card>
+            <Grid container className={classes.container} direction='row' justifyContent='space-between'>
+                <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+                    <Card className={classes.leftCard}>
+                        <Grid container className={classes.titleContainer} justifyContent='space-between'>
                             <text className={classes.textTitle}>
                                 Conductores
                             </text>
-                        </div>
-                        <div className={classes.header}>
-                            <text className={classes.headerText}>
-                                brand
-                            </text>
-                            <text className={classes.headerText}>
-                                model
-                            </text>
-                            <text className={classes.headerText}>
-                                plate
-                            </text>
-                            <text className={classes.headerText}>
-                                Acciones
-                            </text>
-                        </div>
-                        {autos.map((auto) =>
+                        </Grid>
+                        <Grid container justifyContent='space-between'>
+                            <Grid item xs={3} className={classes.headerText}>
+                                <text className={classes.headerText}>
+                                    Marca
+                                </text>
+                            </Grid>
+                            <Grid item xs={3} className={classes.headerText}>
+                                <text className={classes.headerText}>
+                                    Modelo
+                                </text>
+                            </Grid>
+                            <Grid item xs={3} className={classes.headerText}>
+                                <text className={classes.headerText}>
+                                    Patente
+                                </text>
+                            </Grid>
+                            <Grid item xs={2} className={classes.headerText}>
+                                <text className={classes.headerText}>
+                                    Acciones
+                                </text>
+                            </Grid>
+                        </Grid>
+                        <Grid container direction='column' justifyContent='space-between' >
+                            {autos.map((auto) =>
                                 <Vehicle 
                                     key={auto.id}
                                     brand={auto.brand}
                                     model={auto.model}
                                     plate={auto.plate}
                                 />)
-                        }
-                        {footer}
+                            }
+                        </Grid>
                     </Card>
-                    <Card className={classes.cardContainer}>
-                    <div className={classes.titleContainer}>
+                </Grid>
+                <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+                    <Card className={classes.rightCard}>
+                        <Grid container className={classes.titleContainer} justifyContent='space-between'>
                             <text className={classes.textTitle}>
                                 Documentos
                             </text>
-                        </div>
-                        <div className={classes.header}>
+                            <Button onClick={() => console.log('xd')}>
+                                <AddCircleIcon className={classes.circleIcon}/>
+                            </Button>
+                        </Grid>
+                        <Grid container justifyContent='space-between'>
                             <text className={classes.headerText}>
-                                name
+                                Nombre
                             </text>
                             <text className={classes.headerText}>
-                                expiration
+                                Fec. vencimiento
                             </text>
                             <text className={classes.headerText}>
-                                state
+                                Estado
                             </text>
-                        </div>
-                        {document.map((document) => 
+                            <text className={classes.headerText}>
+                                Acciones
+                            </text>
+                        </Grid>
+                        <Grid container direction='column' >
+                            {documents.map((document) =>
                                 <Document 
                                     key={document.id}
                                     name={document.name}
                                     expiration={document.expiration}
                                     state={document.state}
                                 />)
-                        }
-                        {footer}
+                            }
+                        </Grid>
                     </Card>
-                </div>
-            </Card>
-        </div>
+                </Grid>
+            </Grid>
+        </Grid>
     )
 }
 

@@ -89,8 +89,8 @@ const Resources = () => {
 
     return (
         <Grid container className={classes.container} direction='row' justifyContent='space-between'>
-            <Grid item xs={6}>
-                <Card className={classes.card}>
+            <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+                <Card className={classes.leftCard}>
                     <Grid container className={classes.titleContainer} justifyContent='space-between'>
                         <text className={classes.textTitle}>
                             Conductores
@@ -100,18 +100,26 @@ const Resources = () => {
                         </Button>
                     </Grid>
                     <Grid container justifyContent='space-between'>
-                        <text className={classes.headerText}>
-                            Conductor
-                        </text>
-                        <text className={classes.headerText}>
-                            Documento
-                        </text>
-                        <text className={classes.headerText}>
-                            Fecha Nac.
-                        </text>
-                        <text className={classes.headerText}>
-                            Acciones
-                        </text>
+                        <Grid item xs={3} className={classes.headerText}>
+                            <text className={classes.headerText}>
+                                Conductor
+                            </text>
+                        </Grid>
+                        <Grid item xs={3} className={classes.headerText}>
+                            <text className={classes.headerText}>
+                                Documento
+                            </text>
+                        </Grid>
+                        <Grid item xs={3} className={classes.headerText}>
+                            <text className={classes.headerText}>
+                                Fecha Nac.
+                            </text>
+                        </Grid>
+                        <Grid item xs={2} className={classes.headerText}>
+                            <text className={classes.headerText}>
+                                Acciones
+                            </text>
+                        </Grid>
                     </Grid>
                     <Grid container direction='column' justifyContent='space-between' >
                         {conductores.map((conductor) =>
@@ -131,8 +139,8 @@ const Resources = () => {
                     </Grid>
                 </Card>
             </Grid>
-            <Grid item xs={6}>
-                <Card className={classes.card}>
+            <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+                <Card className={classes.rightCard}>
                     <Grid container className={classes.titleContainer} justifyContent='space-between'>
                         <text className={classes.textTitle}>
                             Vehiculos
@@ -142,18 +150,26 @@ const Resources = () => {
                         </Button>
                     </Grid>
                     <Grid container justifyContent='space-between'>
-                        <text className={classes.headerText}>
-                            Marca
-                        </text>
-                        <text className={classes.headerText}>
-                            Modelo
-                        </text>
-                        <text className={classes.headerText}>
-                            Patente
-                        </text>
-                        <text className={classes.headerText}>
-                            Acciones
-                        </text>
+                        <Grid item xs={3} className={classes.headerText}>
+                            <text className={classes.headerText}>
+                                Marca
+                            </text>
+                        </Grid>
+                        <Grid item xs={3} className={classes.headerText}>
+                            <text className={classes.headerText}>
+                                Modelo
+                            </text>
+                        </Grid>
+                        <Grid item xs={3} className={classes.headerText}>
+                            <text className={classes.headerText}>
+                                Patente
+                            </text>
+                        </Grid>
+                        <Grid item xs={2} className={classes.headerText}>
+                            <text className={classes.headerText}>
+                                Acciones
+                            </text>
+                        </Grid>
                     </Grid>
                     <Grid container direction='column' >
                         {autos.map((auto) =>
