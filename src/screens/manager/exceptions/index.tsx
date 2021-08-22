@@ -1,45 +1,45 @@
 import React from 'react';
 
-import { Button, Card, Grid } from '@material-ui/core';
+import { Button, Card, Grid, Link, makeStyles, Theme } from '@material-ui/core';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 
 import useStyles from './styles';
-import DocumentRow from './components/documentRow/DocumentRow';
+import ExceptionRow from './components/exceptionRow/ExceptionRow';
 
 const documents = [
     {
         'id':'1',
         'name':'Constancia de cuil',
-        'expiration': '01/01/2022',
+        'contractor': 'Contratista 1',
         'state':'Vigente',
         'resource': 'Martin Belcic'
     },
     {
         'id':'2',
         'name':'Licencia de conducir',
-        'expiration': '30/01/2022',
+        'contractor': 'Contratista 2',
         'state':'Vigente',
         'resource': 'Wenceslao Mateos'
     },
     {
         'id':'3',
         'name':'Cedula Verde',
-        'expiration': '04/05/2022',
+        'contractor': 'Contratista 3',
         'state':'Vigente',
         'resource': 'Fiat 600'
     },
     {
         'id':'4',
         'name':'Seguro',
-        'expiration': '10/01/2022',
+        'contractor': 'Contratista 4',
         'state':'Vigente',
         'resource': 'Ferrari SF21'
     },
 ]
 
-const Documentacion = () => {
+const Exceptions = () => {
     const classes = useStyles();
 
     const addDriver = () => {
@@ -62,7 +62,7 @@ const Documentacion = () => {
             <Card className={classes.leftCard}>
                 <Grid container className={classes.titleContainer} justifyContent='space-between'>
                     <text className={classes.textTitle}>
-                        Documentación
+                        Excepciones
                     </text>
                     <Button onClick={addDriver}>
                         <AddCircleIcon className={classes.circleIcon}/>
@@ -81,7 +81,7 @@ const Documentacion = () => {
                     </Grid>
                     <Grid item xs={2} className={classes.headerText}>
                         <text className={classes.headerText}>
-                            Fecha de venc.
+                            Contratista
                         </text>
                     </Grid>
                     <Grid item xs={2} className={classes.headerText}>
@@ -97,20 +97,18 @@ const Documentacion = () => {
                 </Grid>
                 <Grid container direction='column' justifyContent='space-between' >
                     {documents.map((document) =>
-                        <Button className={classes.button}>  
-                            <DocumentRow 
-                                key={document.id}
-                                name={document.name}
-                                resource={document.resource}
-                                expiration={document.expiration}
-                                state={document.state}
-                            />
-                        </Button>)
+                        <ExceptionRow 
+                            key={document.id}
+                            name={document.name}
+                            resource={document.resource}
+                            contractor={document.contractor}
+                            state={document.state}
+                        />)
                     }
                 </Grid>
-                </Card>
+            </Card>
         </Grid>
     )
 }
 
-export default Documentacion;
+export default Exceptions;

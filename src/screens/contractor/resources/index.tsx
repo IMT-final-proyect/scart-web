@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Button, Card, Grid, Paper } from '@material-ui/core';
+import { Button, Card, Grid } from '@material-ui/core';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';

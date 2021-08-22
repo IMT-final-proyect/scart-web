@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import clsx from 'clsx';
 
 import { AppBar, Divider, Drawer, makeStyles, Theme, Toolbar, Typography, useTheme } from '@material-ui/core';
 

@@ -6,40 +6,18 @@ import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 
 import useStyles from './styles';
-import DocumentRow from './components/documentRow/DocumentRow';
+import ReportRow from '../reportRow';
 
-const documents = [
-    {
-        'id':'1',
-        'name':'Constancia de cuil',
-        'expiration': '01/01/2022',
-        'state':'Vigente',
-        'resource': 'Martin Belcic'
-    },
-    {
-        'id':'2',
-        'name':'Licencia de conducir',
-        'expiration': '30/01/2022',
-        'state':'Vigente',
-        'resource': 'Wenceslao Mateos'
-    },
-    {
-        'id':'3',
-        'name':'Cedula Verde',
-        'expiration': '04/05/2022',
-        'state':'Vigente',
-        'resource': 'Fiat 600'
-    },
-    {
-        'id':'4',
-        'name':'Seguro',
-        'expiration': '10/01/2022',
-        'state':'Vigente',
-        'resource': 'Ferrari SF21'
-    },
-]
-
-const Documentacion = () => {
+interface resource{
+    id: string,
+    name: string,
+    contractor: string,
+    type: string
+}
+interface Props{
+    resources: resource[]
+}
+const ReportTable = ({resources}: Props) => {
     const classes = useStyles();
 
     const addDriver = () => {
@@ -62,7 +40,7 @@ const Documentacion = () => {
             <Card className={classes.leftCard}>
                 <Grid container className={classes.titleContainer} justifyContent='space-between'>
                     <text className={classes.textTitle}>
-                        Documentación
+                        Reportes
                     </text>
                     <Button onClick={addDriver}>
                         <AddCircleIcon className={classes.circleIcon}/>
@@ -71,46 +49,38 @@ const Documentacion = () => {
                 <Grid container justifyContent='space-between'>
                     <Grid item xs={4} className={classes.headerText}>
                         <text className={classes.headerText}>
-                            Documento
+                            Nombre
+                        </text>
+                    </Grid>
+                    <Grid item xs={1} className={classes.headerText}>
+                        <text className={classes.headerText}>
+                            Tipo
                         </text>
                     </Grid>
                     <Grid item xs={2} className={classes.headerText}>
                         <text className={classes.headerText}>
-                            Recurso
+                            Contratista
                         </text>
                     </Grid>
                     <Grid item xs={2} className={classes.headerText}>
                         <text className={classes.headerText}>
-                            Fecha de venc.
-                        </text>
-                    </Grid>
-                    <Grid item xs={2} className={classes.headerText}>
-                        <text className={classes.headerText}>
-                            Estado
-                        </text>
-                    </Grid>
-                    <Grid item xs={2} className={classes.headerText}>
-                        <text className={classes.headerText}>
-                            Acciones
+                            Reporte
                         </text>
                     </Grid>
                 </Grid>
                 <Grid container direction='column' justifyContent='space-between' >
-                    {documents.map((document) =>
-                        <Button className={classes.button}>  
-                            <DocumentRow 
-                                key={document.id}
-                                name={document.name}
-                                resource={document.resource}
-                                expiration={document.expiration}
-                                state={document.state}
-                            />
-                        </Button>)
+                    {resources.map((resource) =>
+                        <ReportRow 
+                            key={resource.id}
+                            name={resource.name}
+                            type={resource.type}
+                            contractor={resource.contractor}
+                        />)
                     }
                 </Grid>
-                </Card>
+            </Card>
         </Grid>
     )
 }
 
-export default Documentacion;
+export default ReportTable

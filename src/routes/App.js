@@ -7,6 +7,7 @@ import { ROUTES } from './routes';
 
 import Login from '../screens/login';
 import ContractorNavigator from '../screens/contractor/navigation/ContractorNavigator'
+import ManagerNavigator from '../screens/manager/navigation/ManagerNavigator'
 
 const App = () => {
     // const isLoggedIn = (user) => {
@@ -40,6 +41,7 @@ const App = () => {
                 <Route exact path={ROUTES.login} component={Login} />
                 <Route exact path='/' component={Login} />
                 <Route path={ROUTES.contractor} component={ContractorNavigator} />
+                <Route path={ROUTES.manager} component={ManagerNavigator} />
                 <Route component={NotFound} />
             </Switch>
         </BrowserRouter>
