@@ -1,45 +1,12 @@
 import React, { useCallback, useState } from 'react';
-import { Grid, Card, Typography, makeStyles, Theme, Button, TextField, InputAdornment, IconButton } from '@material-ui/core';
+import { Grid, Card, Typography, Button, TextField, InputAdornment, IconButton } from '@material-ui/core';
 import CardContent from '@material-ui/core/CardContent';
 import ClearIcon from '@material-ui/icons/Clear';
-import globalColors from '../../utils/styles/globalColors';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
 import { useDispatch } from 'react-redux';
 import { postLogin } from '../../redux/slices/userSlice';
 import { AppThunkDispatch } from '../../redux/store';
-
-const useStyles = makeStyles((theme: Theme) => ({
-    container:{
-        backgroundColor: globalColors.grey,
-        height: '100vh',
-        margin: 0,
-        padding: 0,
-    },
-    card:{
-        padding: '5%',
-    },
-    row: {
-        marginTop: '3%',
-        marginBottom: '5%',
-    },
-    title: {
-        textAlign: 'center',
-        fontSize: 17,
-        fontWeight: 'bold',
-    },
-    textInput: {
-        color: globalColors.lightBlue,
-    },
-    buttonContainer:{
-        marginTop: '20%',
-    },
-    button: {
-        backgroundColor: globalColors.lightBlue,
-        color: globalColors.white,
-        fontSize: 15,
-        margin: 'auto',
-    },
-}));
+import useStyles from './styles';
 
 const Login = () => {
     const classes = useStyles();
@@ -67,7 +34,7 @@ const Login = () => {
     }
 
     const _onLogIn = () => {
-        dispatch(postLogin({username, password}));
+        dispatch(postLogin(username, password));
     }
 
     return(

@@ -80,12 +80,23 @@ export const { setToken } = userSlice.actions;
 // User's slice reducer
 export default userSlice.reducer;
 
-export const postLogin = (
-   { username, password }: { username: string; password: string },
-): AppThunk => async (dispatch) => {
+export const postLogin = (username: string, password: string): AppThunk => async (dispatch) => {
       dispatch(postLoginRequest);
       try{
-         const response : AxiosResponse<postLoginPayload> = await Axios.post('url');
+         const response : AxiosResponse<postLoginPayload> = await Axios.post('localhost:2999/graphql',{
+         query: `mutation login {
+            loginUser(
+              username: "nachocontratista"
+              password: "nacho"
+            )
+             {
+              uuid
+              access_token
+              username
+              rol
+            }
+          }`
+         });
          dispatch(postLoginSuccess(response.data));
       }
       catch(error){
