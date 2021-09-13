@@ -1,53 +1,111 @@
-import React, { useState } from 'react'
-import { Card, Grid, IconButton, Paper, InputBase, FormControl, InputLabel, MenuItem, Select } from "@material-ui/core"
+import React, { useEffect, useState } from 'react'
+import { Button, Card, Grid, Typography } from "@material-ui/core"
+import MomentUtils from '@date-io/moment';
+import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
+import moment from 'moment';
 import SearchIcon from '@material-ui/icons/Search';
 
 import useStyles from './styles'
+import Input from '../../../../../components/input';
+import CustomSelect from '../../../../../components/customSelect';
+
+const contractors = [
+    {
+        name:'Contratista 1'
+    },
+    {
+        name:'Contratista 2'
+    },
+    {
+        name:'Contratista 3'
+    },
+]
+
+const resourcesType = [
+    {
+        name:'Conductor'
+    },
+    {
+        name:'Vehiculo'
+    },
+]
 
 const Filters = () => {
     const classes = useStyles();
-    const [contractor, setContractor] = useState('');
+    const [contractor, setContractor] = useState<string>('');
+    const [resource, setResource] = useState<string>('');
+    const [resourceType, setResourceType] = useState<string>('');
+    const [fromDate, setFromDate] = useState<moment.Moment | null>(null);
+    const [toDate, setToDate] = useState<moment.Moment | null>(null);
 
-    const Search = () => (
-        <Paper component="form" className={classes.paper}>
-            <InputBase
-                className={classes.input}
-                placeholder="Buscar"
-            />
-            <IconButton type="submit" className={classes.iconButton} aria-label="search">
-                <SearchIcon />
-            </IconButton>
-        </Paper>
-    )
-
-    const handleContractor = (event: React.ChangeEvent<{ value: unknown }>) => {
-        setContractor(event.target.value as string);
+    const handleFromDateChange = (date: moment.Moment | null) => {
+        setFromDate(date);
       };
 
-    const Contratista = () => (
-        <FormControl className={classes.formControl}>
-            <InputLabel id="contractor">Contratista</InputLabel>
-                <Select
-                    labelId="contractor"
-                    id="contractor-select"
-                    value={contractor}
-                    onChange={handleContractor}
-                >
-                    <MenuItem value={10}>Ten</MenuItem>
-                    <MenuItem value={20}>Twenty</MenuItem>
-                    <MenuItem value={30}>Thirty</MenuItem>
-                </Select>
-      </FormControl>
-    )
+    const handleToDateChange = (date: moment.Moment | null) => {
+        setToDate(date);
+    };
+
+    const handleSearch = () => {
+        console.log('filters: '+resource+contractor+resourceType+fromDate?.toString()+toDate?.toString())
+    }
 
     return(
-        <Grid container className={classes.container} direction='column' justifyContent='space-between'>
+        <Grid container >
             <Card className={classes.card}>
-                <Search/>
-                <Contratista/>
+                <Grid container justifyContent='space-between' alignItems='flex-end' >
+                    <Grid item xs={6} md={2} className={classes.container}>
+                        <Input value={resource} placeholder='Nombre' setValue={setResource} />
+                    </Grid>
+                    <Grid item xs={6} md={2} className={classes.container}>
+                        <CustomSelect value={contractor} placeholder='Contratista' setValue={setContractor} data={contractors}/>
+                    </Grid>
+                    <Grid item xs={6} md={2} className={classes.container}>
+                        <CustomSelect value={resourceType} placeholder='Recurso' setValue={setResourceType} data={resourcesType}/>
+                    </Grid>
+                    <Grid item xs={6} md={2} className={classes.container}>
+                        <MuiPickersUtilsProvider utils={MomentUtils}>
+                            <KeyboardDatePicker
+                                disableToolbar
+                                variant="inline"
+                                format="DD/MM/yyyy"
+                                id="desde"
+                                label="Fecha desde"
+                                value={fromDate}
+                                onChange={handleFromDateChange}
+                                KeyboardButtonProps={{
+                                    'aria-label': 'change date',
+                                }}
+                            />
+                        </MuiPickersUtilsProvider>
+                    </Grid>
+                    <Grid item xs={6} md={2} className={classes.container}>
+                        <MuiPickersUtilsProvider utils={MomentUtils}>   
+                            <KeyboardDatePicker
+                                disableToolbar
+                                variant="inline"
+                                format="DD/MM/yyyy"
+                                id="Hasta"
+                                label="Fecha hasta"
+                                value={toDate}
+                                onChange={handleToDateChange}
+                                KeyboardButtonProps={{
+                                    'aria-label': 'change date',
+                                }}
+                            />
+                        </MuiPickersUtilsProvider>
+                    </Grid>
+                    <Grid item xs={6} md={2} className={classes.container}>
+                        <Grid container justifyContent='center' alignItems='center'>
+                            <Button variant="contained" color="primary" onClick={handleSearch}>
+                                <Typography>Search</Typography>
+                                <SearchIcon/>
+                            </Button>
+                        </Grid>
+                    </Grid>
+                </Grid>
             </Card>
         </Grid>
     )
 }
-
 export default Filters

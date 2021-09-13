@@ -1,6 +1,5 @@
 import React from 'react';
 
-import useStyles from './styles'
 import ReportTable from './components/reportsTable';
 import Filters from './components/filters';
 
@@ -31,7 +30,6 @@ const resources = [
     },
 ]
 const Reports = () => {
-    const classes = useStyles();
 
     return (
         <>

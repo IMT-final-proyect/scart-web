@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
-import { Button, makeStyles, Theme } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import HomeIcon from '@material-ui/icons/Home';
 import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
 import StarIcon from '@material-ui/icons/Star';
-import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, Link, useLocation } from 'react-router-dom';
 
 import TemplateBar from '../../../components/TemplateBar';
 import { ROUTES } from './routes';
@@ -13,42 +13,41 @@ import Resources from '../resources';
 import DriverDetails from '../resources/components/driverDetails'
 import VehicleDetails from '../resources/components/vehicleDetails'
 import Documentation from '../documentation';
-
-const useStyles = makeStyles((theme: Theme) => ({
-    container:{
-        paddingTop: '5%',
-    },
-    button: {
-        textTransform: 'none',
-        fontSize: 17,
-        justifyContent: "flex-start",
-        paddingLeft: '10%',
-        paddingTop: '1%',
-    },
-    icon: {
-        paddingTop: '3%',
-        paddingRight: '5%',
-    },
-}));
+import useStyles from './styles'
 
 const ContractorNavigator = () => {
     const classes = useStyles();
+    const [title, setTitle] = useState('');
+    const location = useLocation()
+
+    useEffect(() => {
+        if(location.pathname.includes('home'))
+            setTitle('Inicio')
+        else if(location.pathname.includes('recursos'))
+            setTitle('Recursos')
+            else if(location.pathname.includes('documentacion'))
+                setTitle('Documentación')
+        
+    }, [])
+
     const ButtonList = (
         <>
             <Button 
                 className = {classes.button}
                 component={Link}
                 to={ROUTES.root+ROUTES.home}
+                onClick={() => setTitle("Inicio")}
             >
                 <div className={classes.icon}>
                     <HomeIcon/>
                 </div>
-                Home
+                Inicio
             </Button>
             <Button 
                 className = {classes.button}
                 component={Link}
                 to={ROUTES.root+ROUTES.resources}
+                onClick={() => setTitle("Recursos")}
             >
                 <div className={classes.icon}>
                     <StarIcon/>
@@ -59,11 +58,12 @@ const ContractorNavigator = () => {
                 className = {classes.button}
                 component={Link}
                 to={'/contratista'+ROUTES.documentacion}
+                onClick={() => setTitle("Documentación")}
             >
                 <div className={classes.icon}>
                     <InsertDriveFileIcon/>
                 </div>
-                Documentacion
+                Documentación
             </Button>
         </>
     )
@@ -71,7 +71,7 @@ const ContractorNavigator = () => {
     return(
     <BrowserRouter>
         <TemplateBar
-            title='Home'
+            title={title}
             ButtonList = {ButtonList}
         />
         <Switch>

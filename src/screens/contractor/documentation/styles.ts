@@ -29,9 +29,6 @@ const useStyles = makeStyles((theme: Theme) => ({
             marginTop: '17%'
         },
     },
-    titleContainer:{
-        
-    },
     textTitle:{
         fontSize:20,
         marginTop: '3%',

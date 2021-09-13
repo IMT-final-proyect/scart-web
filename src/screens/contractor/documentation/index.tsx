@@ -60,7 +60,7 @@ const Documentacion = () => {
     return (
         <Grid container className={classes.container} direction='row' justifyContent='space-between'>
             <Card className={classes.leftCard}>
-                <Grid container className={classes.titleContainer} justifyContent='space-between'>
+                <Grid container justifyContent='space-between'>
                     <text className={classes.textTitle}>
                         Documentación
                     </text>

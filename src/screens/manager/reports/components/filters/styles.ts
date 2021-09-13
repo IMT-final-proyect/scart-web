@@ -3,14 +3,15 @@ import { makeStyles, Theme } from '@material-ui/core';
 
 const useStyles = makeStyles((theme: Theme) => ({
     container:{
-    flexGrow: 1,
+        [theme.breakpoints.down('sm')]: {
+            marginBottom: '5%',
+        },
     },
     card:{
         marginTop: '5%',
         marginLeft: '2.5%',
-        paddingRight: '2.5%',
-        paddingLeft: '2.5%',
-        paddingBottom: '2.5%',
+        paddingLeft: '1.5%',
+        paddingBottom: '1%',
         [theme.breakpoints.up('xs')]: {
             width: '130%',
             marginLeft: '2.5%',
