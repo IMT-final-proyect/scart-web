@@ -4,9 +4,11 @@ import { Button, Card, Grid } from '@material-ui/core';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import { Link } from 'react-router-dom';
 
 import useStyles from './styles';
 import ReportRow from '../reportRow';
+import { ROUTES } from '../../../navigation/routes';
 
 interface resource{
     id: string,
@@ -47,12 +49,12 @@ const ReportTable = ({resources}: Props) => {
                     </Button>
                 </Grid>
                 <Grid container justifyContent='space-between'>
-                    <Grid item xs={4} className={classes.headerText}>
+                    <Grid item xs={3} md={4} className={classes.headerText}>
                         <text className={classes.headerText}>
                             Nombre
                         </text>
                     </Grid>
-                    <Grid item xs={1} className={classes.headerText}>
+                    <Grid item xs={2} md={1} className={classes.headerText}>
                         <text className={classes.headerText}>
                             Tipo
                         </text>
@@ -70,12 +72,18 @@ const ReportTable = ({resources}: Props) => {
                 </Grid>
                 <Grid container direction='column' justifyContent='space-between' >
                     {resources.map((resource) =>
-                        <ReportRow 
-                            key={resource.id}
-                            name={resource.name}
-                            type={resource.type}
-                            contractor={resource.contractor}
-                        />)
+                        <Button
+                            className={classes.button}
+                            component={Link}
+                            to={'/encargado'+ROUTES.reportDetails}
+                        >  
+                            <ReportRow 
+                                key={resource.id}
+                                name={resource.name}
+                                type={resource.type}
+                                contractor={resource.contractor}
+                            />
+                        </Button>)
                     }
                 </Grid>
             </Card>

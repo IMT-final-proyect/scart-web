@@ -11,7 +11,7 @@ interface Props{
 const Exception = ({ name, contractor, state, resource }: Props) => {
     const classes = useStyles();
     return(
-        <Grid container direction="row" justifyContent='space-between'>
+        <Grid container direction="row" justifyContent='space-between' alignItems='center'>
             <Grid item xs={4} className={classes.text}>
                 <text> {name} </text>
             </Grid>
@@ -26,7 +26,7 @@ const Exception = ({ name, contractor, state, resource }: Props) => {
             </Grid>
             <Grid item xs={2} className={classes.container}>
                 <Button color="primary" className={classes.text}>Aceptar</Button>
-                <Button color="secondary" className={classes.text}>Rechazar</Button>
+                <Button className={classes.rechazar}>Rechazar</Button>
             </Grid>
     </Grid>
     )

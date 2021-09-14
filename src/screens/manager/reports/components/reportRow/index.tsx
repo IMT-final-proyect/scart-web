@@ -10,15 +10,15 @@ interface Props{
 const ReportRow = ({ name, type, contractor }: Props) => {
     const classes = useStyles();
     return(
-        <Grid container direction="row" justifyContent='space-between'>
-            <Grid item xs={4} className={classes.text}>
+        <Grid container direction="row" justifyContent='space-between'  alignItems='center'>
+            <Grid item xs={3} md={4} className={classes.text}>
                 <text> {name} </text>
             </Grid>
-            <Grid item xs={1} className={classes.text}>
-                <text> {contractor} </text>
+            <Grid item xs={2} md={1} className={classes.text}>
+                <text> {type} </text>
             </Grid>
             <Grid item xs={2} className={classes.text}>
-                <text> {type} </text>
+                <text> {contractor} </text>
             </Grid>
             <Grid item xs={2} className={classes.container}>
                 <Button color="primary" className={classes.text}>Generar</Button>

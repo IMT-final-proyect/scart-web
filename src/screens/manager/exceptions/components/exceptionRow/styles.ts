@@ -1,4 +1,5 @@
 import { makeStyles, Theme } from '@material-ui/core';
+import globalColors from '../../../../../utils/styles/globalColors';
 
 const useStyles = makeStyles((theme: Theme) => ({
     container:{
@@ -10,8 +11,15 @@ const useStyles = makeStyles((theme: Theme) => ({
         textAlign: 'start',
         [theme.breakpoints.down('md')]: {
             fontSize: 10,
+        }
+    },
+    rechazar:{
+        maxWidth: 'auto',
+        textAlign: 'start',
+        [theme.breakpoints.down('md')]: {
+            fontSize: 10,
         },
-        
+        color: globalColors.red
     }
 }));
 

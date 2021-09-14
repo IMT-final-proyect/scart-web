@@ -17,7 +17,7 @@ import useStyles from './styles'
 
 const ContractorNavigator = () => {
     const classes = useStyles();
-    const [title, setTitle] = useState('');
+    const [title, setTitle] = useState('Inicio');
     const location = useLocation()
 
     useEffect(() => {

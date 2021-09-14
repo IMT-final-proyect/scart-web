@@ -9,11 +9,12 @@ import TemplateBar from '../../../components/TemplateBar';
 import { ROUTES } from './routes';
 import Exceptions from '../exceptions';
 import Reports from '../reports';
+import ReportDetails from '../reportDetails';
 import useStyles from './styles';
 
 const ManagerNavigator = () => {
     const classes = useStyles();
-    const [title, setTitle] = useState('');
+    const [title, setTitle] = useState('Excepciones');
     const location = useLocation()
 
     useEffect(() => {
@@ -28,7 +29,7 @@ const ManagerNavigator = () => {
             <Button 
                 className = {classes.button}
                 component={Link}
-                to={ROUTES.root+ROUTES.excepciones}
+                to={ROUTES.root+ROUTES.exceptions}
                 onClick={() => setTitle("Excepciones")}
             >
                 <div className={classes.icon}>
@@ -39,7 +40,7 @@ const ManagerNavigator = () => {
             <Button 
                 className = {classes.button}
                 component={Link}
-                to={ROUTES.root+ROUTES.reportes}
+                to={ROUTES.root+ROUTES.reports}
                 onClick={() => setTitle("Reportes")}
             >
                 <div className={classes.icon}>
@@ -57,8 +58,9 @@ const ManagerNavigator = () => {
             ButtonList = {ButtonList}
         />
         <Switch>
-            <Route exact path={ROUTES.root+ROUTES.excepciones} component={Exceptions} />
-            <Route exact path={ROUTES.root+ROUTES.reportes} component={Reports} />
+            <Route exact path={ROUTES.root+ROUTES.exceptions} component={Exceptions} />
+            <Route exact path={ROUTES.root+ROUTES.reports} component={Reports} />
+            <Route exact path={ROUTES.root+ROUTES.reportDetails} component={ReportDetails} />
             <Route path={ROUTES.root} component= {Exceptions} />
         </Switch>
     </BrowserRouter>

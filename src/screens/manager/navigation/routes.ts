@@ -1,6 +1,6 @@
 export enum ROUTES {
     root = '/encargado',
-    excepciones = '/excepciones',
-    reportes = '/reportes',
-    reporte = '/reportes/:id',
+    exceptions = '/excepciones',
+    reports = '/reportes',
+    reportDetails = '/reportes/:id',
 }
