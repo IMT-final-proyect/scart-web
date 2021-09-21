@@ -56,10 +56,8 @@ const userSlice = createSlice({
          state.token = initialState.token;
       },
       // Indicates a post login request has finished successfully
-      postLoginSuccess(state, action: PayloadAction<postLoginPayload>) {
-         const { accessToken, refreshToken } = action.payload;
-         state.token.accessToken = accessToken;
-         state.token.refreshToken = refreshToken;
+      postLoginSuccess(state, action: any) {
+         state.data = action.payload
       },
       // Indicates a post login request has failed
       postLoginFailure(state) {
@@ -83,19 +81,9 @@ export default userSlice.reducer;
 export const postLogin = (username: string, password: string): AppThunk => async (dispatch) => {
       dispatch(postLoginRequest);
       try{
-         const response : AxiosResponse<postLoginPayload> = await Axios.post('localhost:2999/graphql',{
-         query: `mutation login {
-            loginUser(
-              username: "nachocontratista"
-              password: "nacho"
-            )
-             {
-              uuid
-              access_token
-              username
-              rol
-            }
-          }`
+         const response = await Axios.post('/login',{
+            username,
+            password
          });
          dispatch(postLoginSuccess(response.data));
       }
