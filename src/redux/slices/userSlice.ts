@@ -99,7 +99,7 @@ export const postLogin = (username: string, password: string): AppThunk => async
          });
          dispatch(postLoginSuccess(response.data));
       }
-      catch(error){
+      catch(error: any){
          console.error('Could not log in user ',username,'.',error.message);
          dispatch(postLoginFailure);
       }
