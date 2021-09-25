@@ -9,6 +9,7 @@ import Login from '../screens/login';
 import ContractorNavigator from '../screens/contractor/navigation/ContractorNavigator'
 import ManagerNavigator from '../screens/manager/navigation/ManagerNavigator'
 import AuditorNavigator from '../screens/auditor/navigation/AuditorNavigator'
+import AdminNavigator from '../screens/admin/navigation/AdminNavigator'
 
 const App = () => {
     // const isLoggedIn = (user) => {
@@ -44,6 +45,7 @@ const App = () => {
                 <Route path={ROUTES.contractor} component={ContractorNavigator} />
                 <Route path={ROUTES.manager} component={ManagerNavigator} />
                 <Route path={ROUTES.auditor} component={AuditorNavigator} />
+                <Route path={ROUTES.admin} component={AdminNavigator} />
                 <Route component={NotFound} />
             </Switch>
         </BrowserRouter>

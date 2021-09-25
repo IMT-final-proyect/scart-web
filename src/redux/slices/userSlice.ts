@@ -72,6 +72,7 @@ const {
 export default userSlice.reducer;
 
 export const postLogin = (username: string, password: string): AppThunk => async (dispatch) => {
+<<<<<<< HEAD
    dispatch(postLoginRequest());
    try{
       const response = await Axios.post('/login',{
@@ -84,3 +85,18 @@ export const postLogin = (username: string, password: string): AppThunk => async
       dispatch(postLoginFailure(error.response.data));
    }
 };
+=======
+      dispatch(postLoginRequest);
+      try{
+         const response = await Axios.post('/login',{
+            username,
+            password
+         });
+         dispatch(postLoginSuccess(response.data));
+      }
+      catch(error: any){
+         console.error('Could not log in user ',username,'.',error.message);
+         dispatch(postLoginFailure);
+      }
+   };
+>>>>>>> 4a4de3d27b36ae0a0990ecf57303087a9e652409

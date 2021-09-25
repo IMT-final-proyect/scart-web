@@ -97,15 +97,13 @@ const Documentacion = () => {
                 </Grid>
                 <Grid container direction='column' justifyContent='space-between' >
                     {documents.map((document) =>
-                        <Button className={classes.button}>  
-                            <DocumentRow 
-                                key={document.id}
-                                name={document.name}
-                                resource={document.resource}
-                                expiration={document.expiration}
-                                state={document.state}
-                            />
-                        </Button>)
+                        <DocumentRow 
+                            key={document.id}
+                            name={document.name}
+                            resource={document.resource}
+                            expiration={document.expiration}
+                            state={document.state}
+                        />)
                     }
                 </Grid>
                 </Card>
