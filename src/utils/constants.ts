@@ -8,3 +8,10 @@ export enum AllowedRol{
     MANAGER,
     SECURITY
 }
+
+export const contractor = 'contractor'
+export const auditor = 'auditor'
+export const manager = 'manager'
+export const driver = 'driver'
+export const security = 'security'
+export const admin = 'admin'

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Grid, Card, Typography, Button, TextField, InputAdornment, IconButton } from '@material-ui/core';
 import CardContent from '@material-ui/core/CardContent';
 import ClearIcon from '@material-ui/icons/Clear';
@@ -9,8 +9,7 @@ import { AppThunkDispatch } from '../../redux/store';
 import useStyles from './styles';
 import { RootState } from '../../redux/rootReducer';
 import { useHistory } from "react-router-dom";
-import { ROUTES } from '../contractor/navigation/routes'
-import getRolPath from '../../utils/functions/getRolePath';
+import { getRolPath } from '../../utils/functions/getRolePath';
 
 const Login = () => {
     const history = useHistory();
@@ -28,7 +27,7 @@ const Login = () => {
             console.log('route: ',route);
             history.push(route)
         }
-    }, [userData])
+    }, [history, userData])
     const _onChangeUsername = useCallback((event) => {
         setUsername(event.target.value);
         
