@@ -1,20 +1,33 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Grid, Card, Typography, Button, TextField, InputAdornment, IconButton } from '@material-ui/core';
 import CardContent from '@material-ui/core/CardContent';
 import ClearIcon from '@material-ui/icons/Clear';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { postLogin } from '../../redux/slices/userSlice';
 import { AppThunkDispatch } from '../../redux/store';
 import useStyles from './styles';
+import { RootState } from '../../redux/rootReducer';
+import { useHistory } from "react-router-dom";
+import { ROUTES } from '../contractor/navigation/routes'
+import getRolPath from '../../utils/functions/getRolePath';
 
 const Login = () => {
+    const history = useHistory();
     const classes = useStyles();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false)
     const dispatch = useDispatch<AppThunkDispatch>();
+    const userData = useSelector((state: RootState) => state.user.userData)
 
+    useEffect(() => {
+        if(userData){
+            switch(userData.rol){
+                case (2): history.push(ROUTES.root+ROUTES.home)
+            }
+        }
+    }, [userData])
     const _onChangeUsername = useCallback((event) => {
         setUsername(event.target.value);
         
@@ -35,6 +48,8 @@ const Login = () => {
 
     const _onLogIn = () => {
         dispatch(postLogin(username, password));
+        const route = getRolPath(userData?.rol)
+        history.push(route)
     }
 
     return(
