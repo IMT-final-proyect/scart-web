@@ -22,10 +22,11 @@ const Login = () => {
     const userData = useSelector((state: RootState) => state.user.userData)
 
     useEffect(() => {
-        if(userData){
-            switch(userData.rol){
-                case (2): history.push(ROUTES.root+ROUTES.home)
-            }
+        let route
+        if(userData?.rol){
+            route = getRolPath(userData?.rol)
+            console.log('route: ',route);
+            history.push(route)
         }
     }, [userData])
     const _onChangeUsername = useCallback((event) => {
@@ -48,8 +49,6 @@ const Login = () => {
 
     const _onLogIn = () => {
         dispatch(postLogin(username, password));
-        const route = getRolPath(userData?.rol)
-        history.push(route)
     }
 
     return(
@@ -63,7 +62,7 @@ const Login = () => {
                     <CardContent>
                         <div className={classes.row}>
                             <Typography className={classes.title}>
-                                BIENVENIDOS
+                                Bienvenidos
                             </Typography>
                         </div>
                         <div className={classes.row}>
