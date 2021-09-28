@@ -19,6 +19,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         textAlign: 'center',
         fontSize: 17,
         fontWeight: 'bold',
+        textTransform: 'none'
     },
     textInput: {
         color: globalColors.lightBlue,
@@ -31,6 +32,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         color: globalColors.white,
         fontSize: 15,
         margin: 'auto',
+        textTransform: 'none'
     },
 }));
 

@@ -10,17 +10,28 @@ import ContractorNavigator from '../screens/contractor/navigation/ContractorNavi
 import ManagerNavigator from '../screens/manager/navigation/ManagerNavigator'
 import AuditorNavigator from '../screens/auditor/navigation/AuditorNavigator'
 import AdminNavigator from '../screens/admin/navigation/AdminNavigator'
+import { RootState } from '../redux/rootReducer';
+import { useSelector } from 'react-redux';
+import { getRolNumber, getRolName } from '../utils/functions/getRolePath';
 
 const App = () => {
-    // const isLoggedIn = (user) => {
-    //     if (!!(user?.session?.accessToken)) {
-    //         return true
-    //     }
-    //     else {
-    //         return false
-    //     }
-    // }
+    const userData = useSelector((state: RootState) => state.user.userData)
 
+    const isLoggedIn = () => {
+        if (!!(userData?.access_token)) {
+            return true
+        }
+        else {
+            return false
+        }
+    }
+
+    const isRolAuthored = (rolName: string) => {
+        if (userData?.rol === getRolNumber(rolName))
+            return true
+        else return false
+    }
+    
     // const PrivateRoute = ({ component: Component, ...rest }) => (
     //     <Route {...rest} render={(props) => (
     //         isLoggedIn(user)
@@ -31,7 +42,7 @@ const App = () => {
 
     // const LoginRoute = ({ component: Component, ...rest }) => (
     //     <Route {...rest} render={(props) => (
-    //         isLoggedIn(user)
+    //         isLoggedIn()
     //             ? <Redirect to='/home' />
     //             : <Component {...props} />
     //     )} />
@@ -53,3 +64,7 @@ const App = () => {
 }
 
 export default App;
+function getRoleName(rol: number | undefined) {
+    throw new Error('Function not implemented.');
+}
+
