@@ -1,5 +1,6 @@
 //file for merge all reducers before send to the store
 import { combineReducers } from 'redux';
+import resourcesSlice from './slices/contractorSlices/resourcesSlice';
 import userReducer from './slices/userSlice';
 // import headerReducer from './headerReducer';
 // import requestStateReducer from './requestStateReducer';
@@ -16,8 +17,7 @@ export const initialState = {}
 
 const appReducer = combineReducers({
     user: userReducer,
-    // header: headerReducer,
-    // requestState: requestStateReducer,
+    resources: resourcesSlice
 });
 
 const rootReducer = (state: any, action: any) => {

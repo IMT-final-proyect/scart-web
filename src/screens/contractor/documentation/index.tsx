@@ -1,10 +1,6 @@
 import React from 'react';
-
 import { Button, Card, Grid } from '@material-ui/core';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
-import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
-
 import useStyles from './styles';
 import DocumentRow from './components/documentRow/DocumentRow';
 
@@ -44,17 +40,6 @@ const Documentacion = () => {
 
     const addDriver = () => {
         console.log("add driver");
-    }
-
-    const addCar = () => {
-        console.log("add driver");
-    }
-
-    const handleBackward = () => {
-
-    }
-    const handleFoward = () => {
-
     }
 
     return (

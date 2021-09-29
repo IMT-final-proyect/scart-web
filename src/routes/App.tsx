@@ -15,10 +15,10 @@ import { useSelector } from 'react-redux';
 import { getRolNumber, getRolName } from '../utils/functions/getRolePath';
 
 const App = () => {
-    const userData = useSelector((state: RootState) => state.user.userData)
+    const accountData = useSelector((state: RootState) => state.user.accountData)
 
     const isLoggedIn = () => {
-        if (!!(userData?.access_token)) {
+        if (!!(accountData?.access_token)) {
             return true
         }
         else {
@@ -27,7 +27,7 @@ const App = () => {
     }
 
     const isRolAuthored = (rolName: string) => {
-        if (userData?.rol === getRolNumber(rolName))
+        if (accountData?.rol === getRolNumber(rolName))
             return true
         else return false
     }

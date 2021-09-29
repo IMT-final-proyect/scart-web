@@ -12,7 +12,6 @@ const useStyles = makeStyles((theme: Theme) => ({
         paddingRight: '2.5%',
         paddingBottom: '1%',
         paddingTop: '1%',
-        textAlign: 'center',
         [theme.breakpoints.up('xs')]: {
             width: '135%',
             marginTop: '47px',
@@ -31,6 +30,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     dataContainer:{
         marginBottom: '1%',
+        textAlign: 'start'
     },
     dataField:{
         marginBottom: '10%',
@@ -39,7 +39,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     data:{
         fontSize: 16,
-        marginLeft: '5%',
         fontWeight: 'bold'
     },
     image:{

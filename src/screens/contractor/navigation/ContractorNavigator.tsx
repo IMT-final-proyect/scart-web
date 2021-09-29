@@ -78,8 +78,8 @@ const ContractorNavigator = () => {
             <Route exact path={ROUTES.root+ROUTES.home} component={Home} />
             <Route exact path={ROUTES.root+ROUTES.resources} component={Resources} />
             <Route exact path={ROUTES.root+ROUTES.documentacion} component={Documentation} />
-            <Route exact path={ROUTES.root+ROUTES.driver} component={DriverDetails} />
-            <Route exact path={ROUTES.root+ROUTES.vehicle} component={VehicleDetails} />
+            <Route exact path={ROUTES.root+ROUTES.driver+'/:id'} component={DriverDetails} />
+            <Route exact path={ROUTES.root+ROUTES.vehicle+'/:id'} component={VehicleDetails} />
             <Route path={ROUTES.root} component= {Home} />
         </Switch>
     </BrowserRouter>

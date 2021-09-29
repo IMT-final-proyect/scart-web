@@ -1,5 +1,5 @@
 import React, { memo } from 'react'
-import { Paper, TextField } from "@material-ui/core"
+import { TextField } from "@material-ui/core"
 
 import useStyles from './styles'
 

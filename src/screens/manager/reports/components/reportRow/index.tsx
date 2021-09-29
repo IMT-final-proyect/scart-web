@@ -1,6 +1,8 @@
 import React from 'react';
 import { Button, Grid } from '@material-ui/core';
 import useStyles from './styles';
+import { Link } from 'react-router-dom';
+import { ROUTES } from '../../../navigation/routes';
 
 interface Props{
     name: string,
@@ -21,7 +23,8 @@ const ReportRow = ({ name, type, contractor }: Props) => {
                 <text> {contractor} </text>
             </Grid>
             <Grid item xs={2} className={classes.container}>
-                <Button color="primary" className={classes.text}>Generar</Button>
+                <Button color="primary" className={classes.text} component={Link}
+                            to={ROUTES.root+ROUTES.reportDetails}>Generar</Button>
             </Grid>
     </Grid>
     )

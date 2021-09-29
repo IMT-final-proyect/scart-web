@@ -58,6 +58,9 @@ const useStyles = makeStyles((theme: Theme) => ({
             fontSize: 15,
         },
     },
+    textCenter: {
+        textAlign: 'center'
+    },
     circleIcon:{
         marginTop: '3%',
         marginBottom: '3%',

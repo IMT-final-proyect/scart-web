@@ -1,91 +1,30 @@
-import React from 'react';
-
-import { Button, Card, Grid } from '@material-ui/core';
+import React, { useEffect } from 'react';
+import { Button, Card, Grid, Typography } from '@material-ui/core';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
-import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
-
 import Driver from './components/driverRow';
 import Vehicle from './components/vehicleRow';
 import { Link } from 'react-router-dom';
 import { ROUTES } from '../navigation/routes';
 import useStyles from './styles';
-
-const conductores = [
-    {
-        'id': '1',
-        'nombre': 'Juan Perez',
-        'documento': '40344386',
-        'fnac': '12/03/97',
-    },
-    {
-        'id': '2',
-        'nombre': 'Tincho Belcic',
-        'documento': '39988948',
-        'fnac': '30/08/93',
-    },
-    {
-        'id': '3',
-        'nombre': 'Lucas Pratto',
-        'documento': '09122018',
-        'fnac': '01/01/1986',
-    },
-]
-
-const autos = [
-    {
-        'id': '1',
-        'marca': 'BMW',
-        'modelo': '2015',
-        'patente': 'DIC912',
-    },
-    {
-        'id': '2',
-        'marca': 'Ferrari',
-        'modelo': '2020',
-        'patente': 'LEC016',
-    },
-    {
-        'id': '3',
-        'marca': 'Aston Martin',
-        'modelo': '2021',
-        'patente': 'VET005',
-    },
-]
-
+import { useDispatch, useSelector } from 'react-redux';
+import { createDriver, getDriver, getVehicle, IDriver, IVehicle } from '../../../redux/slices/contractorSlices/resourcesSlice';
+import { RootState } from '../../../redux/rootReducer';
+import moment from 'moment';
 
 const Resources = () => {
     const classes = useStyles();
+    const dispatch = useDispatch()
+    const drivers: IDriver[] = useSelector((state: RootState) => state.resources.drivers.data)
+    const vehicles: IVehicle[] = useSelector((state: RootState) => state.resources.vehicles.data)
+
+    useEffect(() => {
+        dispatch(getDriver())
+        dispatch(getVehicle())
+    }, [])
 
     const addDriver = () => {
-        console.log("add driver");
+        // dispatch(createDriver('Marcos', 'Gutierrez', '23-000231342-8', moment('1982-11-10'), 1))
     }
-
-    const addCar = () => {
-        console.log("add driver");
-    }
-
-    const handleBackward = () => {
-
-    }
-    const handleFoward = () => {
-
-    }
-
-    //in case of pagination
-    const footer = (
-        <Grid container className={classes.titleContainer} justifyContent='space-between'>
-                <text className={classes.footerText}>1-5 of 13</text>
-            <Grid>
-                <Button onClick={handleBackward}>
-                    <ArrowBackIosIcon />
-                </Button>
-                <Button onClick={handleFoward}>
-                    <ArrowForwardIosIcon />
-                </Button>
-            </Grid>
-        </Grid>
-    )
 
     return (
         <Grid container className={classes.container} direction='row' justifyContent='space-between'>
@@ -93,100 +32,113 @@ const Resources = () => {
                 <Card className={classes.leftCard}>
                     <Grid container className={classes.titleContainer} justifyContent='space-between'>
                         <text className={classes.textTitle}>
-                            Conductores
+                            Conductores asociados
                         </text>
                         <Button onClick={addDriver}>
                             <AddCircleIcon className={classes.circleIcon}/>
                         </Button>
                     </Grid>
-                    <Grid container justifyContent='space-between'>
-                        <Grid item xs={3} className={classes.headerText}>
-                            <text className={classes.headerText}>
-                                Conductor
-                            </text>
-                        </Grid>
-                        <Grid item xs={3} className={classes.headerText}>
-                            <text className={classes.headerText}>
-                                Documento
-                            </text>
-                        </Grid>
-                        <Grid item xs={3} className={classes.headerText}>
-                            <text className={classes.headerText}>
-                                Fecha Nac.
-                            </text>
-                        </Grid>
-                        <Grid item xs={2} className={classes.headerText}>
-                            <text className={classes.headerText}>
-                                Acciones
-                            </text>
-                        </Grid>
-                    </Grid>
-                    <Grid container direction='column' justifyContent='space-between' >
-                        {conductores.map((conductor) =>
-                            <Button
-                                className={classes.button}
-                                component={Link}
-                                to={'/contratista'+ROUTES.driver}
-                            >  
-                                <Driver 
-                                    key={conductor.id}
-                                    name={conductor.nombre}
-                                    document={conductor.documento}
-                                    birthday={conductor.fnac}
-                                />
-                            </Button>)
-                        }
-                    </Grid>
+                    {drivers.length === 0 ?
+                        <Typography className={classes.textCenter}> No existen conductores asociados</Typography>
+                        :
+                        <>
+                            <Grid container justifyContent='space-between'>
+                                <Grid item xs={3} className={classes.headerText}>
+                                    <text className={classes.headerText}>
+                                        Conductor
+                                    </text>
+                                </Grid>
+                                <Grid item xs={3} className={classes.headerText}>
+                                    <text className={classes.headerText}>
+                                        Documento
+                                    </text>
+                                </Grid>
+                                <Grid item xs={3} className={classes.headerText}>
+                                    <text className={classes.headerText}>
+                                        Fecha Nac.
+                                    </text>
+                                </Grid>
+                                <Grid item xs={2} className={classes.headerText}>
+                                    <text className={classes.headerText}>
+                                        Acciones
+                                    </text>
+                                </Grid>
+                            </Grid>
+                            <Grid container direction='column' justifyContent='space-between' >
+                                {Object.keys(drivers).map((key: string, i: any) =>
+                                    <Button
+                                        className={classes.button}
+                                        component={Link}
+                                        to={ROUTES.root+ROUTES.driver+'/'+drivers[parseInt(key)].id}
+                                    >  
+                                        <Driver 
+                                            key={i}
+                                            name={drivers[parseInt(key)].name}
+                                            surname={drivers[parseInt(key)].surname}
+                                            document={drivers[parseInt(key)].cuit}
+                                            birthday={drivers[parseInt(key)].birth_date}
+                                        />
+                                    </Button>
+                                )}
+                            </Grid>
+                        </>
+                    }
                 </Card>
             </Grid>
             <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
                 <Card className={classes.rightCard}>
                     <Grid container className={classes.titleContainer} justifyContent='space-between'>
                         <text className={classes.textTitle}>
-                            Vehiculos
+                            Vehiculos asociados
                         </text>
                         <Button onClick={addDriver}>
                             <AddCircleIcon className={classes.circleIcon}/>
                         </Button>
                     </Grid>
-                    <Grid container justifyContent='space-between'>
-                        <Grid item xs={3} className={classes.headerText}>
-                            <text className={classes.headerText}>
-                                Marca
-                            </text>
-                        </Grid>
-                        <Grid item xs={3} className={classes.headerText}>
-                            <text className={classes.headerText}>
-                                Modelo
-                            </text>
-                        </Grid>
-                        <Grid item xs={3} className={classes.headerText}>
-                            <text className={classes.headerText}>
-                                Patente
-                            </text>
-                        </Grid>
-                        <Grid item xs={2} className={classes.headerText}>
-                            <text className={classes.headerText}>
-                                Acciones
-                            </text>
-                        </Grid>
-                    </Grid>
-                    <Grid container direction='column' >
-                        {autos.map((auto) =>
-                            <Button 
-                                className = {classes.button}
-                                component={Link}
-                                to={'/contratista'+ROUTES.vehicle}
-                            > 
-                                <Vehicle 
-                                    key={auto.id}
-                                    brand={auto.marca}
-                                    model={auto.modelo}
-                                    plate={auto.patente}
-                                />
-                            </Button>)
-                        }
-                    </Grid>
+                    {vehicles.length === 0 ?
+                        <Typography className={classes.textCenter}> No existen vehiculos asociados</Typography>
+                        :
+                        <>
+                            <Grid container justifyContent='space-between'>
+                                <Grid item xs={3} className={classes.headerText}>
+                                    <text className={classes.headerText}>
+                                        Marca
+                                    </text>
+                                </Grid>
+                                <Grid item xs={3} className={classes.headerText}>
+                                    <text className={classes.headerText}>
+                                        Modelo
+                                    </text>
+                                </Grid>
+                                <Grid item xs={3} className={classes.headerText}>
+                                    <text className={classes.headerText}>
+                                        Patente
+                                    </text>
+                                </Grid>
+                                <Grid item xs={2} className={classes.headerText}>
+                                    <text className={classes.headerText}>
+                                        Acciones
+                                    </text>
+                                </Grid>
+                            </Grid>
+                            <Grid container direction='column'>
+                                {Object.keys(vehicles).map((key: string, i: any) =>
+                                    <Button
+                                        className={classes.button}
+                                        component={Link}
+                                        to={ROUTES.root+ROUTES.vehicle+'/'+vehicles[parseInt(key)].id}
+                                    >  
+                                        <Vehicle 
+                                            key={i}
+                                            brand={vehicles[parseInt(key)].brand}
+                                            model={vehicles[parseInt(key)].model}
+                                            plate={vehicles[parseInt(key)].plate}
+                                        />
+                                    </Button>
+                                )}
+                            </Grid>
+                        </>
+                    }
                 </Card>
             </Grid>
         </Grid>

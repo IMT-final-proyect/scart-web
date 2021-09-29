@@ -5,6 +5,11 @@ import image from '../../../../../assets/images/pratto.jpg'
 import Vehicle from '../vehicleRow'
 import Document from '../documentRow';
 import useStyles from './styles' 
+import { useParams } from 'react-router-dom';
+import { RootState } from '../../../../../redux/rootReducer';
+import { useSelector } from 'react-redux';
+import { IDriver } from '../../../../../redux/slices/contractorSlices/resourcesSlice';
+import moment from 'moment';
 
 
 const autos = [
@@ -59,54 +64,38 @@ const documents = [
 
 const DriverDetails = () => {
     const classes = useStyles();
-
-    const handleBackward = () => {
-
-    }
-    const handleFoward = () => {
-
-    }
+    const params: any = useParams();
+    const driver: IDriver = useSelector((state: RootState) => {
+        const drivers = state.resources.drivers.data
+        return drivers[params.id]
+    })
 
     return (
         <Grid container className={classes.container} direction='column' justifyContent='space-between'>
             <Card className={classes.cardContainer}>
                 <Grid container justifyContent='space-between' alignItems={'center'}>
-                    <Hidden only={["xs","sm"]}>
-                        <Grid item xs={2} md={1}>
+                    {/* <Hidden only={["xs","sm"]}>
+                        <Grid item xs={2} md={6}>
                             <img src={image} className={classes.image} />
                         </Grid>
-                    </Hidden>
-                    <Grid item xs={12} md={3}>
+                    </Hidden> */}
+                    <Grid item xs={12} md={6}>
                         <div className={classes.dataContainer}>
                             <text className={classes.dataField}> Nombre: </text>
-                            <text className={classes.data}> Lucas </text>
+                            <text className={classes.data}> {driver.name} </text>
                         </div>
                         <div className={classes.dataContainer}>
-                            <text className={classes.dataField}> Telefono: </text>
-                            <text className={classes.data}> +542234484492 </text>
+                            <text className={classes.dataField}> Apellido: </text>
+                            <text className={classes.data}> {driver.surname} </text>
                         </div>
-                    </Grid>
-                    <Grid item xs={12} md={3} >
-                        <div>
-                            <div className={classes.dataContainer}>
-                                <text className={classes.dataField}> Apellido: </text>
-                                <text className={classes.data}> Pratto </text>
-                            </div>
-                            <div className={classes.dataContainer}>
-                                <text className={classes.dataField}> Fecha de Nac.: </text>
-                                <text className={classes.data}> 04/06/1988 </text>
-                            </div>
-                        </div>
-                    </Grid>
-                    <Grid item xs={12} md={3}>
                         <div className={classes.dataContainer}>
-                            <text className={classes.dataField}> DNI: </text>
-                            <text className={classes.data}> 912201831 </text>
+                            <text className={classes.dataField}> Fecha de Nac.: </text>
+                            <text className={classes.data}> {moment(driver.birth_date).format('DD/MM/YY')} </text>
+                        </div>
+                        <div className={classes.dataContainer}>
+                            <text className={classes.dataField}> CUIT: </text>
+                            <text className={classes.data}> {driver.cuit} </text>
                         </div> 
-                        <div className={classes.dataContainer}>
-                            <text className={classes.dataField}> Email: </text>
-                            <text className={classes.data}> osopratto@hotmail.com </text>
-                        </div>
                     </Grid>
                 </Grid>
                 </Card>
@@ -115,7 +104,7 @@ const DriverDetails = () => {
                     <Card className={classes.leftCard}>
                         <Grid container className={classes.titleContainer} justifyContent='space-between'>
                             <text className={classes.textTitle}>
-                                Conductores
+                                Vehiculos conducidos
                             </text>
                         </Grid>
                         <Grid container justifyContent='space-between'>

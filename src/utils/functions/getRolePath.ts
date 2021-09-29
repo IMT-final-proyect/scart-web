@@ -9,7 +9,7 @@ export const getRolPath = (rol?: number) => {
         case (AllowedRol.ADMIN): return AdminRoutes.root+AdminRoutes.contractors
         case (AllowedRol.CONTRACTOR): return ContractorRoutes.root+ContractorRoutes.home
         case (AllowedRol.MANAGER): return ManagerRoutes.root+ManagerRoutes.exceptions
-        case (AllowedRol.AUDITOR): return AuditorRoutes.root+AuditorRoutes.documentDetails
+        case (AllowedRol.AUDITOR): return AuditorRoutes.root
         default: return '/login'
     }
 }

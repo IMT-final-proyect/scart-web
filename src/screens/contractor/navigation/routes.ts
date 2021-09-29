@@ -2,7 +2,7 @@ export enum ROUTES {
     root = '/contratista',
     home = '/home',
     resources = '/recursos',
-    driver = '/conductor/id',
-    vehicle = '/vehiculo/id',
+    driver = '/conductor',
+    vehicle = '/vehiculo',
     documentacion= '/documentacion',
 }

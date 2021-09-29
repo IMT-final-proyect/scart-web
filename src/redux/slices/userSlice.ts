@@ -1,9 +1,8 @@
-import { createAction, createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import Axios, {AxiosResponse} from 'axios';
-import { RootState } from '../rootReducer';
+import { createAction, createSlice } from '@reduxjs/toolkit';
+import Axios from 'axios';
 import { AppThunk } from '../store';
 
- export interface IUser {
+export interface IAccount {
    uuid: string;
    name: string;
    surname: string;
@@ -14,18 +13,33 @@ import { AppThunk } from '../store';
    refresh_token: string;
 }
 
+export interface IUser {
+   id: number;
+   name: string;
+   cuit: string;
+   street: string;
+   number: number;
+   city: string;
+   province: string;
+   drivers?: []
+   vehicles?: []
+}
+
+
 interface IError {
    code: string
    message: string
 }
 
 export interface UserState {
+   accountData: IAccount|null;
    userData: IUser|null;
-   loading: boolean
-   error: IError|null
+   loading: boolean;
+   error: IError|null;
 }
 
 const initialState: UserState = {
+   accountData: null,
    userData: null,
    loading: false,
    error: null
@@ -45,7 +59,8 @@ const userSlice = createSlice({
       },
       postLoginSuccess(state, action: any) {
          const { payload } = action
-         state.userData = payload
+         state.accountData = payload.user
+         state.userData = payload.entity
          state.loading = false;
          state.error = initialState.error
       },
@@ -68,7 +83,7 @@ const {
    postLoginFailure,
 } = userSlice.actions;
 
-// User's slice reducer
+
 export default userSlice.reducer;
 
 export const postLogin = (username: string, password: string): AppThunk => async (dispatch) => {
@@ -78,6 +93,7 @@ export const postLogin = (username: string, password: string): AppThunk => async
          username,
          password
       });
+      localStorage.setItem('access_token', response.data.user.access_token);
       dispatch(postLoginSuccess(response.data));
    }
    catch(error){

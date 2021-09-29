@@ -72,18 +72,12 @@ const ReportTable = ({resources}: Props) => {
                 </Grid>
                 <Grid container direction='column' justifyContent='space-between' >
                     {resources.map((resource) =>
-                        <Button
-                            className={classes.button}
-                            component={Link}
-                            to={'/encargado'+ROUTES.reportDetails}
-                        >  
-                            <ReportRow 
-                                key={resource.id}
-                                name={resource.name}
-                                type={resource.type}
-                                contractor={resource.contractor}
-                            />
-                        </Button>)
+                        <ReportRow 
+                            key={resource.id}
+                            name={resource.name}
+                            type={resource.type}
+                            contractor={resource.contractor}
+                        />)
                     }
                 </Grid>
             </Card>

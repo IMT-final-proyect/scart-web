@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         paddingRight: '2.5%',
         paddingBottom: '1%',
         paddingTop: '1%',
-        textAlign: 'center',
+        textAlign: 'start',
         [theme.breakpoints.up('xs')]: {
             width: '135%',
             marginTop: '47px',
@@ -40,7 +40,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     data:{
         fontSize: 16,
-        marginLeft: '5%',
         fontWeight: 'bold'
     },
     image:{
@@ -79,7 +78,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         }
     },
     rightCard:{
-        marginTop: '10%',
+        marginTop: '5%',
         paddingLeft: '2.5%',
         paddingRight: '2.5%',
         paddingBottom: '2.5%',

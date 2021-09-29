@@ -6,6 +6,10 @@ import AddCircleIcon from '@material-ui/icons/AddCircle';
 import Vehicle from '../vehicleRow';
 import Document from '../documentRow';
 import useStyles from './styles';
+import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../../../redux/rootReducer';
+import { IVehicle } from '../../../../../redux/slices/contractorSlices/resourcesSlice';
 
 
 const autos = [
@@ -52,6 +56,11 @@ const documents = [
 
 const VehicleDetails = () => {
     const classes = useStyles();
+    const params: any = useParams();
+    const vehicle: IVehicle = useSelector((state: RootState) => {
+        const vehicles = state.resources.vehicles.data
+        return vehicles[params.id]
+    })
 
     return (
         <Grid container className={classes.container} direction='column' justifyContent='space-between'>
@@ -60,15 +69,19 @@ const VehicleDetails = () => {
                     <Grid item xs={6}>
                         <div className={classes.dataContainer}>
                             <text className={classes.dataField}> Marca: </text>
-                            <text className={classes.data}> Mercedes Benz </text>
+                            <text className={classes.data}> {vehicle.brand} </text>
                         </div>
                         <div className={classes.dataContainer}>
                             <text className={classes.dataField}> Modelo: </text>
-                            <text className={classes.data}> W12 E 2021 </text>
+                            <text className={classes.data}> {vehicle.model} </text>
                         </div>
                         <div className={classes.dataContainer}>
                             <text className={classes.dataField}> Patente: </text>
-                            <text className={classes.data}> 111 ADDD 1111 </text>
+                            <text className={classes.data}> {vehicle.plate} </text>
+                        </div>
+                        <div className={classes.dataContainer}>
+                            <text className={classes.dataField}> Año: </text>
+                            <text className={classes.data}> {vehicle.year} </text>
                         </div>
                     </Grid>
                 </Grid>
@@ -126,18 +139,26 @@ const VehicleDetails = () => {
                             </Button>
                         </Grid>
                         <Grid container justifyContent='space-between'>
-                            <text className={classes.headerText}>
-                                Nombre
-                            </text>
-                            <text className={classes.headerText}>
-                                Fec. vencimiento
-                            </text>
-                            <text className={classes.headerText}>
-                                Estado
-                            </text>
-                            <text className={classes.headerText}>
-                                Acciones
-                            </text>
+                            <Grid item xs={3} className={classes.headerText}>
+                                <text className={classes.headerText}>
+                                    Nombre
+                                </text>
+                            </Grid>
+                            <Grid item xs={3} className={classes.headerText}>
+                                <text className={classes.headerText}>
+                                    Fec. vencimiento
+                                </text>
+                            </Grid>
+                            <Grid item xs={3} className={classes.headerText}>
+                                <text className={classes.headerText}>
+                                    Estado
+                                </text>
+                            </Grid>
+                            <Grid item xs={2} className={classes.headerText}>
+                                <text className={classes.headerText}>
+                                    Acciones
+                                </text>
+                            </Grid>
                         </Grid>
                         <Grid container direction='column' >
                             {documents.map((document) =>

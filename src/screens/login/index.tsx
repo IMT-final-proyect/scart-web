@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { Grid, Card, Typography, Button, TextField, InputAdornment, IconButton } from '@material-ui/core';
 import CardContent from '@material-ui/core/CardContent';
 import ClearIcon from '@material-ui/icons/Clear';
+import CircularProgress from '@mui/material/CircularProgress';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { postLogin } from '../../redux/slices/userSlice';
@@ -18,16 +19,16 @@ const Login = () => {
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false)
     const dispatch = useDispatch<AppThunkDispatch>();
-    const userData = useSelector((state: RootState) => state.user.userData)
+    const accountData = useSelector((state: RootState) => state.user.accountData)
+    const loading = useSelector((state: RootState) => state.user.loading)
 
     useEffect(() => {
         let route
-        if(userData?.rol){
-            route = getRolPath(userData?.rol)
-            console.log('route: ',route);
+        if(accountData?.rol){
+            route = getRolPath(accountData?.rol)
             history.push(route)
         }
-    }, [history, userData])
+    }, [history, accountData])
     const _onChangeUsername = useCallback((event) => {
         setUsername(event.target.value);
         
@@ -114,11 +115,15 @@ const Login = () => {
                             alignItems="center"
                             className = {classes.buttonContainer}
                         >
+                        {loading ?
+                            <CircularProgress />
+                        :
                             <Button variant="contained" className={classes.button} onClick={_onLogIn} >
                                 <Typography className={classes.button}>
                                     Iniciar Sesion
                                 </Typography>
                             </Button>
+                        }
                         </Grid>
                     </CardContent>
                 </Card>
