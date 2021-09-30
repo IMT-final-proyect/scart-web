@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { Button, Card, Grid, Typography } from '@material-ui/core';
+import { useEffect, useState } from 'react';
+import { Button, Card, Grid, Modal, Typography } from '@material-ui/core';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import Driver from './components/driverRow';
 import Vehicle from './components/vehicleRow';
@@ -10,10 +10,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { createDriver, getDriver, getVehicle, IDriver, IVehicle } from '../../../redux/slices/contractorSlices/resourcesSlice';
 import { RootState } from '../../../redux/rootReducer';
 import moment from 'moment';
+import CreateDriverModal from './components/createDriverModal';
+import CreateVehicleModal from './components/createVehicleModal';
+
 
 const Resources = () => {
     const classes = useStyles();
     const dispatch = useDispatch()
+    const [openDriverModal, setOpenDriverModal] = useState(false)
+    const [openVehicleModal, setOpenVehicleModal] = useState(false)
+    const contractorId = useSelector((state: RootState) => state.user.userData?.id)
     const drivers: IDriver[] = useSelector((state: RootState) => state.resources.drivers.data)
     const vehicles: IVehicle[] = useSelector((state: RootState) => state.resources.vehicles.data)
 
@@ -21,12 +27,35 @@ const Resources = () => {
         dispatch(getDriver())
         dispatch(getVehicle())
     }, [])
+    
+    const addDriver = (name: string, surname: string, cuit: string, birthdate: moment.Moment) => {
+        if(!!contractorId){
+            dispatch(createDriver(name, surname, cuit, moment(birthdate), contractorId))
+            setOpenDriverModal(false)
+        }
+    }
 
-    const addDriver = () => {
-        // dispatch(createDriver('Marcos', 'Gutierrez', '23-000231342-8', moment('1982-11-10'), 1))
+    const addVehicle = (brand: string, model: string, year: string) => {
+        if(!!contractorId){
+            // dispatch(createVehicle(brand, model, year, contractorId))
+            setOpenDriverModal(false)
+        }
     }
 
     return (
+        <>
+        <Modal open={openDriverModal} onClose={() => setOpenDriverModal(false)}>
+            <CreateDriverModal
+                setOpenDriverModal={setOpenDriverModal}
+                addDriver={addDriver}
+            />
+        </Modal>
+        <Modal open={openVehicleModal} onClose={() => setOpenVehicleModal(false)}>
+            <CreateVehicleModal
+                setOpenVehicleModal={setOpenVehicleModal}
+                addVehicle={addVehicle}
+            />
+        </Modal>
         <Grid container className={classes.container} direction='row' justifyContent='space-between'>
             <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
                 <Card className={classes.leftCard}>
@@ -34,7 +63,7 @@ const Resources = () => {
                         <text className={classes.textTitle}>
                             Conductores asociados
                         </text>
-                        <Button onClick={addDriver}>
+                        <Button onClick={() => setOpenDriverModal(true)}>
                             <AddCircleIcon className={classes.circleIcon}/>
                         </Button>
                     </Grid>
@@ -91,7 +120,7 @@ const Resources = () => {
                         <text className={classes.textTitle}>
                             Vehiculos asociados
                         </text>
-                        <Button onClick={addDriver}>
+                        <Button onClick={() => setOpenVehicleModal(true)}>
                             <AddCircleIcon className={classes.circleIcon}/>
                         </Button>
                     </Grid>
@@ -142,6 +171,7 @@ const Resources = () => {
                 </Card>
             </Grid>
         </Grid>
+        </>
     )
 }
 

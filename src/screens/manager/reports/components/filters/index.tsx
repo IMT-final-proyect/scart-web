@@ -67,6 +67,7 @@ const Filters = () => {
                         <MuiPickersUtilsProvider utils={MomentUtils}>
                             <KeyboardDatePicker
                                 disableToolbar
+                                autoOk
                                 variant="inline"
                                 format="DD/MM/yyyy"
                                 id="desde"
@@ -83,6 +84,7 @@ const Filters = () => {
                         <MuiPickersUtilsProvider utils={MomentUtils}>   
                             <KeyboardDatePicker
                                 disableToolbar
+                                autoOk
                                 variant="inline"
                                 format="DD/MM/yyyy"
                                 id="Hasta"
