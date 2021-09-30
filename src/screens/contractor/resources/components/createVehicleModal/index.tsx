@@ -1,20 +1,24 @@
 import { Button, Grid, TextField, Typography } from '@material-ui/core';
 import useStyles from './styles';
 import { useCallback, useState } from 'react';
-import moment from 'moment';
 
 interface Props{
-    addVehicle: (brand: string, model: string, year: string) => void
+    addVehicle: (brand: string, model: string, year: string, plate: string) => void
     setOpenVehicleModal: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const CreateVehicleModal = ({ addVehicle, setOpenVehicleModal }: Props) => {
     const classes = useStyles();
     const [emptyField, setEmptyField] = useState(false)
+    const [plate, setPlate] = useState('')
     const [brand, setBrand] = useState('')
     const [model, setModel] = useState('')
     const [año, setAño] = useState('')
     
+    const _onChangePlate = useCallback((event) => {
+        setPlate(event.target.value);
+    }, [setPlate]);
+
     const _onChangeBrand = useCallback((event) => {
         setBrand(event.target.value);
     }, [setBrand]);
@@ -28,8 +32,8 @@ const CreateVehicleModal = ({ addVehicle, setOpenVehicleModal }: Props) => {
     }, [setAño]);
 
     const _handleOnClick = () => {
-        if(!!brand && !!model && !!año){
-            addVehicle(brand, model, año)
+        if(!!brand && !!model && !!año && !!plate){
+            addVehicle(brand, model, año, plate)
             setOpenVehicleModal(false)
         }
         else{
@@ -42,7 +46,23 @@ const CreateVehicleModal = ({ addVehicle, setOpenVehicleModal }: Props) => {
                 <Typography className={classes.title}>Crear vehiculo</Typography>
                 <Typography className={classes.subtitle}>Registrar un nuevo vehiculo</Typography>
                 <TextField
-                    id="driver-name"
+                    id="vehicle-plate"
+                    className= {classes.textInput}
+                    size="medium"
+                    label="Patente"
+                    value={plate}
+                    onChange={_onChangePlate}
+                />
+                <TextField
+                    id="vehicle-year"
+                    className= {classes.textInput}
+                    size="medium"
+                    label="Año"
+                    value={año}
+                    onChange={_onChangeAño}
+                />
+                <TextField
+                    id="vehicle-brand"
                     className= {classes.textInput}
                     size="medium"
                     label="Marca"
@@ -50,20 +70,12 @@ const CreateVehicleModal = ({ addVehicle, setOpenVehicleModal }: Props) => {
                     onChange={_onChangeBrand}
                 />
                 <TextField
-                    id="driver-surname"
+                    id="vehicle-model"
                     className= {classes.textInput}
                     size="medium"
                     label="Modelo"
                     value={model}
                     onChange={_onChangeModel}
-                />
-                <TextField
-                    id="driver-cuit"
-                    className= {classes.textInput}
-                    size="medium"
-                    label="CUIT"
-                    value={año}
-                    onChange={_onChangeAño}
                 />
                 {emptyField && 
                     <div className={classes.emptyMessage}>Falta completar algún campo</div>

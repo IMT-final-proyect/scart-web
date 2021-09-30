@@ -108,6 +108,20 @@ const resourcesSlice = createSlice({
          state.vehicles.loading = false;
          state.vehicles.error = payload;
       },
+      createVehicleRequest(state) {
+         state.vehicles.loading = true;
+      },
+      createVehicleSuccess(state, action: any) {
+         const { payload } = action
+         state.vehicles.data = ({...state.vehicles.data, [payload.id]: {...payload}})
+         state.vehicles.loading = false;
+         state.vehicles.error = initialState.vehicles.error
+      },
+      createVehicleFailure(state, action: any) {
+         const { payload } = action
+         state.vehicles.loading = false;
+         state.vehicles.error = payload;
+      }
    },
 });
 
@@ -120,7 +134,10 @@ const {
     createDriverFailure,
     getVehiclesRequest,
     getVehiclesSuccess,
-    getVehiclesFailure
+    getVehiclesFailure,
+    createVehicleRequest,
+    createVehicleSuccess,
+    createVehicleFailure
 } = resourcesSlice.actions;
 
 
@@ -169,5 +186,27 @@ export const createDriver = (
    }
    catch(error){
       dispatch(createDriverFailure(error.response.data));
+   }
+}
+
+export const createVehicle = (
+   plate: string,
+   brand: string, 
+   model: string, 
+   year: string, 
+   contractorId: number): AppThunk => async (dispatch) => {
+   dispatch(createVehicleRequest());
+   try{
+      const response: AxiosResponse = await Axios.post('/vehicles',{
+         plate,
+         brand,
+         model,
+         year,
+         contractorId
+      });
+      dispatch(createVehicleSuccess(response.data));
+   }
+   catch(error){
+      dispatch(createVehicleFailure(error.response.data));
    }
 }

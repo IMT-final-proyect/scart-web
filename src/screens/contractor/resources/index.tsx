@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import { ROUTES } from '../navigation/routes';
 import useStyles from './styles';
 import { useDispatch, useSelector } from 'react-redux';
-import { createDriver, getDriver, getVehicle, IDriver, IVehicle } from '../../../redux/slices/contractorSlices/resourcesSlice';
+import { createDriver, createVehicle, getDriver, getVehicle, IDriver, IVehicle } from '../../../redux/slices/contractorSlices/resourcesSlice';
 import { RootState } from '../../../redux/rootReducer';
 import moment from 'moment';
 import CreateDriverModal from './components/createDriverModal';
@@ -35,10 +35,10 @@ const Resources = () => {
         }
     }
 
-    const addVehicle = (brand: string, model: string, year: string) => {
+    const addVehicle = (brand: string, model: string, year: string, plate: string) => {
         if(!!contractorId){
-            // dispatch(createVehicle(brand, model, year, contractorId))
-            setOpenDriverModal(false)
+            dispatch(createVehicle(plate, brand, model, year, contractorId))
+            setOpenVehicleModal(false)
         }
     }
 

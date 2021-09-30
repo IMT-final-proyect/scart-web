@@ -24,6 +24,8 @@ const useStyles = makeStyles((theme: Theme) => ({
         paddingTop: '1.5%',
         paddingBottom: '2.5%',
         backgroundColor: globalColors.white,
+        borderRadius: 10,
+        borderWidth: 1,
     },
     title: {
         marginTop: '3%',
