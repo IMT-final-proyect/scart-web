@@ -1,98 +1,97 @@
-import React from 'react';
-import { Button, Card, Grid } from '@material-ui/core';
+import React, { useEffect, useState } from 'react';
+import { Button, Card, Grid, Modal, Typography } from '@material-ui/core';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import useStyles from './styles';
 import DocumentRow from './components/documentRow/DocumentRow';
-
-const documents = [
-    {
-        'id':'1',
-        'name':'Constancia de cuil',
-        'expiration': '01/01/2022',
-        'state':'Vigente',
-        'resource': 'Martin Belcic'
-    },
-    {
-        'id':'2',
-        'name':'Licencia de conducir',
-        'expiration': '30/01/2022',
-        'state':'Vigente',
-        'resource': 'Wenceslao Mateos'
-    },
-    {
-        'id':'3',
-        'name':'Cedula Verde',
-        'expiration': '04/05/2022',
-        'state':'Vigente',
-        'resource': 'Fiat 600'
-    },
-    {
-        'id':'4',
-        'name':'Seguro',
-        'expiration': '10/01/2022',
-        'state':'Vigente',
-        'resource': 'Ferrari SF21'
-    },
-]
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../../redux/rootReducer';
+import { createDocument, getContractorDocuments, IDocument } from '../../../redux/slices/contractorSlices/documentsSlice';
+import CreateDocumentModal from './components/CreateDocumentModal';
 
 const Documentacion = () => {
     const classes = useStyles();
+    const dispatch = useDispatch()
+    const [openModal, setOpenModal] = useState(false)
+    const documents: IDocument[] = useSelector((state: RootState) => state.documents.contractor.data)
+    const contractor = useSelector((state: RootState) => state.user.accountData)
 
-    const addDriver = () => {
-        console.log("add driver");
+    useEffect(() => {
+        dispatch(getContractorDocuments(contractor?.entityId))
+    }, [])
+
+    const addVehicle = (expirationDate: moment.Moment, state: number, type: number) => {
+        if(!!contractor?.entityId){
+            dispatch(createDocument(expirationDate, state, type, contractor.entityId))
+            setOpenModal(false)
+        }
     }
 
+
     return (
+        <>
+        <Modal open={openModal} onClose={() => setOpenModal(false)}>
+            <CreateDocumentModal
+                setOpenDriverModal={setOpenModal}
+                addVehicle={addVehicle}
+            />
+        </Modal>
         <Grid container className={classes.container} direction='row' justifyContent='space-between'>
             <Card className={classes.leftCard}>
                 <Grid container justifyContent='space-between'>
                     <text className={classes.textTitle}>
                         Documentación
                     </text>
-                    <Button onClick={addDriver}>
+                    <Button onClick={() => setOpenModal(true)}>
                         <AddCircleIcon className={classes.circleIcon}/>
                     </Button>
                 </Grid>
-                <Grid container justifyContent='space-between'>
-                    <Grid item xs={4} className={classes.headerText}>
-                        <text className={classes.headerText}>
-                            Documento
-                        </text>
-                    </Grid>
-                    <Grid item xs={2} className={classes.headerText}>
-                        <text className={classes.headerText}>
-                            Recurso
-                        </text>
-                    </Grid>
-                    <Grid item xs={2} className={classes.headerText}>
-                        <text className={classes.headerText}>
-                            Fecha de venc.
-                        </text>
-                    </Grid>
-                    <Grid item xs={2} className={classes.headerText}>
-                        <text className={classes.headerText}>
-                            Estado
-                        </text>
-                    </Grid>
-                    <Grid item xs={2} className={classes.headerText}>
-                        <text className={classes.headerText}>
-                            Acciones
-                        </text>
-                    </Grid>
-                </Grid>
-                <Grid container direction='column' justifyContent='space-between' >
-                    {documents.map((document) =>
-                        <DocumentRow 
-                            key={document.id}
-                            name={document.name}
-                            resource={document.resource}
-                            expiration={document.expiration}
-                            state={document.state}
-                        />)
-                    }
-                </Grid>
+                {documents.length === 0 ?
+                    <Typography className={classes.textCenter}> No hay documentos asociados</Typography>
+                    :
+                    <>
+                        <Grid container justifyContent='space-between'>
+                            <Grid item xs={4} className={classes.headerText}>
+                                <text className={classes.headerText}>
+                                    Documento
+                                </text>
+                            </Grid>
+                            <Grid item xs={2} className={classes.headerText}>
+                                <text className={classes.headerText}>
+                                    Recurso
+                                </text>
+                            </Grid>
+                            <Grid item xs={2} className={classes.headerText}>
+                                <text className={classes.headerText}>
+                                    Fecha de venc.
+                                </text>
+                            </Grid>
+                            <Grid item xs={2} className={classes.headerText}>
+                                <text className={classes.headerText}>
+                                    Estado
+                                </text>
+                            </Grid>
+                            <Grid item xs={2} className={classes.headerText}>
+                                <text className={classes.headerText}>
+                                    Acciones
+                                </text>
+                            </Grid>
+                        </Grid>
+                        <Grid container direction='column' justifyContent='space-between' >
+                            {documents.map((document) =>
+                                <DocumentRow 
+                                    key={document.id}
+                                    type={document.type}
+                                    contractor={contractor?.name}
+                                    expiration={document.expirationDate}
+                                    state={document.state}
+                                />)
+                            }
+                        </Grid>
+                    </>
+                }
                 </Card>
         </Grid>
+        </>
     )
 }
 

@@ -34,6 +34,12 @@ const useStyles = makeStyles((theme: Theme) => ({
         margin: 'auto',
         textTransform: 'none'
     },
+    forgotPassword: {
+        marginTop: '10%',
+        justify: 'center',
+        alignItems: 'center',
+        textTransform: 'none'
+    }
 }));
 
 export default useStyles

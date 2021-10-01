@@ -1,4 +1,4 @@
-import { createAction, createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import Axios, {AxiosResponse} from 'axios';
 import moment from 'moment';
 import { AppThunk } from '../../store';
@@ -55,13 +55,8 @@ const initialState: UserState = {
     }
 };
 
-export const cleanState = createAction('cleanState');
-export const postResetPasswordRequest = createAction('user/postResetPasswordRequest');
-export const postResetPasswordSuccess = createAction('user/postResetPasswordSuccess');
-export const postResetPasswordFailure = createAction('user/postResetPasswordFailure');
-
 const resourcesSlice = createSlice({
-   name: 'user',
+   name: 'resources',
    initialState,
    reducers: {
       getDriversRequest(state) {
@@ -165,7 +160,7 @@ export const getVehicle = (): AppThunk => async (dispatch) => {
    catch(error){
       dispatch(getVehiclesFailure(error.response));
    }
-};
+}; 
 
 export const createDriver = (
    username: string,

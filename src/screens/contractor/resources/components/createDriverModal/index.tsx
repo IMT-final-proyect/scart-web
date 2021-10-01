@@ -121,7 +121,6 @@ const CreateDriverModal = ({ addDriver, setOpenDriverModal }: Props) => {
                     <KeyboardDatePicker
                         className={classes.datePicker}
                         autoOk
-                        disableToolbar
                         disableFuture
                         variant="inline"
                         format="DD/MM/yyyy"

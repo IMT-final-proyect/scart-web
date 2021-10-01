@@ -46,7 +46,6 @@ const initialState: UserState = {
    error: null
 };
 
-export const cleanState = createAction('cleanState');
 export const postResetPasswordRequest = createAction('postResetPasswordRequest');
 export const postResetPasswordSuccess = createAction('postResetPasswordSuccess');
 export const postResetPasswordFailure = createAction('postResetPasswordFailure');

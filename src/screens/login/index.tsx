@@ -29,6 +29,7 @@ const Login = () => {
             history.push(route)
         }
     }, [history, accountData])
+
     const _onChangeUsername = useCallback((event) => {
         setUsername(event.target.value);
         
@@ -45,6 +46,12 @@ const Login = () => {
     const _onShowPassword = () => {
         setShowPassword(!showPassword);
     }
+
+    const handleKeyDown = (event: any) => {
+        if (event.key === 'Enter') {
+            dispatch(postLogin(username, password));
+        }
+      }
 
     const _onLogIn = () => {
         dispatch(postLogin(username, password));
@@ -72,6 +79,7 @@ const Login = () => {
                                 label="Usuario/CUIT"
                                 value={username}
                                 onChange={_onChangeUsername}
+                                onKeyDown={handleKeyDown}
                                 InputProps={{
                                     endAdornment: (
                                     <InputAdornment position="end">
@@ -88,25 +96,26 @@ const Login = () => {
                         </div>
                         <div className={classes.row}>
                         <TextField
-                                id="standard-basic"
-                                size="small"
-                                type={showPassword ? 'text' : 'password'}
-                                label="Contraseña"
-                                value={password}
-                                onChange={_onChangePassword}
-                                InputProps={{
-                                    endAdornment: (
-                                    <InputAdornment position="end">
-                                        <IconButton
-                                            aria-label="Show password"
-                                            onClick={_onShowPassword}
-                                        >
-                                            {showPassword ? <VisibilityOff /> : <Visibility />}
-                                        </IconButton>
-                                    </InputAdornment>
-                                    ),
-                                }}
-                            />
+                            id="standard-basic"
+                            size="small"
+                            type={showPassword ? 'text' : 'password'}
+                            label="Contraseña"
+                            value={password}
+                            onChange={_onChangePassword}
+                            onKeyDown={handleKeyDown}
+                            InputProps={{
+                                endAdornment: (
+                                <InputAdornment position="end">
+                                    <IconButton
+                                        aria-label="Show password"
+                                        onClick={_onShowPassword}
+                                    >
+                                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                                    </IconButton>
+                                </InputAdornment>
+                                ),
+                            }}
+                        />
                         </div>
                         <Grid
                             container
@@ -123,6 +132,15 @@ const Login = () => {
                                 </Typography>
                             </Button>
                         }
+                        </Grid>
+                        <Grid 
+                            container
+                            justify="center"
+                            alignItems="center"
+                        >
+                        <Button variant='outlined' className={classes.forgotPassword}>
+                            <Typography> Olvidé mi contraseña </Typography>
+                        </Button>
                         </Grid>
                     </CardContent>
                 </Card>
