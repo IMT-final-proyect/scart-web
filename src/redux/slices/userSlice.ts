@@ -4,6 +4,7 @@ import { AppThunk } from '../store';
 
 export interface IAccount {
    uuid: string;
+   entityId: number;
    name: string;
    surname: string;
    email: string;
@@ -46,9 +47,10 @@ const initialState: UserState = {
 };
 
 export const cleanState = createAction('cleanState');
-export const postResetPasswordRequest = createAction('user/postResetPasswordRequest');
-export const postResetPasswordSuccess = createAction('user/postResetPasswordSuccess');
-export const postResetPasswordFailure = createAction('user/postResetPasswordFailure');
+export const postResetPasswordRequest = createAction('postResetPasswordRequest');
+export const postResetPasswordSuccess = createAction('postResetPasswordSuccess');
+export const postResetPasswordFailure = createAction('postResetPasswordFailure');
+export const postLogout = createAction('postLogout');
 
 const userSlice = createSlice({
    name: 'user',
@@ -59,28 +61,40 @@ const userSlice = createSlice({
       },
       postLoginSuccess(state, action: any) {
          const { payload } = action
-         state.accountData = payload.user
-         state.userData = payload.entity
-         state.loading = false;
+         state.accountData = payload.accountData
          state.error = initialState.error
       },
       postLoginFailure(state, action: any) {
+         const { payload } = action
+         state.accountData = initialState.accountData;
+         state.loading = false;
+         state.error = payload;
+      },
+      getUserDataRequest(state){
+         state.loading = true;
+      },
+      getUserDataSuccess(state, action: any){
+         const { payload } = action
+         state.userData = payload.userData
+         state.error = initialState.error
+         state.loading = true;
+      },
+      getUserDataFailure(state, action: any){
          const { payload } = action
          state.userData = initialState.userData;
          state.loading = false;
          state.error = payload;
       },
-      postLogout(state) {
-         state = initialState;
-      }
    },
 });
 
 const {
    postLoginSuccess,
    postLoginRequest,
-   postLogout,
    postLoginFailure,
+   getUserDataRequest,
+   getUserDataSuccess,
+   getUserDataFailure,
 } = userSlice.actions;
 
 
@@ -93,7 +107,7 @@ export const postLogin = (username: string, password: string): AppThunk => async
          username,
          password
       });
-      localStorage.setItem('access_token', response.data.user.access_token);
+      localStorage.setItem('access_token', response.data.accountData.access_token);
       dispatch(postLoginSuccess(response.data));
    }
    catch(error){
@@ -101,6 +115,13 @@ export const postLogin = (username: string, password: string): AppThunk => async
    }
 };
 
-export const logout = (): AppThunk => async (dispatch) => {
-   dispatch(postLogout)
+export const getContractorData = (id: number | undefined): AppThunk => async (dispatch) => {
+   dispatch(getUserDataRequest())
+   try{
+      const response = await Axios.get(`/contractors/${id}`);
+      dispatch(getUserDataSuccess(response.data));
+   }
+   catch(error){
+      dispatch(getUserDataFailure(error.response.data))
+   }
 }

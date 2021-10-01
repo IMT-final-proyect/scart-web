@@ -6,7 +6,7 @@ import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
 
 import useStyles from './styles'
 import { useDispatch } from 'react-redux';
-import { logout } from '../../redux/slices/userSlice';
+import { postLogout } from '../../redux/slices/userSlice';
 import { useHistory } from 'react-router-dom';
 
 interface Props {
@@ -21,7 +21,7 @@ const TemplateBar = (props : Props) => {
     const [open, setOpen] = useState(false);
 
     const handleLogout = () => {
-      dispatch(logout())
+      dispatch({type: postLogout})
       history.push('/login')
       window.location.reload(true);
     }

@@ -168,6 +168,8 @@ export const getVehicle = (): AppThunk => async (dispatch) => {
 };
 
 export const createDriver = (
+   username: string,
+   password: string,
    name: string, 
    surname: string, 
    cuit: string, 
@@ -175,14 +177,16 @@ export const createDriver = (
    contractorId: number): AppThunk => async (dispatch) => {
    dispatch(createDriverRequest());
    try{
-      const response: AxiosResponse = await Axios.post('/drivers',{
+      const response: AxiosResponse = await Axios.post('/register/driver',{
+         username,
+         password,
          name,
          surname,
          cuit,
          birth_date,
          contractorId
       });
-      dispatch(createDriverSuccess(response.data));
+      dispatch(createDriverSuccess(response.data.userData));
    }
    catch(error){
       dispatch(createDriverFailure(error.response.data));

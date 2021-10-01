@@ -19,7 +19,7 @@ const Resources = () => {
     const dispatch = useDispatch()
     const [openDriverModal, setOpenDriverModal] = useState(false)
     const [openVehicleModal, setOpenVehicleModal] = useState(false)
-    const contractorId = useSelector((state: RootState) => state.user.userData?.id)
+    const contractorId = useSelector((state: RootState) => state.user.accountData?.entityId)
     const drivers: IDriver[] = useSelector((state: RootState) => state.resources.drivers.data)
     const vehicles: IVehicle[] = useSelector((state: RootState) => state.resources.vehicles.data)
 
@@ -28,9 +28,9 @@ const Resources = () => {
         dispatch(getVehicle())
     }, [])
     
-    const addDriver = (name: string, surname: string, cuit: string, birthdate: moment.Moment) => {
+    const addDriver = (username: string, password: string, name: string, surname: string, cuit: string, birthdate: moment.Moment) => {
         if(!!contractorId){
-            dispatch(createDriver(name, surname, cuit, moment(birthdate), contractorId))
+            dispatch(createDriver(username, password, name, surname, cuit, moment(birthdate), contractorId))
             setOpenDriverModal(false)
         }
     }

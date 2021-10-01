@@ -1,18 +1,8 @@
-//file for merge all reducers before send to the store
 import { combineReducers } from 'redux';
+import storage from 'redux-persist/lib/storage';
 import resourcesSlice from './slices/contractorSlices/resourcesSlice';
-import userReducer from './slices/userSlice';
-// import headerReducer from './headerReducer';
-// import requestStateReducer from './requestStateReducer';
+import userReducer, { postLogout } from './slices/userSlice';
 
-// let userLocalStorage: string = '';
-// let _initialState = {}
-// if (!!localStorage.getItem('user')) {
-//     userLocalStorage = localStorage.getItem('user') as string;
-//     const _userLocalStorage = JSON.parse(userLocalStorage);
-//     _initialState = { user: _userLocalStorage }
-// }
-// export const initialState = { ..._initialState }
 export const initialState = {}
 
 const appReducer = combineReducers({
@@ -22,10 +12,10 @@ const appReducer = combineReducers({
 
 const rootReducer = (state: any, action: any) => {
     
-    //Return state to initialState
-    // if (action.type === LOG_OUT)
-    //     state = {};
-
+    if (action.type === postLogout) {
+        storage.removeItem(`persist:root`);
+        state = initialState;
+    }
     return appReducer(state, action);
 }
 

@@ -1,6 +1,8 @@
 import { createStore, applyMiddleware } from 'redux';
 import { Action } from '@reduxjs/toolkit'
 import reduxThunk, { ThunkAction, ThunkDispatch } from 'redux-thunk';
+import { persistStore, persistReducer } from 'redux-persist'
+import storage from 'redux-persist/lib/storage'
 import rootReducer, { initialState, RootState } from './rootReducer';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
@@ -13,12 +15,19 @@ export type AppThunk<ReturnType = void> = ThunkAction<
    Action<string>
 >;
 
+const persistConfig = {
+    key: 'root',
+    storage,
+}
+
+const persistedReducer = persistReducer(persistConfig, rootReducer)
+
 const middleware = [reduxThunk];
 
-const store =  createStore(
-    rootReducer,
+export const store = createStore(
+    persistedReducer,
     initialState,
     composeWithDevTools(applyMiddleware(...middleware))
-);
+)
 
-export default store;
+export const persistor = persistStore(store)

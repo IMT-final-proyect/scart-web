@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { Typography } from '@material-ui/core';
 import { Card } from '@material-ui/core';
@@ -10,10 +10,19 @@ import PersonIcon from '@material-ui/icons/Person';
 
 import barras from '../../../assets/images/barras.PNG';
 import useStyles from './styles';
+import { useDispatch, useSelector } from 'react-redux';
+import { getContractorData } from '../../../redux/slices/userSlice';
+import { RootState } from '../../../redux/rootReducer';
 
 const Home = () => {
     const classes = useStyles();
+    const dispatch = useDispatch()
+    const id = useSelector((state: RootState) => state.user.accountData?.entityId)
 
+    useEffect(() => {
+        dispatch(getContractorData(id))
+    }, [])
+    
     return (
         <div className={classes.container}>
             <div className={classes.cardContainer}>

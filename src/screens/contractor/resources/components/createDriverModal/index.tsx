@@ -6,18 +6,33 @@ import { useCallback, useState } from 'react';
 import moment from 'moment';
 
 interface Props{
-    addDriver: (name: string, surname: string, cuit: string, birthdate: moment.Moment) => void
+    addDriver: (username: string, password: string, name: string, surname: string, cuit: string, birthdate: moment.Moment) => void
     setOpenDriverModal: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const CreateDriverModal = ({ addDriver, setOpenDriverModal }: Props) => {
     const classes = useStyles();
     const [emptyField, setEmptyField] = useState(false)
+    const [username, setUsername] = useState('')
+    const [password, setPassword] = useState('')
+    const [repeatPassword, setRepeatPassword] = useState('')
     const [name, setName] = useState('')
     const [surname, setSurname] = useState('')
     const [cuit, setCuit] = useState('')
     const [birthdate, setBirthdate] = useState<moment.Moment | null>(null);
     
+    const _onChangeUsername = useCallback((event) => {
+        setUsername(event.target.value);
+    }, [setUsername]);
+    
+    const _onChangePassword = useCallback((event) => {
+        setPassword(event.target.value);
+    }, [setPassword]);
+
+    const _onChangeRepeatPassword = useCallback((event) => {
+        setRepeatPassword(event.target.value);
+    }, [setRepeatPassword]);
+
     const _onChangeName = useCallback((event) => {
         setName(event.target.value);
     }, [setName]);
@@ -35,8 +50,8 @@ const CreateDriverModal = ({ addDriver, setOpenDriverModal }: Props) => {
       };
 
     const _handleOnClick = () => {
-        if(!!name && !!surname && !!cuit && !!birthdate){
-            addDriver(name, surname, cuit, moment(birthdate))
+        if(!!username && !!password && !!name && !!surname && !!cuit && !!birthdate){
+            addDriver(username, password, name, surname, cuit, moment(birthdate))
             setOpenDriverModal(false)
         }
         else{
@@ -49,21 +64,51 @@ const CreateDriverModal = ({ addDriver, setOpenDriverModal }: Props) => {
                 <Typography className={classes.title}>Crear conductor</Typography>
                 <Typography className={classes.subtitle}>Registrar un nuevo conductor</Typography>
                 <TextField
-                    id="driver-name"
+                    id="driver-username"
                     className= {classes.textInput}
                     size="medium"
-                    label="Nombre"
-                    value={name}
-                    onChange={_onChangeName}
+                    label="Nombre de usuario"
+                    value={username}
+                    onChange={_onChangeUsername}
                 />
-                <TextField
-                    id="driver-surname"
-                    className= {classes.textInput}
-                    size="medium"
-                    label="Apellido"
-                    value={surname}
-                    onChange={_onChangeSurname}
-                />
+                <Grid item>
+                    <TextField
+                        id="driver-password"
+                        type='password'
+                        className= {classes.textInput}
+                        size="medium"
+                        label="Contraseña"
+                        value={password}
+                        onChange={_onChangePassword}
+                    />
+                    <TextField
+                        id="driver-repeatpassword"
+                        type='password'
+                        className= {classes.textInput}
+                        size="medium"
+                        label="Repetir contraseña"
+                        value={repeatPassword}
+                        onChange={_onChangeRepeatPassword}
+                    />
+                </Grid>
+                <Grid item>
+                    <TextField
+                        id="driver-name"
+                        className= {classes.textInput}
+                        size="medium"
+                        label="Nombre"
+                        value={name}
+                        onChange={_onChangeName}
+                    />
+                    <TextField
+                        id="driver-surname"
+                        className= {classes.textInput}
+                        size="medium"
+                        label="Apellido"
+                        value={surname}
+                        onChange={_onChangeSurname}
+                    />
+                </Grid>
                 <TextField
                     id="driver-cuit"
                     className= {classes.textInput}
@@ -77,6 +122,7 @@ const CreateDriverModal = ({ addDriver, setOpenDriverModal }: Props) => {
                         className={classes.datePicker}
                         autoOk
                         disableToolbar
+                        disableFuture
                         variant="inline"
                         format="DD/MM/yyyy"
                         id="birthdate"

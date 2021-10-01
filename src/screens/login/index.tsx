@@ -44,7 +44,6 @@ const Login = () => {
 
     const _onShowPassword = () => {
         setShowPassword(!showPassword);
-        console.log(showPassword);
     }
 
     const _onLogIn = () => {
@@ -70,7 +69,7 @@ const Login = () => {
                                 id="standard-basic"
                                 className= {classes.textInput}
                                 size="small"
-                                label="CUIT"
+                                label="Usuario/CUIT"
                                 value={username}
                                 onChange={_onChangeUsername}
                                 InputProps={{
