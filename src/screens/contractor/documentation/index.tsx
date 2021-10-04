@@ -5,8 +5,9 @@ import useStyles from './styles';
 import DocumentRow from './components/documentRow/DocumentRow';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../redux/rootReducer';
-import { createDocument, getContractorDocuments, IDocument } from '../../../redux/slices/contractorSlices/documentsSlice';
+import { createDocument, getContractorDocuments } from '../../../redux/slices/contractorSlices/documentsSlice';
 import CreateDocumentModal from './components/CreateDocumentModal';
+import { IDocument } from '../../../utils/interfaces';
 
 const Documentacion = () => {
     const classes = useStyles();
@@ -19,11 +20,9 @@ const Documentacion = () => {
         dispatch(getContractorDocuments(contractor?.entityId))
     }, [])
 
-    const addVehicle = (expirationDate: moment.Moment, state: number, type: number) => {
-        if(!!contractor?.entityId){
-            dispatch(createDocument(expirationDate, state, type, contractor.entityId))
-            setOpenModal(false)
-        }
+    const addDocument = (expirationDate: moment.Moment, entityType: number, entityId: number) => {
+        dispatch(createDocument(expirationDate, entityType, 2, entityId))
+        setOpenModal(false)
     }
 
 
@@ -32,7 +31,7 @@ const Documentacion = () => {
         <Modal open={openModal} onClose={() => setOpenModal(false)}>
             <CreateDocumentModal
                 setOpenDriverModal={setOpenModal}
-                addVehicle={addVehicle}
+                addDocument={addDocument}
             />
         </Modal>
         <Grid container className={classes.container} direction='row' justifyContent='space-between'>
@@ -76,7 +75,7 @@ const Documentacion = () => {
                                 </text>
                             </Grid>
                         </Grid>
-                        <Grid container direction='column' justifyContent='space-between' >
+                        {/* <Grid container direction='column' justifyContent='space-between' >
                             {documents.map((document) =>
                                 <DocumentRow 
                                     key={document.id}
@@ -86,7 +85,7 @@ const Documentacion = () => {
                                     state={document.state}
                                 />)
                             }
-                        </Grid>
+                        </Grid> */}
                     </>
                 }
                 </Card>

@@ -9,7 +9,7 @@ import useStyles from './styles';
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../../redux/rootReducer';
-import { IVehicle } from '../../../../../redux/slices/contractorSlices/resourcesSlice';
+import { IVehicle } from '../../../../../utils/interfaces';
 
 
 const autos = [

@@ -1,17 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 import Axios, {AxiosResponse} from 'axios';
 import moment from 'moment';
+import { contractor, driver, vehicle } from '../../../utils/constants';
+import { getRolName } from '../../../utils/functions/getRolePath';
+import { IDocument } from '../../../utils/interfaces';
 import { AppThunk } from '../../store';
 var _ = require('lodash');
 
-export interface IDocument {
-   id: number;
-   entityId: number;
-   entityType: number
-   type: number;
-   state: number;
-   expirationDate: moment.Moment;
-}
 
 interface IContractorDocuments {
     data: IDocument[]
@@ -33,8 +28,10 @@ interface IVehicleDocuments {
 
 interface IEntitiesDocuments {
     contractor: IContractorDocuments
-    documents: IDriverDocuments
+    drivers: IDriverDocuments
     vehicles: IVehicleDocuments
+    loading: boolean
+    error: IError|null
 }
 
 interface IError {
@@ -48,7 +45,7 @@ const initialState: IEntitiesDocuments = {
         loading: false,
         error: null
     },
-    documents: {
+    drivers: {
         data: [],
         loading: false,
         error: null
@@ -57,7 +54,9 @@ const initialState: IEntitiesDocuments = {
         data: [],
         loading: false,
         error: null
-    }
+    },
+    loading: false,
+    error: null
 };
 
 const documentsSlice = createSlice({
@@ -65,33 +64,45 @@ const documentsSlice = createSlice({
    initialState,
    reducers: {
       getContractorDocumentsRequest(state) {
-         state.documents.loading = true;
+         state.contractor.loading = true;
       },
       getContractorDocumentsSuccess(state, action: any) {
          const { payload } = action
-         state.documents.data = payload
-         state.documents.loading = false;
-         state.documents.error = initialState.documents.error
+         state.contractor.data = payload
+         state.contractor.loading = false;
+         state.contractor.error = initialState.contractor.error
       },
       getContractorDocumentsFailure(state, action: any) {
          const { payload } = action
-         state.documents.data = initialState.documents.data;
-         state.documents.loading = false;
-         state.documents.error = payload;
+         state.contractor.data = initialState.contractor.data;
+         state.contractor.loading = false;
+         state.contractor.error = payload;
       },
       createDocumentRequest(state) {
-         state.documents.loading = true;
+         state.loading = true;
       },
-      createDocumentSuccess(state, action: any) {
+      createContractorDocumentSuccess(state, action: any) {
          const { payload } = action
-         state.documents.data = ({...state.vehicles.data, [payload.id]: {...payload}})
-         state.documents.loading = false;
-         state.documents.error = initialState.vehicles.error
+         state.contractor.data = ({...state.vehicles.data, [payload.id]: {...payload}})
+         state.loading = false;
+         state.error = initialState.vehicles.error
+      },
+      createDriverDocumentSuccess(state, action: any) {
+         const { payload } = action
+         state.drivers.data = ({...state.vehicles.data, [payload.id]: {...payload}})
+         state.loading = false;
+         state.error = initialState.vehicles.error
+      },
+      createVehiclesDocumentSuccess(state, action: any) {
+         const { payload } = action
+         state.vehicles.data = ({...state.vehicles.data, [payload.id]: {...payload}})
+         state.loading = false;
+         state.error = initialState.vehicles.error
       },
       createDocumentFailure(state, action: any) {
          const { payload } = action
-         state.documents.loading = false;
-         state.documents.error = payload;
+         state.loading = false;
+         state.error = payload;
       }
    },
 });
@@ -101,7 +112,9 @@ const {
     getContractorDocumentsRequest,
     getContractorDocumentsFailure,
     createDocumentRequest,
-    createDocumentSuccess,
+    createContractorDocumentSuccess,
+    createDriverDocumentSuccess,
+    createVehiclesDocumentSuccess,
     createDocumentFailure
 } = documentsSlice.actions;
 
@@ -113,6 +126,8 @@ export const getContractorDocuments = (contractorId: number|undefined): AppThunk
    try{
       const response: AxiosResponse = await Axios.get(`/documents/entity/${contractorId}/type/2`);
       const documents = _.mapKeys(response.data, 'id') 
+      console.log(documents);
+      
       dispatch(getContractorDocumentsSuccess(documents));
    }
    catch(error){
@@ -122,19 +137,33 @@ export const getContractorDocuments = (contractorId: number|undefined): AppThunk
 
 export const createDocument = (
    expirationDate: moment.Moment,
-   state: number, 
-   type: number, 
-   contractorId: number): AppThunk => async (dispatch) => {
+   type: number,
+   entityType: number,
+   entityId: number): AppThunk => async (dispatch) => {
    dispatch(createDocumentRequest());
    try{
       const response: AxiosResponse = await Axios.post('/documents',{
          expirationDate,
-         state,
+         state: 1,
          type,
-         contractorId,
-         entityType: 2
+         entityId,
+         entityType
       });
-      dispatch(createDocumentSuccess(response.data));
+      switch(getRolName(entityType)){
+         case contractor: {
+            dispatch(createContractorDocumentSuccess(response.data));
+            break;
+         }
+         case driver: {
+            dispatch(createDriverDocumentSuccess(response.data));
+            break;
+         }
+         case vehicle: {
+            dispatch(createVehiclesDocumentSuccess(response.data));
+            break
+         }
+         default: createDocumentFailure({code: 400, message: 'Entidad no encontrada'})
+      }
    }
    catch(error){
       dispatch(createDocumentFailure(error.response.data));

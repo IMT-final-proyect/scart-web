@@ -8,8 +8,8 @@ import useStyles from './styles'
 import { useParams } from 'react-router-dom';
 import { RootState } from '../../../../../redux/rootReducer';
 import { useSelector } from 'react-redux';
-import { IDriver } from '../../../../../redux/slices/contractorSlices/resourcesSlice';
 import moment from 'moment';
+import { IDriver } from '../../../../../utils/interfaces';
 
 
 const autos = [

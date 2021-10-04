@@ -1,9 +1,10 @@
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import MomentUtils from '@date-io/moment';
-import { Button, Grid, TextField, Typography } from '@material-ui/core';
+import { Button, Grid, Snackbar, TextField, Typography } from '@material-ui/core';
 import useStyles from './styles';
 import { useCallback, useState } from 'react';
 import moment from 'moment';
+import { Alert } from '@mui/material';
 
 interface Props{
     addDriver: (username: string, password: string, name: string, surname: string, cuit: string, birthdate: moment.Moment) => void
@@ -20,6 +21,7 @@ const CreateDriverModal = ({ addDriver, setOpenDriverModal }: Props) => {
     const [surname, setSurname] = useState('')
     const [cuit, setCuit] = useState('')
     const [birthdate, setBirthdate] = useState<moment.Moment | null>(null);
+    const [passwordNotRepeated, setPasswordNotRepeated] = useState(false);
     
     const _onChangeUsername = useCallback((event) => {
         setUsername(event.target.value);
@@ -50,12 +52,16 @@ const CreateDriverModal = ({ addDriver, setOpenDriverModal }: Props) => {
       };
 
     const _handleOnClick = () => {
-        if(!!username && !!password && !!name && !!surname && !!cuit && !!birthdate){
-            addDriver(username, password, name, surname, cuit, moment(birthdate))
-            setOpenDriverModal(false)
+        if(!!username && !!password && !!repeatPassword && !!name && !!surname && !!cuit && !!birthdate){
+            if (password === repeatPassword){
+                addDriver(username, password, name, surname, cuit, moment(birthdate));
+                setOpenDriverModal(false);
+            } else {
+                setPasswordNotRepeated(true);
+            }
         }
         else{
-            setEmptyField(true)
+            setEmptyField(true);
         }
     }
 
@@ -133,9 +139,16 @@ const CreateDriverModal = ({ addDriver, setOpenDriverModal }: Props) => {
                         }}
                     />
                 </MuiPickersUtilsProvider>
-                {emptyField && 
-                    <div className={classes.emptyMessage}>Falta completar algún campo</div>
-                }
+                <Snackbar className={classes.snackbar} open={emptyField} autoHideDuration={6000} onClose={() => setEmptyField(false)} >
+                    <Alert onClose={() => setEmptyField(false)} severity="error" sx={{ width: '100%' }}>
+                        Falta completar algún campo
+                    </Alert>
+                </Snackbar>
+                <Snackbar className={classes.snackbar} open={passwordNotRepeated} autoHideDuration={6000} onClose={() => setPasswordNotRepeated(false)}>
+                    <Alert onClose={() => setPasswordNotRepeated(false)} severity="error" sx={{ width: '100%' }}>
+                        Las contraseñas no coinciden
+                    </Alert>
+                </Snackbar>
                 <Grid container direction='row' justifyContent='space-between'>
                     <Button variant="contained" className={classes.cancel} onClick={ () => setOpenDriverModal(false)}>Cancelar</Button>
                     <Button variant="contained" color='primary' onClick={_handleOnClick}>Crear</Button>

@@ -50,6 +50,12 @@ const useStyles = makeStyles((theme: Theme) => ({
         marginBottom: '10%',
         borderRadius: 10,
         borderWidth: 1,
+    },
+    snackbar: {
+        position: 'absolute',
+        top: '105%',
+        left: '50%',
+        width: '75%' 
     }
 }));
 

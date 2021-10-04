@@ -1,24 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 import Axios, {AxiosResponse} from 'axios';
 import moment from 'moment';
+import { IDriver, IVehicle } from '../../../utils/interfaces';
 import { AppThunk } from '../../store';
 var _ = require('lodash');
-
-export interface IDriver {
-   id: number;
-   name: string;
-   surname: string;
-   cuit: string;
-   birth_date: moment.Moment;
-}
-
-export interface IVehicle {
-   id: number;
-   plate: string;
-   brand: string;
-   model: string;
-   year: number;
-}
 
 interface IError {
    code: string

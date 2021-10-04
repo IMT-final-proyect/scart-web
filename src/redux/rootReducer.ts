@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 import storage from 'redux-persist/lib/storage';
 import documentsSlice from './slices/contractorSlices/documentsSlice';
 import resourcesSlice from './slices/contractorSlices/resourcesSlice';
+import documentTypesSlice from './slices/documentTypesSlice';
 import userReducer, { postLogout } from './slices/userSlice';
 
 export const initialState = {}
@@ -9,7 +10,8 @@ export const initialState = {}
 const appReducer = combineReducers({
     user: userReducer,
     resources: resourcesSlice,
-    documents: documentsSlice
+    documents: documentsSlice,
+    documentTypes: documentTypesSlice,
 });
 
 const rootReducer = (state: any, action: any) => {
