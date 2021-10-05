@@ -14,14 +14,15 @@ const Documentacion = () => {
     const dispatch = useDispatch()
     const [openModal, setOpenModal] = useState(false)
     const documents: IDocument[] = useSelector((state: RootState) => state.documents.contractor.data)
-    const contractor = useSelector((state: RootState) => state.user.accountData)
+    const accountData = useSelector((state: RootState) => state.user.accountData)
+    const userData = useSelector((state: RootState) => state.user.userData)
 
     useEffect(() => {
-        dispatch(getContractorDocuments(contractor?.entityId))
+        dispatch(getContractorDocuments(accountData?.entityId))
     }, [])
 
-    const addDocument = (expirationDate: moment.Moment, entityType: number, entityId: number) => {
-        dispatch(createDocument(expirationDate, entityType, 2, entityId))
+    const addDocument = (expirationDate: moment.Moment, type: number, entityType: number, entityId: number) => {
+        dispatch(createDocument(expirationDate, type, entityType, entityId))
         setOpenModal(false)
     }
 
@@ -75,17 +76,17 @@ const Documentacion = () => {
                                 </text>
                             </Grid>
                         </Grid>
-                        {/* <Grid container direction='column' justifyContent='space-between' >
-                            {documents.map((document) =>
+                        <Grid container direction='column' justifyContent='space-between' >
+                            {Object.keys(documents).map((key: string, i: any) =>
                                 <DocumentRow 
-                                    key={document.id}
-                                    type={document.type}
-                                    contractor={contractor?.name}
-                                    expiration={document.expirationDate}
-                                    state={document.state}
-                                />)
-                            }
-                        </Grid> */}
+                                    key={documents[parseInt(key)].id}
+                                    type={documents[parseInt(key)].type}
+                                    contractor={userData?.name}
+                                    expiration={documents[parseInt(key)].expirationDate}
+                                    state={documents[parseInt(key)].state}
+                                />
+                            )}
+                        </Grid>
                     </>
                 }
                 </Card>

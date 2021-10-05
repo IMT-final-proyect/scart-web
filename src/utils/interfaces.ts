@@ -16,10 +16,9 @@ export interface IVehicle {
 
 export interface IDocument {
    id: number;
-   name: string;
    entityId: number;
    entityType: number
-   type: number;
+   type: IDocumentType;
    state: number;
    expirationDate: moment.Moment;
 }

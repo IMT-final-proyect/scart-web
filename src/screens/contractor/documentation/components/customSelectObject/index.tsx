@@ -10,7 +10,7 @@ interface Props {
     setValue: React.Dispatch<React.SetStateAction<string>>
 }
 
-const CustomSelect = ({ value, placeholder, data, setValue }: Props) => {
+const CustomSelectObject = ({ value, placeholder, data, setValue }: Props) => {
     const classes = useStyles();
 
     const handleSelect = (event: React.ChangeEvent<{ value: unknown }>) => {
@@ -26,13 +26,12 @@ const CustomSelect = ({ value, placeholder, data, setValue }: Props) => {
                 value={value}
                 onChange={handleSelect}
             >
-                {data.map((element) =>
-                        <MenuItem value={element.name}>{element.name}</MenuItem>)
+                {Object.keys(data).map((key: string, i: any) =>
+                        <MenuItem value={data[parseInt(key)].name}>{data[parseInt(key)].name}</MenuItem>)
                 }
-            
             </Select>
     </FormControl>
     )
 }
 
-export default memo(CustomSelect)
+export default memo(CustomSelectObject)

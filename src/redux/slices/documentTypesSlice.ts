@@ -1,9 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import Axios, {AxiosResponse} from 'axios';
-import moment from 'moment';
-import { contractor, driver, vehicle } from '../../utils/constants';
-import { getRolName } from '../../utils/functions/getRolePath';
-import { IDocument } from '../../utils/interfaces';
+import { IDocumentType } from '../../utils/interfaces';
 import { AppThunk } from '../store';
 var _ = require('lodash');
 
@@ -13,7 +10,7 @@ interface IError {
 }
 
 interface IDocumentTypes {
-    data: IDocument[]
+    data: IDocumentType[]
     loading: boolean
     error: IError|null
 }
@@ -57,12 +54,11 @@ const {
 
 export default documentTypesSlice.reducer;
 
-export const getDocumentTypesByEntity = (entityType: string): AppThunk => async (dispatch) => {
+export const getDocumentTypesByEntity = (entityType: number): AppThunk => async (dispatch) => {
    dispatch(getDocumentTypesByEntityRequest());
    try{
       const response: AxiosResponse = await Axios.get(`/types/${entityType}`);
       const documentTypes = _.mapKeys(response.data, 'id') 
-      console.log(documentTypes);
       dispatch(getDocumentTypesByEntitySuccess(documentTypes));
    }
    catch(error){

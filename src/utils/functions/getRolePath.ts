@@ -37,3 +37,15 @@ export const getRolName = (rolNumber: number): string => {
         default: return ''
     }
 }
+
+export const getRolNumero = (rolName: string): number => {
+    switch(rolName){
+        case ('Admin'): return AllowedRol.ADMIN
+        case ('Contratista'): return AllowedRol.CONTRACTOR
+        case ('Manager'): return AllowedRol.MANAGER
+        case ('Auditor'): return AllowedRol.AUDITOR
+        case ('Conductor'): return AllowedRol.DRIVER
+        case ('Seguridad'): return AllowedRol.SECURITY
+        default: return -1
+    }
+}

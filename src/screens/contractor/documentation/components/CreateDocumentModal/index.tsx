@@ -1,6 +1,6 @@
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import MomentUtils from '@date-io/moment';
-import { Button, Grid, TextField, Typography } from '@material-ui/core';
+import { Button, Grid, Typography } from '@material-ui/core';
 import useStyles from './styles';
 import { useEffect, useState } from 'react';
 import moment from 'moment';
@@ -9,14 +9,27 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { useFilePicker } from 'use-file-picker';
 
 import CustomSelect from '../../../../../components/customSelect';
-import { getRolNumber } from '../../../../../utils/functions/getRolePath';
+import CustomSelectObject from '../customSelectObject' 
+import { getRolNumber, getRolNumero } from '../../../../../utils/functions/getRolePath';
 import { useDispatch, useSelector } from 'react-redux';
 import { getDocumentTypesByEntity } from '../../../../../redux/slices/documentTypesSlice';
 import { RootState } from '../../../../../redux/rootReducer';
 import globalColors from '../../../../../utils/styles/globalColors';
 
+const entities = [
+    {
+        name: 'Contratista'
+    },
+    {
+        name: 'Conductor'
+    },
+    {
+        name: 'Vehiculos'
+    }
+]
+
 interface Props{
-    addDocument: (expirationDate: moment.Moment, entityType: number, entityId: number) => void
+    addDocument: (expirationDate: moment.Moment, type: number, entityType: number, entityId: number) => void
     setOpenDriverModal: React.Dispatch<React.SetStateAction<boolean>>
 }
 
@@ -28,30 +41,20 @@ const CreateDocumentModal = ({ addDocument, setOpenDriverModal }: Props) => {
     const [documentType, setDocumentType] = useState('')
     const [entityType, setEntityType] = useState('')
     const documentTypes = useSelector((state: RootState) => state.documentTypes.data)
-      const [openFileSelector, { filesContent, loading, errors, plainFiles, clear }] = useFilePicker({
-        multiple: true,
-        readAs: 'DataURL',
-        accept: ['.png', '.pdf', '.rar', '.zip', '.jpeg', '.jpg'],
-      });
+    const contractorId = useSelector((state: RootState) => state.user.userData?.id)
 
-    const entities = [
-        {
-            name: 'Contratista'
-        },
-        {
-            name: 'Conductor'
-        },
-        {
-            name: 'Vehiculos'
-        }
-    ]
+    const [openFileSelector, { filesContent, loading, errors, plainFiles, clear }] = useFilePicker({
+    multiple: true,
+    readAs: 'DataURL',
+    accept: ['.png', '.pdf', '.rar', '.zip', '.jpeg', '.jpg'],
+    });
 
     useEffect(() => {
         console.log(filesContent);
-        
     }, [filesContent])
+
     useEffect(() => {
-        // if (!!entityType) dispatch(getDocumentTypesByEntity(entityType))
+        if (!!entityType) dispatch(getDocumentTypesByEntity(getRolNumero(entityType)))
     }, [entityType])
 
     const handleExpirationChange = (date: moment.Moment | null) => {
@@ -60,9 +63,16 @@ const CreateDocumentModal = ({ addDocument, setOpenDriverModal }: Props) => {
 
     const _handleOnClick = () => {
         if(!!expirationDate && (!!documentType) && (!!entityType)){
-            const documentId = documentTypes.findIndex(document => document.name === documentType)
-            addDocument(moment(expirationDate), documentId, getRolNumber(entityType))
-            setOpenDriverModal(false)
+            let typeId
+            (Object.keys(documentTypes).map((key: string) => {
+                if (documentTypes[parseInt(key)].name === documentType) typeId = documentTypes[parseInt(key)].id
+            }))
+            console.log('contractord: ',contractorId);
+            
+            if(!!typeId && !!contractorId){
+                addDocument(moment(expirationDate), typeId, getRolNumero(entityType), contractorId)
+                setOpenDriverModal(false)
+            }
         }
         else{
             setEmptyField(true)
@@ -73,7 +83,9 @@ const CreateDocumentModal = ({ addDocument, setOpenDriverModal }: Props) => {
         <Grid className={classes.modal} container direction='column' justify='center' alignItems='center'>
             <Typography className={classes.title}>Cargar documentación</Typography>
             <CustomSelect value={entityType} placeholder='Entidad' setValue={setEntityType} data={entities}/>
-            <CustomSelect value={documentType} placeholder='Documento' setValue={setDocumentType} data={documentTypes}/>
+            {documentTypes &&
+                <CustomSelectObject value={documentType} placeholder='Documento' setValue={setDocumentType} data={documentTypes}/>
+            }
             <MuiPickersUtilsProvider utils={MomentUtils}>
                 <KeyboardDatePicker
                     className={classes.datePicker}

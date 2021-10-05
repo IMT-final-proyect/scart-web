@@ -83,13 +83,13 @@ const documentsSlice = createSlice({
       },
       createContractorDocumentSuccess(state, action: any) {
          const { payload } = action
-         state.contractor.data = ({...state.vehicles.data, [payload.id]: {...payload}})
+         state.contractor.data = ({...state.contractor.data, [payload.id]: {...payload}})
          state.loading = false;
          state.error = initialState.vehicles.error
       },
       createDriverDocumentSuccess(state, action: any) {
          const { payload } = action
-         state.drivers.data = ({...state.vehicles.data, [payload.id]: {...payload}})
+         state.drivers.data = ({...state.drivers.data, [payload.id]: {...payload}})
          state.loading = false;
          state.error = initialState.vehicles.error
       },
@@ -124,9 +124,8 @@ export default documentsSlice.reducer;
 export const getContractorDocuments = (contractorId: number|undefined): AppThunk => async (dispatch) => {
    dispatch(getContractorDocumentsRequest());
    try{
-      const response: AxiosResponse = await Axios.get(`/documents/entity/${contractorId}/type/2`);
-      const documents = _.mapKeys(response.data, 'id') 
-      console.log(documents);
+      const response: AxiosResponse = await Axios.get(`/documents?entityId=${contractorId}&entityType=2`);
+      const documents = _.mapKeys(response.data, 'id')
       
       dispatch(getContractorDocumentsSuccess(documents));
    }
