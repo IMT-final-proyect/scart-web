@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Button, Card, Grid } from "@material-ui/core"
+import { Button, Card, Grid, Typography } from "@material-ui/core"
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 
 import Vehicle from '../vehicleRow';
@@ -12,45 +12,26 @@ import { RootState } from '../../../../../redux/rootReducer';
 import { IVehicle } from '../../../../../utils/interfaces';
 
 
-const autos = [
-    {
-        'id': '1',
-        'brand': 'BMW',
-        'model': '2015',
-        'plate': 'DIC912',
-    },
-    {
-        'id': '2',
-        'brand': 'Ferrari',
-        'model': '2020',
-        'plate': 'LEC016',
-    },
-    {
-        'id': '3',
-        'brand': 'Aston Martin',
-        'model': '2021',
-        'plate': 'VET005',
-    },
-]
+const conductores = []
 
 const documents = [
     {
         'id':'1',
         'name':'Seguro',
         'expiration': '01/01/2022',
-        'state':'Vigente'
+        'state':0
     },
     {
         'id':'2',
         'name':'VTV',
         'expiration': '30/01/2022',
-        'state':'Vigente'
+        'state':2
     },
     {
         'id':'3',
         'name':'Habilitacion',
         'expiration': '04/05/2022',
-        'state':'Vigente'
+        'state':1
     },
 ]
 
@@ -65,8 +46,7 @@ const VehicleDetails = () => {
     return (
         <Grid container className={classes.container} direction='column' justifyContent='space-between'>
             <Card className={classes.cardContainer}>
-                <Grid container justifyContent='space-between'>
-                    <Grid item xs={6}>
+                <Grid container justifyContent='space-between' direction='row'>
                         <div className={classes.dataContainer}>
                             <text className={classes.dataField}> Marca: </text>
                             <text className={classes.data}> {vehicle.brand} </text>
@@ -83,7 +63,6 @@ const VehicleDetails = () => {
                             <text className={classes.dataField}> Año: </text>
                             <text className={classes.data}> {vehicle.year} </text>
                         </div>
-                    </Grid>
                 </Grid>
             </Card>
             <Grid container className={classes.container} direction='row' justifyContent='space-between'>
@@ -116,16 +95,20 @@ const VehicleDetails = () => {
                                 </text>
                             </Grid>
                         </Grid>
-                        <Grid container direction='column' justifyContent='space-between' >
-                            {autos.map((auto) =>
-                                <Vehicle 
-                                    key={auto.id}
-                                    brand={auto.brand}
-                                    model={auto.model}
-                                    plate={auto.plate}
-                                />)
-                            }
-                        </Grid>
+                        {conductores.length === 0 ? 
+                        <Typography className={classes.textCenter}> No ha sido utilizado por ningún conductor </Typography>
+                            :
+                            <Grid container direction='column' justifyContent='space-between' >
+                                {/* {conductores.map((conductor) =>
+                                    <Vehicle 
+                                        key={conductor.id}
+                                        brand={conductor.brand}
+                                        model={conductor.model}
+                                        plate={conductor.plate}
+                                    />)
+                                } */}
+                            </Grid>
+                        }
                     </Card>
                 </Grid>
                 <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>

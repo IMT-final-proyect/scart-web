@@ -16,3 +16,15 @@ export const driver = 'driver'
 export const vehicle = 'vehicle'
 export const security = 'security'
 export const admin = 'admin'
+
+export const PENDING = 'Pendiente'
+export const VALID = 'Vigente'
+export const REJECTED = 'Rechazado'
+export const EXPIRED = 'Vencido'
+
+export enum States {
+    PENDING,
+    VALID,
+    REJECTED,
+    EXPIRED,
+}

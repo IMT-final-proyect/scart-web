@@ -1,5 +1,6 @@
 import { makeStyles, Theme } from "@material-ui/core";
 import globalColors from "../../utils/styles/globalColors";
+import NutrecoImage from '../../assets/images/planta_inicio.jpeg'
 
 const useStyles = makeStyles((theme: Theme) => ({
     container:{
@@ -7,9 +8,13 @@ const useStyles = makeStyles((theme: Theme) => ({
         height: '100vh',
         margin: 0,
         padding: 0,
+        backgroundImage: `url(${NutrecoImage})`,
+        backgroundSize: '100% 100%',
+        backgroundRepeat: 'no-repeat'
     },
     card:{
         padding: '5%',
+        backgroundColor: 'rgba(255,255,255,.8)'
     },
     row: {
         marginTop: '3%',
@@ -38,7 +43,16 @@ const useStyles = makeStyles((theme: Theme) => ({
         marginTop: '10%',
         justify: 'center',
         alignItems: 'center',
-        textTransform: 'none'
+        textTransform: 'none',
+        backgroundColor: globalColors.white
+    },
+    logoNutreco: {
+        marginBottom: '2%',
+        width: '30%',
+        [theme.breakpoints.down('md')]: {
+            width: '70%',
+            marginBottom:'5%'
+        },
     }
 }));
 

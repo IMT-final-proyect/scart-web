@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import Axios, {AxiosResponse} from 'axios';
 import moment from 'moment';
 import { contractor, driver, vehicle } from '../../../utils/constants';
-import { getRolName } from '../../../utils/functions/getRolePath';
+import { getRolName } from '../../../utils/functions/roles';
 import { IDocument } from '../../../utils/interfaces';
 import { AppThunk } from '../../store';
 var _ = require('lodash');
@@ -143,7 +143,7 @@ export const createDocument = (
    try{
       const response: AxiosResponse = await Axios.post('/documents',{
          expirationDate,
-         state: 1,
+         state: 0,
          type,
          entityId,
          entityType

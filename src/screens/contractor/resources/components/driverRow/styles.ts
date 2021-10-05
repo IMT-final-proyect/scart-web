@@ -6,6 +6,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     text:{
         maxWidth: 'auto',
+        textTransform: 'none',
         [theme.breakpoints.down('sm')]: {
             fontSize: 11,
         },

@@ -108,6 +108,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     button:{
         height: '35px',
     },
+    textCenter: {
+        textAlign: 'center',
+        marginTop: '2%'
+    }
 }));
 
 export default useStyles

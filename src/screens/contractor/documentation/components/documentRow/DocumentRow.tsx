@@ -5,6 +5,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import useStyles from './styles';
 import moment from 'moment';
 import { IDocumentType } from '../../../../../utils/interfaces';
+import { getStateColor, getStateName } from '../../../../../utils/functions/states';
 
 interface Props{
     contractor: string | undefined
@@ -13,7 +14,10 @@ interface Props{
     expiration: moment.Moment,
 }
 const Document = ({ type, expiration, state, contractor }: Props) => {
-    const classes = useStyles();
+    const stateName = getStateName(state)
+    const color = getStateColor(stateName)
+    const classes = useStyles({color});
+    
     return(
         <Grid container direction="row" justifyContent='space-between'>
             <Grid item xs={4} className={classes.text}>
@@ -25,8 +29,10 @@ const Document = ({ type, expiration, state, contractor }: Props) => {
             <Grid item xs={2} className={classes.text}>
                 <text> {moment(expiration).format('DD/MM/YY')} </text>
             </Grid>
-            <Grid item xs={2} className={classes.text}>
-                <text> {state} </text>
+            <Grid item xs={2}>
+                <div className={classes.state}>
+                    <text className={classes.stateColor}> {stateName} </text>
+                </div>
             </Grid>
             <Grid item xs={2} className={classes.container}>
                 <CreateIcon />

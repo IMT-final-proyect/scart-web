@@ -12,7 +12,7 @@ import AuditorNavigator from '../screens/auditor/navigation/AuditorNavigator'
 import AdminNavigator from '../screens/admin/navigation/AdminNavigator'
 import { RootState } from '../redux/rootReducer';
 import { useSelector } from 'react-redux';
-import { getRolNumber, getRolName } from '../utils/functions/getRolePath';
+import { getRolNumber, getRolName } from '../utils/functions/roles';
 
 const App = () => {
     const accountData = useSelector((state: RootState) => state.user.accountData)

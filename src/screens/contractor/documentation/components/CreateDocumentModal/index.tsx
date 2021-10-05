@@ -1,6 +1,6 @@
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import MomentUtils from '@date-io/moment';
-import { Button, Grid, Typography } from '@material-ui/core';
+import { Button, Grid, Snackbar, Typography } from '@material-ui/core';
 import useStyles from './styles';
 import { useEffect, useState } from 'react';
 import moment from 'moment';
@@ -10,11 +10,12 @@ import { useFilePicker } from 'use-file-picker';
 
 import CustomSelect from '../../../../../components/customSelect';
 import CustomSelectObject from '../customSelectObject' 
-import { getRolNumber, getRolNumero } from '../../../../../utils/functions/getRolePath';
+import { getRolNumber, getRolNumero } from '../../../../../utils/functions/roles';
 import { useDispatch, useSelector } from 'react-redux';
 import { getDocumentTypesByEntity } from '../../../../../redux/slices/documentTypesSlice';
 import { RootState } from '../../../../../redux/rootReducer';
 import globalColors from '../../../../../utils/styles/globalColors';
+import { Alert } from '@mui/material';
 
 const entities = [
     {
@@ -112,9 +113,11 @@ const CreateDocumentModal = ({ addDocument, setOpenDriverModal }: Props) => {
                 }
             </Button>
             <Typography className={classes.filesUploaded}>Archivos cargados: {filesContent.length}</Typography>
-            {emptyField && 
-                <div className={classes.emptyMessage}>Falta completar algún campo</div>
-            }
+            <Snackbar className={classes.snackbar} open={emptyField} autoHideDuration={6000} onClose={() => setEmptyField(false)} >
+                <Alert onClose={() => setEmptyField(false)} severity="error" sx={{ width: '100%' }}>
+                    Falta completar algún campo
+                </Alert>
+            </Snackbar>
             <Grid container direction='row' justifyContent='space-between'>
                 <Button variant="contained" className={classes.cancel} onClick={ () => setOpenDriverModal(false)}>Cancelar</Button>
                 <Button variant="contained" color='primary' onClick={_handleOnClick}>Crear</Button>

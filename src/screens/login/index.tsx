@@ -10,7 +10,9 @@ import { AppThunkDispatch } from '../../redux/store';
 import useStyles from './styles';
 import { RootState } from '../../redux/rootReducer';
 import { useHistory } from "react-router-dom";
-import { getRolPath } from '../../utils/functions/getRolePath';
+import { getRolPath } from '../../utils/functions/roles';
+import LogoNutreco from '../../assets/images/logoNutreco.png'
+
 
 const Login = () => {
     const history = useHistory();
@@ -61,16 +63,13 @@ const Login = () => {
             <Grid
                 className={classes.container}
                 container
+                direction= "column"
                 justify="center"
                 alignItems="center"
             >
+                <img className={classes.logoNutreco} src={LogoNutreco}/>
                 <Card className={classes.card}>
                     <CardContent>
-                        <div className={classes.row}>
-                            <Typography className={classes.title}>
-                                Bienvenidos
-                            </Typography>
-                        </div>
                         <div className={classes.row}>
                             <TextField
                                 id="standard-basic"
@@ -138,7 +137,7 @@ const Login = () => {
                             justify="center"
                             alignItems="center"
                         >
-                        <Button variant='outlined' className={classes.forgotPassword}>
+                        <Button variant='contained' className={classes.forgotPassword}>
                             <Typography> Olvidé mi contraseña </Typography>
                         </Button>
                         </Grid>

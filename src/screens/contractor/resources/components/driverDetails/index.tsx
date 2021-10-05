@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Card, Grid, Hidden } from "@material-ui/core"
+import { Button, Card, Grid, Hidden, Typography } from "@material-ui/core"
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import image from '../../../../../assets/images/pratto.jpg'
 import Vehicle from '../vehicleRow'
@@ -12,51 +12,32 @@ import moment from 'moment';
 import { IDriver } from '../../../../../utils/interfaces';
 
 
-const autos = [
-    {
-        'id': '1',
-        'brand': 'BMW',
-        'model': '2015',
-        'plate': 'DIC912',
-    },
-    {
-        'id': '2',
-        'brand': 'Ferrari',
-        'model': '2020',
-        'plate': 'LEC016',
-    },
-    {
-        'id': '3',
-        'brand': 'Aston Martin',
-        'model': '2021',
-        'plate': 'VET005',
-    },
-]
+const autos: string[] = []
 
 const documents = [
     {
         'id':'1',
         'name':'Constancia de cuil',
         'expiration': '01/01/2022',
-        'state':'Vigente'
+        'state':1
     },
     {
         'id':'2',
         'name':'Licencia de conducir',
         'expiration': '30/01/2022',
-        'state':'Vigente'
+        'state':1
     },
     {
         'id':'3',
         'name':'Cedula Verde',
         'expiration': '04/05/2022',
-        'state':'Vigente'
+        'state':0
     },
     {
         'id':'4',
         'name':'Seguro',
         'expiration': '10/01/2022',
-        'state':'Vigente'
+        'state':2
     },
 ]
 
@@ -73,13 +54,12 @@ const DriverDetails = () => {
     return (
         <Grid container className={classes.container} direction='column' justifyContent='space-between'>
             <Card className={classes.cardContainer}>
-                <Grid container justifyContent='space-between' alignItems={'center'}>
+                <Grid container justifyContent='space-between' direction='row' alignItems={'center'}>
                     {/* <Hidden only={["xs","sm"]}>
                         <Grid item xs={2} md={6}>
                             <img src={image} className={classes.image} />
                         </Grid>
                     </Hidden> */}
-                    <Grid item xs={12} md={6}>
                         <div className={classes.dataContainer}>
                             <text className={classes.dataField}> Nombre: </text>
                             <text className={classes.data}> {driver.name} </text>
@@ -95,8 +75,7 @@ const DriverDetails = () => {
                         <div className={classes.dataContainer}>
                             <text className={classes.dataField}> CUIT: </text>
                             <text className={classes.data}> {driver.cuit} </text>
-                        </div> 
-                    </Grid>
+                        </div>
                 </Grid>
                 </Card>
             <Grid container className={classes.container} direction='row' justifyContent='space-between'>
@@ -129,23 +108,27 @@ const DriverDetails = () => {
                                 </text>
                             </Grid>
                         </Grid>
-                        <Grid container direction='column' justifyContent='space-between' >
-                            {autos.map((auto) =>
-                                <Vehicle 
-                                    key={auto.id}
-                                    brand={auto.brand}
-                                    model={auto.model}
-                                    plate={auto.plate}
-                                />)
-                            }
-                        </Grid>
+                        {autos.length === 0 ? 
+                        <Typography className={classes.textCenter}> No ha conducido ningún vehiculo aún</Typography>
+                            :
+                            <Grid container direction='column' justifyContent='space-between' >
+                                {/* {autos.map((auto) =>
+                                    <Vehicle 
+                                        key={auto.id}
+                                        brand={auto.brand}
+                                        model={auto.model}
+                                        plate={auto.plate}
+                                    />)
+                                } */}
+                            </Grid>
+                        }
                     </Card>
                 </Grid>
                 <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
                     <Card className={classes.rightCard}>
                         <Grid container className={classes.titleContainer} justifyContent='space-between'>
                             <text className={classes.textTitle}>
-                                Documentación
+                                Documentación asociada
                             </text>
                             <Button onClick={() => console.log('xd')}>
                                 <AddCircleIcon className={classes.circleIcon}/>
@@ -154,17 +137,17 @@ const DriverDetails = () => {
                         <Grid container justifyContent='space-between'>
                             <Grid item xs={3} className={classes.headerText}>
                                 <text className={classes.headerText}>
-                                    Marca
+                                    Nombre
                                 </text>
                             </Grid>
                             <Grid item xs={3} className={classes.headerText}>
                                 <text className={classes.headerText}>
-                                    Modelo
+                                    Fecha de vencimiento
                                 </text>
                             </Grid>
                             <Grid item xs={3} className={classes.headerText}>
                                 <text className={classes.headerText}>
-                                    Patente
+                                    Estado
                                 </text>
                             </Grid>
                             <Grid item xs={2} className={classes.headerText}>
