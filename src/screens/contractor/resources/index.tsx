@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Button, Card, Grid, Modal, Typography } from '@material-ui/core';
+import { Button, Card, Grid, Modal, Snackbar, Typography } from '@material-ui/core';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import Driver from './components/driverRow';
 import Vehicle from './components/vehicleRow';
@@ -13,6 +13,7 @@ import moment from 'moment';
 import CreateDriverModal from './components/createDriverModal';
 import CreateVehicleModal from './components/createVehicleModal';
 import { IDriver, IVehicle } from '../../../utils/interfaces';
+import { Alert } from '@mui/material';
 
 
 const Resources = () => {
@@ -20,14 +21,33 @@ const Resources = () => {
     const dispatch = useDispatch()
     const [openDriverModal, setOpenDriverModal] = useState(false)
     const [openVehicleModal, setOpenVehicleModal] = useState(false)
+    const [openSnackbarError, setOpenSnackbarError] = useState(false)
+    const [openDriverSuccess, setOpenDriverSuccess] = useState(false)
+    const [openVehicleSuccess, setOpenVehicleSuccess] = useState(false)
     const contractorId = useSelector((state: RootState) => state.user.accountData?.entityId)
     const drivers: IDriver[] = useSelector((state: RootState) => state.resources.drivers.data)
     const vehicles: IVehicle[] = useSelector((state: RootState) => state.resources.vehicles.data)
+    const error = useSelector((state: RootState) => state.resources.drivers.error)
+    const driverSuccess = useSelector((state: RootState) => state.resources.drivers.success)
+    const vehicleSuccess = useSelector((state: RootState) => state.resources.vehicles.success)
 
     useEffect(() => {
         dispatch(getDriver())
         dispatch(getVehicle())
     }, [])
+
+    useEffect(() => {
+        if (!!error)
+            setOpenSnackbarError(true)
+    }, [error])
+
+    useEffect(() => {
+        setOpenDriverSuccess(driverSuccess)
+    }, [driverSuccess])
+
+    useEffect(() => {
+        setOpenDriverSuccess(vehicleSuccess)
+    }, [vehicleSuccess])
     
     const addDriver = (username: string, password: string, name: string, surname: string, cuit: string, birthdate: moment.Moment) => {
         if(!!contractorId){
@@ -119,14 +139,14 @@ const Resources = () => {
                 <Card className={classes.rightCard}>
                     <Grid container className={classes.titleContainer} justifyContent='space-between'>
                         <text className={classes.textTitle}>
-                            Vehiculos asociados
+                            Vehículos asociados
                         </text>
                         <Button onClick={() => setOpenVehicleModal(true)}>
                             <AddCircleIcon className={classes.circleIcon}/>
                         </Button>
                     </Grid>
                     {vehicles.length === 0 ?
-                        <Typography className={classes.textCenter}> No existen vehiculos asociados</Typography>
+                        <Typography className={classes.textCenter}> No existen vehículos asociados</Typography>
                         :
                         <>
                             <Grid container justifyContent='space-between'>
@@ -169,6 +189,21 @@ const Resources = () => {
                             </Grid>
                         </>
                     }
+                    <Snackbar className={classes.snackbar} open={openSnackbarError} autoHideDuration={6000} onClose={() => setOpenSnackbarError(false)} >
+                        <Alert onClose={() => setOpenSnackbarError(false)} severity="error" sx={{ width: '50%' }}>
+                            {error?.message}
+                        </Alert>
+                    </Snackbar>
+                    <Snackbar className={classes.snackbar} open={openDriverSuccess} autoHideDuration={6000} onClose={() => setOpenDriverSuccess(false)} >
+                        <Alert onClose={() => setOpenDriverSuccess(false)} severity="success" sx={{ width: '50%' }}>
+                            Conductor creado con éxito
+                        </Alert>
+                    </Snackbar>
+                    <Snackbar className={classes.snackbar} open={openVehicleSuccess} autoHideDuration={6000} onClose={() => setOpenVehicleSuccess(false)} >
+                        <Alert onClose={() => setOpenVehicleSuccess(false)} severity="success" sx={{ width: '50%' }}>
+                            Vehículo creado con éxito
+                        </Alert>
+                    </Snackbar>
                 </Card>
             </Grid>
         </Grid>

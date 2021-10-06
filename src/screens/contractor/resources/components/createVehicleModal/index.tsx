@@ -17,7 +17,7 @@ const CreateVehicleModal = ({ addVehicle, setOpenVehicleModal }: Props) => {
     const [año, setAño] = useState('')
     
     const _onChangePlate = useCallback((event) => {
-        setPlate(event.target.value);
+        setPlate((event.target.value).toUpperCase());
     }, [setPlate]);
 
     const _onChangeBrand = useCallback((event) => {
@@ -44,8 +44,8 @@ const CreateVehicleModal = ({ addVehicle, setOpenVehicleModal }: Props) => {
 
     return (
         <Grid className={classes.modal} container direction='column' justify='center' alignItems='center'>
-                <Typography className={classes.title}>Crear vehiculo</Typography>
-                <Typography className={classes.subtitle}>Registrar un nuevo vehiculo</Typography>
+                <Typography className={classes.title}>Crear vehículo</Typography>
+                <Typography className={classes.subtitle}>Registrar un nuevo vehículo</Typography>
                 <TextField
                     id="vehicle-plate"
                     className= {classes.textInput}

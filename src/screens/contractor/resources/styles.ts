@@ -82,6 +82,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     button:{
         height: '35px',
+    },
+    snackbar: {
+        width: '75%',
     }
 }));
 

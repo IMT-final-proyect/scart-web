@@ -13,12 +13,14 @@ interface IError {
 interface IDriverData {
    data: IDriver[]
    loading: boolean
+   success: boolean
    error: IError|null
 }
 
 interface IVehicleData {
    data: IVehicle[]
    loading: boolean
+   success: boolean
    error: IError|null
 }
 
@@ -31,11 +33,13 @@ const initialState: UserState = {
     drivers: {
       data:[],
       loading: false,
+      success: false,
       error: null
     },
     vehicles: {
       data:[],
       loading: false,
+      success: false,
       error: null
     }
 };
@@ -61,17 +65,21 @@ const resourcesSlice = createSlice({
       },
       createDriverRequest(state) {
          state.drivers.loading = true;
+         state.drivers.error = initialState.drivers.error;
+         state.drivers.success = initialState.drivers.success;
       },
       createDriverSuccess(state, action: any) {
          const { payload } = action
          state.drivers.data = ({...state.drivers.data, [payload.id]: {...payload}})
          state.drivers.loading = false;
+         state.drivers.success = true;
          state.drivers.error = initialState.drivers.error
       },
       createDriverFailure(state, action: any) {
          const { payload } = action
          state.drivers.loading = false;
          state.drivers.error = payload;
+         state.drivers.success = initialState.drivers.success;
       },
       getVehiclesRequest(state) {
          state.vehicles.loading = true;
@@ -90,17 +98,21 @@ const resourcesSlice = createSlice({
       },
       createVehicleRequest(state) {
          state.vehicles.loading = true;
+         state.vehicles.error = initialState.vehicles.error;
+         state.vehicles.success = initialState.vehicles.success;
       },
       createVehicleSuccess(state, action: any) {
          const { payload } = action
          state.vehicles.data = ({...state.vehicles.data, [payload.id]: {...payload}})
          state.vehicles.loading = false;
+         state.vehicles.success = true;
          state.vehicles.error = initialState.vehicles.error
       },
       createVehicleFailure(state, action: any) {
          const { payload } = action
          state.vehicles.loading = false;
          state.vehicles.error = payload;
+         state.vehicles.success = initialState.vehicles.success;
       }
    },
 });

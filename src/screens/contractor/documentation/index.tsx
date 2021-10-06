@@ -6,7 +6,7 @@ import DocumentRow from './components/documentRow/DocumentRow';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../redux/rootReducer';
 import { createDocument, getContractorDocuments } from '../../../redux/slices/contractorSlices/documentsSlice';
-import CreateDocumentModal from './components/CreateDocumentModal';
+import CreateContractorDocumentModal from './components/CreateContractorDocumentModal';
 import { IDocument } from '../../../utils/interfaces';
 
 const Documentacion = () => {
@@ -21,8 +21,8 @@ const Documentacion = () => {
         dispatch(getContractorDocuments(accountData?.entityId))
     }, [])
 
-    const addDocument = (expirationDate: moment.Moment, type: number, entityType: number, entityId: number) => {
-        dispatch(createDocument(expirationDate, type, entityType, entityId))
+    const addDocument = (expirationDate: moment.Moment, type: number, entityType: number, entityId: number, images: string[]) => {
+        dispatch(createDocument(expirationDate, type, entityType, entityId, images))
         setOpenModal(false)
     }
 
@@ -30,7 +30,7 @@ const Documentacion = () => {
     return (
         <>
         <Modal open={openModal} onClose={() => setOpenModal(false)}>
-            <CreateDocumentModal
+            <CreateContractorDocumentModal
                 setOpenDriverModal={setOpenModal}
                 addDocument={addDocument}
             />

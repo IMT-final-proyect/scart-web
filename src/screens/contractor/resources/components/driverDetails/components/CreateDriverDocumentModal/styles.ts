@@ -1,6 +1,6 @@
 
 import { makeStyles, Theme } from '@material-ui/core';
-import globalColors from '../../../../../utils/styles/globalColors';
+import globalColors from '../../../../../../../utils/styles/globalColors';
 
 const useStyles = makeStyles((theme: Theme) => ({
     textInput: {
@@ -31,7 +31,11 @@ const useStyles = makeStyles((theme: Theme) => ({
         marginTop: '3%',
         fontSize: 25,
         fontWeight: 'bold',
-        marginBottom: '10%'
+    },
+    subtitle: {
+        marginTop: '3%',
+        fontSize: 20,
+        marginBottom: '5%'
     },
     cancel: {
         padding: '2.5%',

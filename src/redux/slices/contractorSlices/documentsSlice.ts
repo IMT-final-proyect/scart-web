@@ -135,19 +135,23 @@ export const getContractorDocuments = (contractorId: number|undefined): AppThunk
 };
 
 export const createDocument = (
-   expirationDate: moment.Moment,
-   type: number,
-   entityType: number,
-   entityId: number): AppThunk => async (dispatch) => {
+      expirationDate: moment.Moment,
+      type: number,
+      entityType: number,
+      entityId: number,
+      images: string[]
+   ): AppThunk => async (dispatch) => {
    dispatch(createDocumentRequest());
    try{
       const response: AxiosResponse = await Axios.post('/documents',{
          expirationDate,
-         state: 0,
+         state: 1,
          type,
          entityId,
-         entityType
+         entityType,
+         photos: images
       });
+      
       switch(getRolName(entityType)){
          case contractor: {
             dispatch(createContractorDocumentSuccess(response.data));

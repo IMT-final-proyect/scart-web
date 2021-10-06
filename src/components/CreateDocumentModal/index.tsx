@@ -8,13 +8,13 @@ import AttachFileIcon from '@mui/icons-material/AttachFile';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useFilePicker } from 'use-file-picker';
 
-import CustomSelect from '../../../../../components/customSelect';
+import CustomSelect from '../customSelect';
 import CustomSelectObject from '../customSelectObject' 
-import { getRolNumber, getRolNumero } from '../../../../../utils/functions/roles';
+import { getRolNumero } from '../../utils/functions/roles';
 import { useDispatch, useSelector } from 'react-redux';
-import { getDocumentTypesByEntity } from '../../../../../redux/slices/documentTypesSlice';
-import { RootState } from '../../../../../redux/rootReducer';
-import globalColors from '../../../../../utils/styles/globalColors';
+import { getDocumentTypesByEntity } from '../../redux/slices/documentTypesSlice';
+import { RootState } from '../../redux/rootReducer';
+import globalColors from '../../utils/styles/globalColors';
 import { Alert } from '@mui/material';
 
 const entities = [
@@ -47,7 +47,7 @@ const CreateDocumentModal = ({ addDocument, setOpenDriverModal }: Props) => {
     const [openFileSelector, { filesContent, loading, errors, plainFiles, clear }] = useFilePicker({
     multiple: true,
     readAs: 'DataURL',
-    accept: ['.png', '.pdf', '.rar', '.zip', '.jpeg', '.jpg'],
+    accept: ['.png', '.pdf', '.jpeg', '.jpg'],
     });
 
     useEffect(() => {
@@ -68,8 +68,6 @@ const CreateDocumentModal = ({ addDocument, setOpenDriverModal }: Props) => {
             (Object.keys(documentTypes).map((key: string) => {
                 if (documentTypes[parseInt(key)].name === documentType) typeId = documentTypes[parseInt(key)].id
             }))
-            console.log('contractord: ',contractorId);
-            
             if(!!typeId && !!contractorId){
                 addDocument(moment(expirationDate), typeId, getRolNumero(entityType), contractorId)
                 setOpenDriverModal(false)
