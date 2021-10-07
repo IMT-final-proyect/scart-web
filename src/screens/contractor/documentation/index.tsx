@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Card, Grid, Modal, Typography } from '@material-ui/core';
+import { Button, Card, Grid, Modal, } from '@material-ui/core';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import useStyles from './styles';
 import DocumentRow from './components/documentRow/DocumentRow';
@@ -8,6 +8,8 @@ import { RootState } from '../../../redux/rootReducer';
 import { createDocument, getContractorDocuments } from '../../../redux/slices/contractorSlices/documentsSlice';
 import CreateContractorDocumentModal from './components/CreateContractorDocumentModal';
 import { IDocument } from '../../../utils/interfaces';
+import { ROUTES } from '../navigation/routes';
+import { Link } from 'react-router-dom';
 
 const Documentacion = () => {
     const classes = useStyles();
@@ -46,16 +48,16 @@ const Documentacion = () => {
                     </Button>
                 </Grid>
                 {documents.length === 0 ?
-                    <Typography className={classes.textCenter}> No hay documentos asociados</Typography>
+                    <text className={classes.textCenter}> No hay documentos asociados</text>
                     :
                     <>
                         <Grid container justifyContent='space-between'>
-                            <Grid item xs={4} className={classes.headerText}>
+                            <Grid item xs={5} className={classes.headerText}>
                                 <text className={classes.headerText}>
                                     Documento
                                 </text>
                             </Grid>
-                            <Grid item xs={2} className={classes.headerText}>
+                            <Grid item xs={3} className={classes.headerText}>
                                 <text className={classes.headerText}>
                                     Recurso
                                 </text>
@@ -70,21 +72,23 @@ const Documentacion = () => {
                                     Estado
                                 </text>
                             </Grid>
-                            <Grid item xs={2} className={classes.headerText}>
-                                <text className={classes.headerText}>
-                                    Acciones
-                                </text>
-                            </Grid>
                         </Grid>
                         <Grid container direction='column' justifyContent='space-between' >
                             {Object.keys(documents).map((key: string, i: any) =>
+                            <Button
+                                className={classes.button}
+                                component={Link}
+                                to={ROUTES.root+ROUTES.documentacion+'/'+documents[parseInt(key)].id}
+                            >  
                                 <DocumentRow 
                                     key={documents[parseInt(key)].id}
                                     type={documents[parseInt(key)].type}
                                     contractor={userData?.name}
                                     expiration={documents[parseInt(key)].expirationDate}
                                     state={documents[parseInt(key)].state}
+                                    images={documents[parseInt(key)].photos}
                                 />
+                            </Button>
                             )}
                         </Grid>
                     </>

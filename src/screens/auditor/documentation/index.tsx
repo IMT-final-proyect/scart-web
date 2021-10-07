@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Button, Card, Grid } from '@material-ui/core';
+import { Button, Card, Grid, } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 
 import useStyles from './styles';

@@ -60,11 +60,15 @@ const useStyles = makeStyles((theme: Theme) => ({
     arrowsContainer:{
         marginRight: '3%',
     },
-    button:{
-        height: '35px',
-    },
     textCenter: {
         textAlign: 'center'
+    },
+    button:{
+        height: '35px',
+        textTransform: 'none',
+        paddingTop: '2%',
+        paddingBottom: '2%',
+        alignItems: 'center',
     },
 }));
 

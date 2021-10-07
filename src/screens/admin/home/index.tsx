@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, Grid } from '@material-ui/core'
+import { Card, Grid, } from '@material-ui/core'
 import PersonIcon from '@mui/icons-material/Person';
 
 import useStyles from './styles'

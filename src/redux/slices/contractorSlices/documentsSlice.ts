@@ -30,6 +30,7 @@ interface IEntitiesDocuments {
     contractor: IContractorDocuments
     drivers: IDriverDocuments
     vehicles: IVehicleDocuments
+    activeDocument: IDocument
     loading: boolean
     error: IError|null
 }
@@ -55,6 +56,20 @@ const initialState: IEntitiesDocuments = {
         loading: false,
         error: null
     },
+    activeDocument: {
+      id: -1,
+      entityId: -1,
+      entityType: -1,
+      type: {
+         id: -1,
+         name: '',
+         appliesTo: -1,
+         severity: '',
+      },
+      state: -1,
+      expirationDate: moment(1),
+      photos: []
+    },
     loading: false,
     error: null
 };
@@ -77,6 +92,21 @@ const documentsSlice = createSlice({
          state.contractor.data = initialState.contractor.data;
          state.contractor.loading = false;
          state.contractor.error = payload;
+      },
+      getDocumentByIdRequest(state) {
+         state.loading = true
+      },
+      getDocumentByIdSuccess(state, action: any) {
+         const { payload } = action
+         state.activeDocument = payload
+         state.loading = false
+         state.error = initialState.error
+      },
+      getDocumentByIdFailure(state, action: any) {
+         const { payload } = action
+         state.activeDocument = initialState.activeDocument
+         state.error = payload
+         state.loading = false
       },
       createDocumentRequest(state) {
          state.loading = true;
@@ -111,6 +141,9 @@ const {
     getContractorDocumentsSuccess,
     getContractorDocumentsRequest,
     getContractorDocumentsFailure,
+    getDocumentByIdRequest,
+    getDocumentByIdSuccess,
+    getDocumentByIdFailure,
     createDocumentRequest,
     createContractorDocumentSuccess,
     createDriverDocumentSuccess,
@@ -131,6 +164,17 @@ export const getContractorDocuments = (contractorId: number|undefined): AppThunk
    }
    catch(error){
       dispatch(getContractorDocumentsFailure(error.response.data));
+   }
+};
+
+export const getDocumentById = (documentId: number): AppThunk => async (dispatch) => {
+   dispatch(getDocumentByIdRequest());
+   try{
+      const response: AxiosResponse = await Axios.get(`/documents/${documentId}`);
+      dispatch(getDocumentByIdSuccess(response.data));
+   }
+   catch(error){
+      dispatch(getDocumentByIdFailure(error.response.data));
    }
 };
 

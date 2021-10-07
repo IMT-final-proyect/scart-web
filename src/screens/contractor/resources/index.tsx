@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Button, Card, Grid, Modal, Snackbar, Typography } from '@material-ui/core';
+import { Button, Card, Grid, Modal, Snackbar, } from '@material-ui/core';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import Driver from './components/driverRow';
 import Vehicle from './components/vehicleRow';
@@ -89,7 +89,7 @@ const Resources = () => {
                         </Button>
                     </Grid>
                     {drivers.length === 0 ?
-                        <Typography className={classes.textCenter}> No existen conductores asociados</Typography>
+                        <text className={classes.textCenter}> No existen conductores asociados</text>
                         :
                         <>
                             <Grid container justifyContent='space-between'>
@@ -117,12 +117,12 @@ const Resources = () => {
                             <Grid container direction='column' justifyContent='space-between' >
                                 {Object.keys(drivers).map((key: string, i: any) =>
                                     <Button
+                                        key={i}
                                         className={classes.button}
                                         component={Link}
                                         to={ROUTES.root+ROUTES.driver+'/'+drivers[parseInt(key)].id}
                                     >  
                                         <Driver 
-                                            key={i}
                                             name={drivers[parseInt(key)].name}
                                             surname={drivers[parseInt(key)].surname}
                                             document={drivers[parseInt(key)].cuit}
@@ -146,7 +146,7 @@ const Resources = () => {
                         </Button>
                     </Grid>
                     {vehicles.length === 0 ?
-                        <Typography className={classes.textCenter}> No existen vehículos asociados</Typography>
+                        <text className={classes.textCenter}> No existen vehículos asociados</text>
                         :
                         <>
                             <Grid container justifyContent='space-between'>
@@ -174,12 +174,12 @@ const Resources = () => {
                             <Grid container direction='column'>
                                 {Object.keys(vehicles).map((key: string, i: any) =>
                                     <Button
+                                        key={i}
                                         className={classes.button}
                                         component={Link}
                                         to={ROUTES.root+ROUTES.vehicle+'/'+vehicles[parseInt(key)].id}
                                     >  
                                         <Vehicle 
-                                            key={i}
                                             brand={vehicles[parseInt(key)].brand}
                                             model={vehicles[parseInt(key)].model}
                                             plate={vehicles[parseInt(key)].plate}

@@ -21,11 +21,12 @@ export interface IDocument {
    type: IDocumentType;
    state: number;
    expirationDate: moment.Moment;
+   photos: string[];
 }
 
 export interface IDocumentType {
-   id: number
-   name: string
-   appliesTo: number
-   severity: string
+   id: number;
+   name: string;
+   appliesTo: number;
+   severity: string;
 }

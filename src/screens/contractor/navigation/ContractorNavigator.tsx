@@ -14,6 +14,7 @@ import DriverDetails from '../resources/components/driverDetails'
 import VehicleDetails from '../resources/components/vehicleDetails'
 import Documentation from '../documentation';
 import useStyles from './styles'
+import DocumentDetails from '../../../components/documentDetails';
 
 const ContractorNavigator = () => {
     const classes = useStyles();
@@ -80,6 +81,7 @@ const ContractorNavigator = () => {
             <Route exact path={ROUTES.root+ROUTES.documentacion} component={Documentation} />
             <Route exact path={ROUTES.root+ROUTES.driver+'/:id'} component={DriverDetails} />
             <Route exact path={ROUTES.root+ROUTES.vehicle+'/:id'} component={VehicleDetails} />
+            <Route exact path={ROUTES.root+ROUTES.documentacion+'/:id'} component={DocumentDetails} />
             <Route path={ROUTES.root} component= {Home} />
         </Switch>
     </BrowserRouter>

@@ -1,4 +1,4 @@
-import { Button, Grid, Snackbar, TextField, Typography } from '@material-ui/core';
+import { Button, Grid, Snackbar, TextField, } from '@material-ui/core';
 import useStyles from './styles';
 import { useCallback, useState } from 'react';
 import { Alert } from '@mui/material';
@@ -44,8 +44,8 @@ const CreateVehicleModal = ({ addVehicle, setOpenVehicleModal }: Props) => {
 
     return (
         <Grid className={classes.modal} container direction='column' justify='center' alignItems='center'>
-                <Typography className={classes.title}>Crear vehículo</Typography>
-                <Typography className={classes.subtitle}>Registrar un nuevo vehículo</Typography>
+                <text className={classes.title}>Crear vehículo</text>
+                <text className={classes.subtitle}>Registrar un nuevo vehículo</text>
                 <TextField
                     id="vehicle-plate"
                     className= {classes.textInput}

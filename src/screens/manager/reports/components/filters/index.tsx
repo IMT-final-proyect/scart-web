@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Card, Grid, Typography } from "@material-ui/core"
+import { Button, Card, Grid, } from '@material-ui/core'
 import MomentUtils from '@date-io/moment';
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
 import moment from 'moment';
@@ -100,7 +100,7 @@ const Filters = () => {
                     <Grid item xs={6} md={2} className={classes.container}>
                         <Grid container justifyContent='center' alignItems='center'>
                             <Button variant="contained" color="primary" onClick={handleSearch}>
-                                <Typography>Search</Typography>
+                                <text>Search</text>
                                 <SearchIcon/>
                             </Button>
                         </Grid>

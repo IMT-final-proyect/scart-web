@@ -1,6 +1,6 @@
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import MomentUtils from '@date-io/moment';
-import { Button, Grid, Snackbar, TextField, Typography } from '@material-ui/core';
+import { Button, Grid, Snackbar, TextField, } from '@material-ui/core';
 import useStyles from './styles';
 import { useCallback, useState } from 'react';
 import moment from 'moment';
@@ -67,8 +67,8 @@ const CreateDriverModal = ({ addDriver, setOpenDriverModal }: Props) => {
 
     return (
         <Grid className={classes.modal} container direction='column' justify='center' alignItems='center'>
-                <Typography className={classes.title}>Crear conductor</Typography>
-                <Typography className={classes.subtitle}>Registrar un nuevo conductor</Typography>
+                <text className={classes.title}>Crear conductor</text>
+                <text className={classes.subtitle}>Registrar un nuevo conductor</text>
                 <TextField
                     id="driver-username"
                     className= {classes.textInput}

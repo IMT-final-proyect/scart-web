@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { Grid, Card, Typography, Button, TextField, InputAdornment, IconButton } from '@material-ui/core';
+import { Grid, Card, Button, TextField, InputAdornment, IconButton } from '@material-ui/core';
 import CardContent from '@material-ui/core/CardContent';
 import ClearIcon from '@material-ui/icons/Clear';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -126,9 +126,9 @@ const Login = () => {
                             <CircularProgress />
                         :
                             <Button variant="contained" className={classes.button} onClick={_onLogIn} >
-                                <Typography className={classes.button}>
+                                <text className={classes.button}>
                                     Iniciar Sesion
-                                </Typography>
+                                </text>
                             </Button>
                         }
                         </Grid>
@@ -138,7 +138,7 @@ const Login = () => {
                             alignItems="center"
                         >
                         <Button variant='contained' className={classes.forgotPassword}>
-                            <Typography> Olvidé mi contraseña </Typography>
+                            <text> Olvidé mi contraseña </text>
                         </Button>
                         </Grid>
                     </CardContent>

@@ -1,7 +1,5 @@
 import React, { useEffect } from 'react';
-
-import { Typography } from '@material-ui/core';
-import { Card } from '@material-ui/core';
+import { Card, Typography } from '@material-ui/core';
 import DoneIcon from '@material-ui/icons/Done';
 import CloseIcon from '@material-ui/icons/Close';
 import TimerIcon from '@material-ui/icons/Timer';

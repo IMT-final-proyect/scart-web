@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 
-import { Button, Card, Grid, Modal, Typography } from "@material-ui/core"
+import { Button, Card, Grid, Modal, Typography } from '@material-ui/core'
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 
 import Vehicle from '../vehicleRow';
-import Document from '../documentRow';
+import Document from '../../../../../components/documentDetails/components/documentRow';
 import useStyles from './styles';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -89,41 +89,43 @@ const VehicleDetails = () => {
                                     Conductores
                                 </text>
                             </Grid>
-                            <Grid container justifyContent='space-between'>
-                                <Grid item xs={3} className={classes.headerText}>
-                                    <text className={classes.headerText}>
-                                        Marca
-                                    </text>
-                                </Grid>
-                                <Grid item xs={3} className={classes.headerText}>
-                                    <text className={classes.headerText}>
-                                        Modelo
-                                    </text>
-                                </Grid>
-                                <Grid item xs={3} className={classes.headerText}>
-                                    <text className={classes.headerText}>
-                                        Patente
-                                    </text>
-                                </Grid>
-                                <Grid item xs={2} className={classes.headerText}>
-                                    <text className={classes.headerText}>
-                                        Acciones
-                                    </text>
-                                </Grid>
-                            </Grid>
                             {conductores.length === 0 ? 
-                            <Typography className={classes.textCenter}> No ha sido utilizado por ningún conductor </Typography>
+                            <Typography className={classes.textCenter}> El vehículo no ha sido utilizado por ningún conductor </Typography>
                                 :
-                                <Grid container direction='column' justifyContent='space-between' >
-                                    {/* {conductores.map((conductor) =>
-                                        <Vehicle 
-                                            key={conductor.id}
-                                            brand={conductor.brand}
-                                            model={conductor.model}
-                                            plate={conductor.plate}
-                                        />)
-                                    } */}
-                                </Grid>
+                                <>
+                                    <Grid container justifyContent='space-between'>
+                                        <Grid item xs={3} className={classes.headerText}>
+                                            <text className={classes.headerText}>
+                                                Marca
+                                            </text>
+                                        </Grid>
+                                        <Grid item xs={3} className={classes.headerText}>
+                                            <text className={classes.headerText}>
+                                                Modelo
+                                            </text>
+                                        </Grid>
+                                        <Grid item xs={3} className={classes.headerText}>
+                                            <text className={classes.headerText}>
+                                                Patente
+                                            </text>
+                                        </Grid>
+                                        <Grid item xs={2} className={classes.headerText}>
+                                            <text className={classes.headerText}>
+                                                Acciones
+                                            </text>
+                                        </Grid>
+                                    </Grid>
+                                    <Grid container direction='column' justifyContent='space-between' >
+                                        {/* {conductores.map((conductor) =>
+                                            <Vehicle 
+                                                key={conductor.id}
+                                                brand={conductor.brand}
+                                                model={conductor.model}
+                                                plate={conductor.plate}
+                                            />)
+                                        } */}
+                                    </Grid>
+                                </>
                             }
                         </Card>
                     </Grid>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Button, Card, Grid, Hidden, Modal, Typography } from "@material-ui/core"
+import { Button, Card, Grid, Hidden, Modal, Typography, } from '@material-ui/core'
 import AddCircleIcon from '@material-ui/icons/AddCircle';
-import Document from '../documentRow';
+import Document from '../../../../../components/documentDetails/components/documentRow';
 import useStyles from './styles' 
 import { useParams } from 'react-router-dom';
 import { RootState } from '../../../../../redux/rootReducer';
@@ -98,36 +98,38 @@ const DriverDetails = () => {
                                     Vehiculos conducidos
                                 </text>
                             </Grid>
-                            <Grid container justifyContent='space-between'>
-                                <Grid item xs={4} className={classes.headerText}>
-                                    <text className={classes.headerText}>
-                                        Marca
-                                    </text>
-                                </Grid>
-                                <Grid item xs={4} className={classes.headerText}>
-                                    <text className={classes.headerText}>
-                                        Modelo
-                                    </text>
-                                </Grid>
-                                <Grid item xs={4} className={classes.headerText}>
-                                    <text className={classes.headerText}>
-                                        Patente
-                                    </text>
-                                </Grid>
-                            </Grid>
                             {autos.length === 0 ? 
-                            <Typography className={classes.textCenter}> No ha conducido ningún vehiculo aún</Typography>
+                            <Typography className={classes.textCenter}> El conductor no ha conducido ningún vehiculo aún</Typography>
                                 :
-                                <Grid container direction='column' justifyContent='space-between' >
-                                    {/* {autos.map((auto) =>
-                                        <Vehicle 
-                                            key={auto.id}
-                                            brand={auto.brand}
-                                            model={auto.model}
-                                            plate={auto.plate}
-                                        />)
-                                    } */}
-                                </Grid>
+                                <>
+                                    <Grid container justifyContent='space-between'>
+                                        <Grid item xs={4} className={classes.headerText}>
+                                            <text className={classes.headerText}>
+                                                Marca
+                                            </text>
+                                        </Grid>
+                                        <Grid item xs={4} className={classes.headerText}>
+                                            <text className={classes.headerText}>
+                                                Modelo
+                                            </text>
+                                        </Grid>
+                                        <Grid item xs={4} className={classes.headerText}>
+                                            <text className={classes.headerText}>
+                                                Patente
+                                            </text>
+                                        </Grid>
+                                    </Grid>
+                                    <Grid container direction='column' justifyContent='space-between' >
+                                        {/* {autos.map((auto) =>
+                                            <Vehicle 
+                                                key={auto.id}
+                                                brand={auto.brand}
+                                                model={auto.model}
+                                                plate={auto.plate}
+                                            />)
+                                        } */}
+                                    </Grid>
+                                </>
                             }
                         </Card>
                     </Grid>

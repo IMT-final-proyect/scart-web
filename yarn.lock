@@ -9569,6 +9569,11 @@ react-app-polyfill@^2.0.0:
     regenerator-runtime "^0.13.7"
     whatwg-fetch "^3.4.1"
 
+react-base64-downloader@^2.1.7:
+  version "2.1.7"
+  resolved "https://registry.yarnpkg.com/react-base64-downloader/-/react-base64-downloader-2.1.7.tgz#f29b5ab0b29ec22ccac3d3007795a65fb76c6dcf"
+  integrity sha512-2ZNpjoTxH+DAX44YgA1vCBbOU74Qo14+BeCWyMq705xy67rohJtu0vVO4IyOqXVoXmpZcibaPnl9rzLijzAxlQ==
+
 react-dev-utils@^11.0.3:
   version "11.0.4"
   resolved "https://registry.yarnpkg.com/react-dev-utils/-/react-dev-utils-11.0.4.tgz#a7ccb60257a1ca2e0efe7a83e38e6700d17aa37a"

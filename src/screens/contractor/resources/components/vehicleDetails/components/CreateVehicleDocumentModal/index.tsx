@@ -2,7 +2,7 @@
 
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import MomentUtils from '@date-io/moment';
-import { Button, Grid, Snackbar, Typography } from '@material-ui/core';
+import { Button, Grid, Snackbar, } from '@material-ui/core';
 import useStyles from './styles';
 import { useEffect, useState } from 'react';
 import moment from 'moment';
@@ -68,8 +68,8 @@ const CreateVehicleDocumentModal = ({ addDocument, setOpenDocumentModal }: Props
 
     return (
         <Grid className={classes.modal} container direction='column' justify='center' alignItems='center'>
-            <Typography className={classes.title}>Cargar documentación</Typography>
-            <Typography className={classes.subtitle}>Vehículo</Typography>
+            <text className={classes.title}>Cargar documentación</text>
+            <text className={classes.subtitle}>Vehículo</text>
             {documentTypes &&
                 <CustomSelectObject value={documentType} placeholder='Documento' setValue={setDocumentType} data={documentTypes}/>
             }
@@ -98,7 +98,7 @@ const CreateVehicleDocumentModal = ({ addDocument, setOpenDocumentModal }: Props
                 </>
                 }
             </Button>
-            <Typography className={classes.filesUploaded}>Archivos cargados: {filesContent.length}</Typography>
+            <text className={classes.filesUploaded}>Archivos cargados: {filesContent.length}</text>
             <Snackbar className={classes.snackbar} open={emptyField} autoHideDuration={6000} onClose={() => setEmptyField(false)} >
                 <Alert onClose={() => setEmptyField(false)} severity="error" sx={{ width: '100%' }}>
                     Falta completar algún campo
