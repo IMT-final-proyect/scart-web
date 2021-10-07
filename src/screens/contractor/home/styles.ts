@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     card:{
         flex: 1,
-        marginTop: '10%',
+        marginTop: '65px',
         marginInline: '10%',
     },
     counterContainer:{

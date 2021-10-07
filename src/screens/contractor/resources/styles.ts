@@ -15,15 +15,11 @@ const useStyles = makeStyles((theme: Theme) => ({
         paddingRight: '2.5%',
         paddingBottom: '2.5%',
         [theme.breakpoints.up('xs')]: {
-            width: '130%',
             marginLeft: '2.5%',
+            marginRight: '2.5%'
         },
-        [theme.breakpoints.up('sm')]: {
-            width: '730px',
-        },
-        [theme.breakpoints.up('md')]: {
-            width: '95%',
-            marginRight: '2.5%',
+        [theme.breakpoints.down('sm')]: {
+            marginTop: '17%'
         },
     },
     leftCard:{
@@ -33,14 +29,8 @@ const useStyles = makeStyles((theme: Theme) => ({
         paddingLeft: '2.5%',
         paddingBottom: '2.5%',
         [theme.breakpoints.up('xs')]: {
-            width: '130%',
             marginLeft: '2.5%',
-        },
-        [theme.breakpoints.up('sm')]: {
-            width: '730px',
-        },
-        [theme.breakpoints.up('md')]: {
-            width: '95%',
+            marginRight: '2.5%'
         },
         [theme.breakpoints.down('sm')]: {
             marginTop: '17%'
@@ -81,7 +71,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         marginRight: '3%',
     },
     button:{
-        height: '35px',
+        height: '50px',
     },
     snackbar: {
         width: '75%',

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { Grid, Card, Button, TextField, InputAdornment, IconButton } from '@material-ui/core';
+import { Grid, Card, Button, TextField, InputAdornment, IconButton, Hidden } from '@material-ui/core';
 import CardContent from '@material-ui/core/CardContent';
 import ClearIcon from '@material-ui/icons/Clear';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -67,14 +67,15 @@ const Login = () => {
                 justify="center"
                 alignItems="center"
             >
-                <img className={classes.logoNutreco} src={LogoNutreco}/>
+                <Hidden only={["xs","sm"]}>
+                    <img className={classes.logoNutreco} src={LogoNutreco}/>
+                </Hidden>
                 <Card className={classes.card}>
                     <CardContent>
                         <div className={classes.row}>
                             <TextField
                                 id="standard-basic"
                                 className= {classes.textInput}
-                                size="small"
                                 label="Usuario/CUIT"
                                 value={username}
                                 onChange={_onChangeUsername}
@@ -96,7 +97,7 @@ const Login = () => {
                         <div className={classes.row}>
                         <TextField
                             id="standard-basic"
-                            size="small"
+                            className= {classes.textInput}
                             type={showPassword ? 'text' : 'password'}
                             label="Contraseña"
                             value={password}

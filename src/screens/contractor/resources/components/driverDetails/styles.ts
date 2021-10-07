@@ -8,25 +8,11 @@ const useStyles = makeStyles((theme: Theme) => ({
     cardContainer:{
         marginLeft: '2.5%',
         marginRight: '2.5%',
+        marginTop: '60px',
         paddingLeft: '2.5%',
         paddingRight: '2.5%',
         paddingBottom: '1%',
         paddingTop: '1%',
-        [theme.breakpoints.up('xs')]: {
-            width: '135%',
-            marginTop: '47px',
-            marginLeft: 'auto',
-            marginRight: 'auto',
-        },
-        [theme.breakpoints.up('sm')]: {
-            width: '100%',
-            marginTop: '47px',
-        },
-        
-        [theme.breakpoints.up('md')]: {
-            marginTop: '5%',
-            width: '95%',
-        },
     },
     dataContainer:{
         marginBottom: '1%',
@@ -66,15 +52,9 @@ const useStyles = makeStyles((theme: Theme) => ({
         paddingLeft: '2.5%',
         paddingBottom: '2.5%',
         [theme.breakpoints.up('xs')]: {
-            width: '130%',
             marginLeft: '2.5%',
+            marginRight: '2.5%',
         },
-        [theme.breakpoints.up('sm')]: {
-            width: '730px',
-        },
-        [theme.breakpoints.up('md')]: {
-            width: '95%',
-        }
     },
     rightCard:{
         marginTop: '5%',
@@ -82,15 +62,8 @@ const useStyles = makeStyles((theme: Theme) => ({
         paddingRight: '2.5%',
         paddingBottom: '2.5%',
         [theme.breakpoints.up('xs')]: {
-            width: '136%',
-            marginLeft: '2.5%',
-        },
-        [theme.breakpoints.up('sm')]: {
-            width: '730px',
-        },
-        [theme.breakpoints.up('md')]: {
-            width: '95%',
             marginRight: '2.5%',
+            marginLeft: '2.5%',
         },
     },
     textTitle:{
