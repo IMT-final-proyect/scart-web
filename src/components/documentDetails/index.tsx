@@ -13,13 +13,16 @@ import AttachFileIcon from '@mui/icons-material/AttachFile';
 import DownloadIcon from '@mui/icons-material/Download';
 import { getDocumentById } from '../../redux/slices/contractorSlices/documentsSlice';
 import globalColors from '../../utils/styles/globalColors';
+import { getStateColor, getStateName } from '../../utils/functions/states';
 
 const DocumentDetails = () => {
-    const classes = useStyles();
+    const { activeDocument, loading, error } = useSelector((state: RootState) => state.documents)
+    const stateName = getStateName(activeDocument.state)
+    const color = getStateColor(stateName)
+    const classes = useStyles({color});    
     const dispatch = useDispatch()
     const params: any = useParams();
     const [image, setImage] = useState('')
-    const { activeDocument, loading, error } = useSelector((state: RootState) => state.documents)
 
     useEffect(() => {
         dispatch(getDocumentById(params.id))        
@@ -29,7 +32,7 @@ const DocumentDetails = () => {
         <>
         <Grid container className={classes.container} direction='column' justifyContent='space-between'>
             <Card className={classes.cardContainer}>
-                <Grid container justifyContent='space-between' direction='column' alignItems='flex-start'>
+                <Grid container direction='column' alignItems='flex-start'>
                         <div className={classes.dataContainer}>
                             <text className={classes.dataField}> Documento: </text>
                             <text className={classes.data}> {activeDocument?.type?.name} </text>
@@ -42,13 +45,13 @@ const DocumentDetails = () => {
                             <text className={classes.dataField}> Fecha de vencimiento: </text>
                             <text className={classes.data}> {moment(activeDocument?.expirationDate).format('DD/MM/YY')} </text>
                         </div>
-                        <div className={classes.dataContainer}>
+                        <div className={classes.stateContainer}>
                             <text className={classes.dataField}> Estado: </text>
-                            <text className={classes.data}> {activeDocument?.state} </text>
+                            <text className={classes.stateColor}> {stateName} </text>
                         </div>
                 </Grid>
             </Card>
-            <Grid container className={classes.container} direction='row' justifyContent='space-between'>
+            <Grid container className={classes.bottomCardContainer} direction='row' justifyContent='space-between'>
                 <Grid item xs={12} lg={3}>
                     <Card className={classes.leftCard}>
                         <Grid container className={classes.titleContainer} justifyContent='space-between'>

@@ -1,29 +1,37 @@
 import { makeStyles, Theme } from '@material-ui/core';
 import globalColors from '../../utils/styles/globalColors';
 
-const useStyles = makeStyles((theme: Theme) => ({
+interface Props {
+    color: string
+}
+
+const useStyles = makeStyles<Theme, Props>((theme: Theme) => ({
     container:{
         flexGrow: 1,
-        marginTop: '2%',
         paddingBottom: '1%',
+        marginTop: '65px',
+    },
+    bottomCardContainer: {
+        flexGrow: 1,
+        marginTop: '2%',
+        [theme.breakpoints.down('md')]: {
+            marginTop: '5%'
+        },
     },
     cardContainer:{
         padding: '2%',
-        [theme.breakpoints.up('xs')]: {
-            marginTop: '47px',
-            marginLeft: '2.5%',
-            marginRight: '2.5%',
-        },
-        [theme.breakpoints.up('sm')]: {
-            marginTop: '47px',
-        },
-        [theme.breakpoints.up('md')]: {
-            marginTop: '5%',
-        },
+        paddingBottom: '4%',
+        marginLeft: '2.5%',
+        marginRight: '2.5%',
     },
     dataContainer:{
         marginBottom: '1%',
         textAlign: 'start'
+    },
+    stateContainer: {
+        display: 'flex',
+        flex: 'row',
+        alignItems: 'flex-start'
     },
     dataField:{
         marginBottom: '10%',
@@ -33,6 +41,16 @@ const useStyles = makeStyles((theme: Theme) => ({
     data:{
         fontSize: 16,
         fontWeight: 'bold'
+    },
+    stateColor: {
+        backgroundColor: ({color}) => color,
+        borderRadius: 20,
+        fontWeight: 'bold',
+        marginLeft: '5%',
+        paddingLeft: '8%',
+        paddingRight: '8%',
+        paddingTop: '2%',
+        paddingBottom: '2%'
     },
     titleContainer:{
         justifyContent: 'space-between',
@@ -82,6 +100,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         [theme.breakpoints.down('md')]: {
             marginLeft: '2.5%',
             marginRight: '2.5%',
+            marginTop: '5%'
         },
     },
     noImageSelected: {
@@ -92,6 +111,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         [theme.breakpoints.down('md')]: {
             marginLeft: '2.5%',
             marginRight: '2.5%',
+            marginTop: '5%'
         },
     },
     image: {
