@@ -7,8 +7,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import Base64Downloader from 'react-base64-downloader';
 import moment from 'moment';
 import PreviewIcon from '@mui/icons-material/Preview';
-import CreateIcon from '@material-ui/icons/Create';
-import DeleteIcon from '@material-ui/icons/Delete';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
 import DownloadIcon from '@mui/icons-material/Download';
 import { getDocumentById } from '../../redux/slices/contractorSlices/documentsSlice';
@@ -26,7 +24,7 @@ const DocumentDetails = () => {
 
     useEffect(() => {
         dispatch(getDocumentById(params.id))        
-    }, [params])
+    }, [dispatch, params])
 
     return (
         <>
@@ -78,14 +76,13 @@ const DocumentDetails = () => {
                                                             Tag="a"
                                                             extraAttributes={{ href: '#' }}
                                                             className="my-class-name"
+                                                            style={{ color: globalColors.lightBlue }}
                                                         >
-                                                            <Button style={{padding: 0, color: globalColors.lightBlue}}>
                                                                 <DownloadIcon style={{fontSize: 30}}/>
-                                                            </Button>
                                                         </Base64Downloader>
                                                     </Grid>
                                                     <Grid item xs={2}>
-                                                        <Button style={{padding: 0}} onClick={() => setImage(value)}>
+                                                        <Button size="small" style={{padding: 0}} onClick={() => setImage(value)}>
                                                             <PreviewIcon style={{fontSize: 30}} />
                                                         </Button>
                                                     </Grid>

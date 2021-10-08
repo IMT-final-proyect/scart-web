@@ -6,46 +6,46 @@ import { ROUTES as ManagerRoutes } from "../../screens/manager/navigation/routes
 
 export const getRolPath = (rol?: number) => {
     switch(rol){
-        case (AllowedRol.ADMIN): return AdminRoutes.root+AdminRoutes.contractors
-        case (AllowedRol.CONTRACTOR): return ContractorRoutes.root+ContractorRoutes.home
-        case (AllowedRol.MANAGER): return ManagerRoutes.root+ManagerRoutes.exceptions
-        case (AllowedRol.AUDITOR): return AuditorRoutes.root
+        case (AllowedRol.admin): return AdminRoutes.root+AdminRoutes.contractors
+        case (AllowedRol.contractor): return ContractorRoutes.root+ContractorRoutes.home
+        case (AllowedRol.manager): return ManagerRoutes.root+ManagerRoutes.exceptions
+        case (AllowedRol.auditor): return AuditorRoutes.root
         default: return '/login'
     }
 }
 
 export const getRolNumber = (rolName: string): number => {
     switch(rolName){
-        case (admin): return AllowedRol.ADMIN
-        case (contractor): return AllowedRol.CONTRACTOR
-        case (manager): return AllowedRol.MANAGER
-        case (auditor): return AllowedRol.AUDITOR
-        case (driver): return AllowedRol.DRIVER
-        case (security): return AllowedRol.SECURITY
+        case (admin): return AllowedRol.admin
+        case (contractor): return AllowedRol.contractor
+        case (manager): return AllowedRol.manager
+        case (auditor): return AllowedRol.auditor
+        case (driver): return AllowedRol.driver
+        case (security): return AllowedRol.security
         default: return -1
     }
 }
 
 export const getRolName = (rolNumber: number): string => {
     switch(rolNumber){
-        case (AllowedRol.ADMIN): return admin
-        case (AllowedRol.CONTRACTOR): return contractor
-        case (AllowedRol.MANAGER): return manager
-        case (AllowedRol.AUDITOR): return auditor
-        case (AllowedRol.DRIVER): return driver
-        case (AllowedRol.SECURITY): return security
+        case (AllowedRol.admin): return admin
+        case (AllowedRol.contractor): return contractor
+        case (AllowedRol.manager): return manager
+        case (AllowedRol.auditor): return auditor
+        case (AllowedRol.driver): return driver
+        case (AllowedRol.security): return security
         default: return ''
     }
 }
 
 export const getRolNumero = (rolName: string): number => {
     switch(rolName){
-        case ('Admin'): return AllowedRol.ADMIN
-        case ('Contratista'): return AllowedRol.CONTRACTOR
-        case ('Manager'): return AllowedRol.MANAGER
-        case ('Auditor'): return AllowedRol.AUDITOR
-        case ('Conductor'): return AllowedRol.DRIVER
-        case ('Seguridad'): return AllowedRol.SECURITY
+        case ('Admin'): return AllowedRol.admin
+        case ('Contratista'): return AllowedRol.contractor
+        case ('Manager'): return AllowedRol.manager
+        case ('Auditor'): return AllowedRol.auditor
+        case ('Conductor'): return AllowedRol.driver
+        case ('Seguridad'): return AllowedRol.security
         default: return -1
     }
 }

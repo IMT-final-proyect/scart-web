@@ -1,41 +1,20 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Button, Card, Grid, Modal, Typography } from '@material-ui/core'
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 
-import Vehicle from '../vehicleRow';
-import Document from '../../../../../components/documentDetails/components/documentRow';
 import useStyles from './styles';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../../../redux/rootReducer';
-import { IVehicle } from '../../../../../utils/interfaces';
-import { createDocument } from '../../../../../redux/slices/contractorSlices/documentsSlice';
+import { IDocument, IVehicle } from '../../../../../utils/interfaces';
+import { createDocument, getVehicleDocuments } from '../../../../../redux/slices/contractorSlices/documentsSlice';
 import CreateVehicleDocumentModal from './components/CreateVehicleDocumentModal';
+import DocumentRow from '../../../documentation/components/documentRow/DocumentRow';
+import { ROUTES } from '../../../navigation/routes';
 
 
 const conductores = []
-
-const documents = [
-    {
-        'id':'1',
-        'name':'Seguro',
-        'expiration': '01/01/2022',
-        'state':0
-    },
-    {
-        'id':'2',
-        'name':'VTV',
-        'expiration': '30/01/2022',
-        'state':2
-    },
-    {
-        'id':'3',
-        'name':'Habilitacion',
-        'expiration': '04/05/2022',
-        'state':1
-    },
-]
 
 const VehicleDetails = () => {
     const classes = useStyles();
@@ -46,6 +25,12 @@ const VehicleDetails = () => {
         const vehicles = state.resources.vehicles.data
         return vehicles[params.id]
     })
+    const documents: IDocument[] = useSelector((state: RootState) => state.documents.drivers.data)
+    const userData = useSelector((state: RootState) => state.user.userData)
+
+    useEffect(() => { 
+        dispatch(getVehicleDocuments(vehicle.id))
+    }, [dispatch, vehicle.id])
 
     const addDocument = (expirationDate: moment.Moment, type: number, entityType: number, entityId: number, images: string[]) => {
         dispatch(createDocument(expirationDate, type, entityType, entityId, images))
@@ -161,16 +146,29 @@ const VehicleDetails = () => {
                                     </text>
                                 </Grid>
                             </Grid>
-                            <Grid container direction='column' >
-                                {documents.map((document) =>
-                                    <Document 
-                                        key={document.id}
-                                        name={document.name}
-                                        expiration={document.expiration}
-                                        state={document.state}
-                                    />)
-                                }
-                            </Grid>
+                            {documents.length === 0 
+                            ?
+                                <Typography className={classes.textCenter}> El vehículo no tiene documentación asociada </Typography>
+                            :
+                                <Grid container direction='column' justifyContent='space-between' >
+                                    {Object.keys(documents).map((key: string, i: any) =>
+                                    <Button
+                                        className={classes.button}
+                                        component={Link}
+                                        to={ROUTES.root+ROUTES.documentacion+'/'+documents[parseInt(key)].id}
+                                    >  
+                                        <DocumentRow 
+                                            key={documents[parseInt(key)].id}
+                                            type={documents[parseInt(key)].type}
+                                            contractor={userData?.name}
+                                            expiration={documents[parseInt(key)].expirationDate}
+                                            state={documents[parseInt(key)].state}
+                                            images={documents[parseInt(key)].photos}
+                                        />
+                                    </Button>
+                                    )}
+                                </Grid>
+                            }
                         </Card>
                     </Grid>
                 </Grid>

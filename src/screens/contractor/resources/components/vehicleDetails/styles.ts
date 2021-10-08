@@ -79,6 +79,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     button:{
         height: '35px',
+        textTransform: 'none',
+        marginBottom: '2%'
     },
     textCenter: {
         textAlign: 'center',

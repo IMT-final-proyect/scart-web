@@ -26,7 +26,7 @@ const Driver = ({ name, surname, document, birthday }: Props) => {
             <Grid item xs={3} className={classes.text}>
                 <text> {moment(birthday).format('DD/MM/YY')} </text>
             </Grid>
-            <Grid item xs={2} className={classes.container}>
+            <Grid item xs={2} className={classes.iconContainer}>
                 <CreateIcon />
                 <DeleteIcon />
             </Grid>

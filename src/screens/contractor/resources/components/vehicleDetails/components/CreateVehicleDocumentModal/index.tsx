@@ -30,7 +30,7 @@ const CreateVehicleDocumentModal = ({ addDocument, setOpenDocumentModal }: Props
     const [documentType, setDocumentType] = useState('')
     const documentTypes = useSelector((state: RootState) => state.documentTypes.data)
     const contractorId = useSelector((state: RootState) => state.user.userData?.id)
-    const error = useSelector((state: RootState) => state.documents.contractor.error)
+    const error = useSelector((state: RootState) => state.documents.vehicles.error)
 
     const [openFileSelector, { filesContent, loading, errors, plainFiles, clear }] = useFilePicker({
         multiple: true,
@@ -39,7 +39,7 @@ const CreateVehicleDocumentModal = ({ addDocument, setOpenDocumentModal }: Props
     });
     
     useEffect(() => {
-        dispatch(getDocumentTypesByEntity(1))
+        dispatch(getDocumentTypesByEntity(6))
     }, [])
 
     const handleExpirationChange = (date: moment.Moment | null) => {

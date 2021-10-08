@@ -1,45 +1,20 @@
-import React, { useState } from 'react';
-import { Button, Card, Grid, Hidden, Modal, Typography, } from '@material-ui/core'
+import React, { useEffect, useState } from 'react';
+import { Button, Card, Grid, Modal, Typography, } from '@material-ui/core'
 import AddCircleIcon from '@material-ui/icons/AddCircle';
-import Document from '../../../../../components/documentDetails/components/documentRow';
 import useStyles from './styles' 
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { RootState } from '../../../../../redux/rootReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
-import { IDriver } from '../../../../../utils/interfaces';
+import { IDocument, IDriver } from '../../../../../utils/interfaces';
 import CreateDriverDocumentModal from './components/CreateDriverDocumentModal';
-import { createDocument } from '../../../../../redux/slices/contractorSlices/documentsSlice';
+import { createDocument, getDriverDocuments } from '../../../../../redux/slices/contractorSlices/documentsSlice';
+import DocumentRow from '../../../documentation/components/documentRow/DocumentRow';
+import { ROUTES } from '../../../navigation/routes';
 
 
 const autos: string[] = []
 
-const documents = [
-    {
-        'id':'1',
-        'name':'Constancia de cuil',
-        'expiration': '01/01/2022',
-        'state':1
-    },
-    {
-        'id':'2',
-        'name':'Licencia de conducir',
-        'expiration': '30/01/2022',
-        'state':1
-    },
-    {
-        'id':'3',
-        'name':'Cedula Verde',
-        'expiration': '04/05/2022',
-        'state':0
-    },
-    {
-        'id':'4',
-        'name':'Seguro',
-        'expiration': '10/01/2022',
-        'state':2
-    },
-]
 
 const DriverDetails = () => {
     const classes = useStyles();
@@ -50,6 +25,12 @@ const DriverDetails = () => {
         const drivers = state.resources.drivers.data
         return drivers[params.id]
     })
+    const documents: IDocument[] = useSelector((state: RootState) => state.documents.drivers.data)
+    const userData = useSelector((state: RootState) => state.user.userData)
+
+    useEffect(() => { 
+        dispatch(getDriverDocuments(driver.id))
+    }, [])
 
     const addDocument = (expirationDate: moment.Moment, type: number, entityType: number, entityId: number, images: string[]) => {
         dispatch(createDocument(expirationDate, type, entityType, entityId, images))
@@ -128,7 +109,7 @@ const DriverDetails = () => {
                                                 plate={auto.plate}
                                             />)
                                         } */}
-                                    </Grid>
+                                    </Grid>     
                                 </>
                             }
                         </Card>
@@ -165,15 +146,23 @@ const DriverDetails = () => {
                                     </text>
                                 </Grid>
                             </Grid>
-                            <Grid container direction='column' >
-                                {documents.map((document) =>
-                                    <Document 
-                                        key={document.id}
-                                        name={document.name}
-                                        expiration={document.expiration}
-                                        state={document.state}
-                                    />)
-                                }
+                            <Grid container direction='column' justifyContent='space-between' >
+                                {Object.keys(documents).map((key: string, i: any) =>
+                                <Button
+                                    className={classes.button}
+                                    component={Link}
+                                    to={ROUTES.root+ROUTES.documentacion+'/'+documents[parseInt(key)].id}
+                                >  
+                                    <DocumentRow 
+                                        key={documents[parseInt(key)].id}
+                                        type={documents[parseInt(key)].type}
+                                        contractor={userData?.name}
+                                        expiration={documents[parseInt(key)].expirationDate}
+                                        state={documents[parseInt(key)].state}
+                                        images={documents[parseInt(key)].photos}
+                                    />
+                                </Button>
+                                )}
                             </Grid>
                         </Card>
                     </Grid>

@@ -1,12 +1,13 @@
 export const headerSize = 40;
 
 export enum AllowedRol{
-    ADMIN,
-    DRIVER,
-    CONTRACTOR,
-    AUDITOR,
-    MANAGER,
-    SECURITY
+    admin,
+    driver,
+    contractor,
+    auditor,
+    manager,
+    security,
+    vehicle
 }
 
 export const contractor = 'contractor'

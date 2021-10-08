@@ -52,14 +52,13 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     logoNutreco: {
         marginBottom: '2%',
-        width: '30%',
         [theme.breakpoints.down('lg')]: {
-            width: '60%',
-            marginBottom:'5%'
+            width: '40%',
+            marginBottom:'3%'
         },
         [theme.breakpoints.down('sm')]: {
-            width: '50%',
-            marginBottom:'5%'
+            width: '40%',
+            marginBottom:'3%'
         },
     }
 }));

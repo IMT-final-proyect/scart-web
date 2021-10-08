@@ -93,6 +93,36 @@ const documentsSlice = createSlice({
          state.contractor.loading = false;
          state.contractor.error = payload;
       },
+      getDriverDocumentsRequest(state) {
+         state.drivers.loading = true;
+      },
+      getDriverDocumentsSuccess(state, action: any) {
+         const { payload } = action
+         state.drivers.data = payload
+         state.drivers.loading = false;
+         state.drivers.error = initialState.drivers.error
+      },
+      getDriverDocumentsFailure(state, action: any) {
+         const { payload } = action
+         state.drivers.data = initialState.drivers.data;
+         state.drivers.loading = false;
+         state.drivers.error = payload;
+      },
+      getVehicleDocumentsRequest(state) {
+         state.vehicles.loading = true;
+      },
+      getVehicleDocumentsSuccess(state, action: any) {
+         const { payload } = action
+         state.vehicles.data = payload
+         state.vehicles.loading = false;
+         state.vehicles.error = initialState.vehicles.error
+      },
+      getVehicleDocumentsFailure(state, action: any) {
+         const { payload } = action
+         state.vehicles.data = initialState.vehicles.data;
+         state.vehicles.loading = false;
+         state.vehicles.error = payload;
+      },
       getDocumentByIdRequest(state) {
          state.loading = true
       },
@@ -141,6 +171,12 @@ const {
     getContractorDocumentsSuccess,
     getContractorDocumentsRequest,
     getContractorDocumentsFailure,
+    getDriverDocumentsRequest,
+    getDriverDocumentsSuccess,
+    getDriverDocumentsFailure,
+    getVehicleDocumentsRequest,
+    getVehicleDocumentsSuccess,
+    getVehicleDocumentsFailure,
     getDocumentByIdRequest,
     getDocumentByIdSuccess,
     getDocumentByIdFailure,
@@ -166,6 +202,34 @@ export const getContractorDocuments = (contractorId: number|undefined): AppThunk
       dispatch(getContractorDocumentsFailure(error.response.data));
    }
 };
+
+export const getDriverDocuments = (driverId: number|undefined): AppThunk => async (dispatch) => {
+   dispatch(getDriverDocumentsRequest());
+   try{
+      const response: AxiosResponse = await Axios.get(`/documents?entityId=${driverId}&entityType=1`);
+      const documents = _.mapKeys(response.data, 'id')
+      
+      dispatch(getDriverDocumentsSuccess(documents));
+   }
+   catch(error){
+      dispatch(getDriverDocumentsFailure(error.response.data));
+   }
+};
+
+export const getVehicleDocuments = (driverId: number|undefined): AppThunk => async (dispatch) => {
+   dispatch(getVehicleDocumentsRequest());
+   try{
+      const response: AxiosResponse = await Axios.get(`/documents?entityId=${driverId}&entityType=6`);
+      const documents = _.mapKeys(response.data, 'id')
+      
+      dispatch(getVehicleDocumentsSuccess(documents));
+   }
+   catch(error){
+      dispatch(getVehicleDocumentsFailure(error.response.data));
+   }
+};
+
+
 
 export const getDocumentById = (documentId: number): AppThunk => async (dispatch) => {
    dispatch(getDocumentByIdRequest());

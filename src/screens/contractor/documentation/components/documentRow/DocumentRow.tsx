@@ -20,7 +20,7 @@ const Document = ({ type, expiration, state, contractor, images }: Props) => {
     return(
         <Grid container direction="row" justifyContent='space-between'>
             <Grid item xs={5} className={classes.text}>
-                <text> {type.name} </text>
+                <text> {type.name.substring(0, 60)}... </text>
             </Grid>
             <Grid item xs={3} className={classes.text}>
                 <text> {contractor} </text>
