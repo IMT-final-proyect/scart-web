@@ -67,7 +67,7 @@ const Login = () => {
                 justify="center"
                 alignItems="center"
             >
-                <Hidden only={["xs","sm"]}>
+                <Hidden only={["xs","sm", "lg"]}>
                     <img className={classes.logoNutreco} src={LogoNutreco}/>
                 </Hidden>
                 <Card className={classes.card}>

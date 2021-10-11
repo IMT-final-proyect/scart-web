@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { Button, Card, Grid, Modal, } from '@material-ui/core';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import useStyles from './styles';
-import DocumentRow from './components/contratorRow/DocumentRow';
+import DocumentRow from './components/driverRow';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../redux/rootReducer';
 import { createDocument, getContractorDocuments } from '../../../redux/slices/contractorSlices/documentsSlice';
-import CreateContractorDocumentModal from './components/CreateContractorDocumentModal';
+import CreateContractorDocumentModal from './components/CreateDriverDocumentModal';
 import { IDocument } from '../../../utils/interfaces';
 import { ROUTES } from '../navigation/routes';
 import { Link } from 'react-router-dom';
@@ -41,14 +41,14 @@ const Contractors = () => {
             <Card className={classes.leftCard}>
                 <Grid container justifyContent='space-between'>
                     <text className={classes.textTitle}>
-                        Contratistas
+                        Conductores
                     </text>
                     <Button onClick={() => setOpenModal(true)}>
                         <AddCircleIcon className={classes.circleIcon}/>
                     </Button>
                 </Grid>
                 {documents.length === 0 ?
-                    <text className={classes.textCenter}> No hay contratistas registrados</text>
+                    <text className={classes.textCenter}> No hay conductores registrados</text>
                     :
                     <>
                         <Grid container justifyContent='space-between'>
