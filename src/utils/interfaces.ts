@@ -1,3 +1,9 @@
+export interface IContractor {
+   id: number;
+   name: string;
+   cuit: string;
+}
+
 export interface IDriver {
    id: number;
    name: string;

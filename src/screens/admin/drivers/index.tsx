@@ -2,25 +2,24 @@ import React, { useEffect, useState } from 'react';
 import { Button, Card, Grid, Modal, } from '@material-ui/core';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import useStyles from './styles';
-import DocumentRow from './components/driverRow';
+import DriverRow from './components/driverRow';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../redux/rootReducer';
-import { createDocument, getContractorDocuments } from '../../../redux/slices/contractorSlices/documentsSlice';
+import { createDocument } from '../../../redux/slices/documentsSlice';
 import CreateContractorDocumentModal from './components/CreateDriverDocumentModal';
-import { IDocument } from '../../../utils/interfaces';
 import { ROUTES } from '../navigation/routes';
 import { Link } from 'react-router-dom';
+import { getAllDrivers } from '../../../redux/slices/resourcesSlice';
+import moment from 'moment';
 
 const Contractors = () => {
     const classes = useStyles();
     const dispatch = useDispatch()
     const [openModal, setOpenModal] = useState(false)
-    const documents: IDocument[] = useSelector((state: RootState) => state.documents.contractor.data)
-    const accountData = useSelector((state: RootState) => state.user.accountData)
-    const userData = useSelector((state: RootState) => state.user.userData)
+    const drivers = useSelector((state: RootState) => state.resources.drivers.data)
 
     useEffect(() => {
-        dispatch(getContractorDocuments(accountData?.entityId))
+        dispatch(getAllDrivers())
     }, [])
 
     const addDocument = (expirationDate: moment.Moment, type: number, entityType: number, entityId: number, images: string[]) => {
@@ -47,46 +46,45 @@ const Contractors = () => {
                         <AddCircleIcon className={classes.circleIcon}/>
                     </Button>
                 </Grid>
-                {documents.length === 0 ?
+                {drivers.length === 0 ?
                     <text className={classes.textCenter}> No hay conductores registrados</text>
                     :
                     <>
                         <Grid container justifyContent='space-between'>
-                            <Grid item xs={5} className={classes.headerText}>
+                            <Grid item xs={3} className={classes.headerText}>
+                                <text className={classes.headerText}>
+                                    Nombre
+                                </text>
+                            </Grid>
+                            <Grid item xs={3} className={classes.headerText}>
                                 <text className={classes.headerText}>
                                     Documento
                                 </text>
                             </Grid>
                             <Grid item xs={3} className={classes.headerText}>
                                 <text className={classes.headerText}>
-                                    Recurso
+                                    Fecha de Nac.
                                 </text>
                             </Grid>
                             <Grid item xs={2} className={classes.headerText}>
                                 <text className={classes.headerText}>
-                                    Fecha de venc.
-                                </text>
-                            </Grid>
-                            <Grid item xs={2} className={classes.headerText}>
-                                <text className={classes.headerText}>
-                                    Estado
+                                    Acciones
                                 </text>
                             </Grid>
                         </Grid>
                         <Grid container direction='column' justifyContent='space-between' >
-                            {Object.keys(documents).map((key: string, i: any) =>
+                            {Object.keys(drivers).map((key: string, i: any) =>
                             <Button
                                 className={classes.button}
                                 component={Link}
-                                to={ROUTES.root+ROUTES.contractors+'/'+documents[parseInt(key)].id}
+                                to={ROUTES.root+ROUTES.contractors+'/'+drivers[parseInt(key)].id}
                             >  
-                                <DocumentRow 
-                                    key={documents[parseInt(key)].id}
-                                    type={documents[parseInt(key)].type}
-                                    contractor={userData?.name}
-                                    expiration={documents[parseInt(key)].expirationDate}
-                                    state={documents[parseInt(key)].state}
-                                    images={documents[parseInt(key)].photos}
+                                <DriverRow 
+                                    key={drivers[parseInt(key)].id}
+                                    name={drivers[parseInt(key)].name}
+                                    surname={drivers[parseInt(key)].surname}
+                                    document={drivers[parseInt(key)].cuit}
+                                    birthday={moment(drivers[parseInt(key)].birth_date)}
                                 />
                             </Button>
                             )}

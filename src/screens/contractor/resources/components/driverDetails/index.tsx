@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import { IDocument, IDriver } from '../../../../../utils/interfaces';
 import CreateDriverDocumentModal from './components/CreateDriverDocumentModal';
-import { createDocument, getDriverDocuments } from '../../../../../redux/slices/contractorSlices/documentsSlice';
+import { createDocument, getDriverDocuments } from '../../../../../redux/slices/documentsSlice';
 import DocumentRow from '../../../documentation/components/documentRow/DocumentRow';
 import { ROUTES } from '../../../navigation/routes';
 

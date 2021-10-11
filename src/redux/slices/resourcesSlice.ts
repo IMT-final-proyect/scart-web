@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 import Axios, {AxiosResponse} from 'axios';
 import moment from 'moment';
-import { IDriver, IVehicle } from '../../../utils/interfaces';
-import { AppThunk } from '../../store';
+import { IDriver, IVehicle } from '../../utils/interfaces';
+import { AppThunk } from '../store';
 var _ = require('lodash');
 
 interface IError {
@@ -58,6 +58,21 @@ const resourcesSlice = createSlice({
          state.drivers.error = initialState.drivers.error
       },
       getDriversFailure(state, action: any) {
+         const { payload } = action
+         state.drivers.data = initialState.drivers.data;
+         state.drivers.loading = false;
+         state.drivers.error = payload;
+      },
+      getAllDriversRequest(state) {
+         state.drivers.loading = true;
+      },
+      getAllDriversSuccess(state, action: any) {
+         const { payload } = action
+         state.drivers.data = payload
+         state.drivers.loading = false;
+         state.drivers.error = initialState.drivers.error
+      },
+      getAllDriversFailure(state, action: any) {
          const { payload } = action
          state.drivers.data = initialState.drivers.data;
          state.drivers.loading = false;
@@ -121,6 +136,9 @@ const {
     getDriversSuccess,
     getDriversRequest,
     getDriversFailure,
+    getAllDriversSuccess,
+    getAllDriversRequest,
+    getAllDriversFailure,
     createDriverRequest,
     createDriverSuccess,
     createDriverFailure,
@@ -134,6 +152,18 @@ const {
 
 
 export default resourcesSlice.reducer;
+
+export const getAllDrivers = (): AppThunk => async (dispatch) => {
+   dispatch(getAllDriversRequest());
+   try{
+      const response: AxiosResponse = await Axios.get('/drivers');
+      const drivers = _.mapKeys(response.data, 'id') 
+      dispatch(getAllDriversSuccess(drivers));
+   }
+   catch(error){
+      dispatch(getAllDriversFailure(error.response.data));
+   }
+}
 
 export const getDriver = (): AppThunk => async (dispatch) => {
    dispatch(getDriversRequest());

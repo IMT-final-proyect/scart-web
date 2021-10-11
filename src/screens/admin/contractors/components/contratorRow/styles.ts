@@ -1,10 +1,6 @@
 import { makeStyles, Theme } from '@material-ui/core';
 
-interface Props {
-    color: string
-}
-
-const useStyles = makeStyles<Theme, Props>((theme: Theme) => ({
+const useStyles = makeStyles((theme: Theme) => ({
     container:{
         maxWidth: 'auto',
         textAlign: 'start',
@@ -15,21 +11,6 @@ const useStyles = makeStyles<Theme, Props>((theme: Theme) => ({
         [theme.breakpoints.down('md')]: {
             fontSize: 7,
         },
-    },
-    state:{
-        maxWidth: 'auto',
-        textAlign: 'start',
-        [theme.breakpoints.down('md')]: {
-            fontSize: 7,
-        },
-    },
-    stateColor: {
-        backgroundColor: ({color}) => color,
-        borderRadius: 20,
-        paddingLeft: '4%',
-        paddingRight: '4%',
-        paddingTop: '1%',
-        paddingBottom: '1%'
     }
 }));
 

@@ -8,7 +8,7 @@ import { Link, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../../../redux/rootReducer';
 import { IDocument, IVehicle } from '../../../../../utils/interfaces';
-import { createDocument, getVehicleDocuments } from '../../../../../redux/slices/contractorSlices/documentsSlice';
+import { createDocument, getVehicleDocuments } from '../../../../../redux/slices/documentsSlice';
 import CreateVehicleDocumentModal from './components/CreateVehicleDocumentModal';
 import DocumentRow from '../../../documentation/components/documentRow/DocumentRow';
 import { ROUTES } from '../../../navigation/routes';

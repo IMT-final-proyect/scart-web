@@ -1,40 +1,37 @@
 import React from 'react';
 import { Grid, } from '@material-ui/core';
+import CreateIcon from '@material-ui/icons/Create';
+import DeleteIcon from '@material-ui/icons/Delete';
 import useStyles from './styles';
 import moment from 'moment';
-import { IDocumentType } from '../../../../../utils/interfaces';
-import { getStateColor, getStateName } from '../../../../../utils/functions/states';
 
 interface Props{
-    contractor: string | undefined
-    type: IDocumentType,
-    state: number,
-    expiration: moment.Moment,
-    images: string[]
-}
-const DriverRow = ({ type, expiration, state, contractor, images }: Props) => {
-    const stateName = getStateName(state)
-    const color = getStateColor(stateName)
-    const classes = useStyles({color});    
-    
+    name: string,
+    surname: string,
+    document: string,
+    birthday: moment.Moment
+
+} 
+const Driver = ({ name, surname, document, birthday }: Props) => {
+    const classes = useStyles();
     return(
         <Grid container direction="row" justifyContent='space-between'>
-            <Grid item xs={5} className={classes.text}>
-                <text> {type.name.substring(0, 60)}... </text>
+            <Grid item xs={3} className={classes.text}>
+                <text> {name} </text>
+                <text> {surname} </text>
             </Grid>
             <Grid item xs={3} className={classes.text}>
-                <text> {contractor} </text>
+                <text> {document} </text>
             </Grid>
-            <Grid item xs={2} className={classes.text}>
-                <text> {moment(expiration).format('DD/MM/YY')} </text>
+            <Grid item xs={3} className={classes.text}>
+                <text> {moment(birthday).format('DD/MM/YY')} </text>
             </Grid>
-            <Grid item xs={2}>
-                <div className={classes.state}>
-                    <text className={classes.stateColor}> {stateName} </text>
-                </div>
+            <Grid item xs={2} className={classes.iconContainer}>
+                <CreateIcon />
+                <DeleteIcon />
             </Grid>
-    </Grid>
+        </Grid>
     )
 }
 
-export default DriverRow;
+export default Driver;
