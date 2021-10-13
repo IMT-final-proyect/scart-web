@@ -26,7 +26,7 @@ const Login = () => {
 
     useEffect(() => {
         let route
-        if(accountData?.rol){
+        if(accountData?.rol !== undefined && accountData?.rol >= 0){
             route = getRolPath(accountData?.rol)
             history.push(route)
         }
@@ -67,7 +67,7 @@ const Login = () => {
                 justify="center"
                 alignItems="center"
             >
-                <Hidden only={["xs","sm", "lg"]}>
+                <Hidden only={["xs","sm"]}>
                     <img className={classes.logoNutreco} src={LogoNutreco}/>
                 </Hidden>
                 <Card className={classes.card}>

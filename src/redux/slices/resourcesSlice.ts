@@ -111,6 +111,21 @@ const resourcesSlice = createSlice({
          state.vehicles.loading = false;
          state.vehicles.error = payload;
       },
+      getAllVehiclesRequest(state) {
+         state.vehicles.loading = true;
+      },
+      getAllVehiclesSuccess(state, action: any) {
+         const { payload } = action
+         state.vehicles.data = payload
+         state.vehicles.loading = false;
+         state.vehicles.error = initialState.vehicles.error
+      },
+      getAllVehiclesFailure(state, action: any) {
+         const { payload } = action
+         state.vehicles.data = initialState.vehicles.data;
+         state.vehicles.loading = false;
+         state.vehicles.error = payload;
+      },
       createVehicleRequest(state) {
          state.vehicles.loading = true;
          state.vehicles.error = initialState.vehicles.error;
@@ -145,6 +160,9 @@ const {
     getVehiclesRequest,
     getVehiclesSuccess,
     getVehiclesFailure,
+    getAllVehiclesRequest,
+    getAllVehiclesSuccess,
+    getAllVehiclesFailure,
     createVehicleRequest,
     createVehicleSuccess,
     createVehicleFailure
@@ -176,6 +194,19 @@ export const getDriver = (): AppThunk => async (dispatch) => {
       dispatch(getDriversFailure(error.response.data));
    }
 };
+
+export const getAllVehicles = (): AppThunk => async (dispatch) => {
+   dispatch(getAllVehiclesRequest());
+   try{
+      const response: AxiosResponse = await Axios.get('/vehicles');
+      const vehicle = _.mapKeys(response.data, 'id') 
+      dispatch(getAllVehiclesSuccess(vehicle));
+   }
+   catch(error){
+      dispatch(getAllVehiclesFailure(error.response));
+   }
+}; 
+
 
 export const getVehicle = (): AppThunk => async (dispatch) => {
    dispatch(getVehiclesRequest());

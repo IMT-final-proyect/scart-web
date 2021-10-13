@@ -6,7 +6,7 @@ import { ROUTES as ManagerRoutes } from "../../screens/manager/navigation/routes
 
 export const getRolPath = (rol?: number) => {
     switch(rol){
-        case (AllowedRol.admin): return AdminRoutes.root+AdminRoutes.contractors
+        case (AllowedRol.admin): return AdminRoutes.root
         case (AllowedRol.contractor): return ContractorRoutes.root+ContractorRoutes.home
         case (AllowedRol.manager): return ManagerRoutes.root+ManagerRoutes.exceptions
         case (AllowedRol.auditor): return AuditorRoutes.root

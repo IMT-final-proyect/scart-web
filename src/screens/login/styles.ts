@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         backgroundRepeat: 'no-repeat'
     },
     card:{
-        padding: '5%',
+        padding: '2.5%',
         backgroundColor: 'rgba(255,255,255,.8)',
         [theme.breakpoints.down('md')]: {
             padding: '0',
@@ -53,11 +53,11 @@ const useStyles = makeStyles((theme: Theme) => ({
     logoNutreco: {
         marginBottom: '2%',
         [theme.breakpoints.down('lg')]: {
-            width: '40%',
+            width: '30%',
             marginBottom:'3%'
         },
         [theme.breakpoints.down('sm')]: {
-            width: '40%',
+            width: '20%',
             marginBottom:'3%'
         },
     }

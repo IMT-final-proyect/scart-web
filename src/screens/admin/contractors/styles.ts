@@ -48,6 +48,9 @@ const useStyles = makeStyles((theme: Theme) => ({
         color: globalColors.darkGrey,
         fontSize: 12,
         [theme.breakpoints.down('md')]: {
+            fontSize: 13,
+        },
+        [theme.breakpoints.down('sm')]: {
             fontSize: 9,
         },
     },

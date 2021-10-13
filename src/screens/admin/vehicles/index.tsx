@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Button, Card, Grid, Modal, } from '@material-ui/core';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import useStyles from './styles';
-import DocumentRow from './components/vehicleRow';
+import VehicleRow from './components/vehicleRow';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../redux/rootReducer';
 import { createDocument, getContractorDocuments } from '../../../redux/slices/documentsSlice';
@@ -10,17 +10,16 @@ import CreateContractorDocumentModal from './components/CreateVehicleDocumentMod
 import { IDocument } from '../../../utils/interfaces';
 import { ROUTES } from '../navigation/routes';
 import { Link } from 'react-router-dom';
+import { getAllVehicles } from '../../../redux/slices/resourcesSlice';
 
 const Contractors = () => {
     const classes = useStyles();
     const dispatch = useDispatch()
     const [openModal, setOpenModal] = useState(false)
-    const documents: IDocument[] = useSelector((state: RootState) => state.documents.contractor.data)
-    const accountData = useSelector((state: RootState) => state.user.accountData)
-    const userData = useSelector((state: RootState) => state.user.userData)
+    const vehicles = useSelector((state: RootState) => state.resources.vehicles.data)
 
     useEffect(() => {
-        dispatch(getContractorDocuments(accountData?.entityId))
+        dispatch(getAllVehicles())
     }, [])
 
     const addDocument = (expirationDate: moment.Moment, type: number, entityType: number, entityId: number, images: string[]) => {
@@ -47,46 +46,49 @@ const Contractors = () => {
                         <AddCircleIcon className={classes.circleIcon}/>
                     </Button>
                 </Grid>
-                {documents.length === 0 ?
+                {vehicles.length === 0 ?
                     <text className={classes.textCenter}> No hay vehiculos registrados</text>
                     :
                     <>
                         <Grid container justifyContent='space-between'>
-                            <Grid item xs={5} className={classes.headerText}>
+                            <Grid item xs={3} className={classes.headerText}>
                                 <text className={classes.headerText}>
-                                    Documento
+                                    Marca
                                 </text>
                             </Grid>
                             <Grid item xs={3} className={classes.headerText}>
                                 <text className={classes.headerText}>
-                                    Recurso
+                                    Modelo
+                                </text>
+                            </Grid>
+                            <Grid item xs={3} className={classes.headerText}>
+                                <text className={classes.headerText}>
+                                    Contratista
                                 </text>
                             </Grid>
                             <Grid item xs={2} className={classes.headerText}>
                                 <text className={classes.headerText}>
-                                    Fecha de venc.
+                                    Patente
                                 </text>
                             </Grid>
-                            <Grid item xs={2} className={classes.headerText}>
+                            <Grid item xs={1} className={classes.headerText}>
                                 <text className={classes.headerText}>
-                                    Estado
+                                    Acciones
                                 </text>
                             </Grid>
                         </Grid>
                         <Grid container direction='column' justifyContent='space-between' >
-                            {Object.keys(documents).map((key: string, i: any) =>
+                            {Object.keys(vehicles).map((key: string, i: any) =>
                             <Button
                                 className={classes.button}
                                 component={Link}
-                                to={ROUTES.root+ROUTES.contractors+'/'+documents[parseInt(key)].id}
+                                to={ROUTES.root+ROUTES.contractors+'/'+vehicles[parseInt(key)].id}
                             >  
-                                <DocumentRow 
-                                    key={documents[parseInt(key)].id}
-                                    type={documents[parseInt(key)].type}
-                                    contractor={userData?.name}
-                                    expiration={documents[parseInt(key)].expirationDate}
-                                    state={documents[parseInt(key)].state}
-                                    images={documents[parseInt(key)].photos}
+                                <VehicleRow 
+                                    key={vehicles[parseInt(key)].id}
+                                    brand={vehicles[parseInt(key)].brand}
+                                    model={vehicles[parseInt(key)].model}
+                                    plate={vehicles[parseInt(key)].plate}
                                 />
                             </Button>
                             )}

@@ -63,7 +63,7 @@ const Contractors = () => {
                             </Grid>
                             <Grid item xs={3} className={classes.headerText}>
                                 <text className={classes.headerText}>
-                                    Fecha de Nac.
+                                    Contratista
                                 </text>
                             </Grid>
                             <Grid item xs={2} className={classes.headerText}>
@@ -84,7 +84,7 @@ const Contractors = () => {
                                     name={drivers[parseInt(key)].name}
                                     surname={drivers[parseInt(key)].surname}
                                     document={drivers[parseInt(key)].cuit}
-                                    birthday={moment(drivers[parseInt(key)].birth_date)}
+                                    contractor='Contratista1'
                                 />
                             </Button>
                             )}
