@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 import Axios, {AxiosResponse} from 'axios';
 import moment from 'moment';
-import { IDriver, IVehicle } from '../../../utils/interfaces';
-import { AppThunk } from '../../store';
+import { IDriver, IVehicle } from '../../utils/interfaces';
+import { AppThunk } from '../store';
 var _ = require('lodash');
 
 interface IError {
@@ -63,6 +63,21 @@ const resourcesSlice = createSlice({
          state.drivers.loading = false;
          state.drivers.error = payload;
       },
+      getAllDriversRequest(state) {
+         state.drivers.loading = true;
+      },
+      getAllDriversSuccess(state, action: any) {
+         const { payload } = action
+         state.drivers.data = payload
+         state.drivers.loading = false;
+         state.drivers.error = initialState.drivers.error
+      },
+      getAllDriversFailure(state, action: any) {
+         const { payload } = action
+         state.drivers.data = initialState.drivers.data;
+         state.drivers.loading = false;
+         state.drivers.error = payload;
+      },
       createDriverRequest(state) {
          state.drivers.loading = true;
          state.drivers.error = initialState.drivers.error;
@@ -96,6 +111,21 @@ const resourcesSlice = createSlice({
          state.vehicles.loading = false;
          state.vehicles.error = payload;
       },
+      getAllVehiclesRequest(state) {
+         state.vehicles.loading = true;
+      },
+      getAllVehiclesSuccess(state, action: any) {
+         const { payload } = action
+         state.vehicles.data = payload
+         state.vehicles.loading = false;
+         state.vehicles.error = initialState.vehicles.error
+      },
+      getAllVehiclesFailure(state, action: any) {
+         const { payload } = action
+         state.vehicles.data = initialState.vehicles.data;
+         state.vehicles.loading = false;
+         state.vehicles.error = payload;
+      },
       createVehicleRequest(state) {
          state.vehicles.loading = true;
          state.vehicles.error = initialState.vehicles.error;
@@ -121,12 +151,18 @@ const {
     getDriversSuccess,
     getDriversRequest,
     getDriversFailure,
+    getAllDriversSuccess,
+    getAllDriversRequest,
+    getAllDriversFailure,
     createDriverRequest,
     createDriverSuccess,
     createDriverFailure,
     getVehiclesRequest,
     getVehiclesSuccess,
     getVehiclesFailure,
+    getAllVehiclesRequest,
+    getAllVehiclesSuccess,
+    getAllVehiclesFailure,
     createVehicleRequest,
     createVehicleSuccess,
     createVehicleFailure
@@ -134,6 +170,18 @@ const {
 
 
 export default resourcesSlice.reducer;
+
+export const getAllDrivers = (): AppThunk => async (dispatch) => {
+   dispatch(getAllDriversRequest());
+   try{
+      const response: AxiosResponse = await Axios.get('/drivers');
+      const drivers = _.mapKeys(response.data, 'id') 
+      dispatch(getAllDriversSuccess(drivers));
+   }
+   catch(error){
+      dispatch(getAllDriversFailure(error.response.data));
+   }
+}
 
 export const getDriver = (): AppThunk => async (dispatch) => {
    dispatch(getDriversRequest());
@@ -146,6 +194,19 @@ export const getDriver = (): AppThunk => async (dispatch) => {
       dispatch(getDriversFailure(error.response.data));
    }
 };
+
+export const getAllVehicles = (): AppThunk => async (dispatch) => {
+   dispatch(getAllVehiclesRequest());
+   try{
+      const response: AxiosResponse = await Axios.get('/vehicles');
+      const vehicle = _.mapKeys(response.data, 'id') 
+      dispatch(getAllVehiclesSuccess(vehicle));
+   }
+   catch(error){
+      dispatch(getAllVehiclesFailure(error.response));
+   }
+}; 
+
 
 export const getVehicle = (): AppThunk => async (dispatch) => {
    dispatch(getVehiclesRequest());

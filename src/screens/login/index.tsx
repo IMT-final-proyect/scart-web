@@ -26,7 +26,7 @@ const Login = () => {
 
     useEffect(() => {
         let route
-        if(accountData?.rol){
+        if(accountData?.rol !== undefined && accountData?.rol >= 0){
             route = getRolPath(accountData?.rol)
             history.push(route)
         }

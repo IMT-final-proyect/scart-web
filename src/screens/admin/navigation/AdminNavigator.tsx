@@ -11,14 +11,17 @@ import { ROUTES } from './routes';
 import useStyles from './styles';
 import Home from '../home';
 import contractors from '../contractors';
-
+import drivers from '../drivers';
+import vehicles from '../vehicles';
+import auditar from '../auditar'
+import DocumentDetails from '../documentDetails';
 const AdminNavigator = () => {
     const classes = useStyles();
     const [title, setTitle] = useState('Admin');
 
     const ButtonList = (
         <>
-            <Button 
+            {/* <Button 
                 className = {classes.button}
                 component={Link}
                 to={ROUTES.root}
@@ -28,32 +31,69 @@ const AdminNavigator = () => {
                     <InsertDriveFileIcon/>
                 </div>
                 Home
-            </Button>
+            </Button> */}
             <Button 
                 className = {classes.button}
                 component={Link}
                 to={ROUTES.root+ROUTES.contractors}
-                onClick={() => setTitle("Contractor")}
+                onClick={() => setTitle("Contratista")}
             >
                 <div className={classes.icon}>
                     <InsertDriveFileIcon/>
                 </div>
-                Contractors
+                Contratistas
+            </Button>
+            <Button 
+                className = {classes.button}
+                component={Link}
+                to={ROUTES.root+ROUTES.drivers}
+                onClick={() => setTitle("Conductores")}
+            >
+                <div className={classes.icon}>
+                    <InsertDriveFileIcon/>
+                </div>
+                Conductores
+            </Button>
+            <Button 
+                className = {classes.button}
+                component={Link}
+                to={ROUTES.root+ROUTES.vehicles}
+                onClick={() => setTitle("Vehiculos")}
+            >
+                <div className={classes.icon}>
+                    <InsertDriveFileIcon/>
+                </div>
+                Vehiculos
+            </Button>
+            <Button 
+                className = {classes.button}
+                component={Link}
+                to={ROUTES.root+ROUTES.audition}
+                onClick={() => setTitle("Auditar")}
+            >
+                <div className={classes.icon}>
+                    <InsertDriveFileIcon/>
+                </div>
+                Auditar
             </Button>
         </>
     )
 
     return(
-    <BrowserRouter>
-        <TemplateBar
-            title={title}
-            ButtonList = {ButtonList}
-        />
-        <Switch>
-            <Route exact path={ROUTES.root+ROUTES.contractors} component={contractors} />
-            <Route path={ROUTES.root} component={Home} />
-        </Switch>
-    </BrowserRouter>
+        <BrowserRouter>
+            <TemplateBar
+                title={title}
+                ButtonList = {ButtonList}
+            />
+            <Switch>
+                <Route exact path={ROUTES.root+ROUTES.contractors} component={contractors} />
+                <Route exact path={ROUTES.root+ROUTES.drivers} component={drivers} />
+                <Route exact path={ROUTES.root+ROUTES.vehicles} component={vehicles} />
+                <Route exact path={ROUTES.root+ROUTES.audition} component={auditar} />
+                <Route exact path={ROUTES.root+ROUTES.audition+'/:id'} component={DocumentDetails} />
+                <Route path={ROUTES.root} component={contractors} />
+            </Switch>
+        </BrowserRouter>
     )
 }
 

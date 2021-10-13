@@ -2,23 +2,24 @@ import React, { useEffect, useState } from 'react';
 import { Button, Card, Grid, Modal, } from '@material-ui/core';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import useStyles from './styles';
+import VehicleRow from './components/vehicleRow';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../redux/rootReducer';
-import { createDocument } from '../../../redux/slices/documentsSlice';
-import CreateContractorDocumentModal from './components/CreateContractorDocumentModal';
+import { createDocument, getContractorDocuments } from '../../../redux/slices/documentsSlice';
+import CreateContractorDocumentModal from './components/CreateVehicleDocumentModal';
+import { IDocument } from '../../../utils/interfaces';
 import { ROUTES } from '../navigation/routes';
 import { Link } from 'react-router-dom';
-import { getContractors } from '../../../redux/slices/contractorsSlice';
-import ContractorRow from './components/contratorRow';
+import { getAllVehicles } from '../../../redux/slices/resourcesSlice';
 
 const Contractors = () => {
     const classes = useStyles();
     const dispatch = useDispatch()
     const [openModal, setOpenModal] = useState(false)
-    const contractors = useSelector((state: RootState) => state.contractors.data)
+    const vehicles = useSelector((state: RootState) => state.resources.vehicles.data)
 
     useEffect(() => {
-        dispatch(getContractors())
+        dispatch(getAllVehicles())
     }, [])
 
     const addDocument = (expirationDate: moment.Moment, type: number, entityType: number, entityId: number, images: string[]) => {
@@ -39,38 +40,55 @@ const Contractors = () => {
             <Card className={classes.leftCard}>
                 <Grid container justifyContent='space-between'>
                     <text className={classes.textTitle}>
-                        Contratistas
+                        Vehiculos
                     </text>
                     <Button onClick={() => setOpenModal(true)}>
                         <AddCircleIcon className={classes.circleIcon}/>
                     </Button>
                 </Grid>
-                {contractors.length === 0 ?
-                    <text className={classes.textCenter}> No hay contratistas registrados</text>
+                {vehicles.length === 0 ?
+                    <text className={classes.textCenter}> No hay vehiculos registrados</text>
                     :
                     <>
                         <Grid container justifyContent='space-between'>
-                            <Grid item xs={5} className={classes.headerText}>
+                            <Grid item xs={3} className={classes.headerText}>
                                 <text className={classes.headerText}>
-                                    Nombre
+                                    Marca
                                 </text>
                             </Grid>
-                            <Grid item xs={5} className={classes.headerText}>
+                            <Grid item xs={3} className={classes.headerText}>
                                 <text className={classes.headerText}>
-                                    CUIT
+                                    Modelo
+                                </text>
+                            </Grid>
+                            <Grid item xs={3} className={classes.headerText}>
+                                <text className={classes.headerText}>
+                                    Contratista
+                                </text>
+                            </Grid>
+                            <Grid item xs={2} className={classes.headerText}>
+                                <text className={classes.headerText}>
+                                    Patente
+                                </text>
+                            </Grid>
+                            <Grid item xs={1} className={classes.headerText}>
+                                <text className={classes.headerText}>
+                                    Acciones
                                 </text>
                             </Grid>
                         </Grid>
                         <Grid container direction='column' justifyContent='space-between' >
-                            {Object.keys(contractors).map((key: string, i: any) =>
+                            {Object.keys(vehicles).map((key: string, i: any) =>
                             <Button
                                 className={classes.button}
                                 component={Link}
-                                to={ROUTES.root+ROUTES.contractors+'/'+contractors[parseInt(key)].id}
+                                to={ROUTES.root+ROUTES.contractors+'/'+vehicles[parseInt(key)].id}
                             >  
-                                <ContractorRow 
-                                    name={contractors[parseInt(key)].name}
-                                    cuit={contractors[parseInt(key)].cuit}
+                                <VehicleRow 
+                                    key={vehicles[parseInt(key)].id}
+                                    brand={vehicles[parseInt(key)].brand}
+                                    model={vehicles[parseInt(key)].model}
+                                    plate={vehicles[parseInt(key)].plate}
                                 />
                             </Button>
                             )}

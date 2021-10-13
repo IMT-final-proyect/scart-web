@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import { ROUTES } from '../navigation/routes';
 import useStyles from './styles';
 import { useDispatch, useSelector } from 'react-redux';
-import { createDriver, createVehicle, getDriver, getVehicle } from '../../../redux/slices/contractorSlices/resourcesSlice';
+import { createDriver, createVehicle, getDriver, getVehicle } from '../../../redux/slices/resourcesSlice';
 import { RootState } from '../../../redux/rootReducer';
 import moment from 'moment';
 import CreateDriverModal from './components/createDriverModal';

@@ -9,7 +9,7 @@ import moment from 'moment';
 import PreviewIcon from '@mui/icons-material/Preview';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
 import DownloadIcon from '@mui/icons-material/Download';
-import { getDocumentById } from '../../redux/slices/contractorSlices/documentsSlice';
+import { getDocumentById } from '../../redux/slices/documentsSlice';
 import globalColors from '../../utils/styles/globalColors';
 import { getStateColor, getStateName } from '../../utils/functions/states';
 

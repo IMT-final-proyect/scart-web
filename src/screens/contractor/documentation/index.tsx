@@ -5,7 +5,7 @@ import useStyles from './styles';
 import DocumentRow from './components/documentRow/DocumentRow';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../redux/rootReducer';
-import { createDocument, getContractorDocuments } from '../../../redux/slices/contractorSlices/documentsSlice';
+import { createDocument, getContractorDocuments } from '../../../redux/slices/documentsSlice';
 import CreateContractorDocumentModal from './components/CreateContractorDocumentModal';
 import { IDocument } from '../../../utils/interfaces';
 import { ROUTES } from '../navigation/routes';
