@@ -1,95 +1,126 @@
-import { createAction, createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import Axios, {AxiosResponse} from 'Axios';
-import { RootState } from '../rootReducer';
+import { createAction, createSlice } from '@reduxjs/toolkit';
+import Axios from 'axios';
 import { AppThunk } from '../store';
 
- //user interface
- export interface IUSER {
+export interface IAccount {
+   uuid: string;
+   entityId: number;
+   name: string;
+   surname: string;
+   email: string;
+   active: false;
+   rol: number;
+   access_token: string;
+   refresh_token: string;
+}
+
+export interface IUser {
    id: number;
-   name: string,
-   surname: string,
-   email: string,
-}
-
-// User reducer state interface
-export interface userState {
-   // Provider's data
-   data: IUSER|null;
-   // Authentication and authorization data
-   token: { accessToken: string|null; refreshToken: string|null };
-}
-
-// Payload of the post login action
-interface postLoginPayload {
-   user: IUSER;
-   accessToken: string;
-   refreshToken: string;
+   name: string;
+   cuit: string;
+   street: string;
+   number: number;
+   city: string;
+   province: string;
+   drivers?: []
+   vehicles?: []
 }
 
 
-// User reducer initial state
-const initialState: userState = {
-   data: null,
-   token: { accessToken: null, refreshToken: null },
+interface IError {
+   code: string
+   message: string
+}
+
+export interface UserState {
+   accountData: IAccount|null;
+   userData: IUser|null;
+   loading: boolean;
+   error: IError|null;
+}
+
+const initialState: UserState = {
+   accountData: null,
+   userData: null,
+   loading: false,
+   error: null
 };
 
-// Clean state action, this will be defined in another slices
-export const cleanState = createAction('cleanState');
-export const postLoginRequest = createAction('postLoginRequest')
-export const postResetPasswordRequest = createAction('user/postResetPasswordRequest');
-export const postResetPasswordSuccess = createAction('user/postResetPasswordSuccess');
-export const postResetPasswordFailure = createAction('user/postResetPasswordFailure');
+export const postResetPasswordRequest = createAction('postResetPasswordRequest');
+export const postResetPasswordSuccess = createAction('postResetPasswordSuccess');
+export const postResetPasswordFailure = createAction('postResetPasswordFailure');
+export const postLogout = createAction('postLogout');
 
 const userSlice = createSlice({
    name: 'user',
    initialState,
    reducers: {
-      // Sets the token data
-      setToken(
-         state,
-         action: PayloadAction<{ accessToken: string; refreshToken: string }>,
-      ) {
-         state.token = action.payload;
+      postLoginRequest(state) {
+         state.loading = true;
       },
-      // Indicates a post logout request has finished successfully
-      postLogoutSuccess(state) {
-         state.token = initialState.token;
+      postLoginSuccess(state, action: any) {
+         const { payload } = action
+         state.accountData = payload.accountData
+         state.error = initialState.error
       },
-      // Indicates a post login request has finished successfully
-      postLoginSuccess(state, action: PayloadAction<postLoginPayload>) {
-         const { accessToken, refreshToken } = action.payload;
-         state.token.accessToken = accessToken;
-         state.token.refreshToken = refreshToken;
+      postLoginFailure(state, action: any) {
+         const { payload } = action
+         state.accountData = initialState.accountData;
+         state.loading = false;
+         state.error = payload;
       },
-      // Indicates a post login request has failed
-      postLoginFailure(state) {
-         state.data = initialState.data;
-         state.token = initialState.token;
+      getUserDataRequest(state){
+         state.loading = true;
+      },
+      getUserDataSuccess(state, action: any){
+         const { payload } = action
+         state.userData = payload
+         state.error = initialState.error
+         state.loading = true;
+      },
+      getUserDataFailure(state, action: any){
+         const { payload } = action
+         state.userData = initialState.userData;
+         state.loading = false;
+         state.error = payload;
       },
    },
 });
 
 const {
    postLoginSuccess,
-   postLogoutSuccess,
+   postLoginRequest,
    postLoginFailure,
+   getUserDataRequest,
+   getUserDataSuccess,
+   getUserDataFailure,
 } = userSlice.actions;
 
-export const { setToken } = userSlice.actions;
 
-// User's slice reducer
 export default userSlice.reducer;
 
-export const postLogin = (
-   { username, password }: { username: string; password: string },
-): AppThunk => async (dispatch) => {
-      dispatch(postLoginRequest);
-      try{
-         const response : AxiosResponse<postLoginPayload> = await Axios.post('url');
-         dispatch(postLoginSuccess(response.data));
-      }
-      catch(error){
-         console.error('Could not log in user ',username,'.',error.message);
-         dispatch(postLoginFailure);
-      }
-   };
+export const postLogin = (username: string, password: string): AppThunk => async (dispatch) => {
+   dispatch(postLoginRequest());
+   try{
+      const response = await Axios.post('/login',{
+         username,
+         password
+      });
+      localStorage.setItem('access_token', response.data.accountData.access_token);
+      dispatch(postLoginSuccess(response.data));
+   }
+   catch(error){
+      dispatch(postLoginFailure(error.response.data));
+   }
+};
+
+export const getContractorData = (id: number | undefined): AppThunk => async (dispatch) => {
+   dispatch(getUserDataRequest())
+   try{
+      const response = await Axios.get(`/contractors/${id}`);
+      dispatch(getUserDataSuccess(response.data));
+   }
+   catch(error){
+      dispatch(getUserDataFailure(error.response.data))
+   }
+}

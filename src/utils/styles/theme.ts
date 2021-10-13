@@ -1,4 +1,4 @@
-import { createMuiTheme } from '@material-ui/core';
+import { createTheme } from '@material-ui/core';
 import globalColors from './globalColors';
 
 const RobotoBlack = {
@@ -7,7 +7,7 @@ const RobotoBlack = {
     fontWeight: '500',
   };
 
-export default createMuiTheme({
+export default createTheme({
     overrides: {
       MuiCssBaseline: {
         '@global': {
@@ -24,5 +24,8 @@ export default createMuiTheme({
       primary: {
         main: globalColors.lightBlue,
       },
+      secondary: {
+        main: globalColors.white
+      }
     },
 });
