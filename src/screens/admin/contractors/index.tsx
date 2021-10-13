@@ -4,11 +4,10 @@ import AddCircleIcon from '@material-ui/icons/AddCircle';
 import useStyles from './styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../redux/rootReducer';
-import { createDocument } from '../../../redux/slices/documentsSlice';
-import CreateContractorDocumentModal from './components/CreateContractorDocumentModal';
+import CreateContractorModal from './components/CreateContractorModal';
 import { ROUTES } from '../navigation/routes';
 import { Link } from 'react-router-dom';
-import { getContractors } from '../../../redux/slices/contractorsSlice';
+import { createContractor, getContractors } from '../../../redux/slices/contractorsSlice';
 import ContractorRow from './components/contratorRow';
 
 const Contractors = () => {
@@ -21,8 +20,8 @@ const Contractors = () => {
         dispatch(getContractors())
     }, [])
 
-    const addDocument = (expirationDate: moment.Moment, type: number, entityType: number, entityId: number, images: string[]) => {
-        dispatch(createDocument(expirationDate, type, entityType, entityId, images))
+    const addContractor = (username: string, password: string, name: string, cuit: string, street: string, number: string, city: string, province: string) => {
+        dispatch(createContractor(username, password, name, cuit, street, number, city, province))
         setOpenModal(false)
     }
 
@@ -30,9 +29,9 @@ const Contractors = () => {
     return (
         <>
         <Modal open={openModal} onClose={() => setOpenModal(false)}>
-            <CreateContractorDocumentModal
-                setOpenDriverModal={setOpenModal}
-                addDocument={addDocument}
+            <CreateContractorModal
+                setOpenModal={setOpenModal}
+                addContractor={addContractor}
             />
         </Modal>
         <Grid container className={classes.container} direction='row' justifyContent='space-between'>

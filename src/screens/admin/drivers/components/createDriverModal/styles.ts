@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         marginBottom: '2.5%'
     },
     datePicker: {
-        marginBottom: '15%',
+        marginBottom: '10%',
         marginTop: '5%'
     },
     modal: {
@@ -31,25 +31,16 @@ const useStyles = makeStyles((theme: Theme) => ({
         marginTop: '3%',
         fontSize: 25,
         fontWeight: 'bold',
+        marginBottom: '2.5%'
     },
-    subtitle: {
-        marginTop: '3%',
-        fontSize: 20,
-        marginBottom: '5%'
+    subtitle:{
+        fontSize: 15,
+        marginBottom: '2.5%'
     },
     cancel: {
         padding: '2.5%',
         background: globalColors.red,
         color: globalColors.white
-    },
-    upload: {
-        padding: '2.5%',
-        background: globalColors.green,
-        color: globalColors.white,
-        marginBottom: '2.5%'
-    },
-    filesUploaded: {
-        marginBottom: '15%'
     },
     emptyMessage: {
         backgroundColor: globalColors.red,

@@ -48,21 +48,6 @@ const resourcesSlice = createSlice({
    name: 'resources',
    initialState,
    reducers: {
-      getDriversRequest(state) {
-         state.drivers.loading = true;
-      },
-      getDriversSuccess(state, action: any) {
-         const { payload } = action
-         state.drivers.data = payload
-         state.drivers.loading = false;
-         state.drivers.error = initialState.drivers.error
-      },
-      getDriversFailure(state, action: any) {
-         const { payload } = action
-         state.drivers.data = initialState.drivers.data;
-         state.drivers.loading = false;
-         state.drivers.error = payload;
-      },
       getAllDriversRequest(state) {
          state.drivers.loading = true;
       },
@@ -95,21 +80,6 @@ const resourcesSlice = createSlice({
          state.drivers.loading = false;
          state.drivers.error = payload;
          state.drivers.success = initialState.drivers.success;
-      },
-      getVehiclesRequest(state) {
-         state.vehicles.loading = true;
-      },
-      getVehiclesSuccess(state, action: any) {
-         const { payload } = action
-         state.vehicles.data = payload
-         state.vehicles.loading = false;
-         state.vehicles.error = initialState.vehicles.error
-      },
-      getVehiclesFailure(state, action: any) {
-         const { payload } = action
-         state.vehicles.data = initialState.vehicles.data;
-         state.vehicles.loading = false;
-         state.vehicles.error = payload;
       },
       getAllVehiclesRequest(state) {
          state.vehicles.loading = true;
@@ -148,18 +118,12 @@ const resourcesSlice = createSlice({
 });
 
 const {
-    getDriversSuccess,
-    getDriversRequest,
-    getDriversFailure,
     getAllDriversSuccess,
     getAllDriversRequest,
     getAllDriversFailure,
     createDriverRequest,
     createDriverSuccess,
     createDriverFailure,
-    getVehiclesRequest,
-    getVehiclesSuccess,
-    getVehiclesFailure,
     getAllVehiclesRequest,
     getAllVehiclesSuccess,
     getAllVehiclesFailure,
@@ -171,52 +135,30 @@ const {
 
 export default resourcesSlice.reducer;
 
-export const getAllDrivers = (): AppThunk => async (dispatch) => {
+
+export const getAllDrivers = (contractorId?: number): AppThunk => async (dispatch) => {
    dispatch(getAllDriversRequest());
+   const url = contractorId !== undefined ? `/drivers?contractor=${contractorId}` : `/drivers`
    try{
-      const response: AxiosResponse = await Axios.get('/drivers');
+      const response: AxiosResponse = await Axios.get(url);
       const drivers = _.mapKeys(response.data, 'id') 
       dispatch(getAllDriversSuccess(drivers));
    }
    catch(error){
       dispatch(getAllDriversFailure(error.response.data));
    }
-}
-
-export const getDriver = (): AppThunk => async (dispatch) => {
-   dispatch(getDriversRequest());
-   try{
-      const response: AxiosResponse = await Axios.get('/drivers');
-      const drivers = _.mapKeys(response.data, 'id') 
-      dispatch(getDriversSuccess(drivers));
-   }
-   catch(error){
-      dispatch(getDriversFailure(error.response.data));
-   }
 };
 
-export const getAllVehicles = (): AppThunk => async (dispatch) => {
+export const getAllVehicles = (contractorId?: number): AppThunk => async (dispatch) => {
    dispatch(getAllVehiclesRequest());
+   const url = contractorId !== undefined ? `/vehicles?contractor=${contractorId}` : `/vehicles`
    try{
-      const response: AxiosResponse = await Axios.get('/vehicles');
+      const response: AxiosResponse = await Axios.get(url);
       const vehicle = _.mapKeys(response.data, 'id') 
       dispatch(getAllVehiclesSuccess(vehicle));
    }
    catch(error){
       dispatch(getAllVehiclesFailure(error.response));
-   }
-}; 
-
-
-export const getVehicle = (): AppThunk => async (dispatch) => {
-   dispatch(getVehiclesRequest());
-   try{
-      const response: AxiosResponse = await Axios.get('/vehicles');
-      const vehicle = _.mapKeys(response.data, 'id') 
-      dispatch(getVehiclesSuccess(vehicle));
-   }
-   catch(error){
-      dispatch(getVehiclesFailure(error.response));
    }
 }; 
 

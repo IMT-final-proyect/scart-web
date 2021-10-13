@@ -125,24 +125,24 @@ const DriverDetails = () => {
                                 </Button>
                             </Grid>
                             <Grid container justifyContent='space-between'>
-                                <Grid item xs={3} className={classes.headerText}>
+                                <Grid item xs={5} className={classes.headerText}>
                                     <text className={classes.headerText}>
                                         Nombre
                                     </text>
                                 </Grid>
                                 <Grid item xs={3} className={classes.headerText}>
                                     <text className={classes.headerText}>
-                                        Fecha de vencimiento
-                                    </text>
-                                </Grid>
-                                <Grid item xs={3} className={classes.headerText}>
-                                    <text className={classes.headerText}>
-                                        Estado
+                                        Contratista
                                     </text>
                                 </Grid>
                                 <Grid item xs={2} className={classes.headerText}>
                                     <text className={classes.headerText}>
-                                        Acciones
+                                        Fecha de vencimiento
+                                    </text>
+                                </Grid>
+                                <Grid item xs={2} className={classes.headerText}>
+                                    <text className={classes.headerText}>
+                                        Estado
                                     </text>
                                 </Grid>
                             </Grid>

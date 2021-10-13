@@ -92,20 +92,22 @@ export const createContractor = (
    username: string,
    password: string,
    name: string, 
-   surname: string, 
    cuit: string, 
-   birth_date: moment.Moment, 
-   contractorId: number): AppThunk => async (dispatch) => {
+   street: string, 
+   number: string,
+   city: string, 
+   province: string): AppThunk => async (dispatch) => {
    dispatch(createContractorRequest());
    try{
       const response: AxiosResponse = await Axios.post('/register/Contractor',{
          username,
          password,
          name,
-         surname,
          cuit,
-         birth_date,
-         contractorId
+         street,
+         number,
+         city,
+         province
       });
       dispatch(createContractorSuccess(response.data.userData));
    }

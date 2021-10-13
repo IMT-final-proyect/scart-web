@@ -12,11 +12,11 @@ interface Props {
 
 const CustomSelect = ({ value, placeholder, data, setValue }: Props) => {
     const classes = useStyles();
-
+    
     const handleSelect = (event: React.ChangeEvent<{ value: unknown }>) => {
         setValue(event.target.value as string);
       };
-
+    
     return(
     <FormControl className={classes.formControl}>
         <InputLabel id="select">{placeholder}</InputLabel>

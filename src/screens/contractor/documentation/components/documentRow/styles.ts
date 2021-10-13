@@ -12,14 +12,20 @@ const useStyles = makeStyles<Theme, Props>((theme: Theme) => ({
     text:{
         maxWidth: 'auto',
         textAlign: 'start',
-        [theme.breakpoints.down('md')]: {
+        [theme.breakpoints.down('lg')]: {
+            fontSize: 11,
+        },
+        [theme.breakpoints.down('sm')]: {
             fontSize: 7,
         },
     },
     state:{
         maxWidth: 'auto',
         textAlign: 'start',
-        [theme.breakpoints.down('md')]: {
+        [theme.breakpoints.down('lg')]: {
+            fontSize: 11,
+        },
+        [theme.breakpoints.down('sm')]: {
             fontSize: 7,
         },
     },

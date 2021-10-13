@@ -6,34 +6,38 @@ import DriverRow from './components/driverRow';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../redux/rootReducer';
 import { createDocument } from '../../../redux/slices/documentsSlice';
-import CreateContractorDocumentModal from './components/CreateDriverDocumentModal';
+import CreateDriverModal from './components/createDriverModal';
 import { ROUTES } from '../navigation/routes';
 import { Link } from 'react-router-dom';
-import { getAllDrivers } from '../../../redux/slices/resourcesSlice';
+import { createDriver, getAllDrivers } from '../../../redux/slices/resourcesSlice';
 import moment from 'moment';
+import { getContractors } from '../../../redux/slices/contractorsSlice';
 
-const Contractors = () => {
+const Drivers = () => {
     const classes = useStyles();
     const dispatch = useDispatch()
-    const [openModal, setOpenModal] = useState(false)
+    const [openDriverModal, setOpenDriverModal] = useState(false)
     const drivers = useSelector((state: RootState) => state.resources.drivers.data)
 
     useEffect(() => {
         dispatch(getAllDrivers())
+        dispatch(getContractors())
     }, [])
 
-    const addDocument = (expirationDate: moment.Moment, type: number, entityType: number, entityId: number, images: string[]) => {
-        dispatch(createDocument(expirationDate, type, entityType, entityId, images))
-        setOpenModal(false)
+    const addDriver = (username: string, password: string, name: string, surname: string, cuit: string, birthdate: moment.Moment, contractorId: number) => {
+        if(!!contractorId){
+            dispatch(createDriver(username, password, name, surname, cuit, moment(birthdate), contractorId))
+            setOpenDriverModal(false)
+        }
     }
 
 
     return (
         <>
-        <Modal open={openModal} onClose={() => setOpenModal(false)}>
-            <CreateContractorDocumentModal
-                setOpenDriverModal={setOpenModal}
-                addDocument={addDocument}
+        <Modal open={openDriverModal} onClose={() => setOpenDriverModal(false)}>
+            <CreateDriverModal
+                setOpenDriverModal={setOpenDriverModal}
+                addDriver={addDriver}
             />
         </Modal>
         <Grid container className={classes.container} direction='row' justifyContent='space-between'>
@@ -42,7 +46,7 @@ const Contractors = () => {
                     <text className={classes.textTitle}>
                         Conductores
                     </text>
-                    <Button onClick={() => setOpenModal(true)}>
+                    <Button onClick={() => setOpenDriverModal(true)}>
                         <AddCircleIcon className={classes.circleIcon}/>
                     </Button>
                 </Grid>
@@ -97,4 +101,4 @@ const Contractors = () => {
     )
 }
 
-export default Contractors;
+export default Drivers;
