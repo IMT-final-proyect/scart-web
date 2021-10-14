@@ -25,7 +25,6 @@ const Contractors = () => {
         setOpenModal(false)
     }
 
-
     return (
         <>
         <Modal open={openModal} onClose={() => setOpenModal(false)}>

@@ -10,6 +10,11 @@ export interface IDriver {
    surname: string;
    cuit: string;
    birth_date: moment.Moment;
+   contractor: {
+      id: string;
+      name: string;
+      cuit: string;
+   };
 }
 
 export interface IVehicle {
@@ -18,6 +23,11 @@ export interface IVehicle {
    brand: string;
    model: string;
    year: number;
+   contractor: {
+      id: string;
+      name: string;
+      cuit: string;
+   };
 }
 
 export interface IDocument {

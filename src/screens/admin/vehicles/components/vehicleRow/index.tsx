@@ -7,9 +7,10 @@ import useStyles from './styles';
 interface Props{
     brand: string,
     model: string,
-    plate: string
+    plate: string,
+    contractor: string,
 }
-const VehicleRow = ({ brand, model, plate }: Props) => {
+const VehicleRow = ({ brand, model, plate, contractor }: Props) => {
     const classes = useStyles();    
     
     return(
@@ -21,7 +22,7 @@ const VehicleRow = ({ brand, model, plate }: Props) => {
                 <text> {model} </text>
             </Grid>
             <Grid item xs={3} className={classes.text}>
-                <text> Contratista1 </text>
+                <text> {contractor} </text>
             </Grid>
             <Grid item xs={2} className={classes.text}>
                 <text> {plate} </text>

@@ -88,7 +88,7 @@ const Drivers = () => {
                                     name={drivers[parseInt(key)].name}
                                     surname={drivers[parseInt(key)].surname}
                                     document={drivers[parseInt(key)].cuit}
-                                    contractor='Contratista1'
+                                    contractor={drivers[parseInt(key)].contractor.name}
                                 />
                             </Button>
                             )}

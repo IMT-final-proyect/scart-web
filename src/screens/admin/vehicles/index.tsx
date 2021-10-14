@@ -5,35 +5,37 @@ import useStyles from './styles';
 import VehicleRow from './components/vehicleRow';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../redux/rootReducer';
-import { createDocument, getContractorDocuments } from '../../../redux/slices/documentsSlice';
-import CreateContractorDocumentModal from './components/CreateVehicleDocumentModal';
-import { IDocument } from '../../../utils/interfaces';
+import { createDocument } from '../../../redux/slices/documentsSlice';
+import CreateVehicleModal from './components/createVehicleModal';
 import { ROUTES } from '../navigation/routes';
 import { Link } from 'react-router-dom';
-import { getAllVehicles } from '../../../redux/slices/resourcesSlice';
+import { createVehicle, getAllVehicles } from '../../../redux/slices/resourcesSlice';
+import { getContractors } from '../../../redux/slices/contractorsSlice';
 
 const Contractors = () => {
     const classes = useStyles();
     const dispatch = useDispatch()
-    const [openModal, setOpenModal] = useState(false)
+    const [openVehicleModal, setOpenVehicleModal] = useState(false)
     const vehicles = useSelector((state: RootState) => state.resources.vehicles.data)
 
     useEffect(() => {
         dispatch(getAllVehicles())
+        dispatch(getContractors())
     }, [])
 
-    const addDocument = (expirationDate: moment.Moment, type: number, entityType: number, entityId: number, images: string[]) => {
-        dispatch(createDocument(expirationDate, type, entityType, entityId, images))
-        setOpenModal(false)
+    const addVehicle = (brand: string, model: string, year: string, plate: string, contractorId: number) => {
+        if(!!contractorId){
+            dispatch(createVehicle(plate, brand, model, year, contractorId))
+            setOpenVehicleModal(false)
+        }
     }
-
 
     return (
         <>
-        <Modal open={openModal} onClose={() => setOpenModal(false)}>
-            <CreateContractorDocumentModal
-                setOpenDriverModal={setOpenModal}
-                addDocument={addDocument}
+        <Modal open={openVehicleModal} onClose={() => setOpenVehicleModal(false)}>
+            <CreateVehicleModal
+                setOpenVehicleModal={setOpenVehicleModal}
+                addVehicle={addVehicle}
             />
         </Modal>
         <Grid container className={classes.container} direction='row' justifyContent='space-between'>
@@ -42,7 +44,7 @@ const Contractors = () => {
                     <text className={classes.textTitle}>
                         Vehiculos
                     </text>
-                    <Button onClick={() => setOpenModal(true)}>
+                    <Button onClick={() => setOpenVehicleModal(true)}>
                         <AddCircleIcon className={classes.circleIcon}/>
                     </Button>
                 </Grid>
@@ -89,6 +91,7 @@ const Contractors = () => {
                                     brand={vehicles[parseInt(key)].brand}
                                     model={vehicles[parseInt(key)].model}
                                     plate={vehicles[parseInt(key)].plate}
+                                    contractor={vehicles[parseInt(key)].contractor.name}
                                 />
                             </Button>
                             )}

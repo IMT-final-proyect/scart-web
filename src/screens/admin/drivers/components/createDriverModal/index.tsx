@@ -2,11 +2,9 @@ import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/picker
 import MomentUtils from '@date-io/moment';
 import { Button, Grid, Snackbar, TextField, } from '@material-ui/core';
 import useStyles from './styles';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import moment from 'moment';
 import { Alert } from '@mui/material';
-import { getContractors } from '../../../../../redux/slices/contractorsSlice';
-import { IContractor } from '../../../../../utils/interfaces';
 import { RootState } from '../../../../../redux/rootReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import CustomSelect from '../../../../../components/customSelect'

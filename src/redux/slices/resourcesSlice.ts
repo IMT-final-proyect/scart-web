@@ -138,7 +138,7 @@ export default resourcesSlice.reducer;
 
 export const getAllDrivers = (contractorId?: number): AppThunk => async (dispatch) => {
    dispatch(getAllDriversRequest());
-   const url = contractorId !== undefined ? `/drivers?contractor=${contractorId}` : `/drivers`
+   const url = contractorId !== undefined ? `/drivers?contractor=${contractorId}` : `/drivers?relations=contractor`
    try{
       const response: AxiosResponse = await Axios.get(url);
       const drivers = _.mapKeys(response.data, 'id') 
@@ -151,7 +151,7 @@ export const getAllDrivers = (contractorId?: number): AppThunk => async (dispatc
 
 export const getAllVehicles = (contractorId?: number): AppThunk => async (dispatch) => {
    dispatch(getAllVehiclesRequest());
-   const url = contractorId !== undefined ? `/vehicles?contractor=${contractorId}` : `/vehicles`
+   const url = contractorId !== undefined ? `/vehicles?contractor=${contractorId}` : `/vehicles?relations=contractor`
    try{
       const response: AxiosResponse = await Axios.get(url);
       const vehicle = _.mapKeys(response.data, 'id') 
