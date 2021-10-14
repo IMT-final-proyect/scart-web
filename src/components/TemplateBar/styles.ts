@@ -13,6 +13,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     title:{
         marginLeft: theme.spacing(2),
+        marginBottom: '5%'
     },
     menuButton: {
         marginRight: theme.spacing(2),

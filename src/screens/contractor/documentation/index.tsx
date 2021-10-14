@@ -59,17 +59,17 @@ const Documentacion = () => {
                             </Grid>
                             <Grid item xs={3} className={classes.headerText}>
                                 <text className={classes.headerText}>
-                                    Recurso
-                                </text>
-                            </Grid>
-                            <Grid item xs={2} className={classes.headerText}>
-                                <text className={classes.headerText}>
                                     Fecha de venc.
                                 </text>
                             </Grid>
                             <Grid item xs={2} className={classes.headerText}>
                                 <text className={classes.headerText}>
                                     Estado
+                                </text>
+                            </Grid>
+                            <Grid item xs={2} className={classes.headerText}>
+                                <text className={classes.headerText}>
+                                    Importancia
                                 </text>
                             </Grid>
                         </Grid>
@@ -83,7 +83,6 @@ const Documentacion = () => {
                                 <DocumentRow 
                                     key={documents[parseInt(key)].id}
                                     type={documents[parseInt(key)].type}
-                                    contractor={userData?.name}
                                     expiration={documents[parseInt(key)].expirationDate}
                                     state={documents[parseInt(key)].state}
                                     images={documents[parseInt(key)].photos}

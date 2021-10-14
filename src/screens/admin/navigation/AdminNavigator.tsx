@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 
 import { Button } from '@material-ui/core';
-import HomeIcon from '@material-ui/icons/Home';
-import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
-import StarIcon from '@material-ui/icons/Star';
+import FindInPageIcon from '@mui/icons-material/FindInPage';
+import BusinessIcon from '@mui/icons-material/Business';
+import DirectionsCarFilledIcon from '@mui/icons-material/DirectionsCarFilled';
+import PersonIcon from '@mui/icons-material/Person';
 import { BrowserRouter, Route, Switch, Link, useLocation } from 'react-router-dom';
 
 import TemplateBar from '../../../components/TemplateBar';
@@ -14,7 +15,8 @@ import contractors from '../contractors';
 import drivers from '../drivers';
 import vehicles from '../vehicles';
 import auditar from '../auditar'
-import DocumentDetails from '../documentDetails';
+import DocumentDetails from '../../../components/documentDetails';
+import contractorDetails from '../contractors/components/contractorDetails';
 const AdminNavigator = () => {
     const classes = useStyles();
     const [title, setTitle] = useState('Admin');
@@ -39,7 +41,7 @@ const AdminNavigator = () => {
                 onClick={() => setTitle("Contratista")}
             >
                 <div className={classes.icon}>
-                    <InsertDriveFileIcon/>
+                    <BusinessIcon/>
                 </div>
                 Contratistas
             </Button>
@@ -50,7 +52,7 @@ const AdminNavigator = () => {
                 onClick={() => setTitle("Conductores")}
             >
                 <div className={classes.icon}>
-                    <InsertDriveFileIcon/>
+                    <PersonIcon/>
                 </div>
                 Conductores
             </Button>
@@ -61,7 +63,7 @@ const AdminNavigator = () => {
                 onClick={() => setTitle("Vehiculos")}
             >
                 <div className={classes.icon}>
-                    <InsertDriveFileIcon/>
+                    <DirectionsCarFilledIcon/>
                 </div>
                 Vehiculos
             </Button>
@@ -72,7 +74,7 @@ const AdminNavigator = () => {
                 onClick={() => setTitle("Auditar")}
             >
                 <div className={classes.icon}>
-                    <InsertDriveFileIcon/>
+                    <FindInPageIcon/>
                 </div>
                 Auditar
             </Button>
@@ -87,10 +89,11 @@ const AdminNavigator = () => {
             />
             <Switch>
                 <Route exact path={ROUTES.root+ROUTES.contractors} component={contractors} />
+                <Route exact path={ROUTES.root+ROUTES.contractors+'/:id'} component={contractorDetails} />
                 <Route exact path={ROUTES.root+ROUTES.drivers} component={drivers} />
                 <Route exact path={ROUTES.root+ROUTES.vehicles} component={vehicles} />
                 <Route exact path={ROUTES.root+ROUTES.audition} component={auditar} />
-                <Route exact path={ROUTES.root+ROUTES.audition+'/:id'} component={DocumentDetails} />
+                <Route exact path={ROUTES.root+ROUTES.documentDetails+'/:id'} component={DocumentDetails} />
                 <Route path={ROUTES.root} component={contractors} />
             </Switch>
         </BrowserRouter>

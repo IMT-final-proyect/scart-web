@@ -2,16 +2,15 @@ import React from 'react';
 import { Grid, } from '@material-ui/core';
 import useStyles from './styles';
 import moment from 'moment';
-import { IDocumentType } from '../../../../../utils/interfaces';
-import { getStateColor, getStateName } from '../../../../../utils/functions/states';
+import { IDocumentType } from '../../../../../../../utils/interfaces';
+import { getStateColor, getStateName } from '../../../../../../../utils/functions/states';
 
 interface Props{
     type: IDocumentType,
     state: number,
     expiration: moment.Moment,
-    images: string[]
 }
-const Document = ({ type, expiration, state, images }: Props) => {
+const Document = ({ type, expiration, state }: Props) => {
     const stateName = getStateName(state)
     const color = getStateColor(stateName)
     const classes = useStyles({color});    

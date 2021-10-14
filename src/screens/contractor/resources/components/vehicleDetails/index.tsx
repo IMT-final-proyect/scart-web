@@ -125,7 +125,7 @@ const VehicleDetails = () => {
                                 </Button>
                             </Grid>
                             <Grid container justifyContent='space-between'>
-                                <Grid item xs={3} className={classes.headerText}>
+                                <Grid item xs={5} className={classes.headerText}>
                                     <text className={classes.headerText}>
                                         Nombre
                                     </text>
@@ -135,14 +135,14 @@ const VehicleDetails = () => {
                                         Fec. vencimiento
                                     </text>
                                 </Grid>
-                                <Grid item xs={3} className={classes.headerText}>
+                                <Grid item xs={2} className={classes.headerText}>
                                     <text className={classes.headerText}>
                                         Estado
                                     </text>
                                 </Grid>
                                 <Grid item xs={2} className={classes.headerText}>
                                     <text className={classes.headerText}>
-                                        Acciones
+                                        Importancia
                                     </text>
                                 </Grid>
                             </Grid>
@@ -160,7 +160,6 @@ const VehicleDetails = () => {
                                         <DocumentRow 
                                             key={documents[parseInt(key)].id}
                                             type={documents[parseInt(key)].type}
-                                            contractor={userData?.name}
                                             expiration={documents[parseInt(key)].expirationDate}
                                             state={documents[parseInt(key)].state}
                                             images={documents[parseInt(key)].photos}

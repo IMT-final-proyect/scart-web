@@ -8,7 +8,7 @@ interface Props{
     name: string,
     surname: string,
     document: string,
-    contractor: String
+    contractor: string
 
 } 
 const Driver = ({ name, surname, document, contractor }: Props) => {

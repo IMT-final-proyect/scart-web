@@ -23,7 +23,7 @@ const TemplateBar = (props : Props) => {
     const handleLogout = () => {
       dispatch({type: postLogout})
       history.push('/login')
-      window.location.reload(true);
+      window.location.reload();
     }
 
     const toggleDrawer = (value: boolean) => (

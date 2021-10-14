@@ -132,17 +132,17 @@ const DriverDetails = () => {
                                 </Grid>
                                 <Grid item xs={3} className={classes.headerText}>
                                     <text className={classes.headerText}>
-                                        Contratista
-                                    </text>
-                                </Grid>
-                                <Grid item xs={2} className={classes.headerText}>
-                                    <text className={classes.headerText}>
                                         Fecha de vencimiento
                                     </text>
                                 </Grid>
                                 <Grid item xs={2} className={classes.headerText}>
                                     <text className={classes.headerText}>
                                         Estado
+                                    </text>
+                                </Grid>
+                                <Grid item xs={2} className={classes.headerText}>
+                                    <text className={classes.headerText}>
+                                        Importancia
                                     </text>
                                 </Grid>
                             </Grid>
@@ -156,7 +156,6 @@ const DriverDetails = () => {
                                     <DocumentRow 
                                         key={documents[parseInt(key)].id}
                                         type={documents[parseInt(key)].type}
-                                        contractor={userData?.name}
                                         expiration={documents[parseInt(key)].expirationDate}
                                         state={documents[parseInt(key)].state}
                                         images={documents[parseInt(key)].photos}

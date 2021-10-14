@@ -50,7 +50,7 @@ const DocumentDetails = () => {
                 </Grid>
             </Card>
             <Grid container className={classes.bottomCardContainer} direction='row' justifyContent='space-between'>
-                <Grid item xs={12} lg={3}>
+                <Grid item xs={12} md={3}>
                     <Card className={classes.leftCard}>
                         <Grid container className={classes.titleContainer} justifyContent='space-between'>
                             <text className={classes.textTitle}>
@@ -97,7 +97,7 @@ const DocumentDetails = () => {
                     } 
                     </Card>
                 </Grid>
-                <Grid item xs={12} lg={9}>
+                <Grid item xs={12} md={9}>
                     {!image ?
                         <Card className={classes.noImageSelected}>
                             <text>Selecciona una imagen para visualizar</text> 

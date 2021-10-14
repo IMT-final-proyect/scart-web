@@ -89,7 +89,7 @@ const useStyles = makeStyles<Theme, Props>((theme: Theme) => ({
         marginBottom: '3%',
         marginLeft: '10%',
         textAlign: 'center',
-        [theme.breakpoints.down('md')]: {
+        [theme.breakpoints.down('sm')]: {
             marginLeft: '2.5%',
             marginRight: '2.5%',
         },
@@ -97,7 +97,7 @@ const useStyles = makeStyles<Theme, Props>((theme: Theme) => ({
     rightCard: {
         marginLeft: '2%',
         marginRight: '3.5%',
-        [theme.breakpoints.down('md')]: {
+        [theme.breakpoints.down('sm')]: {
             marginLeft: '2.5%',
             marginRight: '2.5%',
             marginTop: '5%'
