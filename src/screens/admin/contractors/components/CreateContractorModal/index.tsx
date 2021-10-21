@@ -75,8 +75,8 @@ const CreateDriverModal = ({ addContractor, setOpenModal }: Props) => {
 
     return (
         <Grid className={classes.modal} container direction='column' justify='center' alignItems='center'>
-                <text className={classes.title}>Crear conductor</text>
-                <text className={classes.subtitle}>Registrar un nuevo conductor</text>
+                <text className={classes.title}>Crear contratista</text>
+                <text className={classes.subtitle}>Registrar un nuevo contratista</text>
                 <TextField
                     id="driver-username"
                     className= {classes.textInput}

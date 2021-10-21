@@ -81,7 +81,7 @@ const Drivers = () => {
                             <Button
                                 className={classes.button}
                                 component={Link}
-                                to={ROUTES.root+ROUTES.contractors+'/'+drivers[parseInt(key)].id}
+                                to={ROUTES.root+ROUTES.drivers+'/'+drivers[parseInt(key)].id}
                             >  
                                 <DriverRow 
                                     key={drivers[parseInt(key)].id}

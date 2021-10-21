@@ -1,5 +1,6 @@
 const globalColors = {
     backgroundColor: '#2196F3',
+    lightBlueBackground: '#A5CFF1',
     black: '#00000',
     grey: '#BDBDBD',
     darkGrey: 'rgba(0, 0, 0, 0.56)',

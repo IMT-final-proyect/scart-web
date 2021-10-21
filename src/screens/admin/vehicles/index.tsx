@@ -84,7 +84,7 @@ const Contractors = () => {
                             <Button
                                 className={classes.button}
                                 component={Link}
-                                to={ROUTES.root+ROUTES.contractors+'/'+vehicles[parseInt(key)].id}
+                                to={ROUTES.root+ROUTES.vehicles+'/'+vehicles[parseInt(key)].id}
                             >  
                                 <VehicleRow 
                                     key={vehicles[parseInt(key)].id}

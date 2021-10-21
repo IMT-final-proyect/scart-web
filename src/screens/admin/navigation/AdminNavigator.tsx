@@ -1,22 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 import { Button } from '@material-ui/core';
 import FindInPageIcon from '@mui/icons-material/FindInPage';
 import BusinessIcon from '@mui/icons-material/Business';
 import DirectionsCarFilledIcon from '@mui/icons-material/DirectionsCarFilled';
 import PersonIcon from '@mui/icons-material/Person';
-import { BrowserRouter, Route, Switch, Link, useLocation } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
 
 import TemplateBar from '../../../components/TemplateBar';
 import { ROUTES } from './routes';
 import useStyles from './styles';
-import Home from '../home';
 import contractors from '../contractors';
 import drivers from '../drivers';
 import vehicles from '../vehicles';
 import auditar from '../auditar'
 import DocumentDetails from '../../../components/documentDetails';
 import contractorDetails from '../contractors/components/contractorDetails';
+import DriverDetails from '../drivers/components/driverDetails';
+import VehicleDetails from '../vehicles/components/vehicleDetails';
 const AdminNavigator = () => {
     const classes = useStyles();
     const [title, setTitle] = useState('Admin');
@@ -91,7 +92,9 @@ const AdminNavigator = () => {
                 <Route exact path={ROUTES.root+ROUTES.contractors} component={contractors} />
                 <Route exact path={ROUTES.root+ROUTES.contractors+'/:id'} component={contractorDetails} />
                 <Route exact path={ROUTES.root+ROUTES.drivers} component={drivers} />
+                <Route exact path={ROUTES.root+ROUTES.drivers+'/:id'} component={DriverDetails} />
                 <Route exact path={ROUTES.root+ROUTES.vehicles} component={vehicles} />
+                <Route exact path={ROUTES.root+ROUTES.vehicles+'/:id'} component={VehicleDetails} />
                 <Route exact path={ROUTES.root+ROUTES.audition} component={auditar} />
                 <Route exact path={ROUTES.root+ROUTES.documentDetails+'/:id'} component={DocumentDetails} />
                 <Route path={ROUTES.root} component={contractors} />
