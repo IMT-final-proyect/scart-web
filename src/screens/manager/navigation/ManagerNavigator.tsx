@@ -5,7 +5,7 @@ import HomeIcon from '@material-ui/icons/Home';
 import StarIcon from '@material-ui/icons/Star';
 import { BrowserRouter, Route, Switch, Link, useLocation } from 'react-router-dom';
 
-import TemplateBar from '../../../components/TemplateBar';
+import TemplateBar from '../../../components/templateBar';
 import { ROUTES } from './routes';
 import Exceptions from '../exceptions';
 import Reports from '../reports';

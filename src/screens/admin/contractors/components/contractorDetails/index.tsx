@@ -48,15 +48,55 @@ const ContractorDetails = () => {
             </Modal>
             <Grid container direction='column' justifyContent='space-between'>
                 <Card className={classes.cardContainer}>
-                    <Grid container justifyContent='space-between' direction='row' alignItems={'center'}>
+                    <Grid container className={classes.contractorDataRow} justifyContent='space-between' direction='row' alignItems={'center'}>
+                        <Grid item xs={3}>
                             <div className={classes.dataContainer}>
                                 <text className={classes.dataField}> Nombre: </text>
                                 <text className={classes.data}> {contractor.name} </text>
                             </div>
+                        </Grid>
+                        <Grid item xs={3}>
                             <div className={classes.dataContainer}>
                                 <text className={classes.dataField}> Cuit: </text>
                                 <text className={classes.data}> {contractor.cuit} </text>
                             </div>
+                        </Grid>
+                        <Grid item xs={3}>
+                            <div className={classes.dataContainer}>
+                                <text className={classes.dataField}> Calle: </text>
+                                <text className={classes.data}> {contractor.address?.street} </text>
+                            </div>
+                        </Grid>
+                        <Grid item xs={3}>
+                            <div className={classes.dataContainer}>
+                                <text className={classes.dataField}> Numero: </text>
+                                <text className={classes.data}> {contractor.address?.number} </text>
+                            </div>
+                        </Grid>
+                    </Grid>
+                    <Grid container className={classes.contractorDataRow} justifyContent='space-between' direction='row' alignItems={'center'}>
+                        <Grid item xs={3}>
+                            <div className={classes.dataContainer}>
+                                <text className={classes.dataField}> Ciudad: </text>
+                                <text className={classes.data}> {contractor.address?.city} </text>
+                            </div>
+                        </Grid>
+                        <Grid item xs={3}>
+                            <div className={classes.dataContainer}>
+                                <text className={classes.dataField}> Provincia: </text>
+                                <text className={classes.data}> {contractor.address?.province} </text>
+                            </div>
+                        </Grid>
+                        <Grid item xs={3}>
+                            <div className={classes.dataContainer}>
+                                <text className={classes.dataField}> Codigo Postal: </text>
+                                <text className={classes.data}> {contractor.address?.zipcode} </text>
+                            </div>
+                        </Grid>
+                        <Grid item xs={3}>
+                            <div className={classes.dataContainer}>
+                            </div>
+                        </Grid>
                     </Grid>
                 </Card>
                 <Grid item xs={12}>

@@ -7,9 +7,12 @@ interface Props {
     value: string
     placeholder: string
     setValue: React.Dispatch<React.SetStateAction<string>>
+    variant?: 'standard' | 'filled' | 'outlined'
+    size?: 'small' | 'medium'
+    className?: string
 }
 
-const Input = ({ value, placeholder, setValue }: Props) => {
+const CustomInput = ({ value, placeholder, setValue, variant='standard', size='medium', className }: Props) => {
     const classes = useStyles();
 
     const handleOnChange = (event: any) => {
@@ -19,11 +22,13 @@ const Input = ({ value, placeholder, setValue }: Props) => {
     return(
         <TextField
             value={value}
-            className={classes.input}
+            className={className || classes.input}
             label={placeholder}
+            variant={variant}
+            size={size}
             onChange={handleOnChange}
         />
     )
 }
 
-export default memo(Input)
+export default memo(CustomInput)

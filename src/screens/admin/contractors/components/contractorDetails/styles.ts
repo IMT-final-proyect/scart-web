@@ -8,7 +8,6 @@ const useStyles = makeStyles((theme: Theme) => ({
         marginTop: '60px',
         paddingLeft: '2.5%',
         paddingRight: '2.5%',
-        paddingBottom: '1%',
         paddingTop: '1%',
     },
     dataContainer:{
@@ -16,7 +15,6 @@ const useStyles = makeStyles((theme: Theme) => ({
         textAlign: 'start'
     },
     dataField:{
-        marginBottom: '10%',
         fontSize: 16,
         color: globalColors.darkGrey
     },
@@ -38,7 +36,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 
     },
     headerText:{
-        marginBottom: '2%',
+        marginBottom: '1.5%',
         color: globalColors.darkGrey,
         fontSize: 12,
     },
@@ -70,6 +68,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     textCenter: {
         textAlign: 'center',
         marginTop: '2%'
+    },
+    contractorDataRow: {
+        marginTop: '1%',
     }
 }));
 

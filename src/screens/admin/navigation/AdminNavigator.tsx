@@ -7,7 +7,7 @@ import DirectionsCarFilledIcon from '@mui/icons-material/DirectionsCarFilled';
 import PersonIcon from '@mui/icons-material/Person';
 import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
 
-import TemplateBar from '../../../components/TemplateBar';
+import TemplateBar from '../../../components/templateBar';
 import { ROUTES } from './routes';
 import useStyles from './styles';
 import contractors from '../contractors';
@@ -20,26 +20,15 @@ import DriverDetails from '../drivers/components/driverDetails';
 import VehicleDetails from '../vehicles/components/vehicleDetails';
 const AdminNavigator = () => {
     const classes = useStyles();
-    const [title, setTitle] = useState('Admin');
+    const [title, setTitle] = useState('Contratistas');
 
     const ButtonList = (
         <>
-            {/* <Button 
-                className = {classes.button}
-                component={Link}
-                to={ROUTES.root}
-                onClick={() => setTitle("Home")}
-            >
-                <div className={classes.icon}>
-                    <InsertDriveFileIcon/>
-                </div>
-                Home
-            </Button> */}
             <Button 
                 className = {classes.button}
                 component={Link}
                 to={ROUTES.root+ROUTES.contractors}
-                onClick={() => setTitle("Contratista")}
+                onClick={() => setTitle("Contratistas")}
             >
                 <div className={classes.icon}>
                     <BusinessIcon/>

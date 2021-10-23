@@ -6,7 +6,7 @@ import moment from 'moment';
 import SearchIcon from '@material-ui/icons/Search';
 
 import useStyles from './styles'
-import Input from '../../../../../components/input';
+import CustomInput from '../../../../../components/customInput';
 import CustomSelect from '../../../../../components/customSelect';
 
 const contractors = [
@@ -55,7 +55,7 @@ const Filters = () => {
             <Card className={classes.card}>
                 <Grid container justifyContent='space-between' alignItems='flex-end' >
                     <Grid item xs={6} md={2} className={classes.container}>
-                        <Input value={resource} placeholder='Nombre' setValue={setResource} />
+                        <CustomInput value={resource} placeholder='Nombre' setValue={setResource} />
                     </Grid>
                     <Grid item xs={6} md={2} className={classes.container}>
                         <CustomSelect value={contractor} placeholder='Contratista' setValue={setContractor} data={contractors}/>

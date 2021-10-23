@@ -46,7 +46,7 @@ const TemplateBar = (props : Props) => {
                 <Button  onClick={() => setOpen(true)}>
                   <MenuIcon color='secondary'/>
                 </Button>
-                <Typography variant="h6" className={classes.title}>
+                <Typography variant="h6" className={classes.title} color='secondary'>
                     {props.title}
                 </Typography>
                 <Button onClick={handleLogout}>

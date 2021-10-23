@@ -1,7 +1,17 @@
+export interface IAddress {
+   id: number;
+   number: number;
+   street: string;
+   city: string;
+   province: string;
+   zipcode: string
+}
+
 export interface IContractor {
    id: number;
    name: string;
    cuit: string;
+   address: IAddress
 }
 
 export interface IDriver {

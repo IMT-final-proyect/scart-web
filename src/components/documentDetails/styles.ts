@@ -108,7 +108,7 @@ const useStyles = makeStyles<Theme, Props>((theme: Theme) => ({
         marginRight: '3.5%',
         padding: '5%',
         textAlign: 'center',
-        [theme.breakpoints.down('md')]: {
+        [theme.breakpoints.down('sm')]: {
             marginLeft: '2.5%',
             marginRight: '2.5%',
             marginTop: '5%'

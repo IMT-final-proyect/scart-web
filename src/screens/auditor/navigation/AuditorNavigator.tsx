@@ -6,7 +6,7 @@ import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
 import StarIcon from '@material-ui/icons/Star';
 import { BrowserRouter, Route, Switch, Link, useLocation } from 'react-router-dom';
 
-import TemplateBar from '../../../components/TemplateBar';
+import TemplateBar from '../../../components/templateBar';
 import { ROUTES } from './routes';
 import Documentation from '../documentation';
 import useStyles from './styles'
