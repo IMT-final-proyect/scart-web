@@ -1,5 +1,5 @@
 import { Grid, Typography } from "@material-ui/core"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import CustomInput from "../customInput"
 import CustomSelect from "../customSelect"
 import useStyles from "./styles"
@@ -16,12 +16,53 @@ interface Props {
     setSecondValue: any
     thirdValue: any
     setThirdValue: any
+    fourthValue: any
+    setFourthValue: any
+    cleanAction: () => void
     className?: string
 }
 
-const TripleSearchBar = ({ placeholders, firstValue, secondValue, thirdValue, setFirstValue, setSecondValue, setThirdValue, className }: Props) => {
+const TripleSearchBar = ({ 
+    placeholders,
+    firstValue, 
+    secondValue, 
+    thirdValue, 
+    setFirstValue, 
+    setSecondValue, 
+    setThirdValue, 
+    fourthValue,
+    setFourthValue,
+    cleanAction, 
+    className }: Props) => {
     const classes = useStyles()
     const [placeholder, setPlaceholder] = useState<string>(placeholders[0].name)
+    
+    useEffect(() => {        
+        cleanAction()
+    }, [cleanAction, placeholder])
+
+    useEffect(() => {
+        if (placeholder === placeholders[0].name) {
+            setSecondValue('')
+            setThirdValue('')
+            setFourthValue('')
+        }
+        if (placeholder === placeholders[1].name) {
+            setFirstValue('')
+            setThirdValue('')
+            setFourthValue('')
+        }
+        if (placeholder === placeholders[2].name) {
+            setFirstValue('')
+            setSecondValue('')
+            setFourthValue('')
+        }
+        if (placeholder === placeholders[3].name) {
+            setFirstValue('')
+            setSecondValue('')
+            setThirdValue('')
+        }
+    }, [placeholder])
     
     return (
         <>
@@ -37,12 +78,17 @@ const TripleSearchBar = ({ placeholders, firstValue, secondValue, thirdValue, se
                 }
                 {placeholder === placeholders[1].name && 
                     <Grid item xs={10}>
-                        <CustomInput variant='outlined' className={classes.input} value={secondValue} setValue={setSecondValue}  placeholder={placeholders[1].name} size='small'/>
+                        <CustomInput variant='outlined' className={classes.input} value={secondValue} setValue={setSecondValue} placeholder={placeholders[1].name} size='small' />
                     </Grid>
                 }
                 {placeholder === placeholders[2].name && 
                     <Grid item xs={10}>
                         <CustomInput variant='outlined' className={classes.input} value={thirdValue} setValue={setThirdValue}  placeholder={placeholders[2].name} size='small'/>
+                    </Grid>
+                }
+                {placeholder === placeholders[3].name && 
+                    <Grid item xs={10}>
+                        <CustomInput variant='outlined' className={classes.input} value={fourthValue} setValue={setFourthValue}  placeholder={placeholders[3].name} size='small'/>
                     </Grid>
                 }
             </Grid>

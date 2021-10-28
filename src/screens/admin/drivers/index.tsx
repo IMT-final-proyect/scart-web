@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Button, Card, CircularProgress, Grid, Modal, Typography, } from '@material-ui/core';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import useStyles from './styles';
 import DriverRow from './components/driverRow';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../redux/rootReducer';
-import { createDocument } from '../../../redux/slices/documentsSlice';
 import TripleSearchBar from '../../../components/tripleSearchBar';
 import CreateDriverModal from './components/createDriverModal';
 import { ROUTES } from '../navigation/routes';
@@ -20,6 +19,7 @@ const Drivers = () => {
     const dispatch = useDispatch()
     const [openDriverModal, setOpenDriverModal] = useState(false)
     const [searchName, setSearchName] = useState('')
+    const [searchSurname, setSearchSurname] = useState('')
     const [searchDocument, setSearchDocument] = useState('')
     const [searchContractor, setSearchContractor] = useState('')
     const [loadingFilter, setLoadingFilter] = useState(false)
@@ -30,9 +30,65 @@ const Drivers = () => {
     useEffect(() => {
         dispatch(getAllDrivers())
         dispatch(getContractors())
-    }, [])
+    }, [dispatch])
 
     useEffect(() => {
+        cleanFilters()
+    }, [drivers])
+
+    useEffect(() => {
+        cleanFilters()
+    }, [drivers, searchName])
+
+    useEffect(() => {
+        setLoadingFilter(true)
+        let driversAux: IDriver[] = []
+        Object.keys(drivers).map((key: string, i: any) => {
+            const driverSurname = drivers[parseInt(key)].surname.toUpperCase()
+            if (driverSurname.includes(searchSurname.toUpperCase()))
+                driversAux.push(drivers[parseInt(key)])
+        })
+        setDriversFiltered(driversAux)
+        setLoadingFilter(false)
+    }, [drivers, searchSurname])
+
+    useEffect(() => {
+        setLoadingFilter(true)
+        let driversAux: IDriver[] = []
+        Object.keys(drivers).map((key: string, i: any) => {
+            const driverName = drivers[parseInt(key)].name.toUpperCase()
+            if (driverName.includes(searchName.toUpperCase()))
+                driversAux.push(drivers[parseInt(key)])
+        })
+        setDriversFiltered(driversAux)
+        setLoadingFilter(false)
+    }, [drivers, searchName])
+
+    useEffect(() => {
+        setLoadingFilter(true)
+        let driversAux: IDriver[] = []
+        Object.keys(drivers).map((key: string, i: any) => {
+            if (drivers[parseInt(key)].cuit.includes(searchDocument))
+                driversAux.push(drivers[parseInt(key)])
+        })
+        setDriversFiltered(driversAux)
+        setLoadingFilter(false)
+    }, [drivers, searchDocument])
+
+    useEffect(() => {
+        setLoadingFilter(true)
+        let driversAux: IDriver[] = []
+        Object.keys(drivers).map((key: string, i: any) => {
+            const contractorName = drivers[parseInt(key)].contractor.name.toUpperCase()
+            if (contractorName.includes(searchContractor))
+                driversAux.push(drivers[parseInt(key)])
+        })
+        setDriversFiltered(driversAux)
+        setLoadingFilter(false)
+    }, [drivers, searchContractor])
+
+    const cleanFilters = useCallback(() => {
+        console.log('ejecute');
         setDriversFiltered(() => {
             let driversAux: IDriver[] = []
             Object.keys(drivers).map((key: string, i: any) => {
@@ -41,33 +97,6 @@ const Drivers = () => {
             return driversAux
         })
     }, [drivers])
-
-    useEffect(() => {
-        let driversAux: IDriver[] = []
-        Object.keys(drivers).map((key: string, i: any) => {
-            const driverName = drivers[parseInt(key)].name.toUpperCase()
-            if (driverName.includes(searchName.toUpperCase()))
-                driversAux.push(drivers[parseInt(key)])
-        })
-    }, [searchName])
-
-    useEffect(() => {
-        let driversAux: IDriver[] = []
-        Object.keys(drivers).map((key: string, i: any) => {
-            const driverName = drivers[parseInt(key)].name.toUpperCase()
-            if (driverName.includes(searchName.toUpperCase()))
-                driversAux.push(drivers[parseInt(key)])
-        })
-    }, [searchDocument])
-
-    useEffect(() => {
-        let driversAux: IDriver[] = []
-        Object.keys(drivers).map((key: string, i: any) => {
-            const contractorName = drivers[parseInt(key)].contractor.name.toUpperCase()
-            if (contractorName.includes(searchContractor))
-                driversAux.push(drivers[parseInt(key)])
-        })
-    }, [searchContractor])
 
     const addDriver = (username: string, password: string, name: string, surname: string, cuit: string, birthdate: moment.Moment, contractorId: number) => {
         if(!!contractorId){
@@ -95,13 +124,16 @@ const Drivers = () => {
                         </Button>
                     </Grid>
                     <TripleSearchBar 
-                        placeholders={[{name: 'Nombre Apellido'}, {name: 'Documento'}, {name: 'Contratista'} ]}
+                        placeholders={[{name: 'Nombre'}, {name: 'Apellido'}, {name: 'Documento'}, {name: 'Contratista'} ]}
                         firstValue={searchName}
                         setFirstValue={setSearchName} 
-                        secondValue={searchDocument}
-                        setSecondValue={setSearchDocument}
-                        thirdValue={searchContractor}
-                        setThirdValue={setSearchContractor}
+                        secondValue={searchSurname}
+                        setSecondValue={setSearchSurname}
+                        thirdValue={searchDocument}
+                        setThirdValue={setSearchDocument}
+                        fourthValue={searchContractor}
+                        setFourthValue={setSearchContractor}
+                        cleanAction={cleanFilters}
                     />
                 </Card> 
             </Grid>
@@ -139,18 +171,18 @@ const Drivers = () => {
                                     </Grid>
                                 </Grid>
                                 <Grid container direction='column' justifyContent='space-between' >
-                                    {Object.keys(drivers).map((key: string, i: any) =>
+                                    {Object.keys(driversFiltered).map((key: string, i: any) =>
                                     <Button
                                         className={classes.button}
                                         component={Link}
-                                        to={ROUTES.root+ROUTES.drivers+'/'+drivers[parseInt(key)].id}
+                                        to={ROUTES.root+ROUTES.drivers+'/'+driversFiltered[parseInt(key)].id}
                                     >  
                                         <DriverRow 
-                                            key={drivers[parseInt(key)].id}
-                                            name={drivers[parseInt(key)].name}
-                                            surname={drivers[parseInt(key)].surname}
-                                            document={drivers[parseInt(key)].cuit}
-                                            contractor={drivers[parseInt(key)].contractor.name}
+                                            key={driversFiltered[parseInt(key)].id}
+                                            name={driversFiltered[parseInt(key)].name}
+                                            surname={driversFiltered[parseInt(key)].surname}
+                                            document={driversFiltered[parseInt(key)].cuit}
+                                            contractor={driversFiltered[parseInt(key)].contractor.name}
                                         />
                                     </Button>
                                     )}
