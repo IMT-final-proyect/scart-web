@@ -62,6 +62,7 @@ const userSlice = createSlice({
          const { payload } = action
          state.accountData = payload.accountData
          state.error = initialState.error
+         state.loading = false
       },
       postLoginFailure(state, action: any) {
          const { payload } = action

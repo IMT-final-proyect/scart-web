@@ -36,7 +36,8 @@ const useStyles = makeStyles((theme: Theme) => ({
         fontSize:20,
         marginTop: '3%',
         marginBottom: '3%',
-        marginLeft: '3%',
+        fontWeight: 'bold',
+        color: globalColors.lightBlue,
         [theme.breakpoints.down('sm')]: {
             fontSize: 15,
         },

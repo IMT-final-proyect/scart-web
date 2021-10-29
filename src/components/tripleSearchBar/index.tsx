@@ -62,7 +62,7 @@ const TripleSearchBar = ({
             setSecondValue('')
             setThirdValue('')
         }
-    }, [placeholder])
+    }, [placeholder, placeholders, setFirstValue, setFourthValue, setSecondValue, setThirdValue])
     
     return (
         <>

@@ -19,7 +19,7 @@ const Document = ({ type, expiration, state, images }: Props) => {
     return(
         <Grid container direction="row" justifyContent='space-between'>
             <Grid item xs={5} className={classes.text}>
-                <text> {type.name.substring(0, 60)}... </text>
+                <text> {type.name.length > 60 ? type.name.substring(0, 60)+'...' : type.name} </text>
             </Grid>
             
             <Grid item xs={3} className={classes.text}>
