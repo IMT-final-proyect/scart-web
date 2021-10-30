@@ -12,6 +12,7 @@ import { RootState } from '../../redux/rootReducer';
 import { useHistory } from "react-router-dom";
 import { getRolPath } from '../../utils/functions/roles';
 import LogoNutreco from '../../assets/images/logoNutreco.png'
+import { isTokenValid } from '../../utils/functions/validations';
 
 
 const Login = () => {
@@ -26,7 +27,7 @@ const Login = () => {
 
     useEffect(() => {
         let route
-        if(accountData?.rol !== undefined && accountData?.rol >= 0){
+        if(accountData?.rol !== undefined && accountData?.rol >= 0 && isTokenValid(accountData?.access_token)){
             route = getRolPath(accountData?.rol)
             history.push(route)
         }

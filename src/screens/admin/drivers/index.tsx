@@ -80,7 +80,7 @@ const Drivers = () => {
         let driversAux: IDriver[] = []
         Object.keys(drivers).map((key: string, i: any) => {
             const contractorName = drivers[parseInt(key)].contractor.name.toUpperCase()
-            if (contractorName.includes(searchContractor))
+            if (contractorName.includes(searchContractor.toUpperCase()))
                 driversAux.push(drivers[parseInt(key)])
         })
         setDriversFiltered(driversAux)

@@ -38,7 +38,7 @@ const AuditorNavigation = () => {
             ButtonList = {ButtonList}
         />
         <Switch>
-            <Route exact path={ROUTES.root+ROUTES.documentDetails} component={DocumentDetails} />
+            <Route exact path={ROUTES.root+'/:id'} component={DocumentDetails} />
             <Route path={ROUTES.root} component={Documentation} />
         </Switch>
     </BrowserRouter>

@@ -10,13 +10,13 @@ export enum AllowedRol{
     vehicle
 }
 
-export const contractor = 'contractor'
-export const auditor = 'auditor'
-export const manager = 'manager'
-export const driver = 'driver'
-export const vehicle = 'vehicle'
-export const security = 'security'
-export const admin = 'admin'
+export const contractor = 'Contratista'
+export const auditor = 'Auditor'
+export const manager = 'Encargado'
+export const driver = 'Conductor'
+export const vehicle = 'Vehiculo'
+export const security = 'Seguridad'
+export const admin = 'Administrador'
 
 export const PENDING = 'Pendiente'
 export const VALID = 'Vigente'

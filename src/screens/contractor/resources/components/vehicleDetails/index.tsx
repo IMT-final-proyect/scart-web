@@ -162,7 +162,6 @@ const VehicleDetails = () => {
                                             type={documents[parseInt(key)].type}
                                             expiration={documents[parseInt(key)].expirationDate}
                                             state={documents[parseInt(key)].state}
-                                            images={documents[parseInt(key)].photos}
                                         />
                                     </Button>
                                     )}

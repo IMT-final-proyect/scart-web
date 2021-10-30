@@ -1,9 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Button, Card, Grid, TextField} from '@material-ui/core';
 
 import useStyles from './styles';
 import FileRow from './components/fileRow'
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { getDocumentById, getOwner } from '../../../redux/slices/documentsSlice';
+import { RootState } from '../../../redux/rootReducer';
+import moment from 'moment';
 
 const files = [
     {
@@ -24,20 +29,31 @@ const files = [
     },
 ]
 
-const owner = {
-    name: 'Contratista S.A.',
-    cuit: '30-3643622-9',
-    phone: '+5492236778923',
-    address: 'Av. Constitucion 1234',
-    mail: 'm.romina@gmail.com'
-}
-
 const DocumentDetails = () => {
     const classes = useStyles();
-    const [comment, setComment] = useState('');
+    const dispatch = useDispatch()
+    const params: any = useParams();
+    const [comment, setComment] = useState('')
+    const { activeDocument, loading, error } = useSelector((state: RootState) => state.documents)
+    const owner = useSelector((state: RootState) => state.documents.owner)
+
+    useEffect(() => {
+        dispatch(getDocumentById(params.id))
+    }, [dispatch, params])
+
+    useEffect(() => {
+        if(!!activeDocument.entityType && !!activeDocument.entityId)
+            dispatch(getOwner(activeDocument.entityType, activeDocument.entityId))
+    }, [activeDocument])
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setComment(event.target.value);
+    }
+
+    const DocumentOwner = {
+        name: activeDocument.entityType === 1 || activeDocument.entityType === 2 ? owner?.name : owner?.plate,
+        document: activeDocument.entityType === 1 || activeDocument.entityType === 2 ? owner?.cuit : null,
+        contractor: activeDocument.entityType === 1 || activeDocument.entityType === 6 ? owner?.contractor : null
     }
 
     return (
@@ -45,52 +61,76 @@ const DocumentDetails = () => {
             <Card className={classes.card}>
                 <Grid container justifyContent='space-between'>
                     <text className={classes.textTitle}>
-                        Datos del dueño
+                        Datos del documento
                     </text>
                 </Grid>
-                <Grid container justifyContent='space-between' direction='row'>
-                    <Grid item xs={2}>
+                <Grid container className={classes.documentDataRow} justifyContent='space-between' direction='row'>
+                    <Grid item xs={6}>
                         <text className={classes.field}>
                             Nombre:
                         </text>
                         <text className={classes.dataField}>
-                            {owner.name}
+                            {activeDocument.type.name}
                         </text>
                         
                     </Grid>
-                    <Grid item xs={2}>
+                    <Grid item xs={3}>
                         <text className={classes.field}>
-                            CUIT: 
+                            Vencimiento: 
                         </text>
                         <text className={classes.dataField}>
-                            {owner.cuit}
+                            {moment(activeDocument.expirationDate).format('DD/MM/YYYY')}
                         </text>
                     </Grid>
-                    <Grid item xs={2}>
+                    <Grid item xs={3}>
                         <text className={classes.field}>
-                            Telefono: 
+                            Importancia: 
                         </text>
                         <text className={classes.dataField}>
-                            {owner.phone}
-                        </text>
-                    </Grid>
-                    <Grid item xs={2}>
-                        <text className={classes.field}>
-                            Dirección: 
-                        </text>
-                        <text className={classes.dataField}>
-                            {owner.address}
-                        </text>
-                    </Grid>
-                    <Grid item xs={2}>
-                        <text className={classes.field}>
-                            Email: 
-                        </text>
-                        <text className={classes.dataField}>
-                            {owner.mail}
+                            {activeDocument.type.severity}
                         </text>
                     </Grid>
                 </Grid>
+                <Grid container className={classes.documentDataRow} justifyContent='space-between' direction='row'>
+                    <Grid item xs={6}>
+                        <text className={classes.field}>
+                            Dueño del documento: 
+                        </text>
+                        <text className={classes.dataField}>
+                            {DocumentOwner.name}
+                        </text>
+                    </Grid>
+                    {DocumentOwner.document &&
+                    <Grid item xs={6}>
+                        <text className={classes.field}>
+                            Cuit/Cuil: 
+                        </text>
+                        <text className={classes.dataField}>
+                            {DocumentOwner.document}
+                        </text>
+                    </Grid>
+                    }
+                </Grid>
+                {DocumentOwner.contractor &&
+                    <Grid container justifyContent='space-between' direction='row'>
+                        <Grid item xs={6}>
+                            <text className={classes.field}>
+                                Contratista: 
+                            </text>
+                            <text className={classes.dataField}>
+                                {DocumentOwner.contractor.name}
+                            </text>
+                        </Grid>
+                        <Grid item xs={6}>
+                            <text className={classes.field}>
+                                Cuit: 
+                            </text>
+                            <text className={classes.dataField}>
+                                {DocumentOwner.contractor.cuit}
+                            </text>
+                        </Grid>
+                    </Grid>
+                }
             </Card>
             <Grid container className={classes.container} direction='row' justifyContent='space-between'>
                 <Grid item md={4}>

@@ -165,7 +165,6 @@ const Documentacion = () => {
                                         type={documentsFiltered[parseInt(key)].type}
                                         expiration={documentsFiltered[parseInt(key)].expirationDate}
                                         state={documentsFiltered[parseInt(key)].state}
-                                        images={documentsFiltered[parseInt(key)].photos}
                                     />
                                 </Button>
                                 )}

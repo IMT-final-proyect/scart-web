@@ -8,10 +8,9 @@ import { getStateColor, getStateName } from '../../../../../utils/functions/stat
 interface Props{
     type: IDocumentType,
     state: number,
-    expiration: moment.Moment,
-    images: string[]
+    expiration: moment.Moment
 }
-const Document = ({ type, expiration, state, images }: Props) => {
+const Document = ({ type, expiration, state }: Props) => {
     const stateName = getStateName(state)
     const color = getStateColor(stateName)
     const classes = useStyles({color});    
@@ -33,7 +32,7 @@ const Document = ({ type, expiration, state, images }: Props) => {
             <Grid item xs={2} className={classes.text}>
                 <text> {type.severity} </text>
             </Grid>
-    </Grid>
+        </Grid>
     )
 }
 

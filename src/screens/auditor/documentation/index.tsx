@@ -1,45 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
-import { Button, Card, Grid, } from '@material-ui/core';
-import { Link } from 'react-router-dom';
+import { Card, Grid, } from '@material-ui/core';
 
 import useStyles from './styles';
 import DocumentRow from './components/documentRow'
 import { ROUTES } from '../navigation/routes';
-
-const documents = [
-    {
-        'id':'1',
-        'name':'Constancia de cuil',
-        'state':'Vigente',
-        'owner': 'Martin Belcic',
-        'type': 'Contratista'
-    },
-    {
-        'id':'2',
-        'name':'Licencia de conducir',
-        'state':'Vigente',
-        'owner': 'Wenceslao Mateos',
-        'type': 'Contratista'
-    },
-    {
-        'id':'3',
-        'name':'Cedula Verde',
-        'state':'Vigente',
-        'owner': 'Luciano Morazzo',
-        'type': 'Conductor',
-    },
-    {
-        'id':'4',
-        'name':'Seguro',
-        'state':'Vencido',
-        'owner': 'Ferrari SF21',
-        'type': 'Auto',
-    },
-]
+import { useDispatch, useSelector } from 'react-redux';
+import { getDocumentByState } from '../../../redux/slices/documentsSlice';
+import { States } from '../../../utils/constants';
+import { RootState } from '../../../redux/rootReducer';
 
 const Documentation = () => {
     const classes = useStyles();
+    const dispatch = useDispatch()
+    const documents = useSelector((state: RootState) => state.documents.pendingDocuments)
+
+    useEffect(() => {
+        dispatch(getDocumentByState(States.PENDING))
+    }, [dispatch])
 
     return (
         <Grid container className={classes.container} direction='row' justifyContent='space-between'>
@@ -57,7 +35,7 @@ const Documentation = () => {
                     </Grid>
                     <Grid item xs={2} className={classes.headerText}>
                         <text className={classes.headerText}>
-                            Dueño
+                            Pertenece a
                         </text>
                     </Grid>
                     <Grid item xs={2} className={classes.headerText}>
@@ -67,7 +45,7 @@ const Documentation = () => {
                     </Grid>
                     <Grid item xs={2} className={classes.headerText}>
                         <text className={classes.headerText}>
-                            Estado
+                            Importancia
                         </text>
                     </Grid>
                     <Grid item xs={2} className={classes.headerText}>
@@ -77,21 +55,14 @@ const Documentation = () => {
                     </Grid>
                 </Grid>
                 <Grid container direction='column' justifyContent='space-between' >
-                    {documents.map((document) =>
-                        <Button
-                            className = {classes.button}
-                            component={Link}
-                            to={ROUTES.root+ROUTES.documentDetails}
-                        >
-                            <DocumentRow 
-                                key={document.id}
-                                name={document.name}
-                                type={document.type}
-                                owner={document.owner}
-                                state={document.state}
-                            />
-                        </Button>)
-                    }
+                    {Object.keys(documents).map((key: string, i: any) =>
+                        <DocumentRow 
+                            key={documents[parseInt(key)].id}
+                            type={documents[parseInt(key)].type}
+                            owner={documents[parseInt(key)].entityId}
+                            route={ROUTES.root+'/'+documents[parseInt(key)].id}
+                        />
+                    )}
                 </Grid>
             </Card>
         </Grid>

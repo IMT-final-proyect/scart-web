@@ -66,14 +66,13 @@ const useStyles = makeStyles((theme: Theme) => ({
     field:{
         marginBottom: '2%',
         color: globalColors.darkGrey,
-        fontSize: 12,
+        fontSize: 13,
         [theme.breakpoints.down('md')]: {
             fontSize: 12,
         },
     },
     dataField:{
         marginLeft: '2%',
-        maxWidth: 'auto',
         textAlign: 'start',
         [theme.breakpoints.down('md')]: {
             fontSize: 10,
@@ -115,6 +114,10 @@ const useStyles = makeStyles((theme: Theme) => ({
         [theme.breakpoints.down('md')]: {
             fontSize: 10,
         },
+    },
+    documentDataRow:{
+        marginBottom: '1%',
+        paddingRight: '1%'
     }
 }));
 

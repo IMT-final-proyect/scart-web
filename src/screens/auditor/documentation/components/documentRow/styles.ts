@@ -3,24 +3,33 @@ import globalColors from '../../../../../utils/styles/globalColors';
 
 const useStyles = makeStyles((theme: Theme) => ({
     container:{
-        maxWidth: 'auto',
         textAlign: 'start',
+        alignItems: 'center'
     },
     text:{
         maxWidth: 'auto',
         textAlign: 'start',
-        [theme.breakpoints.down('md')]: {
-            fontSize: 10,
-        }
+        [theme.breakpoints.down('lg')]: {
+            fontSize: 14,
+        },
+        [theme.breakpoints.down('sm')]: {
+            fontSize: 11,
+        },
     },
-    rechazar:{
+    state:{
         maxWidth: 'auto',
         textAlign: 'start',
-        [theme.breakpoints.down('md')]: {
-            fontSize: 10,
+        [theme.breakpoints.down('lg')]: {
+            fontSize: 11,
         },
-        color: globalColors.red
-    }
+        [theme.breakpoints.down('sm')]: {
+            fontSize: 7,
+        },
+    },
+    button:{
+        height: '35px',
+        color: globalColors.lightBlue
+    },
 }));
 
 export default useStyles

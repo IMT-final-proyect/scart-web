@@ -3,7 +3,7 @@ import Axios, {AxiosResponse} from 'axios';
 import moment from 'moment';
 import { contractor, driver, vehicle } from '../../utils/constants';
 import { getRolName } from '../../utils/functions/roles';
-import { IDocument } from '../../utils/interfaces';
+import { IContractor, IDocument, IDriver, IVehicle } from '../../utils/interfaces';
 import { AppThunk } from '../store';
 var _ = require('lodash');
 
@@ -31,6 +31,8 @@ interface IEntitiesDocuments {
     drivers: IDriverDocuments
     vehicles: IVehicleDocuments
     activeDocument: IDocument
+    pendingDocuments: IDocument[]
+    owner: any
     loading: boolean
     error: IError|null
 }
@@ -70,6 +72,8 @@ const initialState: IEntitiesDocuments = {
       expirationDate: moment(1),
       photos: []
     },
+    pendingDocuments: [],
+    owner: null,
     loading: false,
     error: null
 };
@@ -141,29 +145,45 @@ const documentsSlice = createSlice({
       createDocumentRequest(state) {
          state.loading = true;
       },
-      createContractorDocumentSuccess(state, action: any) {
-         const { payload } = action
-         state.contractor.data = ({...state.contractor.data, [payload.id]: {...payload}})
+      createDocumentSuccess(state) {
          state.loading = false;
-         state.error = initialState.vehicles.error
-      },
-      createDriverDocumentSuccess(state, action: any) {
-         const { payload } = action
-         state.drivers.data = ({...state.drivers.data, [payload.id]: {...payload}})
-         state.loading = false;
-         state.error = initialState.vehicles.error
-      },
-      createVehiclesDocumentSuccess(state, action: any) {
-         const { payload } = action
-         state.vehicles.data = ({...state.vehicles.data, [payload.id]: {...payload}})
-         state.loading = false;
-         state.error = initialState.vehicles.error
+         state.error = initialState.error
       },
       createDocumentFailure(state, action: any) {
          const { payload } = action
          state.loading = false;
          state.error = payload;
-      }
+      },
+      getDocumentByStateRequest(state) {
+         state.loading = true
+      },
+      getDocumentByStateSuccess(state, action: any) {
+         const { payload } = action
+         state.pendingDocuments = payload
+         state.loading = false
+         state.error = initialState.error
+      },
+      getDocumentByStateFailure(state, action: any) {
+         const { payload } = action
+         state.pendingDocuments = initialState.pendingDocuments
+         state.error = payload
+         state.loading = false
+      },
+      getOwnerRequest(state) {
+         state.loading = true
+      },
+      getOwnerSuccess(state, action: any) {
+         const { payload } = action
+         state.owner = payload
+         state.loading = false
+         state.error = initialState.error
+      },
+      getOwnerFailure(state, action: any) {
+         const { payload } = action
+         state.owner = initialState.owner
+         state.error = payload
+         state.loading = false
+      },
    },
 });
 
@@ -181,10 +201,14 @@ const {
     getDocumentByIdSuccess,
     getDocumentByIdFailure,
     createDocumentRequest,
-    createContractorDocumentSuccess,
-    createDriverDocumentSuccess,
-    createVehiclesDocumentSuccess,
-    createDocumentFailure
+    createDocumentSuccess,
+    createDocumentFailure,
+    getDocumentByStateRequest,
+    getDocumentByStateSuccess,
+    getDocumentByStateFailure,
+    getOwnerRequest,
+    getOwnerSuccess,
+    getOwnerFailure
 } = documentsSlice.actions;
 
 
@@ -216,10 +240,10 @@ export const getDriverDocuments = (driverId: number|undefined): AppThunk => asyn
    }
 };
 
-export const getVehicleDocuments = (driverId: number|undefined): AppThunk => async (dispatch) => {
+export const getVehicleDocuments = (vehicleId: number|undefined): AppThunk => async (dispatch) => {
    dispatch(getVehicleDocumentsRequest());
    try{
-      const response: AxiosResponse = await Axios.get(`/documents?entityId=${driverId}&entityType=6`);
+      const response: AxiosResponse = await Axios.get(`/documents?entityId=${vehicleId}&entityType=6`);
       const documents = _.mapKeys(response.data, 'id')
       
       dispatch(getVehicleDocumentsSuccess(documents));
@@ -251,7 +275,7 @@ export const createDocument = (
    ): AppThunk => async (dispatch) => {
    dispatch(createDocumentRequest());
    try{
-      const response: AxiosResponse = await Axios.post('/documents',{
+      await Axios.post('/documents',{
          expirationDate,
          state: 1,
          type,
@@ -259,18 +283,19 @@ export const createDocument = (
          entityType,
          photos: images
       });
-      
+      dispatch(createDocumentSuccess());
+
       switch(getRolName(entityType)){
          case contractor: {
-            dispatch(createContractorDocumentSuccess(response.data));
+            dispatch(getContractorDocuments(entityId));
             break;
          }
          case driver: {
-            dispatch(createDriverDocumentSuccess(response.data));
+            dispatch(getDriverDocuments(entityId));
             break;
          }
          case vehicle: {
-            dispatch(createVehiclesDocumentSuccess(response.data));
+            dispatch(getVehicleDocuments(entityId));
             break
          }
          default: createDocumentFailure({code: 400, message: 'Entidad no encontrada'})
@@ -280,3 +305,42 @@ export const createDocument = (
       dispatch(createDocumentFailure(error.response.data));
    }
 }
+
+export const getDocumentByState = (state: number): AppThunk => async (dispatch) => {
+   dispatch(getDocumentByStateRequest());
+   try{
+      const response: AxiosResponse = await Axios.get(`/documents?state=${state}`);
+      dispatch(getDocumentByStateSuccess(response.data));
+   }
+   catch(error){
+      dispatch(getDocumentByStateFailure(error.response.data));
+   }
+};
+
+
+export const getOwner = (entityType: number, entityId: number): AppThunk => async (dispatch) => {
+   dispatch(getOwnerRequest());
+   try{
+      let url
+      switch(entityType){
+         case(1):{
+            url = `/drivers/${entityId}?relations=contractor`
+            break;
+         }
+         case(2): {
+            url = `/contractors/${entityId}`
+            break;
+         }
+         case(6): {
+            url = `/vehicles/${entityId}?relations=contractor`
+            break;
+         }
+         default: url=''
+      }
+      const response: AxiosResponse = await Axios.get(url);
+      dispatch(getOwnerSuccess(response.data));
+   }
+   catch(error){
+      dispatch(getOwnerFailure(error.response.data));
+   }
+};
