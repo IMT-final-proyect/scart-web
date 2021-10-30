@@ -20,10 +20,12 @@
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "axios": "^0.21.1",
+    "chart.js": "^3.6.0",
     "lodash": "^4.17.21",
     "moment": "^2.29.1",
     "react": "^17.0.2",
     "react-base64-downloader": "^2.1.7",
+    "react-chartjs-2": "^3.3.0",
     "react-dom": "^17.0.2",
     "react-redux": "^7.2.4",
     "react-router-dom": "^5.2.0",
@@ -64,6 +66,5 @@
   "devDependencies": {
     "@types/react-router-dom": "^5.1.8"
   },
-  "proxy": "http://192.168.0.70:2999"
-
+  "proxy": "http://127.0.0.1:2999"
 }

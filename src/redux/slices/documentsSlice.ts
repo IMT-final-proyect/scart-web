@@ -10,12 +10,14 @@ var _ = require('lodash');
 
 interface IContractorDocuments {
     data: IDocument[]
+    expiring: IDocument[]
     loading: boolean
     error: IError|null
 }
 
 interface IDriverDocuments {
     data: IDocument[]
+    expiring: IDocument[]
     loading: boolean
     error: IError|null
 }
@@ -43,11 +45,13 @@ interface IError {
 const initialState: IEntitiesDocuments = {
     contractor: {
         data: [],
+        expiring: [],
         loading: false,
         error: null
     },
     drivers: {
         data: [],
+        expiring: [],
         loading: false,
         error: null
     },
@@ -92,6 +96,21 @@ const documentsSlice = createSlice({
          state.contractor.data = initialState.contractor.data;
          state.contractor.loading = false;
          state.contractor.error = payload;
+      },
+      getContractorExpiringDocumentsRequest(state) {
+        state.contractor.loading = true;
+      },
+      getContractorExpiringDocumentsSuccess(state, action: any) {
+        const { payload } = action
+        state.contractor.expiring = payload
+        state.contractor.loading = false;
+        state.contractor.error = initialState.contractor.error
+      },
+      getContractorExpiringDocumentsFailure(state, action: any) {
+        const { payload } = action
+        state.contractor.expiring = initialState.contractor.expiring;
+        state.contractor.loading = false;
+        state.contractor.error = payload;
       },
       getDriverDocumentsRequest(state) {
          state.drivers.loading = true;
@@ -171,6 +190,9 @@ const {
     getContractorDocumentsSuccess,
     getContractorDocumentsRequest,
     getContractorDocumentsFailure,
+    getContractorExpiringDocumentsSuccess,
+    getContractorExpiringDocumentsRequest,
+    getContractorExpiringDocumentsFailure,
     getDriverDocumentsRequest,
     getDriverDocumentsSuccess,
     getDriverDocumentsFailure,
@@ -215,6 +237,20 @@ export const getDriverDocuments = (driverId: number|undefined): AppThunk => asyn
       dispatch(getDriverDocumentsFailure(error.response.data));
    }
 };
+
+export const getContractorExpiringDocuments = (contractorId: number|undefined): AppThunk => async (dispatch) => {
+  dispatch(getContractorExpiringDocumentsRequest())
+  try {
+    const before = moment().add(7, 'days');
+    const response: AxiosResponse = await Axios.get(`/documents?entityId=${contractorId}&entityType=2&before=${before.format()}`)
+    const documents = _.mapKeys(response.data, 'id')
+
+    dispatch(getContractorExpiringDocumentsSuccess(documents));
+  } catch (error) {
+    dispatch(getContractorExpiringDocumentsFailure(error.response.data));
+  }
+
+}
 
 export const getVehicleDocuments = (driverId: number|undefined): AppThunk => async (dispatch) => {
    dispatch(getVehicleDocumentsRequest());
