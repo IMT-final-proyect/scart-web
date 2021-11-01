@@ -18,7 +18,7 @@ const App = () => {
 
     const PrivateRoute = ({ rol, component: Component, ...rest }: any) => (
         <Route {...rest} render={(props) => (
-            (isRolAuthored( rol, accountData?.rol) && isTokenValid(accountData?.access_token))
+            (isTokenValid(accountData?.access_token))
                 ? <Component {...props} />
                 : <Redirect to={ROUTES.login} />
         )} />

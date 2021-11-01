@@ -54,7 +54,6 @@ const useStyles = makeStyles<Theme, Props>((theme: Theme) => ({
     },
     titleContainer:{
         justifyContent: 'space-between',
-
     },
     headerText:{
         marginBottom: '2%',

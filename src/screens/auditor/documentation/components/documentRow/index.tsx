@@ -16,13 +16,8 @@ const DocumentRow = ({ type, owner, route }: Props) => {
     
     return(
         <Grid container className={classes.container} direction="row" justifyContent='space-between'>
-            <Grid item xs={4} className={classes.text}>
-                <text> {type.name.length > 60 ? type.name.substring(0, 60)+'...' : type.name} </text>
-            </Grid>
-            <Grid item xs={2}>
-                <div className={classes.state}>
-                    <text className={classes.text}> {owner} </text>
-                </div>
+            <Grid item xs={6} className={classes.text}>
+                <text> {type.name.length > 60 ? type.name.substring(0, 87)+'...' : type.name} </text>
             </Grid>
             <Grid item xs={2}>
                 <div className={classes.state}>

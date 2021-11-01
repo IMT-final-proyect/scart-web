@@ -277,7 +277,7 @@ export const createDocument = (
    try{
       await Axios.post('/documents',{
          expirationDate,
-         state: 1,
+         state: 0,
          type,
          entityId,
          entityType,
