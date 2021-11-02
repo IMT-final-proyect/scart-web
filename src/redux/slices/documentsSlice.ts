@@ -24,6 +24,7 @@ interface IDriverDocuments {
 
 interface IVehicleDocuments {
     data: IDocument[]
+    expiring: IDocument[]
     loading: boolean
     error: IError|null
 }
@@ -57,6 +58,7 @@ const initialState: IEntitiesDocuments = {
     },
     vehicles: {
         data: [],
+        expiring: [],
         loading: false,
         error: null
     },
@@ -249,7 +251,6 @@ export const getContractorExpiringDocuments = (contractorId: number|undefined): 
   } catch (error) {
     dispatch(getContractorExpiringDocumentsFailure(error.response.data));
   }
-
 }
 
 export const getVehicleDocuments = (driverId: number|undefined): AppThunk => async (dispatch) => {

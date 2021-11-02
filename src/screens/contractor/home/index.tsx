@@ -10,7 +10,7 @@ import ResourcesCard from './components/resourcesCard';
 import DocumentsCard from './components/documentsCard';
 import { States } from '../../../utils/constants';
 import { IDocument } from '../../../utils/interfaces';
-import { Button, Card, Grid } from '@material-ui/core';
+import { Button, Card, Grid, Typography } from '@material-ui/core';
 import { ROUTES } from '../navigation/routes';
 import DocumentRow from '../documentation/components/documentRow/DocumentRow';
 import { Link } from 'react-router-dom';
@@ -21,10 +21,18 @@ const Home = () => {
     const id = useSelector((state: RootState) => state.user.accountData?.entityId)
     const drivers = useSelector((state: RootState) => state.resources.drivers.data);
     const vehicles = useSelector((state: RootState) => state.resources.vehicles.data);
-    const valid: IDocument[] = useSelector((state: RootState) => Object.values(state.documents.contractor.data).filter(doc => doc.state ===  States.VALID));
-    const pending: IDocument[] = useSelector((state: RootState) => Object.values(state.documents.contractor.data).filter(doc => doc.state ===  States.PENDING));
-    const expired: IDocument[] = useSelector((state: RootState) => Object.values(state.documents.contractor.data).filter(doc => doc.state ===  States.EXPIRED));
-    const expiringDocuments: IDocument[] = useSelector((state: RootState) => state.documents.contractor.expiring);
+    const contractorValid: IDocument[] = useSelector((state: RootState) => Object.values(state.documents.contractor.data).filter(doc => doc.state ===  States.VALID));
+    const contractorPending: IDocument[] = useSelector((state: RootState) => Object.values(state.documents.contractor.data).filter(doc => doc.state ===  States.PENDING));
+    const contractorExpired: IDocument[] = useSelector((state: RootState) => Object.values(state.documents.contractor.data).filter(doc => doc.state ===  States.EXPIRED));
+    const driversValid: IDocument[] = useSelector((state: RootState) => Object.values(state.documents.drivers.data).filter(doc => doc.state ===  States.VALID));
+    const driversPending: IDocument[] = useSelector((state: RootState) => Object.values(state.documents.drivers.data).filter(doc => doc.state ===  States.PENDING));
+    const driversExpired: IDocument[] = useSelector((state: RootState) => Object.values(state.documents.drivers.data).filter(doc => doc.state ===  States.EXPIRED));
+    const vehiclesValid: IDocument[] = useSelector((state: RootState) => Object.values(state.documents.vehicles.data).filter(doc => doc.state ===  States.VALID));
+    const vehiclesPending: IDocument[] = useSelector((state: RootState) => Object.values(state.documents.vehicles.data).filter(doc => doc.state ===  States.PENDING));
+    const vehiclesExpired: IDocument[] = useSelector((state: RootState) => Object.values(state.documents.vehicles.data).filter(doc => doc.state ===  States.EXPIRED));
+    const contractorExpiringDocuments: IDocument[] = useSelector((state: RootState) => state.documents.contractor.expiring);
+    const driversExpiringDocuments: IDocument[] = useSelector((state: RootState) => state.documents.drivers.expiring);
+    const vehiclesExpiringDocuments: IDocument[] = useSelector((state: RootState) => state.documents.vehicles.expiring);
 
     useEffect(() => {
       dispatch(getContractorData(id))
@@ -32,11 +40,11 @@ const Home = () => {
       dispatch(getAllVehicles(id))
       dispatch(getContractorDocuments(id))
       dispatch(getContractorExpiringDocuments(id))
-    }, [])
+    }, [dispatch])
     return (
         <div className={classes.container}>
             <div className={classes.cardContainer}>
-                <DocumentsCard valid={valid.length} pending={pending.length} expired={expired.length} />
+                <DocumentsCard valid={contractorValid.length} pending={contractorPending.length} expired={contractorExpired.length} />
                 <ResourcesCard drivers={Object.keys(drivers).length} vehicles={Object.keys(vehicles).length}/>
             </div>
             <Grid container className={classes.container} direction='row' justifyContent='space-between'>
@@ -46,8 +54,8 @@ const Home = () => {
                         Documentación
                     </text>
                 </Grid>
-                {expiringDocuments.length === 0 ?
-                    <text className={classes.textCenter}> No hay documentos asociados</text>
+                {Object.keys(contractorExpiringDocuments)?.length === 0 ?
+                    <Typography className={classes.textCenter}> No hay documentos por vencer</Typography>
                     :
                     <>
                         <Grid container justifyContent='space-between'>
@@ -73,18 +81,18 @@ const Home = () => {
                             </Grid>
                         </Grid>
                         <Grid container direction='column' justifyContent='space-between' >
-                            {Object.keys(expiringDocuments).map((key: string, i: any) =>
+                            {Object.keys(contractorExpiringDocuments).map((key: string, i: any) =>
                             <Button
                                 className={classes.button}
                                 component={Link}
-                                to={ROUTES.root+ROUTES.documentacion+'/'+expiringDocuments[parseInt(key)].id}
+                                to={ROUTES.root+ROUTES.documentacion+'/'+contractorExpiringDocuments[parseInt(key)].id}
                             >  
                                 <DocumentRow 
-                                    key={expiringDocuments[parseInt(key)].id}
-                                    type={expiringDocuments[parseInt(key)].type}
-                                    expiration={expiringDocuments[parseInt(key)].expirationDate}
-                                    state={expiringDocuments[parseInt(key)].state}
-                                    images={expiringDocuments[parseInt(key)].photos}
+                                    key={contractorExpiringDocuments[parseInt(key)].id}
+                                    type={contractorExpiringDocuments[parseInt(key)].type}
+                                    expiration={contractorExpiringDocuments[parseInt(key)].expirationDate}
+                                    state={contractorExpiringDocuments[parseInt(key)].state}
+                                    images={contractorExpiringDocuments[parseInt(key)].photos}
                                 />
                             </Button>
                             )}
