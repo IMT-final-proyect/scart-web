@@ -87,7 +87,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     spinner: {
         marginTop: '5%',
-        color: globalColors.white
+        color: globalColors.lightBlue
     }
 }));
 

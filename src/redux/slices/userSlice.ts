@@ -85,6 +85,9 @@ const userSlice = createSlice({
          state.loading = false;
          state.error = payload;
       },
+      clearLoginError(state){
+         state.error =  initialState.error
+      }
    },
 });
 
@@ -95,6 +98,7 @@ const {
    getUserDataRequest,
    getUserDataSuccess,
    getUserDataFailure,
+   clearLoginError
 } = userSlice.actions;
 
 
@@ -124,4 +128,8 @@ export const getContractorData = (id: number | undefined): AppThunk => async (di
    catch(error){
       dispatch(getUserDataFailure(error.response.data))
    }
+}
+
+export const clearError = (): AppThunk => async (dispatch) => {
+   dispatch(clearLoginError())
 }

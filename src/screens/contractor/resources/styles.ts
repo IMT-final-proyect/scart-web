@@ -89,8 +89,8 @@ const useStyles = makeStyles((theme: Theme) => ({
         marginRight: '2%'
     },
     spinner: {
-        marginTop: '5%',
-        color: globalColors.white
+        marginTop: '10%',
+        color: globalColors.lightBlue
     },
     input: {
         minWidth: '95%',

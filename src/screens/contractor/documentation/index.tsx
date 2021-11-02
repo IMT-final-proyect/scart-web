@@ -25,7 +25,7 @@ const Documentacion = () => {
     const [documentsFiltered, setDocumentsFiltered] = useState<IDocument[]>([])
     const documents: IDocument[] = useSelector((state: RootState) => state.documents.contractor.data)
     const accountData = useSelector((state: RootState) => state.user.accountData)
-    const loadingDocuments = useSelector((state: RootState) => state.documents.loading)
+    const loadingDocuments = useSelector((state: RootState) => state.documents.contractor.loading)
 
     useEffect(() => {
         dispatch(getContractorDocuments(accountData?.entityId))
