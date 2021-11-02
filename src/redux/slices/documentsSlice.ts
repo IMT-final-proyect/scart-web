@@ -34,6 +34,7 @@ interface IEntitiesDocuments {
     pendingDocuments: IDocument[]
     owner: any
     loading: boolean
+    evaluationLoading: boolean
     error: IError|null
 }
 
@@ -75,6 +76,7 @@ const initialState: IEntitiesDocuments = {
     pendingDocuments: [],
     owner: null,
     loading: false,
+    evaluationLoading: false,
     error: null
 };
 
@@ -184,6 +186,18 @@ const documentsSlice = createSlice({
          state.error = payload
          state.loading = false
       },
+      postDocumentEvaluationRequest(state) {
+         state.evaluationLoading = true
+      },
+      postDocumentEvaluationSuccess(state) {
+         state.evaluationLoading = false
+         state.error = initialState.error
+      },
+      postDocumentEvaluationFailure(state, action: any) {
+         const { payload } = action
+         state.evaluationLoading = false
+         state.error = payload
+      },
    },
 });
 
@@ -208,7 +222,10 @@ const {
     getDocumentByStateFailure,
     getOwnerRequest,
     getOwnerSuccess,
-    getOwnerFailure
+    getOwnerFailure,
+    postDocumentEvaluationRequest,
+    postDocumentEvaluationSuccess,
+    postDocumentEvaluationFailure
 } = documentsSlice.actions;
 
 
@@ -245,6 +262,7 @@ export const getVehicleDocuments = (vehicleId: number|undefined): AppThunk => as
    try{
       const response: AxiosResponse = await Axios.get(`/documents?entityId=${vehicleId}&entityType=6`);
       const documents = _.mapKeys(response.data, 'id')
+      console.log(documents);
       
       dispatch(getVehicleDocumentsSuccess(documents));
    }
@@ -342,5 +360,22 @@ export const getOwner = (entityType: number, entityId: number): AppThunk => asyn
    }
    catch(error){
       dispatch(getOwnerFailure(error.response.data));
+   }
+};
+
+export const postDocumentEvaluation = (id: number, isApprovation: boolean, comment: string): AppThunk => async (dispatch) => {
+   dispatch(postDocumentEvaluationRequest());
+   try{
+      let nextState
+      if(isApprovation) 
+         nextState = 1
+      else
+         nextState = 2
+      await Axios.post(`/documents/${id}`,{ state: nextState });
+      console.log(comment)
+      dispatch(postDocumentEvaluationSuccess());
+   }
+   catch(error){
+      dispatch(postDocumentEvaluationFailure(error.response.data));
    }
 };

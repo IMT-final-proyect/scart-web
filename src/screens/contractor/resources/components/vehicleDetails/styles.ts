@@ -85,6 +85,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     textCenter: {
         textAlign: 'center',
         marginTop: '2%'
+    },
+    spinner: {
+        marginTop: '20%',
+        color: globalColors.lightBlue
     }
 }));
 

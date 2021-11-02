@@ -16,7 +16,7 @@ export const isTokenValid = (accessToken?: string) => {
 }
 
 export const isRolAuthored = (rolName: string, accountRol?: number) => {
-    if (!!accountRol && accountRol === getRolNumber(rolName))
+    if (accountRol !== undefined && (accountRol === getRolNumber(rolName)))
         return true
     else return false
 }

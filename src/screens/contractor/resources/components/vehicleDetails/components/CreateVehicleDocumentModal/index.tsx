@@ -16,13 +16,15 @@ import { getDocumentTypesByEntity } from '../../../../../../../redux/slices/docu
 import { RootState } from '../../../../../../../redux/rootReducer';
 import globalColors from '../../../../../../../utils/styles/globalColors';
 import { Alert } from '@mui/material';
+import { AllowedRol } from '../../../../../../../utils/constants';
 
 interface Props{
+    vehicleId: number
     addDocument: (expirationDate: moment.Moment, type: number, entityType: number, entityId: number, images: string[]) => void
     setOpenDocumentModal: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const CreateVehicleDocumentModal = ({ addDocument, setOpenDocumentModal }: Props) => {
+const CreateVehicleDocumentModal = ({ vehicleId, addDocument, setOpenDocumentModal }: Props) => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const [emptyField, setEmptyField] = useState(false)
@@ -57,7 +59,7 @@ const CreateVehicleDocumentModal = ({ addDocument, setOpenDocumentModal }: Props
                 images.push(file.content)
             }))
             if(!!typeId && !!contractorId){
-                addDocument(moment(expirationDate), typeId, 1, contractorId, images)
+                addDocument(moment(expirationDate), typeId, AllowedRol.vehicle, vehicleId, images)
                 setOpenDocumentModal(false)
             }
         }

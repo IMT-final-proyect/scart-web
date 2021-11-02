@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Card, Grid, Modal, Typography, } from '@material-ui/core'
+import { Button, Card, CircularProgress, Grid, Modal, Typography, } from '@material-ui/core'
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import useStyles from './styles' 
 import { Link, useParams } from 'react-router-dom';
@@ -26,11 +26,11 @@ const DriverDetails = () => {
         return drivers[params.id]
     })
     const documents: IDocument[] = useSelector((state: RootState) => state.documents.drivers.data)
-    const userData = useSelector((state: RootState) => state.user.userData)
+    const loading: boolean = useSelector((state: RootState) => state.documents.drivers.loading)
 
     useEffect(() => { 
         dispatch(getDriverDocuments(driver.id))
-    }, [])
+    }, [dispatch, driver.id])
 
     const addDocument = (expirationDate: moment.Moment, type: number, entityType: number, entityId: number, images: string[]) => {
         dispatch(createDocument(expirationDate, type, entityType, entityId, images))
@@ -43,8 +43,14 @@ const DriverDetails = () => {
                 <CreateDriverDocumentModal
                     setOpenDocumentModal={setOpenDriverDocumentModal}
                     addDocument={addDocument}
+                    driverId={driver.id}
                 />
             </Modal>
+            {loading ?
+                <Grid container alignContent='center' justifyContent='center' >
+                    <CircularProgress className={classes.spinner} />
+                </Grid>
+                :
             <Grid container className={classes.container} direction='column' justifyContent='space-between'>
                 <Card className={classes.cardContainer}>
                     <Grid container justifyContent='space-between' direction='row' alignItems={'center'}>
@@ -124,50 +130,61 @@ const DriverDetails = () => {
                                     <AddCircleIcon className={classes.circleIcon} />
                                 </Button>
                             </Grid>
-                            <Grid container justifyContent='space-between'>
-                                <Grid item xs={5} className={classes.headerText}>
-                                    <text className={classes.headerText}>
-                                        Nombre
-                                    </text>
-                                </Grid>
-                                <Grid item xs={3} className={classes.headerText}>
-                                    <text className={classes.headerText}>
-                                        Fecha de vencimiento
-                                    </text>
-                                </Grid>
-                                <Grid item xs={2} className={classes.headerText}>
-                                    <text className={classes.headerText}>
-                                        Estado
-                                    </text>
-                                </Grid>
-                                <Grid item xs={2} className={classes.headerText}>
-                                    <text className={classes.headerText}>
-                                        Importancia
-                                    </text>
-                                </Grid>
-                            </Grid>
-                            <Grid container direction='column' justifyContent='space-between' >
-                                {Object.keys(documents).map((key: string, i: any) =>
-                                <Button
-                                    className={classes.button}
-                                    component={Link}
-                                    to={ROUTES.root+ROUTES.documentacion+'/'+documents[parseInt(key)].id}
-                                >  
-                                    <DocumentRow 
-                                        key={documents[parseInt(key)].id}
-                                        type={documents[parseInt(key)].type}
-                                        expiration={documents[parseInt(key)].expirationDate}
-                                        state={documents[parseInt(key)].state}
-                                    />
-                                </Button>
-                                )}
-                            </Grid>
+                            {Object.keys(documents).length !== 0 ?
+                                <>
+                                    <Grid container justifyContent='space-between'>
+                                        <Grid item xs={5} className={classes.headerText}>
+                                            <text className={classes.headerText}>
+                                                Nombre
+                                            </text>
+                                        </Grid>
+                                        <Grid item xs={3} className={classes.headerText}>
+                                            <text className={classes.headerText}>
+                                                Fecha de vencimiento
+                                            </text>
+                                        </Grid>
+                                        <Grid item xs={2} className={classes.headerText}>
+                                            <text className={classes.headerText}>
+                                                Estado
+                                            </text>
+                                        </Grid>
+                                        <Grid item xs={2} className={classes.headerText}>
+                                            <text className={classes.headerText}>
+                                                Importancia
+                                            </text>
+                                        </Grid>
+                                    </Grid>
+                                    <Grid container direction='column' justifyContent='space-between' >
+                                        {Object.keys(documents).map((key: string, i: any) =>
+                                        <Button
+                                            className={classes.button}
+                                            component={Link}
+                                            to={ROUTES.root+ROUTES.documentacion+'/'+documents[parseInt(key)].id}
+                                        >  
+                                            <DocumentRow 
+                                                key={documents[parseInt(key)].id}
+                                                type={documents[parseInt(key)].type}
+                                                expiration={documents[parseInt(key)].expirationDate}
+                                                state={documents[parseInt(key)].state}
+                                            />
+                                        </Button>
+                                        )}
+                                    </Grid>
+                                </>
+                                :
+                                <Typography className={classes.textCenter}>No hay documentacion asociada</Typography>
+                            }
                         </Card>
                     </Grid>
                 </Grid>
             </Grid>
+            }
         </>
     )
 }
 
 export default DriverDetails;
+
+function isObjEmpty(documents: IDocument[]) {
+    throw new Error('Function not implemented.');
+}

@@ -62,6 +62,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     arrowsContainer:{
         marginRight: '3%',
+    },
+    spinner: {
+        marginTop: '20%',
+        color: globalColors.lightBlue
     }
 }));
 
