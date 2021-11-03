@@ -4,7 +4,11 @@ import { headerSize } from '../../../utils/constants';
 
 import globalColors from '../../../utils/styles/globalColors';
 
-const useStyles = makeStyles((theme: Theme) => ({
+interface Props {
+    color: string
+}
+
+const useStyles = makeStyles<Theme, Props>((theme: Theme) => ({
     container:{
         display: 'flex',
         flexGrow: 1,
@@ -156,7 +160,23 @@ const useStyles = makeStyles((theme: Theme) => ({
     spinner: {
         marginTop: '20%',
         color: globalColors.lightBlue
-    }
+    },
+    severity:{
+        maxWidth: 'auto',
+        textAlign: 'start',
+        marginLeft: '2%',
+        [theme.breakpoints.down('sm')]: {
+            fontSize: 11,
+        },
+    },
+    stateColor: {
+        backgroundColor: ({color}) => color,
+        borderRadius: 20,
+        paddingLeft: '20%',
+        paddingRight: '20%',
+        paddingTop: '7%',
+        paddingBottom: '7%'
+    },
 }));
 
 export default useStyles

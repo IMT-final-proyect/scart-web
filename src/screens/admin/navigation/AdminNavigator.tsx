@@ -14,7 +14,7 @@ import contractors from '../contractors';
 import drivers from '../drivers';
 import vehicles from '../vehicles';
 import audition from '../audition'
-import DocumentDetails from '../../../components/documentDetails';
+import DocumentDetails from '../documentDetails'
 import contractorDetails from '../contractors/components/contractorDetails';
 import DriverDetails from '../drivers/components/driverDetails';
 import VehicleDetails from '../vehicles/components/vehicleDetails';

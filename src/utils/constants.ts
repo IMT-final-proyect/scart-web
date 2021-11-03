@@ -23,9 +23,20 @@ export const VALID = 'Vigente'
 export const REJECTED = 'Rechazado'
 export const EXPIRED = 'Vencido'
 
+export const HIGH = 'Alta'
+export const MEDIUM = 'Media'
+export const LOW = 'Baja'
+
 export enum States {
     PENDING,
     VALID,
     REJECTED,
     EXPIRED,
 }
+
+export enum Severities {
+    HIGH,
+    MEDIUM,
+    LOW,
+  }
+  

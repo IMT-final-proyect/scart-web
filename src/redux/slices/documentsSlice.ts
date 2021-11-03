@@ -67,7 +67,7 @@ const initialState: IEntitiesDocuments = {
          id: -1,
          name: '',
          appliesTo: -1,
-         severity: '',
+         severity: -1,
       },
       state: -1,
       expirationDate: moment(1),
@@ -363,17 +363,19 @@ export const getOwner = (entityType: number, entityId: number): AppThunk => asyn
    }
 };
 
-export const postDocumentEvaluation = (id: number, isApprovation: boolean, comment: string): AppThunk => async (dispatch) => {
+export const postDocumentEvaluation = (id: number, isApprovation: boolean, comment: string, uuid?: string): AppThunk => async (dispatch) => {
    dispatch(postDocumentEvaluationRequest());
    try{
-      let nextState
-      if(isApprovation) 
-         nextState = 1
-      else
-         nextState = 2
-      await Axios.post(`/documents/${id}`,{ state: nextState });
-      console.log(comment)
-      dispatch(postDocumentEvaluationSuccess());
+      if(uuid){
+         let nextState
+         if(isApprovation) 
+            nextState = 1
+         else
+            nextState = 2
+         await Axios.post(`/documents/${id}`,{ state: nextState });
+         console.log(comment, uuid)
+         dispatch(postDocumentEvaluationSuccess());
+      }
    }
    catch(error){
       dispatch(postDocumentEvaluationFailure(error.response.data));

@@ -4,6 +4,7 @@ import useStyles from './styles';
 import { IDocumentType } from '../../../../../utils/interfaces';
 import { getRolName } from '../../../../../utils/functions/roles';
 import { Link } from 'react-router-dom';
+import { getSeverityColor, getSeverityName } from '../../../../../utils/functions/severities';
 
 interface Props{
     type: IDocumentType
@@ -11,8 +12,10 @@ interface Props{
     route: string
 }
 const DocumentRow = ({ type, owner, route }: Props) => {
-    const classes = useStyles()
     const typeName = getRolName(type.appliesTo)
+    const severity =  getSeverityName(type.severity)
+    const color = getSeverityColor(severity)
+    const classes = useStyles({color});
     
     return(
         <Grid container className={classes.container} direction="row" justifyContent='space-between'>
@@ -24,8 +27,10 @@ const DocumentRow = ({ type, owner, route }: Props) => {
                     <text className={classes.text}> {typeName} </text>
                 </div>
             </Grid>
-            <Grid item xs={2} className={classes.text}>
-                <text> {type.severity} </text>
+            <Grid item xs={2}>
+                <div className={classes.severity}>
+                    <text className={classes.stateColor}> {severity} </text>
+                </div>
             </Grid>
             <Grid item xs={2} className={classes.container}>
                 <Button

@@ -14,9 +14,9 @@ import { RootState } from '../../../redux/rootReducer';
 import moment from 'moment';
 import globalColors from '../../../utils/styles/globalColors';
 import { ROUTES } from '../navigation/routes';
+import { getSeverityColor, getSeverityName } from '../../../utils/functions/severities';
 
 const DocumentDetails = () => {
-    const classes = useStyles();
     const dispatch = useDispatch()
     const params: any = useParams();
     const history = useHistory();
@@ -24,9 +24,12 @@ const DocumentDetails = () => {
     const [image, setImage] = useState('')
     const [modalImage, setModalImage] = useState(false)
     const [evaluated, setEvaluated] = useState(false)
-    const { activeDocument, loading, error } = useSelector((state: RootState) => state.documents)
+    const { activeDocument, loading } = useSelector((state: RootState) => state.documents)
     const evaluationLoading = useSelector((state:RootState) => state.documents.evaluationLoading)
     const owner = useSelector((state: RootState) => state.documents.owner)
+    const severity =  getSeverityName(activeDocument.type.severity)
+    const color = getSeverityColor(severity)
+    const classes = useStyles({color});
 
     useEffect(() => {
         dispatch(getDocumentById(params.id))
@@ -47,7 +50,7 @@ const DocumentDetails = () => {
 
     useEffect(() => {
         if(evaluated) history.push(ROUTES.root)
-    }, [evaluationLoading, history])
+    }, [evaluated, evaluationLoading, history])
 
     const closeImagePicker = (value: any) => {
         setModalImage(false)
@@ -76,7 +79,7 @@ const DocumentDetails = () => {
     <>
         <Modal open={modalImage} onClose={() => closeImagePicker} onBackdropClick={closeImagePicker}>
             <div className={classes.imageCard}>
-                <img src={image} className={classes.image}/>
+                <img src={image} alt='document' className={classes.image}/>
             </div>
         </Modal>
         {loading ?
@@ -101,12 +104,14 @@ const DocumentDetails = () => {
                             </text>
                         </Grid>
                         <Grid item xs={6}>
-                            <text className={classes.field}>
-                                Importancia: 
-                            </text>
-                            <text className={classes.dataField}>
-                                {activeDocument.type.severity}
-                            </text>
+                            <Grid container direction='row'>
+                                <text className={classes.field}>
+                                    Importancia: 
+                                </text>
+                                <div className={classes.severity}>
+                                    <text className={classes.stateColor}> {severity} </text>
+                                </div>
+                            </Grid>
                         </Grid>
                     </Grid>
                     <Grid container className={classes.documentDataRow} justifyContent='space-between' direction='row'>

@@ -1,7 +1,10 @@
 import { makeStyles, Theme } from '@material-ui/core';
 import globalColors from '../../../../../utils/styles/globalColors';
 
-const useStyles = makeStyles((theme: Theme) => ({
+interface Props {
+    color: string
+}
+const useStyles = makeStyles<Theme, Props>((theme: Theme) => ({
     container:{
         textAlign: 'start',
         alignItems: 'center'
@@ -16,15 +19,20 @@ const useStyles = makeStyles((theme: Theme) => ({
             fontSize: 11,
         },
     },
-    state:{
+    severity:{
         maxWidth: 'auto',
         textAlign: 'start',
-        [theme.breakpoints.down('lg')]: {
+        [theme.breakpoints.down('sm')]: {
             fontSize: 11,
         },
-        [theme.breakpoints.down('sm')]: {
-            fontSize: 7,
-        },
+    },
+    stateColor: {
+        backgroundColor: ({color}) => color,
+        borderRadius: 20,
+        paddingLeft: '4%',
+        paddingRight: '4%',
+        paddingTop: '1%',
+        paddingBottom: '1%'
     },
     button:{
         height: '35px',

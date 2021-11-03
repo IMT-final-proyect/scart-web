@@ -1,100 +1,75 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
-import { Button, Card, Grid, } from '@material-ui/core';
-import { Link } from 'react-router-dom';
+import { Card, CircularProgress, Grid, } from '@material-ui/core';
 
 import useStyles from './styles';
 import DocumentRow from './components/documentRow'
 import { ROUTES } from '../navigation/routes';
-
-const documents = [
-    {
-        'id':'1',
-        'name':'Constancia de cuil',
-        'state':'Vigente',
-        'owner': 'Martin Belcic',
-        'type': 'Contratista'
-    },
-    {
-        'id':'2',
-        'name':'Licencia de conducir',
-        'state':'Vigente',
-        'owner': 'Wenceslao Mateos',
-        'type': 'Contratista'
-    },
-    {
-        'id':'3',
-        'name':'Cedula Verde',
-        'state':'Vigente',
-        'owner': 'Luciano Morazzo',
-        'type': 'Conductor',
-    },
-    {
-        'id':'4',
-        'name':'Seguro',
-        'state':'Vencido',
-        'owner': 'Ferrari SF21',
-        'type': 'Auto',
-    },
-]
+import { useDispatch, useSelector } from 'react-redux';
+import { getDocumentByState } from '../../../redux/slices/documentsSlice';
+import { States } from '../../../utils/constants';
+import { RootState } from '../../../redux/rootReducer';
 
 const Documentation = () => {
     const classes = useStyles();
+    const dispatch = useDispatch()
+    const documents = useSelector((state: RootState) => state.documents.pendingDocuments)
+    const loading = useSelector((state: RootState) => state.documents.loading)
+    
+    useEffect(() => {
+        dispatch(getDocumentByState(States.PENDING))
+    }, [dispatch])
 
     return (
-        <Grid container className={classes.container} direction='row' justifyContent='space-between'>
-            <Card className={classes.leftCard}>
-                <Grid container className={classes.titleContainer} justifyContent='space-between'>
-                    <text className={classes.textTitle}>
-                        Documentación
-                    </text>
+        <>
+            {loading ?
+                <Grid container alignContent='center' justifyContent='center' >
+                    <CircularProgress className={classes.spinner} />
                 </Grid>
-                <Grid container justifyContent='space-between'>
-                    <Grid item xs={4} className={classes.headerText}>
-                        <text className={classes.headerText}>
-                            Documento
-                        </text>
-                    </Grid>
-                    <Grid item xs={2} className={classes.headerText}>
-                        <text className={classes.headerText}>
-                            Dueño
-                        </text>
-                    </Grid>
-                    <Grid item xs={2} className={classes.headerText}>
-                        <text className={classes.headerText}>
-                            Tipo
-                        </text>
-                    </Grid>
-                    <Grid item xs={2} className={classes.headerText}>
-                        <text className={classes.headerText}>
-                            Estado
-                        </text>
-                    </Grid>
-                    <Grid item xs={2} className={classes.headerText}>
-                        <text className={classes.headerText}>
-                            Acciones
-                        </text>
-                    </Grid>
+                :
+                <Grid container className={classes.container} direction='row' justifyContent='space-between'>
+                    <Card className={classes.leftCard}>
+                        <Grid container className={classes.titleContainer} justifyContent='space-between'>
+                            <text className={classes.textTitle}>
+                                Documentación
+                            </text>
+                        </Grid>
+                        <Grid container justifyContent='space-between'>
+                            <Grid item xs={6} className={classes.headerText}>
+                                <text className={classes.headerText}>
+                                    Documento
+                                </text>
+                            </Grid>
+                            <Grid item xs={2} className={classes.headerText}>
+                                <text className={classes.headerText}>
+                                    Tipo
+                                </text>
+                            </Grid>
+                            <Grid item xs={2} className={classes.headerText}>
+                                <text className={classes.headerText}>
+                                    Importancia
+                                </text>
+                            </Grid>
+                            <Grid item xs={2} className={classes.headerText}>
+                                <text className={classes.headerText}>
+                                    Acciones
+                                </text>
+                            </Grid>
+                        </Grid>
+                        <Grid container direction='column' justifyContent='space-between' >
+                            {Object.keys(documents).map((key: string, i: any) =>
+                                <DocumentRow 
+                                    key={documents[parseInt(key)].id}
+                                    type={documents[parseInt(key)].type}
+                                    owner={documents[parseInt(key)].entityId}
+                                    route={ROUTES.root+ROUTES.documentDetails+'/'+documents[parseInt(key)].id}
+                                />
+                            )}
+                        </Grid>
+                    </Card>
                 </Grid>
-                <Grid container direction='column' justifyContent='space-between' >
-                    {documents.map((document) =>
-                        <Button
-                            className = {classes.button}
-                            component={Link}
-                            to={ROUTES.root+ROUTES.documentDetails}
-                        >
-                            <DocumentRow 
-                                key={document.id}
-                                name={document.name}
-                                type={document.type}
-                                owner={document.owner}
-                                state={document.state}
-                            />
-                        </Button>)
-                    }
-                </Grid>
-            </Card>
-        </Grid>
+            }
+        </>
     )
 }
 

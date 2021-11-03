@@ -54,5 +54,5 @@ export interface IDocumentType {
    id: number;
    name: string;
    appliesTo: number;
-   severity: string;
+   severity: number;
 }

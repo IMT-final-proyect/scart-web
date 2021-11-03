@@ -36,8 +36,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         fontSize:20,
         marginTop: '3%',
         marginBottom: '3%',
-        fontWeight: 'bold',
-        color: globalColors.lightBlue,
+        marginLeft: '3%',
         [theme.breakpoints.down('sm')]: {
             fontSize: 15,
         },
@@ -48,7 +47,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         marginRight: '3%',
     },
     headerText:{
-        marginBottom: '2%',
+        marginBottom: '1%',
         color: globalColors.darkGrey,
         fontSize: 12,
         [theme.breakpoints.down('md')]: {
@@ -64,10 +63,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     arrowsContainer:{
         marginRight: '3%',
     },
-    button:{
-        height: '35px',
-    },
-    paper: {}
+    spinner: {
+        marginTop: '20%',
+        color: globalColors.lightBlue
+    }
 }));
 
 export default useStyles
