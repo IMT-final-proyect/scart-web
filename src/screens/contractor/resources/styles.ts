@@ -71,6 +71,11 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     button:{
         height: '50px',
+        cursor: 'pointer',
+        background: globalColors.white,
+        '&:hover': {
+            background: globalColors.grey
+        }
     },
     snackbar: {
         width: '75%',

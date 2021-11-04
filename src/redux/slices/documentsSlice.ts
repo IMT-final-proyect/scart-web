@@ -262,7 +262,6 @@ export const getVehicleDocuments = (vehicleId: number|undefined): AppThunk => as
    try{
       const response: AxiosResponse = await Axios.get(`/documents?entityId=${vehicleId}&entityType=6`);
       const documents = _.mapKeys(response.data, 'id')
-      console.log(documents);
       
       dispatch(getVehicleDocumentsSuccess(documents));
    }
@@ -373,7 +372,6 @@ export const postDocumentEvaluation = (id: number, isApprovation: boolean, comme
          else
             nextState = 2
          await Axios.post(`/documents/${id}`,{ state: nextState });
-         console.log(comment, uuid)
          dispatch(postDocumentEvaluationSuccess());
       }
    }

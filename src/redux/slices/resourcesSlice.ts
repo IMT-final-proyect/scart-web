@@ -113,7 +113,23 @@ const resourcesSlice = createSlice({
          state.vehicles.loading = false;
          state.vehicles.error = payload;
          state.vehicles.success = initialState.vehicles.success;
-      }
+      },
+      deleteDriverRequest(state) {
+         state.drivers.loading = true;
+         state.drivers.error = initialState.drivers.error;
+         state.drivers.success = initialState.drivers.success;
+      },
+      deleteDriverSuccess(state) {
+         state.drivers.loading = false;
+         state.drivers.success = true;
+         state.drivers.error = initialState.drivers.error
+      },
+      deleteDriverFailure(state, action: any) {
+         const { payload } = action
+         state.drivers.loading = false;
+         state.drivers.error = payload;
+         state.drivers.success = initialState.drivers.success;
+      },
    },
 });
 
@@ -129,7 +145,10 @@ const {
     getAllVehiclesFailure,
     createVehicleRequest,
     createVehicleSuccess,
-    createVehicleFailure
+    createVehicleFailure,
+    deleteDriverRequest,
+    deleteDriverSuccess,
+    deleteDriverFailure,
 } = resourcesSlice.actions;
 
 
@@ -207,5 +226,21 @@ export const createVehicle = (
    }
    catch(error){
       dispatch(createVehicleFailure(error.response.data));
+   }
+}
+
+export const deleteDriver = (id: number, contractorId: number): AppThunk => async (dispatch) => {
+   dispatch(deleteDriverRequest());
+   try{
+      const response: AxiosResponse = await Axios.put(`/drivers/${id}`,{
+         active: 0
+      });
+      console.log(response);
+      
+      dispatch(deleteDriverSuccess());
+      dispatch(getAllDrivers(contractorId))
+   }
+   catch(error){
+      dispatch(deleteDriverFailure(error.response.data));
    }
 }

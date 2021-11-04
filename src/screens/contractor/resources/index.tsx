@@ -3,11 +3,11 @@ import { Button, Card, CircularProgress, Grid, Modal, Snackbar, Typography, } fr
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import Driver from './components/driverRow';
 import Vehicle from './components/vehicleRow';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { ROUTES } from '../navigation/routes';
 import useStyles from './styles';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllDrivers, getAllVehicles, createDriver, createVehicle } from '../../../redux/slices/resourcesSlice';
+import { getAllDrivers, getAllVehicles, createDriver, createVehicle, deleteDriver } from '../../../redux/slices/resourcesSlice';
 import { RootState } from '../../../redux/rootReducer';
 import moment from 'moment';
 import CreateDriverModal from './components/createDriverModal';
@@ -20,6 +20,7 @@ import CustomInput from '../../../components/customInput'
 const Resources = () => {
     const classes = useStyles();
     const dispatch = useDispatch()
+    const history = useHistory()
     const [openDriverModal, setOpenDriverModal] = useState(false)
     const [openVehicleModal, setOpenVehicleModal] = useState(false)
     const [openSnackbarError, setOpenSnackbarError] = useState(false)
@@ -32,6 +33,7 @@ const Resources = () => {
     const [vehiclesFiltered, setVehiclesFiltered] = useState<IVehicle[]>([])
     const [loadingDriversFilter, setLoadingDriversFilter] = useState(false)
     const [loadingVehiclesFilter, setLoadingVehiclesFilter] = useState(false)
+    const [messageSnackbar, setMessageSnackbar] = useState('')
     const contractorId = useSelector((state: RootState) => state.user.accountData?.entityId)
     const drivers: IDriver[] = useSelector((state: RootState) => state.resources.drivers.data)
     const vehicles: IVehicle[] = useSelector((state: RootState) => state.resources.vehicles.data)
@@ -139,6 +141,14 @@ const Resources = () => {
         if(!!contractorId){
             dispatch(createDriver(username, password, name, surname, cuit, moment(birthdate), contractorId))
             setOpenDriverModal(false)
+            setMessageSnackbar('Conductor creado con exito')
+        }
+    }
+
+    const handleDeleteDriver = (id: number) => {
+        if(!!id && !!contractorId) {
+            dispatch(deleteDriver(id, contractorId))
+            setMessageSnackbar('Conductor eliminado con exito')
         }
     }
 
@@ -146,6 +156,7 @@ const Resources = () => {
         if(!!contractorId){
             dispatch(createVehicle(plate, brand, model, year, contractorId))
             setOpenVehicleModal(false)
+            setMessageSnackbar('Vehiculo creado con exito')
         }
     }
 
@@ -229,6 +240,8 @@ const Resources = () => {
                                             surname={driversFiltered[parseInt(key)].surname}
                                             document={driversFiltered[parseInt(key)].cuit}
                                             birthday={driversFiltered[parseInt(key)].birth_date}
+                                            id={driversFiltered[parseInt(key)].id}
+                                            handleDeleteDriver={handleDeleteDriver}
                                         />
                                     </Button>
                                 )}
@@ -314,12 +327,12 @@ const Resources = () => {
                 </Snackbar>
                 <Snackbar className={classes.snackbar} open={openDriverSuccess} autoHideDuration={6000} onClose={() => setOpenDriverSuccess(false)} >
                     <Alert onClose={() => setOpenDriverSuccess(false)} severity="success" sx={{ width: '50%' }}>
-                        Conductor creado con éxito
+                        {messageSnackbar}
                     </Alert>
                 </Snackbar>
                 <Snackbar className={classes.snackbar} open={openVehicleSuccess} autoHideDuration={6000} onClose={() => setOpenVehicleSuccess(false)} >
                     <Alert onClose={() => setOpenVehicleSuccess(false)} severity="success" sx={{ width: '50%' }}>
-                        Vehículo creado con éxito
+                        {messageSnackbar}
                     </Alert>
                 </Snackbar>
             </Grid>
