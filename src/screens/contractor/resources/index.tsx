@@ -7,7 +7,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { ROUTES } from '../navigation/routes';
 import useStyles from './styles';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllDrivers, getAllVehicles, createDriver, createVehicle, deleteDriver } from '../../../redux/slices/resourcesSlice';
+import { getAllDrivers, getAllVehicles, createDriver, createVehicle, deleteDriver, deleteVehicle } from '../../../redux/slices/resourcesSlice';
 import { RootState } from '../../../redux/rootReducer';
 import moment from 'moment';
 import CreateDriverModal from './components/createDriverModal';
@@ -15,12 +15,15 @@ import CreateVehicleModal from './components/createVehicleModal';
 import { IDriver, IVehicle } from '../../../utils/interfaces';
 import { Alert } from '@mui/material';
 import CustomInput from '../../../components/customInput'
+import DeleteModal from '../../../components/DeleteModal';
 
 
 const Resources = () => {
     const classes = useStyles();
     const dispatch = useDispatch()
     const history = useHistory()
+    const [selectedDriverId, setSelectedDriverId] = useState(-1)
+    const [selectedVehicleId, setSelectedVehicleId] = useState(-1)
     const [openDriverModal, setOpenDriverModal] = useState(false)
     const [openVehicleModal, setOpenVehicleModal] = useState(false)
     const [openSnackbarError, setOpenSnackbarError] = useState(false)
@@ -34,6 +37,8 @@ const Resources = () => {
     const [loadingDriversFilter, setLoadingDriversFilter] = useState(false)
     const [loadingVehiclesFilter, setLoadingVehiclesFilter] = useState(false)
     const [messageSnackbar, setMessageSnackbar] = useState('')
+    const [deleteDriverModal, setDeleteDriverModal] = useState(false)
+    const [deleteVehicleModal, setDeleteVehicleModal] = useState(false)
     const contractorId = useSelector((state: RootState) => state.user.accountData?.entityId)
     const drivers: IDriver[] = useSelector((state: RootState) => state.resources.drivers.data)
     const vehicles: IVehicle[] = useSelector((state: RootState) => state.resources.vehicles.data)
@@ -152,12 +157,29 @@ const Resources = () => {
         }
     }
 
+    const handleDeleteDriverModal = (id: number) => {
+        setSelectedDriverId(id)
+        setDeleteDriverModal(true)
+    }
+
     const addVehicle = (brand: string, model: string, year: string, plate: string) => {
         if(!!contractorId){
             dispatch(createVehicle(plate, brand, model, year, contractorId))
             setOpenVehicleModal(false)
             setMessageSnackbar('Vehiculo creado con exito')
         }
+    }
+
+    const handleDeleteVehicle = (id: number) => {
+        if(!!id && !!contractorId) {
+            dispatch(deleteVehicle(id, contractorId))
+            setMessageSnackbar('Vehiculo eliminado con exito')
+        }
+    }
+
+    const handleDeleteVehicleModal = (id: number) => {
+        setSelectedVehicleId(id)
+        setDeleteVehicleModal(true)
     }
 
     return (
@@ -173,6 +195,12 @@ const Resources = () => {
                 setOpenVehicleModal={setOpenVehicleModal}
                 addVehicle={addVehicle}
             />
+        </Modal>
+        <Modal open={deleteDriverModal} onClose={() => setDeleteDriverModal(false)}>
+            <DeleteModal entity={'conductor'} id={selectedDriverId} handleDelete={handleDeleteDriver} setOpenModal={setDeleteDriverModal} />
+        </Modal>
+        <Modal open={deleteVehicleModal} onClose={() => setDeleteVehicleModal(false)}>
+            <DeleteModal entity={'vehiculo'} id={selectedVehicleId} handleDelete={handleDeleteVehicle} setOpenModal={setDeleteVehicleModal} />
         </Modal>
         <Grid container className={classes.container} direction='row' justifyContent='space-between'>
             <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
@@ -241,7 +269,7 @@ const Resources = () => {
                                             document={driversFiltered[parseInt(key)].cuit}
                                             birthday={driversFiltered[parseInt(key)].birth_date}
                                             id={driversFiltered[parseInt(key)].id}
-                                            handleDeleteDriver={handleDeleteDriver}
+                                            handleDeleteDriver={handleDeleteDriverModal}
                                         />
                                     </Button>
                                 )}
@@ -312,6 +340,8 @@ const Resources = () => {
                                                 brand={vehiclesFiltered[parseInt(key)].brand}
                                                 model={vehiclesFiltered[parseInt(key)].model}
                                                 plate={vehiclesFiltered[parseInt(key)].plate}
+                                                id={vehiclesFiltered[parseInt(key)].id}
+                                                handleDeleteVehicle={handleDeleteVehicleModal}
                                             />
                                         </Button>
                                     )}
@@ -325,12 +355,12 @@ const Resources = () => {
                         {error?.message}
                     </Alert>
                 </Snackbar>
-                <Snackbar className={classes.snackbar} open={openDriverSuccess} autoHideDuration={6000} onClose={() => setOpenDriverSuccess(false)} >
+                <Snackbar className={classes.snackbar} open={openDriverSuccess && !!messageSnackbar} autoHideDuration={6000} onClose={() => setOpenDriverSuccess(false)} >
                     <Alert onClose={() => setOpenDriverSuccess(false)} severity="success" sx={{ width: '50%' }}>
                         {messageSnackbar}
                     </Alert>
                 </Snackbar>
-                <Snackbar className={classes.snackbar} open={openVehicleSuccess} autoHideDuration={6000} onClose={() => setOpenVehicleSuccess(false)} >
+                <Snackbar className={classes.snackbar} open={openVehicleSuccess && !!messageSnackbar} autoHideDuration={6000} onClose={() => setOpenVehicleSuccess(false)} >
                     <Alert onClose={() => setOpenVehicleSuccess(false)} severity="success" sx={{ width: '50%' }}>
                         {messageSnackbar}
                     </Alert>
