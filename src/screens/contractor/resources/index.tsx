@@ -63,7 +63,7 @@ const Resources = () => {
     }, [driverSuccess])
 
     useEffect(() => {
-        setOpenDriverSuccess(vehicleSuccess)
+        setOpenVehicleSuccess(vehicleSuccess)
     }, [vehicleSuccess])
 
     useEffect(() => {

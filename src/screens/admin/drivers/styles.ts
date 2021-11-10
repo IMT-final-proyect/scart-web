@@ -70,16 +70,17 @@ const useStyles = makeStyles((theme: Theme) => ({
         textAlign: 'center'
     },
     button:{
-        height: '35px',
+        height: '50px',
         textTransform: 'none',
-        paddingTop: '2%',
-        paddingBottom: '2%',
         alignItems: 'center',
     },
     spinner: {
         marginTop: '5%',
         color: globalColors.lightBlue
-    }
+    },
+    snackbar: {
+        width: '75%',
+    },
 }));
 
 export default useStyles

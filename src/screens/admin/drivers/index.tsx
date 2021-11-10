@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Button, Card, CircularProgress, Grid, Modal, Typography, } from '@material-ui/core';
+import { Button, Card, CircularProgress, Grid, Modal, Snackbar, Typography, } from '@material-ui/core';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import useStyles from './styles';
 import DriverRow from './components/driverRow';
@@ -9,23 +9,33 @@ import TripleSearchBar from '../../../components/tripleSearchBar';
 import CreateDriverModal from './components/createDriverModal';
 import { ROUTES } from '../navigation/routes';
 import { Link } from 'react-router-dom';
-import { createDriver, getAllDrivers } from '../../../redux/slices/resourcesSlice';
+import { createDriver, deleteDriver, getAllDrivers } from '../../../redux/slices/resourcesSlice';
 import moment from 'moment';
 import { getContractors } from '../../../redux/slices/contractorsSlice';
 import { IDriver } from '../../../utils/interfaces';
+import DeleteModal from '../../../components/DeleteModal';
+import { Alert } from '@mui/material';
 
 const Drivers = () => {
     const classes = useStyles();
     const dispatch = useDispatch()
+    const [selectedDriverId, setSelectedDriverId] = useState(-1)
     const [openDriverModal, setOpenDriverModal] = useState(false)
     const [searchName, setSearchName] = useState('')
     const [searchSurname, setSearchSurname] = useState('')
     const [searchDocument, setSearchDocument] = useState('')
     const [searchContractor, setSearchContractor] = useState('')
     const [loadingFilter, setLoadingFilter] = useState(false)
+    const [messageSnackbar, setMessageSnackbar] = useState('')
+    const [deleteDriverModal, setDeleteDriverModal] = useState(false)
+    const [openSnackbarError, setOpenSnackbarError] = useState(false)
+    const [openDriverSuccess, setOpenDriverSuccess] = useState(false)
     const drivers = useSelector((state: RootState) => state.resources.drivers.data)
     const loadingDrivers = useSelector((state: RootState) => state.resources.drivers.loading)
     const [driversFiltered, setDriversFiltered] = useState<IDriver[]>([])
+    const driverSuccess = useSelector((state: RootState) => state.resources.drivers.success)
+    const error = useSelector((state: RootState) => state.resources.drivers.error)
+
 
     useEffect(() => {
         dispatch(getAllDrivers())
@@ -35,6 +45,16 @@ const Drivers = () => {
     useEffect(() => {
         cleanFilters()
     }, [drivers])
+
+    useEffect(() => {
+        if (!!error)
+            setOpenSnackbarError(true)
+    }, [error])
+
+    useEffect(() => {
+        setOpenDriverSuccess(driverSuccess)
+    }, [driverSuccess])
+
 
     useEffect(() => {
         cleanFilters()
@@ -105,6 +125,16 @@ const Drivers = () => {
         }
     }
 
+    const handleDeleteDriver = (id: number) => {
+        dispatch(deleteDriver(id))
+        setMessageSnackbar('Conductor eliminado con exito')
+    }
+
+    const handleDeleteDriverModal = (id: number) => {
+        setSelectedDriverId(id)
+        setDeleteDriverModal(true)
+    }
+
     return (
         <>
             <Modal open={openDriverModal} onClose={() => setOpenDriverModal(false)}>
@@ -112,6 +142,9 @@ const Drivers = () => {
                     setOpenDriverModal={setOpenDriverModal}
                     addDriver={addDriver}
                 />
+            </Modal>
+            <Modal open={deleteDriverModal} onClose={() => setDeleteDriverModal(false)}>
+                <DeleteModal entity={'conductor'} id={selectedDriverId} handleDelete={handleDeleteDriver} setOpenModal={setDeleteDriverModal} />
             </Modal>
             <Grid container className={classes.container} direction='row' justifyContent='space-between'>
                 <Card className={classes.card}>
@@ -183,6 +216,8 @@ const Drivers = () => {
                                             surname={driversFiltered[parseInt(key)].surname}
                                             document={driversFiltered[parseInt(key)].cuit}
                                             contractor={driversFiltered[parseInt(key)].contractor.name}
+                                            id={driversFiltered[parseInt(key)].id}
+                                            handleDeleteDriver={handleDeleteDriverModal}
                                         />
                                     </Button>
                                     )}
@@ -191,6 +226,16 @@ const Drivers = () => {
                         }
                     </Card>
                 }
+                <Snackbar className={classes.snackbar} open={openSnackbarError} autoHideDuration={6000} onClose={() => setOpenSnackbarError(false)} >
+                    <Alert onClose={() => setOpenSnackbarError(false)} severity="error" sx={{ width: '50%' }}>
+                        {error?.message}
+                    </Alert>
+                </Snackbar>
+                <Snackbar className={classes.snackbar} open={openDriverSuccess && !!messageSnackbar} autoHideDuration={6000} onClose={() => setOpenDriverSuccess(false)} >
+                    <Alert onClose={() => setOpenDriverSuccess(false)} severity="success" sx={{ width: '50%' }}>
+                        {messageSnackbar}
+                    </Alert>
+                </Snackbar>
             </Grid>
         </>
     )

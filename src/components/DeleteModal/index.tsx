@@ -4,7 +4,7 @@ import useStyles from './styles';
 interface Props { 
     entity: string
     id: number
-    handleDelete: (id: number) => void
+    handleDelete: (id: number, contratorId?: number) => void
     setOpenModal: React.Dispatch<React.SetStateAction<boolean>>
 }
 const DeleteModal = ({ entity, id, handleDelete, setOpenModal }: Props) => {

@@ -248,7 +248,7 @@ export const createVehicle = (
    }
 }
 
-export const deleteDriver = (id: number, contractorId: number): AppThunk => async (dispatch) => {
+export const deleteDriver = (id: number, contractorId?: number): AppThunk => async (dispatch) => {
    dispatch(deleteDriverRequest());
    try{
       const response: AxiosResponse = await Axios.put(`/drivers/${id}`,{
@@ -264,7 +264,7 @@ export const deleteDriver = (id: number, contractorId: number): AppThunk => asyn
    }
 }
 
-export const deleteVehicle = (id: number, contractorId: number): AppThunk => async (dispatch) => {
+export const deleteVehicle = (id: number, contractorId?: number): AppThunk => async (dispatch) => {
    dispatch(deleteVehicleRequest());
    try{
       const response: AxiosResponse = await Axios.put(`/vehicles/${id}`,{

@@ -89,11 +89,14 @@ const useStyles = makeStyles((theme: Theme) => ({
         textAlign: 'center'
     },
     button:{
-        height: '35px',
+        height: '50px',
         textTransform: 'none',
-        paddingTop: '2%',
-        paddingBottom: '2%',
+        paddingTop: '1%',
+        paddingBottom: '1%',
         alignItems: 'center',
+    },
+    snackbar: {
+        width: '75%',
     },
     searchTitle:{
         color: globalColors.darkGrey,
