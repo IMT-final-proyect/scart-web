@@ -11,6 +11,8 @@ import CreateDriverDocumentModal from './components/CreateDriverDocumentModal';
 import { createDocument, getDriverDocuments } from '../../../../../redux/slices/documentsSlice';
 import DocumentRow from '../../../documentation/components/documentRow/DocumentRow';
 import { ROUTES } from '../../../navigation/routes';
+import EditDriverModal from '../../../../../components/editDriverModal';
+import EditIcon from '@mui/icons-material/Edit';
 
 
 const autos: string[] = []
@@ -20,6 +22,7 @@ const DriverDetails = () => {
     const classes = useStyles();
     const params: any = useParams();
     const dispatch = useDispatch();
+    const [openEditDriverModal, setOpenEditDriverModal] = useState(false)
     const [openDriverDocumentModal, setOpenDriverDocumentModal] = useState(false)
     const driver: IDriver = useSelector((state: RootState) => {
         const drivers = state.resources.drivers.data
@@ -37,6 +40,11 @@ const DriverDetails = () => {
         setOpenDriverDocumentModal(false)
     }
 
+    const editDriver = (password: string, name: string, surname: string, cuit: string, birthdate: moment.Moment) => {
+        
+    }
+
+
     return (
         <>
             <Modal open={openDriverDocumentModal} onClose={() => setOpenDriverDocumentModal(false)}>
@@ -45,6 +53,9 @@ const DriverDetails = () => {
                     addDocument={addDocument}
                     driverId={driver.id}
                 />
+            </Modal>
+            <Modal open={openEditDriverModal} onClose={() => setOpenEditDriverModal(false)}>
+                <EditDriverModal driver={driver} editDriver={editDriver} setOpenEditDriverModal={setOpenEditDriverModal} />
             </Modal>
             {loading ?
                 <Grid container alignContent='center' justifyContent='center' >
@@ -75,8 +86,11 @@ const DriverDetails = () => {
                                 <text className={classes.dataField}> CUIT: </text>
                                 <text className={classes.data}> {driver.cuit} </text>
                             </div>
+                            <Button onClick={() => {setOpenEditDriverModal(true)}}>
+                                <EditIcon />
+                            </Button>
                     </Grid>
-                    </Card>
+                </Card>
                 <Grid container className={classes.container} direction='row' justifyContent='space-between'>
                     <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
                         <Card className={classes.leftCard}>
@@ -185,6 +199,3 @@ const DriverDetails = () => {
 
 export default DriverDetails;
 
-function isObjEmpty(documents: IDocument[]) {
-    throw new Error('Function not implemented.');
-}

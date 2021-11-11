@@ -15,7 +15,6 @@ const useStyles = makeStyles((theme: Theme) => ({
         paddingTop: '1%',
     },
     dataContainer:{
-        marginBottom: '1%',
         textAlign: 'start'
     },
     dataField:{
