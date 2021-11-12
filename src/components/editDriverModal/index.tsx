@@ -9,17 +9,18 @@ import useStyles from './styles';
 
 interface Props{
     driver: IDriver
-    editDriver: (password: string, name: string, surname: string, cuit: string, birthdate: moment.Moment) => void
+    changePassword: boolean
+    editDriver: (id: number, name: string, surname: string, cuit: string, birthdate: moment.Moment, password: string) => void
     setOpenEditDriverModal: React.Dispatch<React.SetStateAction<boolean>>
+    setChangePassword: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const EditDriverModal = ( {driver, editDriver, setOpenEditDriverModal }: Props ) => {
+const EditDriverModal = ( {driver, changePassword, editDriver, setOpenEditDriverModal, setChangePassword }: Props ) => {
     const classes = useStyles();
     const [emptyField, setEmptyField] = useState(false)
     const [name, setName] = useState(driver.name)
     const [surname, setSurname] = useState(driver.surname)
     const [cuit, setCuit] = useState(driver.cuit)
-    const [changePassword, setChangePassword] = useState(false)
     const [password, setPassword] = useState('')
     const [repeatPassword, setRepeatPassword] = useState('')
     const [birthdate, setBirthdate] = useState<moment.Moment | null>(driver.birth_date);
@@ -50,12 +51,17 @@ const EditDriverModal = ( {driver, editDriver, setOpenEditDriverModal }: Props )
       };
 
       const _handleOnClick = () => {
-        if(!!password && !!repeatPassword && !!name && !!surname && !!cuit && !!birthdate){
-            if (password === repeatPassword){
-                editDriver(password, name, surname, cuit, moment(birthdate));
+        if(!!name && !!surname && !!cuit && !!birthdate){
+            if (changePassword){
+                if (password === repeatPassword){
+                    editDriver(driver.id, name, surname, cuit, moment(birthdate), password);
+                    setOpenEditDriverModal(false);
+                }
+                else setPasswordNotRepeated(true);
+            }
+            else {
+                editDriver(driver.id, name, surname, cuit, moment(birthdate), password);
                 setOpenEditDriverModal(false);
-            } else {
-                setPasswordNotRepeated(true);
             }
         }
         else{

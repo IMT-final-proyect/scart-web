@@ -88,7 +88,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     spinner: {
         marginTop: '20%',
         color: globalColors.lightBlue
-    }
+    },
+    snackbar: {
+        width: '75%',
+    },
 }));
 
 export default useStyles

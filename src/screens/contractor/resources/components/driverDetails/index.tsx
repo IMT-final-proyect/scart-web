@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Card, CircularProgress, Grid, Modal, Typography, } from '@material-ui/core'
+import { Button, Card, CircularProgress, Grid, Modal, Snackbar, Typography, } from '@material-ui/core'
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import useStyles from './styles' 
 import { Link, useParams } from 'react-router-dom';
@@ -13,6 +13,8 @@ import DocumentRow from '../../../documentation/components/documentRow/DocumentR
 import { ROUTES } from '../../../navigation/routes';
 import EditDriverModal from '../../../../../components/editDriverModal';
 import EditIcon from '@mui/icons-material/Edit';
+import { editDriver } from '../../../../../redux/slices/resourcesSlice';
+import { Alert } from '@mui/material';
 
 
 const autos: string[] = []
@@ -24,24 +26,36 @@ const DriverDetails = () => {
     const dispatch = useDispatch();
     const [openEditDriverModal, setOpenEditDriverModal] = useState(false)
     const [openDriverDocumentModal, setOpenDriverDocumentModal] = useState(false)
+    const [openEditDriverSuccess, setOpenEditDriverSuccess] = useState(false)
+    const [messageSnackbar, setMessageSnackbar] = useState('')
+    const [changePassword, setChangePassword] = useState(false)
     const driver: IDriver = useSelector((state: RootState) => {
         const drivers = state.resources.drivers.data
         return drivers[params.id]
     })
     const documents: IDocument[] = useSelector((state: RootState) => state.documents.drivers.data)
     const loading: boolean = useSelector((state: RootState) => state.documents.drivers.loading)
+    const success: boolean = useSelector((state: RootState) => state.resources.drivers.success)
 
     useEffect(() => { 
         dispatch(getDriverDocuments(driver.id))
     }, [dispatch, driver.id])
+
+    useEffect(() => {
+        setOpenEditDriverSuccess(success)
+    }, [success])
 
     const addDocument = (expirationDate: moment.Moment, type: number, entityType: number, entityId: number, images: string[]) => {
         dispatch(createDocument(expirationDate, type, entityType, entityId, images))
         setOpenDriverDocumentModal(false)
     }
 
-    const editDriver = (password: string, name: string, surname: string, cuit: string, birthdate: moment.Moment) => {
-        
+    const _editDriver = (id: number, name: string, surname: string, cuit: string, birthdate: moment.Moment, password: string) => {
+        if (changePassword)
+            dispatch(editDriver(id, name, surname, cuit, birthdate, password))
+        else
+            dispatch(editDriver(id, name, surname, cuit, birthdate))
+        setMessageSnackbar('Conductor modificado con exito')
     }
 
 
@@ -55,7 +69,13 @@ const DriverDetails = () => {
                 />
             </Modal>
             <Modal open={openEditDriverModal} onClose={() => setOpenEditDriverModal(false)}>
-                <EditDriverModal driver={driver} editDriver={editDriver} setOpenEditDriverModal={setOpenEditDriverModal} />
+                <EditDriverModal 
+                    driver={driver} 
+                    changePassword={changePassword}
+                    editDriver={_editDriver} 
+                    setOpenEditDriverModal={setOpenEditDriverModal} 
+                    setChangePassword={setChangePassword}
+                />
             </Modal>
             {loading ?
                 <Grid container alignContent='center' justifyContent='center' >
@@ -65,30 +85,25 @@ const DriverDetails = () => {
             <Grid container className={classes.container} direction='column' justifyContent='space-between'>
                 <Card className={classes.cardContainer}>
                     <Grid container justifyContent='space-between' direction='row' alignItems={'center'}>
-                        {/* <Hidden only={["xs","sm"]}>
-                            <Grid item xs={2} md={6}>
-                                <img src={image} className={classes.image} />
-                            </Grid>
-                        </Hidden> */}
-                            <div className={classes.dataContainer}>
-                                <text className={classes.dataField}> Nombre: </text>
-                                <text className={classes.data}> {driver.name} </text>
-                            </div>
-                            <div className={classes.dataContainer}>
-                                <text className={classes.dataField}> Apellido: </text>
-                                <text className={classes.data}> {driver.surname} </text>
-                            </div>
-                            <div className={classes.dataContainer}>
-                                <text className={classes.dataField}> Fecha de Nac.: </text>
-                                <text className={classes.data}> {moment(driver.birth_date).format('DD/MM/YY')} </text>
-                            </div>
-                            <div className={classes.dataContainer}>
-                                <text className={classes.dataField}> CUIT: </text>
-                                <text className={classes.data}> {driver.cuit} </text>
-                            </div>
-                            <Button onClick={() => {setOpenEditDriverModal(true)}}>
-                                <EditIcon />
-                            </Button>
+                        <div className={classes.dataContainer}>
+                            <text className={classes.dataField}> Nombre: </text>
+                            <text className={classes.data}> {driver.name} </text>
+                        </div>
+                        <div className={classes.dataContainer}>
+                            <text className={classes.dataField}> Apellido: </text>
+                            <text className={classes.data}> {driver.surname} </text>
+                        </div>
+                        <div className={classes.dataContainer}>
+                            <text className={classes.dataField}> Fecha de Nac.: </text>
+                            <text className={classes.data}> {moment(driver.birth_date).format('DD/MM/YY')} </text>
+                        </div>
+                        <div className={classes.dataContainer}>
+                            <text className={classes.dataField}> CUIT: </text>
+                            <text className={classes.data}> {driver.cuit} </text>
+                        </div>
+                        <Button onClick={() => {setOpenEditDriverModal(true)}}>
+                            <EditIcon />
+                        </Button>
                     </Grid>
                 </Card>
                 <Grid container className={classes.container} direction='row' justifyContent='space-between'>
@@ -193,6 +208,11 @@ const DriverDetails = () => {
                 </Grid>
             </Grid>
             }
+            <Snackbar className={classes.snackbar} open={openEditDriverSuccess && !!messageSnackbar} autoHideDuration={6000} onClose={() => setOpenEditDriverSuccess(false)} >
+                <Alert onClose={() => setOpenEditDriverSuccess(false)} severity="success" sx={{ width: '50%' }}>
+                    {messageSnackbar}
+                </Alert>
+            </Snackbar>
         </>
     )
 }

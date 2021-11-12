@@ -50,6 +50,7 @@ const resourcesSlice = createSlice({
    reducers: {
       getAllDriversRequest(state) {
          state.drivers.loading = true;
+         state.drivers.success = initialState.drivers.success;
       },
       getAllDriversSuccess(state, action: any) {
          const { payload } = action
@@ -62,6 +63,7 @@ const resourcesSlice = createSlice({
          state.drivers.data = initialState.drivers.data;
          state.drivers.loading = false;
          state.drivers.error = payload;
+         state.drivers.success = initialState.drivers.success;
       },
       createDriverRequest(state) {
          state.drivers.loading = true;
@@ -89,6 +91,7 @@ const resourcesSlice = createSlice({
          state.vehicles.data = payload
          state.vehicles.loading = false;
          state.vehicles.error = initialState.vehicles.error
+         state.vehicles.success = initialState.vehicles.success;
       },
       getAllVehiclesFailure(state, action: any) {
          const { payload } = action
@@ -146,6 +149,24 @@ const resourcesSlice = createSlice({
          state.vehicles.error = payload;
          state.vehicles.success = initialState.vehicles.success;
       },
+      editDriverRequest(state) {
+         state.drivers.loading = true;
+         state.drivers.error = initialState.drivers.error;
+         state.drivers.success = initialState.drivers.success;
+      },
+      editDriverSuccess(state, action: any) {
+         const { payload } = action
+         state.drivers.data[payload.id] = payload
+         state.drivers.loading = false;
+         state.drivers.success = true;
+         state.drivers.error = initialState.drivers.error
+      },
+      editDriverFailure(state, action: any) {
+         const { payload } = action
+         state.drivers.loading = false;
+         state.drivers.error = payload;
+         state.drivers.success = initialState.drivers.success;
+      },
    },
 });
 
@@ -168,6 +189,9 @@ const {
     deleteVehicleRequest,
     deleteVehicleSuccess,
     deleteVehicleFailure,
+    editDriverRequest,
+    editDriverSuccess,
+    editDriverFailure
 } = resourcesSlice.actions;
 
 
@@ -277,5 +301,33 @@ export const deleteVehicle = (id: number, contractorId?: number): AppThunk => as
    }
    catch(error){
       dispatch(deleteVehicleFailure(error.response.data)); 
+   }
+}
+
+export const editDriver = (id: number, name: string, surname: string, cuit: string, birth_date: moment.Moment, password?: string): AppThunk => async (dispatch) => {
+   dispatch(editDriverRequest());
+   try{
+      let body
+      if (!!password) 
+         body = {
+            name,
+            surname,
+            cuit,
+            birth_date,
+            password
+         }
+      else
+         body = {
+            name,
+            surname,
+            cuit,
+            birth_date
+         } 
+      const response: AxiosResponse = await Axios.put(`/drivers/${id}`,body);
+      
+      dispatch(editDriverSuccess(response.data));
+   }
+   catch(error){
+      dispatch(editDriverFailure(error.response.data)); 
    }
 }
