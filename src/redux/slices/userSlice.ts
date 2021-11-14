@@ -77,7 +77,7 @@ const userSlice = createSlice({
          const { payload } = action
          state.userData = payload
          state.error = initialState.error
-         state.loading = true;
+         state.loading = false;
       },
       getUserDataFailure(state, action: any){
          const { payload } = action

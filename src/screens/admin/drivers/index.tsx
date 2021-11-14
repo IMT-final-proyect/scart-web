@@ -108,7 +108,6 @@ const Drivers = () => {
     }, [drivers, searchContractor])
 
     const cleanFilters = useCallback(() => {
-        console.log('ejecute');
         setDriversFiltered(() => {
             let driversAux: IDriver[] = []
             Object.keys(drivers).map((key: string, i: any) => {
@@ -146,7 +145,7 @@ const Drivers = () => {
             <Modal open={deleteDriverModal} onClose={() => setDeleteDriverModal(false)}>
                 <DeleteModal entity={'conductor'} id={selectedDriverId} handleDelete={handleDeleteDriver} setOpenModal={setDeleteDriverModal} />
             </Modal>
-            <Grid container className={classes.container} direction='row' justifyContent='space-between'>
+            <Grid container className={classes.container} direction='row' justifyContent='space-between' >
                 <Card className={classes.card}>
                     <Grid container justifyContent='space-between'>
                         <text className={classes.textTitle}>

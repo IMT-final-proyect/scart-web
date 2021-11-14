@@ -24,8 +24,8 @@ const DriverDetails = () => {
     const classes = useStyles();
     const params: any = useParams();
     const dispatch = useDispatch();
-    const [openEditDriverModal, setOpenEditDriverModal] = useState(false)
     const [openDriverDocumentModal, setOpenDriverDocumentModal] = useState(false)
+    const [openEditDriverModal, setOpenEditDriverModal] = useState(false)
     const [openEditDriverSuccess, setOpenEditDriverSuccess] = useState(false)
     const [messageSnackbar, setMessageSnackbar] = useState('')
     const [changePassword, setChangePassword] = useState(false)
@@ -50,14 +50,13 @@ const DriverDetails = () => {
         setOpenDriverDocumentModal(false)
     }
 
-    const _editDriver = (id: number, name: string, surname: string, cuit: string, birthdate: moment.Moment, password: string) => {
+    const _editDriver = (driver: IDriver, name: string, surname: string, cuit: string, birthdate: moment.Moment, password: string) => {
         if (changePassword)
-            dispatch(editDriver(id, name, surname, cuit, birthdate, password))
+            dispatch(editDriver(driver, name, surname, cuit, birthdate, password))
         else
-            dispatch(editDriver(id, name, surname, cuit, birthdate))
+            dispatch(editDriver(driver, name, surname, cuit, birthdate))
         setMessageSnackbar('Conductor modificado con exito')
     }
-
 
     return (
         <>

@@ -1,17 +1,21 @@
 import React, { useEffect, useState } from 'react';
 
-import { Button, Card, CircularProgress, Grid, Modal, Typography } from '@material-ui/core'
+import { Button, Card, CircularProgress, Grid, Modal, Snackbar, Typography } from '@material-ui/core'
 import AddCircleIcon from '@material-ui/icons/AddCircle';
-
-import useStyles from './styles';
+import EditIcon from '@mui/icons-material/Edit';
 import { Link, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+
+import useStyles from './styles';
 import { RootState } from '../../../../../redux/rootReducer';
 import { IDocument, IVehicle } from '../../../../../utils/interfaces';
 import { createDocument, getVehicleDocuments } from '../../../../../redux/slices/documentsSlice';
 import CreateVehicleDocumentModal from './components/CreateVehicleDocumentModal';
 import DocumentRow from '../../../documentation/components/documentRow/DocumentRow';
 import { ROUTES } from '../../../navigation/routes';
+import EditVehicleModal from '../../../../../components/editVehicleModal';
+import { editVehicle } from '../../../../../redux/slices/resourcesSlice';
+import { Alert } from '@mui/material';
 
 
 const conductores = []
@@ -21,22 +25,35 @@ const VehicleDetails = () => {
     const dispatch = useDispatch()
     const params: any = useParams();
     const [openVehicleDocumentModal, setOpenVehicleDocumentModal] = useState(false)
+    const [openEditVehicleModal, setOpenEditVehicleModal] = useState(false)
+    const [openEditVehicleSuccess, setOpenEditVehicleSuccess] = useState(false)
+    const [messageSnackbar, setMessageSnackbar] = useState('')
     const vehicle: IVehicle = useSelector((state: RootState) => {
         const vehicles = state.resources.vehicles.data
         return vehicles[params.id]
     })
     const documents: IDocument[] = useSelector((state: RootState) => state.documents.vehicles.data)
-    const userData = useSelector((state: RootState) => state.user.userData)
+    const success: boolean = useSelector((state: RootState) => state.resources.vehicles.success)
     const loading: boolean = useSelector((state: RootState) => state.documents.vehicles.loading)
 
     useEffect(() => { 
         dispatch(getVehicleDocuments(vehicle.id))
     }, [dispatch, vehicle.id])
 
+    useEffect(() => {
+        setOpenEditVehicleSuccess(success)
+    }, [success])
+
     const addDocument = (expirationDate: moment.Moment, type: number, entityType: number, entityId: number, images: string[]) => {
         dispatch(createDocument(expirationDate, type, entityType, entityId, images))
         setOpenVehicleDocumentModal(false)
     }
+
+    const _editVehicle = (vehicle: IVehicle, plate: string, brand: string, model: string, year: number) => {
+            dispatch(editVehicle(vehicle, plate, brand, model, year))
+        setMessageSnackbar('Vehiculo modificado con exito')
+    }
+
 
     return (
         <>
@@ -47,6 +64,13 @@ const VehicleDetails = () => {
                     addDocument={addDocument}
                 />
             </Modal>
+            <Modal open={openEditVehicleModal} onClose={() => setOpenEditVehicleModal(false)}>
+                <EditVehicleModal 
+                    vehicle={vehicle} 
+                    editVehicle={_editVehicle} 
+                    setOpenEditVehicleModal={setOpenEditVehicleModal} 
+                />
+            </Modal>
             {loading ?
                 <Grid container alignContent='center' justifyContent='center' >
                     <CircularProgress className={classes.spinner} />
@@ -54,7 +78,7 @@ const VehicleDetails = () => {
                 :
                 <Grid container className={classes.container} direction='column' justifyContent='space-between'>
                     <Card className={classes.cardContainer}>
-                        <Grid container justifyContent='space-between' direction='row'>
+                        <Grid container justifyContent='space-between' direction='row' alignItems={'center'}>
                                 <div className={classes.dataContainer}>
                                     <text className={classes.dataField}> Marca: </text>
                                     <text className={classes.data}> {vehicle.brand} </text>
@@ -71,6 +95,9 @@ const VehicleDetails = () => {
                                     <text className={classes.dataField}> Año: </text>
                                     <text className={classes.data}> {vehicle.year} </text>
                                 </div>
+                                <Button onClick={() => {setOpenEditVehicleModal(true)}}>
+                                    <EditIcon />
+                                </Button>
                         </Grid>
                     </Card>
                     <Grid container className={classes.container} direction='row' justifyContent='space-between'>
@@ -180,6 +207,11 @@ const VehicleDetails = () => {
                     </Grid>
                 </Grid>
             }
+            <Snackbar className={classes.snackbar} open={openEditVehicleSuccess && !!messageSnackbar} autoHideDuration={6000} onClose={() => setOpenEditVehicleSuccess(false)} >
+                <Alert onClose={() => setOpenEditVehicleSuccess(false)} severity="success" sx={{ width: '50%' }}>
+                    {messageSnackbar}
+                </Alert>
+            </Snackbar>
         </>
     )
 }

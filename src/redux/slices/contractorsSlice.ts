@@ -79,7 +79,7 @@ export default resourcesSlice.reducer;
 export const getContractors = (): AppThunk => async (dispatch) => {
    dispatch(getContractorsRequest());
    try{
-      const response: AxiosResponse = await Axios.get('/contractors');
+      const response: AxiosResponse = await Axios.get('/contractors?relations=address');
       const Contractors = _.mapKeys(response.data, 'id') 
       dispatch(getContractorsSuccess(Contractors));
    }

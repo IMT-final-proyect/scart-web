@@ -167,6 +167,24 @@ const resourcesSlice = createSlice({
          state.drivers.error = payload;
          state.drivers.success = initialState.drivers.success;
       },
+      editVehicleRequest(state) {
+         state.vehicles.loading = true;
+         state.vehicles.error = initialState.vehicles.error;
+         state.vehicles.success = initialState.vehicles.success;
+      },
+      editVehicleSuccess(state, action: any) {
+         const { payload } = action
+         state.vehicles.data[payload.id] = payload
+         state.vehicles.loading = false;
+         state.vehicles.success = true;
+         state.vehicles.error = initialState.vehicles.error
+      },
+      editVehicleFailure(state, action: any) {
+         const { payload } = action
+         state.vehicles.loading = false;
+         state.vehicles.error = payload;
+         state.vehicles.success = initialState.vehicles.success;
+      },
    },
 });
 
@@ -191,7 +209,10 @@ const {
     deleteVehicleFailure,
     editDriverRequest,
     editDriverSuccess,
-    editDriverFailure
+    editDriverFailure,
+    editVehicleRequest,
+    editVehicleSuccess,
+    editVehicleFailure
 } = resourcesSlice.actions;
 
 
@@ -278,7 +299,6 @@ export const deleteDriver = (id: number, contractorId?: number): AppThunk => asy
       const response: AxiosResponse = await Axios.put(`/drivers/${id}`,{
          active: 0
       });
-      console.log(response);
       
       dispatch(deleteDriverSuccess());
       dispatch(getAllDrivers(contractorId))
@@ -294,7 +314,6 @@ export const deleteVehicle = (id: number, contractorId?: number): AppThunk => as
       const response: AxiosResponse = await Axios.put(`/vehicles/${id}`,{
          active: 0
       });
-      console.log(response);
       
       dispatch(deleteVehicleSuccess());
       dispatch(getAllVehicles(contractorId))
@@ -304,7 +323,7 @@ export const deleteVehicle = (id: number, contractorId?: number): AppThunk => as
    }
 }
 
-export const editDriver = (id: number, name: string, surname: string, cuit: string, birth_date: moment.Moment, password?: string): AppThunk => async (dispatch) => {
+export const editDriver = (driver: IDriver, name: string, surname: string, cuit: string, birth_date: moment.Moment, password?: string): AppThunk => async (dispatch) => {
    dispatch(editDriverRequest());
    try{
       let body
@@ -323,11 +342,34 @@ export const editDriver = (id: number, name: string, surname: string, cuit: stri
             cuit,
             birth_date
          } 
-      const response: AxiosResponse = await Axios.put(`/drivers/${id}`,body);
+      const response: AxiosResponse = await Axios.put(`/drivers/${driver.id}`,body);
       
-      dispatch(editDriverSuccess(response.data));
+      const editedDriver = {...driver, ...response.data}
+      
+      
+      dispatch(editDriverSuccess(editedDriver));
    }
    catch(error){
       dispatch(editDriverFailure(error.response.data)); 
+   }
+}
+
+export const editVehicle = (vehicle: IVehicle, plate: string, brand: string, model: string, year: number): AppThunk => async (dispatch) => {
+   dispatch(editVehicleRequest());
+   try{
+      const response: AxiosResponse = await Axios.put(`/vehicles/${vehicle.id}`,
+      {
+         plate,
+         brand,
+         model,
+         year
+      })
+
+      const editedVehicle = {...vehicle, ...response.data}
+
+      dispatch(editVehicleSuccess(editedVehicle));
+   }
+   catch(error){
+      dispatch(editVehicleFailure(error.response.data)); 
    }
 }

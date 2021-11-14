@@ -21,7 +21,7 @@ const VehicleRow = ({ brand, model, plate, contractor, id, handleDeleteVehicle }
     }
 
     return(
-        <Grid container direction="row" justifyContent='space-between'>
+        <Grid container direction="row" justifyContent='space-between' alignItems={'center'}>
             <Grid item xs={3} className={classes.text}>
                 <text> {brand} </text>
             </Grid>

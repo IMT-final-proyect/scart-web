@@ -19,7 +19,7 @@ const Driver = ({ name, surname, document, contractor, id, handleDeleteDriver }:
         handleDeleteDriver(id)
     }
     return(
-        <Grid container direction="row" justifyContent='space-between'>
+        <Grid container direction="row" justifyContent='space-between' alignItems={'center'}>
             <Grid item xs={3} className={classes.text}>
                 <text> {name} </text>
                 <text> {surname} </text>

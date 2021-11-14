@@ -10,21 +10,21 @@ import useStyles from './styles';
 interface Props{
     driver: IDriver
     changePassword: boolean
-    editDriver: (id: number, name: string, surname: string, cuit: string, birthdate: moment.Moment, password: string) => void
+    editDriver: (driver: IDriver, name: string, surname: string, cuit: string, birthdate: moment.Moment, password: string) => void
     setOpenEditDriverModal: React.Dispatch<React.SetStateAction<boolean>>
     setChangePassword: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const EditDriverModal = ( {driver, changePassword, editDriver, setOpenEditDriverModal, setChangePassword }: Props ) => {
     const classes = useStyles();
-    const [emptyField, setEmptyField] = useState(false)
+    const [error, setError] = useState(false)
     const [name, setName] = useState(driver.name)
     const [surname, setSurname] = useState(driver.surname)
     const [cuit, setCuit] = useState(driver.cuit)
     const [password, setPassword] = useState('')
+    const [message, setMessage] = useState('')
     const [repeatPassword, setRepeatPassword] = useState('')
     const [birthdate, setBirthdate] = useState<moment.Moment | null>(driver.birth_date);
-    const [passwordNotRepeated, setPasswordNotRepeated] = useState(false);
     
     const _onChangePassword = useCallback((event) => {
         setPassword(event.target.value);
@@ -43,7 +43,8 @@ const EditDriverModal = ( {driver, changePassword, editDriver, setOpenEditDriver
     }, [setSurname]);
     
     const _onChangeCuit = useCallback((event) => {
-        setCuit(event.target.value);
+        if (!event.target.value.includes("-") && !event.target.value.includes(" "))
+            setCuit(event.target.value);
     }, [setCuit]);
     
     const handleBirthdateChange = (date: moment.Moment | null) => {
@@ -52,20 +53,30 @@ const EditDriverModal = ( {driver, changePassword, editDriver, setOpenEditDriver
 
       const _handleOnClick = () => {
         if(!!name && !!surname && !!cuit && !!birthdate){
-            if (changePassword){
-                if (password === repeatPassword){
-                    editDriver(driver.id, name, surname, cuit, moment(birthdate), password);
-                    setOpenEditDriverModal(false);
+            if(cuit.length === 11){
+                if (changePassword){
+                    if (password === repeatPassword){
+                        editDriver(driver, name, surname, cuit, moment(birthdate), password);
+                        setOpenEditDriverModal(false);
+                    }
+                    else {
+                        setError(true)
+                        setMessage('Las contraseñas no coiniciden')
+                    }
                 }
-                else setPasswordNotRepeated(true);
+                else {
+                    editDriver(driver, name, surname, cuit, moment(birthdate), password);
+                    setOpenEditDriverModal(false);
+                };
             }
-            else {
-                editDriver(driver.id, name, surname, cuit, moment(birthdate), password);
-                setOpenEditDriverModal(false);
+            else{
+                setError(true)
+                setMessage('El cuit debe tener 11 digitos')
             }
         }
         else{
-            setEmptyField(true);
+            setError(true);
+            setMessage('Falta completar algún campo')
         }
     }
 
@@ -144,14 +155,9 @@ const EditDriverModal = ( {driver, changePassword, editDriver, setOpenEditDriver
                         disabled={!changePassword}
                     />
                 </Grid>
-                <Snackbar className={classes.snackbar} open={emptyField} autoHideDuration={6000} onClose={() => setEmptyField(false)} >
-                    <Alert onClose={() => setEmptyField(false)} severity="error" sx={{ width: '100%' }}>
-                        Falta completar algún campo
-                    </Alert>
-                </Snackbar>
-                <Snackbar className={classes.snackbar} open={passwordNotRepeated} autoHideDuration={6000} onClose={() => setPasswordNotRepeated(false)}>
-                    <Alert onClose={() => setPasswordNotRepeated(false)} severity="error" sx={{ width: '100%' }}>
-                        Las contraseñas no coinciden
+                <Snackbar className={classes.snackbar} open={error} autoHideDuration={6000} onClose={() => setError(false)} >
+                    <Alert onClose={() => setError(false)} severity="error" sx={{ width: '100%' }}>
+                        {message}
                     </Alert>
                 </Snackbar>
                 <Grid container direction='row' justifyContent='space-between'>
