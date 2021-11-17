@@ -1,95 +1,107 @@
 import React, { useEffect } from 'react';
-import { Card, Typography } from '@material-ui/core';
-import DoneIcon from '@material-ui/icons/Done';
-import CloseIcon from '@material-ui/icons/Close';
-import TimerIcon from '@material-ui/icons/Timer';
-import DriveEtaIcon from '@material-ui/icons/DriveEta';
-import PersonIcon from '@material-ui/icons/Person';
 
-import barras from '../../../assets/images/barras.PNG';
 import useStyles from './styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { getContractorData } from '../../../redux/slices/userSlice';
 import { RootState } from '../../../redux/rootReducer';
+import { getAllDrivers, getAllVehicles } from '../../../redux/slices/resourcesSlice';
+import { getContractorDocuments, getContractorExpiringDocuments } from '../../../redux/slices/documentsSlice';
+import DriversCard from './components/driversCard';
+import VehiclesCard from './components/vehicleCard';
+import { States } from '../../../utils/constants';
+import { IDocument } from '../../../utils/interfaces';
+import { Button, Card, Grid, Typography } from '@material-ui/core';
+import { ROUTES } from '../navigation/routes';
+import DocumentRow from '../documentation/components/documentRow/DocumentRow';
+import { Link } from 'react-router-dom';
 
 const Home = () => {
     const classes = useStyles();
     const dispatch = useDispatch()
     const id = useSelector((state: RootState) => state.user.accountData?.entityId)
+    const drivers = useSelector((state: RootState) => state.resources.drivers.data);
+    const vehicles = useSelector((state: RootState) => state.resources.vehicles.data);
+    const contractorValid: IDocument[] = useSelector((state: RootState) => Object.values(state.documents.contractor.data).filter(doc => doc.state ===  States.VALID));
+    const contractorPending: IDocument[] = useSelector((state: RootState) => Object.values(state.documents.contractor.data).filter(doc => doc.state ===  States.PENDING));
+    const contractorExpired: IDocument[] = useSelector((state: RootState) => Object.values(state.documents.contractor.data).filter(doc => doc.state ===  States.EXPIRED));
+    const driversValid: IDocument[] = useSelector((state: RootState) => Object.values(state.documents.drivers.data).filter(doc => doc.state ===  States.VALID));
+    const driversPending: IDocument[] = useSelector((state: RootState) => Object.values(state.documents.drivers.data).filter(doc => doc.state ===  States.PENDING));
+    const driversExpired: IDocument[] = useSelector((state: RootState) => Object.values(state.documents.drivers.data).filter(doc => doc.state ===  States.EXPIRED));
+    const vehiclesValid: IDocument[] = useSelector((state: RootState) => Object.values(state.documents.vehicles.data).filter(doc => doc.state ===  States.VALID));
+    const vehiclesPending: IDocument[] = useSelector((state: RootState) => Object.values(state.documents.vehicles.data).filter(doc => doc.state ===  States.PENDING));
+    const vehiclesExpired: IDocument[] = useSelector((state: RootState) => Object.values(state.documents.vehicles.data).filter(doc => doc.state ===  States.EXPIRED));
+    const contractorExpiringDocuments: IDocument[] = useSelector((state: RootState) => state.documents.contractor.expiring);
+    const driversExpiringDocuments: IDocument[] = useSelector((state: RootState) => state.documents.drivers.expiring);
+    const vehiclesExpiringDocuments: IDocument[] = useSelector((state: RootState) => state.documents.vehicles.expiring);
 
     useEffect(() => {
-        dispatch(getContractorData(id))
-    }, [])
-    
+      dispatch(getContractorData(id))
+      dispatch(getAllDrivers(id))
+      dispatch(getAllVehicles(id))
+      dispatch(getContractorDocuments(id))
+      dispatch(getContractorExpiringDocuments(id))
+    }, [dispatch, id])
     return (
-        <div className={classes.container}>
-            <div className={classes.cardContainer}>
-                <Card className={classes.card}>
-                    <div className={classes.counterContainer}>
-                        <div className={classes.imgContainer}>
-                            <img src={barras} className={classes.img}/>
-                        </div>
-                        <div className={classes.counter}>
-                            <Typography variant="h6" className={classes.counterText}>
-                                Total
-                            </Typography>
-                            <Typography variant="h3" className={classes.counterText}>
-                                45
-                            </Typography>
-                        </div>
-                    </div>
-                    <div className={classes.details}>
-                        <div className={classes.row}>
-                            <DoneIcon className={classes.done}/>
-                            <text>
-                                Validos: 40
-                            </text>
-                        </div>
-                        <div className={classes.row}>
-                            <TimerIcon className={classes.wait}/>
-                            <text>
-                                Pendientes: 2
-                            </text>
-                        </div>
-                        <div className={classes.row}>
-                            <CloseIcon className={classes.wrong}/>
-                            <text>
-                                Vencidos: 3
-                            </text>
-                        </div>
-                    </div>
+        <Grid className={classes.container}>
+            <Grid className={classes.cardContainer}>
+                <DriversCard drivers={Object.keys(drivers).length} vehicles={Object.keys(vehicles).length}/>
+                <VehiclesCard valid={contractorValid.length} pending={contractorPending.length} expired={contractorExpired.length} />
+            </Grid>
+            <Grid container className={classes.container} direction='row' justifyContent='space-between'>
+            <Card className={classes.leftCard}>
+                <Grid container justifyContent='space-between'>
+                    <text className={classes.textTitle}>
+                        Documentación por vencer
+                    </text>
+                </Grid>
+                {Object.keys(contractorExpiringDocuments)?.length === 0 ?
+                    <Typography className={classes.textCenter}> No hay documentos por vencer</Typography>
+                    :
+                    <>
+                        <Grid container justifyContent='space-between'>
+                            <Grid item xs={5} className={classes.headerText}>
+                                <text className={classes.headerText}>
+                                    Documento
+                                </text>
+                            </Grid>
+                            <Grid item xs={3} className={classes.headerText}>
+                                <text className={classes.headerText}>
+                                    Fecha de venc.
+                                </text>
+                            </Grid>
+                            <Grid item xs={2} className={classes.headerText}>
+                                <text className={classes.headerText}>
+                                    Estado
+                                </text>
+                            </Grid>
+                            <Grid item xs={2} className={classes.headerText}>
+                                <text className={classes.headerText}>
+                                    Importancia
+                                </text>
+                            </Grid>
+                        </Grid>
+                        <Grid container direction='column' justifyContent='space-between' >
+                            {Object.keys(contractorExpiringDocuments).map((key: string, i: any) =>
+                            <Button
+                                className={classes.button}
+                                component={Link}
+                                to={ROUTES.root+ROUTES.documentacion+'/'+contractorExpiringDocuments[parseInt(key)].id}
+                            >  
+                                <DocumentRow 
+                                    key={contractorExpiringDocuments[parseInt(key)].id}
+                                    type={contractorExpiringDocuments[parseInt(key)].type}
+                                    expiration={contractorExpiringDocuments[parseInt(key)].expirationDate}
+                                    state={contractorExpiringDocuments[parseInt(key)].state}
+                                    images={contractorExpiringDocuments[parseInt(key)].photos}
+                                />
+                            </Button>
+                            )}
+                        </Grid>
+                    </>
+                }
                 </Card>
-                <Card className={classes.card}>
-                    <div className={classes.counterContainer}>
-                        <div className={classes.imgContainer}>
-                            <img src={barras} className={classes.img}/>
-                        </div>
-                        <div className={classes.counter}>
-                            <Typography variant="h6" className={classes.counterText}>
-                                Total
-                            </Typography>
-                            <Typography variant="h3" className={classes.counterText}>
-                                57
-                            </Typography>
-                        </div>
-                    </div>
-                    <div className={classes.details}>
-                        <div>
-                            <PersonIcon />
-                            <text>
-                                Conductores: 45
-                            </text>
-                        </div>
-                        <div>
-                            <DriveEtaIcon />
-                            <text>
-                                Vehiculos: 12
-                            </text>
-                        </div>
-                    </div>
-                </Card>
-            </div>
-        </div>
+            </Grid>
+        </Grid>
     )
 }
 
