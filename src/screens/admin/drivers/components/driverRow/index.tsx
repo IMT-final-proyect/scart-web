@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, } from '@material-ui/core';
+import { Button, Grid, } from '@material-ui/core';
 import CreateIcon from '@material-ui/icons/Create';
 import DeleteIcon from '@material-ui/icons/Delete';
 import useStyles from './styles';
@@ -8,13 +8,18 @@ interface Props{
     name: string,
     surname: string,
     document: string,
-    contractor: string
-
+    contractor: string,
+    id: number,
+    handleDeleteDriver: (id: number) => void
 } 
-const Driver = ({ name, surname, document, contractor }: Props) => {
+const Driver = ({ name, surname, document, contractor, id, handleDeleteDriver }: Props) => {
     const classes = useStyles();
+    const handleClick = (e: any) => {
+        e.preventDefault()
+        handleDeleteDriver(id)
+    }
     return(
-        <Grid container direction="row" justifyContent='space-between'>
+        <Grid container direction="row" justifyContent='space-between' alignItems={'center'}>
             <Grid item xs={3} className={classes.text}>
                 <text> {name} </text>
                 <text> {surname} </text>
@@ -26,8 +31,9 @@ const Driver = ({ name, surname, document, contractor }: Props) => {
                 <text> {contractor} </text>
             </Grid>
             <Grid item xs={2} className={classes.iconContainer}>
-                <CreateIcon />
-                <DeleteIcon />
+                <Button onClick={handleClick} >
+                    <DeleteIcon />
+                </Button>
             </Grid>
         </Grid>
     )

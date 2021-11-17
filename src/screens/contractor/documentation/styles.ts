@@ -1,5 +1,6 @@
 
 import { makeStyles, Theme } from '@material-ui/core';
+import { headerSize } from '../../../utils/constants';
 
 import globalColors from '../../../utils/styles/globalColors';
 
@@ -7,14 +8,14 @@ const useStyles = makeStyles((theme: Theme) => ({
     container:{
         flexGrow: 1,
     },
-    cardContainer:{
-    },
-    leftCard:{
-        marginTop: '5%',
+    card:{
+        marginTop: headerSize+30,
         marginLeft: '2.5%',
-        paddingRight: '2.5%',
+        marginRight: '2.5%',
+        paddingTop: '1%',
+        paddingBottom: '2%',
         paddingLeft: '2.5%',
-        paddingBottom: '2.5%',
+        paddingRight: '2.5%,',
         [theme.breakpoints.up('xs')]: {
             width: '130%',
             marginLeft: '2.5%',
@@ -29,11 +30,25 @@ const useStyles = makeStyles((theme: Theme) => ({
             marginTop: '17%'
         },
     },
+    documentsCard:{
+        marginTop: '2.5%',
+        marginLeft: '2.5%',
+        padding: '2.5%',
+        width: '95%',
+        [theme.breakpoints.up('xs')]: {
+            marginLeft: '2.5%',
+        },
+        [theme.breakpoints.down('sm')]: {
+            marginTop: '5%'
+        },
+    },
     textTitle:{
         fontSize:20,
-        marginTop: '3%',
-        marginBottom: '3%',
+        marginTop: '1%',
+        marginBottom: '1%',
         marginLeft: '3%',
+        fontWeight: 'bold',
+        color: globalColors.lightBlue,
         [theme.breakpoints.down('sm')]: {
             fontSize: 15,
         },
@@ -70,6 +85,29 @@ const useStyles = makeStyles((theme: Theme) => ({
         paddingBottom: '2%',
         alignItems: 'center',
     },
+    searchTitle:{
+        color: globalColors.darkGrey,
+        marginTop: '1%',
+        marginBottom: '2%',
+        marginLeft: '1%',
+        fontSize: 15,
+        [theme.breakpoints.down('sm')]: {
+            fontSize: 12,
+        },
+    },
+    inputContainer: {
+        marginRight: '2%'
+    },
+    input: {
+        minWidth: '95%',
+        [theme.breakpoints.down('md')]: {
+            marginBottom: '3%',
+        },
+    },
+    spinner: {
+        marginTop: '10%',
+        color: globalColors.lightBlue
+    }
 }));
 
 export default useStyles

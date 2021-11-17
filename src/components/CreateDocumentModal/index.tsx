@@ -59,7 +59,7 @@ const CreateDocumentModal = ({ addDocument, setOpenDriverModal }: Props) => {
       };
 
     const _handleOnClick = () => {
-        if(!!expirationDate && (!!documentType) && (!!entityType)){
+        if(!!expirationDate && (!!documentType) && (!!entityType) && (filesContent.length > 0)){
             let typeId
             (Object.keys(documentTypes).map((key: string) => {
                 if (documentTypes[parseInt(key)].name === documentType) typeId = documentTypes[parseInt(key)].id
@@ -109,7 +109,7 @@ const CreateDocumentModal = ({ addDocument, setOpenDriverModal }: Props) => {
             <text className={classes.filesUploaded}>Archivos cargados: {filesContent.length}</text>
             <Snackbar className={classes.snackbar} open={emptyField} autoHideDuration={6000} onClose={() => setEmptyField(false)} >
                 <Alert onClose={() => setEmptyField(false)} severity="error" sx={{ width: '100%' }}>
-                    Falta completar algún campo
+                    Falta completar algún campo o adjuntar alguna imagen
                 </Alert>
             </Snackbar>
             <Grid container direction='row' justifyContent='space-between'>

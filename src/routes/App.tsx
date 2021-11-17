@@ -10,21 +10,15 @@ import AuditorNavigator from '../screens/auditor/navigation/AuditorNavigator'
 import AdminNavigator from '../screens/admin/navigation/AdminNavigator'
 import { RootState } from '../redux/rootReducer';
 import { useSelector } from 'react-redux';
-import { getRolNumber } from '../utils/functions/roles';
 import { admin, auditor, contractor, manager } from '../utils/constants';
+import { isRolAuthored, isTokenValid } from '../utils/functions/validations';
 
 const App = () => {
     const accountData = useSelector((state: RootState) => state.user.accountData)
 
-    const isRolAuthored = (rolName: string) => {
-        if (accountData?.rol === getRolNumber(rolName))
-            return true
-        else return false
-    }
-    
     const PrivateRoute = ({ rol, component: Component, ...rest }: any) => (
         <Route {...rest} render={(props) => (
-            isRolAuthored(rol)
+            (isRolAuthored(rol, accountData?.rol) && isTokenValid(accountData?.access_token))
                 ? <Component {...props} />
                 : <Redirect to={ROUTES.login} />
         )} />

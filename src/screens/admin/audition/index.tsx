@@ -62,7 +62,7 @@ const Documentation = () => {
                                     key={documents[parseInt(key)].id}
                                     type={documents[parseInt(key)].type}
                                     owner={documents[parseInt(key)].entityId}
-                                    route={ROUTES.root+'/'+documents[parseInt(key)].id}
+                                    route={ROUTES.root+ROUTES.documentDetails+'/'+documents[parseInt(key)].id}
                                 />
                             )}
                         </Grid>

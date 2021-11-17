@@ -60,6 +60,9 @@ const useStyles = makeStyles((theme: Theme) => ({
             width: '20%',
             marginBottom:'3%'
         },
+    },
+    
+    snackbar: {
     }
 }));
 

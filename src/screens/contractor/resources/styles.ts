@@ -36,12 +36,9 @@ const useStyles = makeStyles((theme: Theme) => ({
             marginTop: '17%'
         },
     },
-    titleContainer:{
-        
-    },
     textTitle:{
         fontSize:20,
-        marginTop: '3%',
+        marginTop: '4%',
         marginBottom: '3%',
         marginLeft: '3%',
         fontWeight: 'bold',
@@ -74,9 +71,49 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     button:{
         height: '50px',
+        cursor: 'pointer',
+        background: globalColors.white,
+        '&:hover': {
+            background: globalColors.grey
+        }
     },
     snackbar: {
         width: '75%',
+    },
+    searchTitle:{
+        color: globalColors.darkGrey,
+        marginTop: '1%',
+        marginBottom: '2%',
+        marginLeft: '1%',
+        fontSize: 15,
+        [theme.breakpoints.down('sm')]: {
+            fontSize: 12,
+        },
+    },
+    inputContainer: {
+        marginRight: '2%'
+    },
+    spinner: {
+        marginTop: '10%',
+        color: globalColors.lightBlue
+    },
+    input: {
+        minWidth: '95%',
+        [theme.breakpoints.down('md')]: {
+            marginBottom: '3%',
+        },
+    },
+    vehicleCard:{
+        marginTop: '2.5%',
+        marginLeft: '2.5%',
+        padding: '2.5%',
+        width: '95%',
+        [theme.breakpoints.up('xs')]: {
+            marginLeft: '2.5%',
+        },
+        [theme.breakpoints.down('sm')]: {
+            marginTop: '5%'
+        },
     },
 }));
 

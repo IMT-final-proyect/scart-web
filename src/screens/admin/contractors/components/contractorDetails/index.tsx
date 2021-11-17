@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Card, Grid, Modal, Typography, } from '@material-ui/core'
+import { Button, Card, Grid, Modal, } from '@material-ui/core'
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import useStyles from './styles' 
 import { Link, useParams } from 'react-router-dom';
@@ -10,11 +10,7 @@ import { IContractor, IDocument } from '../../../../../utils/interfaces';
 import CreateContractorDocumentModal from './components/CreateContractorDocumentModal';
 import { createDocument, getContractorDocuments } from '../../../../../redux/slices/documentsSlice';
 import { ROUTES } from '../../../navigation/routes';
-import { getAllDrivers, getAllVehicles } from '../../../../../redux/slices/resourcesSlice';
 import DocumentRow from './components/documentRow/DocumentRow';
-
-
-const autos: string[] = []
 
 
 const ContractorDetails = () => {
@@ -30,7 +26,7 @@ const ContractorDetails = () => {
 
     useEffect(() => { 
         dispatch(getContractorDocuments(contractor.id))
-    }, [])
+    }, [contractor.id, dispatch])
 
     const addDocument = (expirationDate: moment.Moment, type: number, entityType: number, entityId: number, images: string[]) => {
         dispatch(createDocument(expirationDate, type, entityType, entityId, images))

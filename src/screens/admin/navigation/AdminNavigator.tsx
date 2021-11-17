@@ -13,8 +13,8 @@ import useStyles from './styles';
 import contractors from '../contractors';
 import drivers from '../drivers';
 import vehicles from '../vehicles';
-import auditar from '../auditar'
-import DocumentDetails from '../../../components/documentDetails';
+import audition from '../audition'
+import DocumentDetails from '../documentDetails'
 import contractorDetails from '../contractors/components/contractorDetails';
 import DriverDetails from '../drivers/components/driverDetails';
 import VehicleDetails from '../vehicles/components/vehicleDetails';
@@ -84,7 +84,7 @@ const AdminNavigator = () => {
                 <Route exact path={ROUTES.root+ROUTES.drivers+'/:id'} component={DriverDetails} />
                 <Route exact path={ROUTES.root+ROUTES.vehicles} component={vehicles} />
                 <Route exact path={ROUTES.root+ROUTES.vehicles+'/:id'} component={VehicleDetails} />
-                <Route exact path={ROUTES.root+ROUTES.audition} component={auditar} />
+                <Route exact path={ROUTES.root+ROUTES.audition} component={audition} />
                 <Route exact path={ROUTES.root+ROUTES.documentDetails+'/:id'} component={DocumentDetails} />
                 <Route path={ROUTES.root} component={contractors} />
             </Switch>

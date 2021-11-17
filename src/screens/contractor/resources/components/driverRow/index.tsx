@@ -1,6 +1,5 @@
 import React from 'react';
-import { Grid, } from '@material-ui/core';
-import CreateIcon from '@material-ui/icons/Create';
+import { Grid, Button } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import useStyles from './styles';
 import moment from 'moment';
@@ -10,10 +9,16 @@ interface Props{
     surname: string,
     document: string,
     birthday: moment.Moment
-
+    id: number
+    handleDeleteDriver: (id: number) => void
 } 
-const Driver = ({ name, surname, document, birthday }: Props) => {
+const Driver = ({ name, surname, document, birthday, id, handleDeleteDriver }: Props) => {
     const classes = useStyles();
+
+    const handleClick = (e: any) => {
+        e.preventDefault()
+        handleDeleteDriver(id)
+    }
     return(
         <Grid container direction="row" justifyContent='space-between'>
             <Grid item xs={3} className={classes.text}>
@@ -27,8 +32,9 @@ const Driver = ({ name, surname, document, birthday }: Props) => {
                 <text> {moment(birthday).format('DD/MM/YY')} </text>
             </Grid>
             <Grid item xs={2} className={classes.iconContainer}>
-                <CreateIcon />
-                <DeleteIcon />
+                <Button onClick={handleClick} >
+                    <DeleteIcon />
+                </Button>
             </Grid>
         </Grid>
     )

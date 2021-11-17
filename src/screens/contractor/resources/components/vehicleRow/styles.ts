@@ -1,7 +1,7 @@
 import { makeStyles, Theme } from '@material-ui/core';
 
 const useStyles = makeStyles((theme: Theme) => ({
-    container:{
+    iconContainer:{
         maxWidth: 'auto'
     },
     text:{

@@ -12,7 +12,6 @@ const useStyles = makeStyles((theme: Theme) => ({
         paddingTop: '1%',
     },
     dataContainer:{
-        marginBottom: '1%',
         textAlign: 'start'
     },
     dataField:{
@@ -70,7 +69,14 @@ const useStyles = makeStyles((theme: Theme) => ({
     textCenter: {
         textAlign: 'center',
         marginTop: '2%',
-    }
+    },
+    spinner: {
+        marginTop: '20%',
+        color: globalColors.lightBlue
+    },
+    snackbar: {
+        width: '75%',
+    },
 }));
 
 export default useStyles

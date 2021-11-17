@@ -1,16 +1,25 @@
 
 import { makeStyles, Theme } from '@material-ui/core';
+import { headerSize } from '../../../utils/constants';
 
 import globalColors from '../../../utils/styles/globalColors';
 
-const useStyles = makeStyles((theme: Theme) => ({
+interface Props {
+    color: string
+}
+const useStyles = makeStyles<Theme, Props>((theme: Theme) => ({
     container:{
+        display: 'flex',
         flexGrow: 1,
+        paddingTop: headerSize+30,
     },
-    cardContainer:{
+    bottomContainer:{
+        flexGrow: 1,
+        marginTop: '1.5%',
+        paddingLeft: '2.5%',
+        paddingRight: '2.5%'
     },
     card:{
-        marginTop: '5%',
         marginLeft: '2.5%',
         paddingRight: '2.5%',
         paddingLeft: '2.5%',
@@ -29,22 +38,22 @@ const useStyles = makeStyles((theme: Theme) => ({
             marginTop: '17%'
         },
     },
+    filesCard: {
+        paddingTop: '2.5%',
+        paddingLeft: '5%',
+        paddingRight: '5%',
+        paddingBottom: '2.5%',
+        textAlign: 'center',
+        [theme.breakpoints.down('sm')]: {
+            marginLeft: '2.5%',
+            marginRight: '2.5%',
+        },
+    },
     commentCard:{
-        marginTop: '1%',
         marginLeft: '2.5%',
         paddingRight: '2.5%',
         paddingLeft: '2.5%',
         paddingBottom: '2.5%',
-        [theme.breakpoints.up('xs')]: {
-            width: '130%',
-            marginLeft: '2.5%',
-        },
-        [theme.breakpoints.up('sm')]: {
-            width: '730px',
-        },
-        [theme.breakpoints.up('md')]: {
-            width: '95%',
-        },
         [theme.breakpoints.down('sm')]: {
             marginTop: '17%'
         },
@@ -53,7 +62,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         fontSize:20,
         marginTop: '3%',
         marginBottom: '3%',
-        marginLeft: '3%',
+        marginLeft: '1%',
         [theme.breakpoints.down('sm')]: {
             fontSize: 15,
         },
@@ -66,14 +75,13 @@ const useStyles = makeStyles((theme: Theme) => ({
     field:{
         marginBottom: '2%',
         color: globalColors.darkGrey,
-        fontSize: 12,
+        fontSize: 13,
         [theme.breakpoints.down('md')]: {
             fontSize: 12,
         },
     },
     dataField:{
         marginLeft: '2%',
-        maxWidth: 'auto',
         textAlign: 'start',
         [theme.breakpoints.down('md')]: {
             fontSize: 10,
@@ -115,7 +123,59 @@ const useStyles = makeStyles((theme: Theme) => ({
         [theme.breakpoints.down('md')]: {
             fontSize: 10,
         },
-    }
+    },
+    documentDataRow:{
+        marginBottom: '1%',
+        paddingRight: '1%'
+    },
+    noImageSelected: {
+        marginLeft: '2%',
+        marginRight: '3.5%',
+        padding: '5%',
+        textAlign: 'center',
+        [theme.breakpoints.down('sm')]: {
+            marginLeft: '2.5%',
+            marginRight: '2.5%',
+            marginTop: '5%'
+        },
+    },
+    imageCard: {
+        padding: '2%',
+        position: 'absolute',
+        left: '50%',
+        top: '50%',
+        transform: `translate(-50%, -50%)`,
+    },
+    image: {
+        width: '100%'
+    },
+    titleContainer:{
+        justifyContent: 'space-between',
+    },
+    textCenter: {
+        textAlign: 'center',
+        marginTop: '2%'
+    },
+    spinner: {
+        marginTop: '20%',
+        color: globalColors.lightBlue
+    },
+    severity:{
+        maxWidth: 'auto',
+        textAlign: 'start',
+        marginLeft: '2%',
+        [theme.breakpoints.down('sm')]: {
+            fontSize: 11,
+        },
+    },
+    stateColor: {
+        backgroundColor: ({color}) => color,
+        borderRadius: 20,
+        paddingLeft: '20%',
+        paddingRight: '20%',
+        paddingTop: '7%',
+        paddingBottom: '7%'
+    },
 }));
 
 export default useStyles

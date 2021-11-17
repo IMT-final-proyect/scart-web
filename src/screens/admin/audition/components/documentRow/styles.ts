@@ -4,6 +4,7 @@ import globalColors from '../../../../../utils/styles/globalColors';
 interface Props {
     color: string
 }
+
 const useStyles = makeStyles<Theme, Props>((theme: Theme) => ({
     container:{
         textAlign: 'start',

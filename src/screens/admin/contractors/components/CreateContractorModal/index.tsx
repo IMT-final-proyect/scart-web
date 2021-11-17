@@ -10,8 +10,8 @@ interface Props{
 
 const CreateDriverModal = ({ addContractor, setOpenModal }: Props) => {
     const classes = useStyles();
-    const [emptyField, setEmptyField] = useState(false)
-    const [passwordNotRepeated, setPasswordNotRepeated] = useState(false);
+    const [error, setError] = useState(false)
+    const [message, setMessage] = useState('');
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [repeatPassword, setRepeatPassword] = useState('')
@@ -23,7 +23,8 @@ const CreateDriverModal = ({ addContractor, setOpenModal }: Props) => {
     const [province, setProvince] = useState('')
     
     const _onChangeUsername = useCallback((event) => {
-        setUsername(event.target.value);
+        if (!event.target.value.includes(" "))
+            setUsername(event.target.value);
     }, [setUsername]);
     
     const _onChangePassword = useCallback((event) => {
@@ -40,7 +41,8 @@ const CreateDriverModal = ({ addContractor, setOpenModal }: Props) => {
     
     
     const _onChangeCuit = useCallback((event) => {
-        setCuit(event.target.value);
+        if (!event.target.value.includes("-") && !event.target.value.includes(" "))
+            setCuit(event.target.value);
     }, [setCuit]);
     
     const _onChangeStreet = useCallback((event) => {
@@ -62,14 +64,22 @@ const CreateDriverModal = ({ addContractor, setOpenModal }: Props) => {
     const _handleOnClick = () => {
         if(!!username && !!password && !!repeatPassword && !!name && !!cuit && !!street && !!number && !!city && !!province){
             if (password === repeatPassword){
-                addContractor(username, password, name, cuit, street, number, city, province);
-                setOpenModal(false);
+                if(cuit.length === 11){
+                    addContractor(username, password, name, cuit, street, number, city, province);
+                    setOpenModal(false);
+                }
+                else {
+                    setError(true)
+                    setMessage('El cuit no tiene 11 digitos')
+                }
             } else {
-                setPasswordNotRepeated(true);
+                setError(true);
+                setMessage('Las contraseñas no coiniciden')
             }
         }
         else{
-            setEmptyField(true);
+            setError(true);
+            setMessage('Faltan completar campos')
         }
     }
 
@@ -116,6 +126,7 @@ const CreateDriverModal = ({ addContractor, setOpenModal }: Props) => {
                     />
                     <TextField
                         id="driver-cuit"
+                        type="numeric"
                         className= {classes.textInput}
                         size="medium"
                         label="CUIT"
@@ -135,6 +146,7 @@ const CreateDriverModal = ({ addContractor, setOpenModal }: Props) => {
                     <TextField
                         id="driver-number"
                         className= {classes.textInput}
+                        type="numeric"
                         size="medium"
                         label="Numero"
                         value={number}
@@ -159,14 +171,9 @@ const CreateDriverModal = ({ addContractor, setOpenModal }: Props) => {
                         onChange={_onChangeProvince}
                     />
                 </Grid>
-                <Snackbar className={classes.snackbar} open={emptyField} autoHideDuration={6000} onClose={() => setEmptyField(false)} >
-                    <Alert onClose={() => setEmptyField(false)} severity="error" sx={{ width: '100%' }}>
-                        Falta completar algún campo
-                    </Alert>
-                </Snackbar>
-                <Snackbar className={classes.snackbar} open={passwordNotRepeated} autoHideDuration={6000} onClose={() => setPasswordNotRepeated(false)}>
-                    <Alert onClose={() => setPasswordNotRepeated(false)} severity="error" sx={{ width: '100%' }}>
-                        Las contraseñas no coinciden
+                <Snackbar className={classes.snackbar} open={error} autoHideDuration={6000} onClose={() => setError(false)} >
+                    <Alert onClose={() => setError(false)} severity="error" sx={{ width: '100%' }}>
+                        {message}
                     </Alert>
                 </Snackbar>
                 <Grid container direction='row' justifyContent='space-between'>

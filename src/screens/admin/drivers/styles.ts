@@ -32,6 +32,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     textTitle:{
         fontSize:20,
+        marginTop: '1%',
+        marginBottom: '1%',
+        fontWeight: 'bold',
+        color: globalColors.lightBlue,
         [theme.breakpoints.down('sm')]: {
             fontSize: 15,
         },
@@ -66,16 +70,17 @@ const useStyles = makeStyles((theme: Theme) => ({
         textAlign: 'center'
     },
     button:{
-        height: '35px',
+        height: '50px',
         textTransform: 'none',
-        paddingTop: '2%',
-        paddingBottom: '2%',
         alignItems: 'center',
     },
     spinner: {
         marginTop: '5%',
-        color: globalColors.white
-    }
+        color: globalColors.lightBlue
+    },
+    snackbar: {
+        width: '75%',
+    },
 }));
 
 export default useStyles

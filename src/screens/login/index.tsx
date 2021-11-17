@@ -1,17 +1,19 @@
 import { useCallback, useEffect, useState } from 'react';
-import { Grid, Card, Button, TextField, InputAdornment, IconButton, Hidden } from '@material-ui/core';
+import { Grid, Card, Button, TextField, InputAdornment, IconButton, Hidden, Snackbar } from '@material-ui/core';
 import CardContent from '@material-ui/core/CardContent';
 import ClearIcon from '@material-ui/icons/Clear';
 import CircularProgress from '@mui/material/CircularProgress';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
 import { useDispatch, useSelector } from 'react-redux';
-import { postLogin } from '../../redux/slices/userSlice';
+import { postLogin, clearError } from '../../redux/slices/userSlice';
 import { AppThunkDispatch } from '../../redux/store';
 import useStyles from './styles';
 import { RootState } from '../../redux/rootReducer';
 import { useHistory } from "react-router-dom";
 import { getRolPath } from '../../utils/functions/roles';
 import LogoNutreco from '../../assets/images/logoNutreco.png'
+import { isTokenValid } from '../../utils/functions/validations';
+import { Alert } from '@mui/material';
 
 
 const Login = () => {
@@ -23,10 +25,11 @@ const Login = () => {
     const dispatch = useDispatch<AppThunkDispatch>();
     const accountData = useSelector((state: RootState) => state.user.accountData)
     const loading = useSelector((state: RootState) => state.user.loading)
+    const error = useSelector((state: RootState) => state.user.error)
 
     useEffect(() => {
         let route
-        if(accountData?.rol !== undefined && accountData?.rol >= 0){
+        if(accountData?.rol !== undefined && accountData?.rol >= 0 && isTokenValid(accountData?.access_token)){
             route = getRolPath(accountData?.rol)
             history.push(route)
         }
@@ -59,6 +62,10 @@ const Login = () => {
         dispatch(postLogin(username, password));
     }
 
+    const handleClearError = () => {
+        dispatch(clearError())
+    }
+
     return(
             <Grid
                 className={classes.container}
@@ -68,7 +75,7 @@ const Login = () => {
                 alignItems="center"
             >
                 <Hidden only={["xs","sm"]}>
-                    <img className={classes.logoNutreco} src={LogoNutreco}/>
+                    <img className={classes.logoNutreco} alt='logo nutreco' src={LogoNutreco}/>
                 </Hidden>
                 <Card className={classes.card}>
                     <CardContent>
@@ -144,6 +151,11 @@ const Login = () => {
                         </Grid>
                     </CardContent>
                 </Card>
+                <Snackbar className={classes.snackbar} open={error !== null} autoHideDuration={6000} onClose={() => handleClearError()}>
+                    <Alert onClose={() => handleClearError()} severity="error" sx={{ width: '100%' }}>
+                        {error?.message}
+                    </Alert>
+                </Snackbar>
             </Grid>
     )
 }

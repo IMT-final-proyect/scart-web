@@ -2,7 +2,7 @@ import { makeStyles, Theme } from '@material-ui/core';
 
 const useStyles = makeStyles((theme: Theme) => ({
     iconContainer:{
-        maxWidth: 'auto',
+        maxWidth: 'auto'
     },
     text:{
         maxWidth: 'auto',

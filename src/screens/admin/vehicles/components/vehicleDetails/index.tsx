@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Card, Grid, Modal, } from '@material-ui/core'
+import { Button, Card, CircularProgress, Grid, Modal, Snackbar, } from '@material-ui/core'
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import useStyles from './styles' 
+import EditIcon from '@mui/icons-material/Edit';
 import { Link, useParams } from 'react-router-dom';
 import { RootState } from '../../../../../redux/rootReducer';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,25 +12,43 @@ import CreateVehicleDocumentModal from './components/CreateVehicleDocumentModal'
 import { createDocument, getVehicleDocuments } from '../../../../../redux/slices/documentsSlice';
 import { ROUTES } from '../../../navigation/routes';
 import DocumentRow from './components/documentRow/DocumentRow';
+import { Alert } from '@mui/material';
+import EditVehicleModal from '../../../../../components/editVehicleModal';
+import { editVehicle } from '../../../../../redux/slices/resourcesSlice';
 
 const VehicleDetails = () => {
     const classes = useStyles();
     const params: any = useParams();
     const dispatch = useDispatch();
     const [openVehicleDocumentModal, setOpenVehicleDocumentModal] = useState(false)
+    const [openEditVehicleModal, setOpenEditVehicleModal] = useState(false)
+    const [openEditVehicleSuccess, setOpenEditVehicleSuccess] = useState(false)
+    const [messageSnackbar, setMessageSnackbar] = useState('')
     const vehicle: IVehicle = useSelector((state: RootState) => {
         const vehicles = state.resources.vehicles.data
         return vehicles[params.id]
     })
     const documents: IDocument[] = useSelector((state: RootState) => state.documents.vehicles.data)
+    const success: boolean = useSelector((state: RootState) => state.resources.vehicles.success)
+    const loading: boolean = useSelector((state: RootState) => state.documents.vehicles.loading)
 
     useEffect(() => { 
         dispatch(getVehicleDocuments(vehicle.id))
-    }, [])
+    }, [dispatch, vehicle.id])
+
+    useEffect(() => {
+        setOpenEditVehicleSuccess(success)
+    }, [success])
+
 
     const addDocument = (expirationDate: moment.Moment, type: number, entityType: number, entityId: number, images: string[]) => {
         dispatch(createDocument(expirationDate, type, entityType, entityId, images))
         setOpenVehicleDocumentModal(false)
+    }
+
+    const _editVehicle = (vehicle: IVehicle, plate: string, brand: string, model: string, year: number) => {
+        dispatch(editVehicle(vehicle, plate, brand, model, year))
+        setMessageSnackbar('Vehiculo modificado con exito')
     }
 
     return (
@@ -41,6 +60,18 @@ const VehicleDetails = () => {
                     vehicleId={vehicle.id}
                 />
             </Modal>
+            <Modal open={openEditVehicleModal} onClose={() => setOpenEditVehicleModal(false)}>
+                <EditVehicleModal 
+                    vehicle={vehicle} 
+                    editVehicle={_editVehicle} 
+                    setOpenEditVehicleModal={setOpenEditVehicleModal} 
+                />
+            </Modal>
+            {loading ?
+                <Grid container alignContent='center' justifyContent='center' >
+                    <CircularProgress className={classes.spinner} />
+                </Grid>
+                :
             <Grid container direction='column' justifyContent='space-between'>
                 <Card className={classes.cardContainer}>
                     <Grid container justifyContent='space-between' direction='row' alignItems={'center'}>
@@ -56,6 +87,13 @@ const VehicleDetails = () => {
                                 <text className={classes.dataField}> Modelo: </text>
                                 <text className={classes.data}> {vehicle.model} </text>
                             </div>
+                            <div className={classes.dataContainer}>
+                                <text className={classes.dataField}> Año: </text>
+                                <text className={classes.data}> {vehicle.year} </text>
+                            </div>
+                            <Button onClick={() => {setOpenEditVehicleModal(true)}}>
+                                    <EditIcon />
+                                </Button>
                     </Grid>
                 </Card>
                 <Grid item xs={12}>
@@ -115,6 +153,12 @@ const VehicleDetails = () => {
                     </Card>
                 </Grid>
             </Grid>
+            }
+            <Snackbar className={classes.snackbar} open={openEditVehicleSuccess && !!messageSnackbar} autoHideDuration={6000} onClose={() => setOpenEditVehicleSuccess(false)} >
+                <Alert onClose={() => setOpenEditVehicleSuccess(false)} severity="success" sx={{ width: '50%' }}>
+                    {messageSnackbar}
+                </Alert>
+            </Snackbar>
         </>
     )
 }

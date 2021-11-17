@@ -26,7 +26,7 @@ const Contractors = () => {
 
     useEffect(() => {
         dispatch(getContractors())
-    }, [])
+    }, [dispatch])
 
     useEffect(() => {
         setContractorsFiltered(() => {
@@ -96,14 +96,14 @@ const Contractors = () => {
                         <Button onClick={() => setOpenModal(true)}>
                             <AddCircleIcon className={classes.circleIcon}/>
                         </Button>
-                    </Grid>
+                </Grid>
                 <Typography className={classes.searchTitle}> Filtar por </Typography>
                 <Grid className={classes.inputContainer} container  direction='row' justifyContent='space-between' >
                         <Grid item xs={10} md={5}>
                             <CustomInput variant='outlined' className={classes.input} value={searchName} setValue={setSearchName} placeholder={'Nombre del contratista'} size='small' />
                         </Grid>
                         <Grid item xs={10} md={5}>
-                            <CustomInput variant='outlined' className={classes.input} value={searchCuit}setValue={setSearchCuit}  placeholder={'CUIT'} size='small'/>
+                            <CustomInput variant='outlined' className={classes.input} value={searchCuit} setValue={setSearchCuit}  placeholder={'CUIT'} size='small'/>
                         </Grid>
                 </Grid>
             </Card> 

@@ -54,7 +54,6 @@ const useStyles = makeStyles<Theme, Props>((theme: Theme) => ({
     },
     titleContainer:{
         justifyContent: 'space-between',
-
     },
     headerText:{
         marginBottom: '2%',
@@ -116,7 +115,11 @@ const useStyles = makeStyles<Theme, Props>((theme: Theme) => ({
     },
     image: {
         width: '100%'
-    }
+    },
+    spinner: {
+        marginTop: '20%',
+        color: globalColors.lightBlue
+    },
 }));
 
 export default useStyles
