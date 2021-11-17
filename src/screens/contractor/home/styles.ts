@@ -1,13 +1,15 @@
 import { makeStyles, Theme } from '@material-ui/core';
+import { headerSize } from '../../../utils/constants';
 import globalColors from '../../../utils/styles/globalColors';
 import colors from '../../../utils/styles/globalColors';
 
 const useStyles = makeStyles((theme: Theme) => ({
     container:{
+        paddingTop: headerSize
     },
     cardContainer:{
         display: 'flex',
-        flex: 1,
+        flex: 1
     },
     card:{
         flex: 1,
@@ -99,7 +101,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   textCenter: {
     textAlign: 'center'
-  },
+  }
 }));
 
 export default useStyles

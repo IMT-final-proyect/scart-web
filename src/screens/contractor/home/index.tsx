@@ -6,8 +6,8 @@ import { getContractorData } from '../../../redux/slices/userSlice';
 import { RootState } from '../../../redux/rootReducer';
 import { getAllDrivers, getAllVehicles } from '../../../redux/slices/resourcesSlice';
 import { getContractorDocuments, getContractorExpiringDocuments } from '../../../redux/slices/documentsSlice';
-import ResourcesCard from './components/resourcesCard';
-import DocumentsCard from './components/documentsCard';
+import DriversCard from './components/driversCard';
+import VehiclesCard from './components/vehicleCard';
 import { States } from '../../../utils/constants';
 import { IDocument } from '../../../utils/interfaces';
 import { Button, Card, Grid, Typography } from '@material-ui/core';
@@ -40,18 +40,18 @@ const Home = () => {
       dispatch(getAllVehicles(id))
       dispatch(getContractorDocuments(id))
       dispatch(getContractorExpiringDocuments(id))
-    }, [dispatch])
+    }, [dispatch, id])
     return (
-        <div className={classes.container}>
-            <div className={classes.cardContainer}>
-                <DocumentsCard valid={contractorValid.length} pending={contractorPending.length} expired={contractorExpired.length} />
-                <ResourcesCard drivers={Object.keys(drivers).length} vehicles={Object.keys(vehicles).length}/>
-            </div>
+        <Grid className={classes.container}>
+            <Grid className={classes.cardContainer}>
+                <DriversCard drivers={Object.keys(drivers).length} vehicles={Object.keys(vehicles).length}/>
+                <VehiclesCard valid={contractorValid.length} pending={contractorPending.length} expired={contractorExpired.length} />
+            </Grid>
             <Grid container className={classes.container} direction='row' justifyContent='space-between'>
             <Card className={classes.leftCard}>
                 <Grid container justifyContent='space-between'>
                     <text className={classes.textTitle}>
-                        Documentación
+                        Documentación por vencer
                     </text>
                 </Grid>
                 {Object.keys(contractorExpiringDocuments)?.length === 0 ?
@@ -101,7 +101,7 @@ const Home = () => {
                 }
                 </Card>
             </Grid>
-        </div>
+        </Grid>
     )
 }
 
