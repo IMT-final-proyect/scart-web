@@ -92,7 +92,6 @@ const Home = () => {
                                     type={contractorExpiringDocuments[parseInt(key)].type}
                                     expiration={contractorExpiringDocuments[parseInt(key)].expirationDate}
                                     state={contractorExpiringDocuments[parseInt(key)].state}
-                                    images={contractorExpiringDocuments[parseInt(key)].photos}
                                 />
                             </Button>
                             )}
