@@ -37,6 +37,9 @@ const VehicleRow = ({ brand, model, plate, contractor, id, handleDeleteVehicle }
             <Grid item xs={1} className={classes.iconContainer}>
                 <Button onClick={handleClick} >
                     <DeleteIcon />
+                    <text className={classes.text}>
+                        Deshabilitar
+                    </text>
                 </Button>
             </Grid>
     </Grid>

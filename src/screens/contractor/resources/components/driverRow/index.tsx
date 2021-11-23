@@ -34,6 +34,9 @@ const Driver = ({ name, surname, document, birthday, id, handleDeleteDriver }: P
             <Grid item xs={2} className={classes.iconContainer}>
                 <Button onClick={handleClick} >
                     <DeleteIcon />
+                    <text className={classes.text}>
+                        Deshabilitar
+                    </text>
                 </Button>
             </Grid>
         </Grid>

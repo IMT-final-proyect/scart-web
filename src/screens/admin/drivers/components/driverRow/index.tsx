@@ -1,6 +1,5 @@
 import React from 'react';
 import { Button, Grid, } from '@material-ui/core';
-import CreateIcon from '@material-ui/icons/Create';
 import DeleteIcon from '@material-ui/icons/Delete';
 import useStyles from './styles';
 
@@ -32,7 +31,10 @@ const Driver = ({ name, surname, document, contractor, id, handleDeleteDriver }:
             </Grid>
             <Grid item xs={2} className={classes.iconContainer}>
                 <Button onClick={handleClick} >
-                    <DeleteIcon />
+                    <DeleteIcon /> 
+                    <text className={classes.text}>
+                        Deshabilitar
+                    </text>
                 </Button>
             </Grid>
         </Grid>
