@@ -281,10 +281,12 @@ export const getDriverDocuments = (driverId: number|undefined): AppThunk => asyn
    }
 };
 
-export const getContractorExpiringDocuments = (contractorId: number|undefined): AppThunk => async (dispatch) => {
+export const getContractorExpiringDocuments = (contractorId: number|undefined, date?: moment.Moment | null): AppThunk => async (dispatch) => {
   dispatch(getContractorExpiringDocumentsRequest())
   try {
-    const before = moment().add(7, 'days');
+    let before
+    if(!!date) before = date
+    else before = moment().add(7, 'days');
     const response: AxiosResponse = await Axios.get(`/documents?entityId=${contractorId}&entityType=2&before=${before.format()}`)
     const documents = _.mapKeys(response.data, 'id')
 
