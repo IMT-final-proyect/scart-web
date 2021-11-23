@@ -4,6 +4,7 @@ import useStyles from './styles';
 import moment from 'moment';
 import { IDocumentType } from '../../../../../utils/interfaces';
 import { getStateColor, getStateName } from '../../../../../utils/functions/states';
+import { getSeverityName } from '../../../../../utils/functions/severities';
 
 interface Props{
     type: IDocumentType,
@@ -30,7 +31,7 @@ const Document = ({ type, expiration, state }: Props) => {
                 </div>
             </Grid>
             <Grid item xs={2} className={classes.text}>
-                <text> {type.severity} </text>
+                <text> {getSeverityName(type.severity)} </text>
             </Grid>
         </Grid>
     )
