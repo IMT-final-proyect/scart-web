@@ -72,9 +72,6 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   textTitle:{
       fontSize:20,
-      marginTop: '3%',
-      marginBottom: '3%',
-      marginLeft: '3%',
       [theme.breakpoints.down('sm')]: {
           fontSize: 15,
       },
@@ -101,6 +98,15 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   textCenter: {
     textAlign: 'center'
+  },
+  textInput: {
+    color: globalColors.lightBlue,
+    marginTop: 0,
+    marginBottom: '5%'
+  },
+  documentHeaderContainer: {
+      paddingTop: '1%',
+      paddingBottom: '1%'
   }
 }));
 

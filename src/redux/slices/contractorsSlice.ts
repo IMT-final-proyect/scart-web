@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import Axios, {AxiosResponse} from 'axios';
 import moment from 'moment';
-import { IContractor } from '../../utils/interfaces';
+import { IContractor, IDriver, IVehicle } from '../../utils/interfaces';
 import { AppThunk } from '../store';
 var _ = require('lodash');
 
@@ -10,18 +10,34 @@ interface IError {
    message: string
 }
 
+interface IInvalid {
+   drivers: IDriver[]
+   vehicles: IVehicle[]
+   loading: boolean
+   success: boolean
+   error: IError|null
+}
+
 export interface ContractorState {
     data: IContractor[]
+    invalid: IInvalid
     loading: boolean
     success: boolean
     error: IError|null
 }
 
 const initialState: ContractorState = {
-    data: [],
-    loading: false,
-    success: false,
-    error: null
+   data: [],
+   invalid: {
+      drivers: [],
+      vehicles: [],
+      loading: false,
+      success: false,
+      error: null
+   },
+   loading: false,
+   success: false,
+   error: null
 };
 
 const resourcesSlice = createSlice({
@@ -61,6 +77,36 @@ const resourcesSlice = createSlice({
          state.error = payload;
          state.success = initialState.success;
       },
+      getInvalidDriversRequest(state) {
+         state.invalid.loading = true;
+      },
+      getInvalidDriversSuccess(state, action: any) {
+         const { payload } = action
+         state.invalid.drivers = payload
+         state.invalid.loading = false;
+         state.invalid.error = initialState.error
+      },
+      getInvalidDriversFailure(state, action: any) {
+         const { payload } = action
+         state.invalid.drivers = initialState.invalid.drivers;
+         state.invalid.loading = false;
+         state.invalid.error = payload;
+      },
+      getInvalidVehiclesRequest(state) {
+         state.invalid.loading = true;
+      },
+      getInvalidVehiclesSuccess(state, action: any) {
+         const { payload } = action
+         state.invalid.vehicles = payload
+         state.invalid.loading = false;
+         state.invalid.error = initialState.error
+      },
+      getInvalidVehiclesFailure(state, action: any) {
+         const { payload } = action
+         state.invalid.vehicles = initialState.invalid.vehicles;
+         state.invalid.loading = false;
+         state.invalid.error = payload;
+      },
    },
 });
 
@@ -71,6 +117,12 @@ const {
     createContractorRequest,
     createContractorSuccess,
     createContractorFailure,
+    getInvalidDriversSuccess,
+    getInvalidDriversRequest,
+    getInvalidDriversFailure,
+    getInvalidVehiclesSuccess,
+    getInvalidVehiclesRequest,
+    getInvalidVehiclesFailure
 } = resourcesSlice.actions;
 
 
@@ -113,5 +165,27 @@ export const createContractor = (
    }
    catch(error){
       dispatch(createContractorFailure(error.response.data));
+   }
+}
+
+export const getInvalidDrivers = (contractorId: number): AppThunk => async (dispatch) => {
+   dispatch(getInvalidDriversRequest());
+   try{
+      const response: AxiosResponse = await Axios.get(`/contractors/${contractorId}/invalid-drivers`);
+      dispatch(getInvalidDriversSuccess(response.data));
+   }
+   catch(error){
+      dispatch(getInvalidDriversFailure(error.response.data));
+   }
+}
+
+export const getInvalidVehicles = (contractorId: number): AppThunk => async (dispatch) => {
+   dispatch(getInvalidVehiclesRequest());
+   try{
+      const response: AxiosResponse = await Axios.get(`/contractors/${contractorId}/invalid-vehicles`);
+      dispatch(getInvalidVehiclesSuccess(response.data));
+   }
+   catch(error){
+      dispatch(getInvalidVehiclesFailure(error.response.data));
    }
 }
