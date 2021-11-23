@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import useStyles from './styles';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,50 +9,69 @@ import { getContractorDocuments, getContractorExpiringDocuments } from '../../..
 import DriversCard from './components/driversCard';
 import VehiclesCard from './components/vehicleCard';
 import { States } from '../../../utils/constants';
-import { IDocument } from '../../../utils/interfaces';
-import { Button, Card, Grid, Typography } from '@material-ui/core';
+import { IDocument, IDriver, IVehicle } from '../../../utils/interfaces';
+import { Button, Card, Grid, TextField, Typography } from '@material-ui/core';
 import { ROUTES } from '../navigation/routes';
 import DocumentRow from '../documentation/components/documentRow/DocumentRow';
 import { Link } from 'react-router-dom';
+import { getInvalidDrivers } from '../../../redux/slices/contractorsSlice';
+import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
+import MomentUtils from '@date-io/moment';
+import moment from 'moment';
 
 const Home = () => {
     const classes = useStyles();
     const dispatch = useDispatch()
+    const [date, setDate] = useState<moment.Moment | null>()
     const id = useSelector((state: RootState) => state.user.accountData?.entityId)
-    const drivers = useSelector((state: RootState) => state.resources.drivers.data);
-    const vehicles = useSelector((state: RootState) => state.resources.vehicles.data);
-    const contractorValid: IDocument[] = useSelector((state: RootState) => Object.values(state.documents.contractor.data).filter(doc => doc.state ===  States.VALID));
-    const contractorPending: IDocument[] = useSelector((state: RootState) => Object.values(state.documents.contractor.data).filter(doc => doc.state ===  States.PENDING));
-    const contractorExpired: IDocument[] = useSelector((state: RootState) => Object.values(state.documents.contractor.data).filter(doc => doc.state ===  States.EXPIRED));
-    const driversValid: IDocument[] = useSelector((state: RootState) => Object.values(state.documents.drivers.data).filter(doc => doc.state ===  States.VALID));
-    const driversPending: IDocument[] = useSelector((state: RootState) => Object.values(state.documents.drivers.data).filter(doc => doc.state ===  States.PENDING));
-    const driversExpired: IDocument[] = useSelector((state: RootState) => Object.values(state.documents.drivers.data).filter(doc => doc.state ===  States.EXPIRED));
-    const vehiclesValid: IDocument[] = useSelector((state: RootState) => Object.values(state.documents.vehicles.data).filter(doc => doc.state ===  States.VALID));
-    const vehiclesPending: IDocument[] = useSelector((state: RootState) => Object.values(state.documents.vehicles.data).filter(doc => doc.state ===  States.PENDING));
-    const vehiclesExpired: IDocument[] = useSelector((state: RootState) => Object.values(state.documents.vehicles.data).filter(doc => doc.state ===  States.EXPIRED));
+    const invalidDrivers: IDriver[] = useSelector((state: RootState) => state.contractors.invalid.drivers);
+    const invalidVehicles: IVehicle[] = useSelector((state: RootState) => state.contractors.invalid.vehicles);
     const contractorExpiringDocuments: IDocument[] = useSelector((state: RootState) => state.documents.contractor.expiring);
-    const driversExpiringDocuments: IDocument[] = useSelector((state: RootState) => state.documents.drivers.expiring);
-    const vehiclesExpiringDocuments: IDocument[] = useSelector((state: RootState) => state.documents.vehicles.expiring);
 
     useEffect(() => {
-      dispatch(getContractorData(id))
-      dispatch(getAllDrivers(id))
-      dispatch(getAllVehicles(id))
-      dispatch(getContractorDocuments(id))
-      dispatch(getContractorExpiringDocuments(id))
+      if(!!id){
+          dispatch(getContractorData(id))
+          dispatch(getInvalidDrivers(id))
+          dispatch(getAllVehicles(id))
+          dispatch(getContractorExpiringDocuments(id, date))
+      }
     }, [dispatch, id])
+
+    useEffect(() => {
+        dispatch(getContractorExpiringDocuments(id, date))
+    }, [date, dispatch, id])
+
+    const handleDateChange = (d: moment.Moment | null) => {
+        setDate(d);
+      };
+
     return (
         <Grid className={classes.container}>
             <Grid className={classes.cardContainer}>
-                <DriversCard drivers={Object.keys(drivers).length} vehicles={Object.keys(vehicles).length}/>
-                <VehiclesCard valid={contractorValid.length} pending={contractorPending.length} expired={contractorExpired.length} />
+                <DriversCard drivers={invalidDrivers} />
+                <VehiclesCard vehicles={invalidVehicles} />
             </Grid>
-            <Grid container className={classes.container} direction='row' justifyContent='space-between'>
+            <Grid container className={classes.container} direction='row' justifyContent='space-between' >
             <Card className={classes.leftCard}>
-                <Grid container justifyContent='space-between'>
+                <Grid className={classes.documentHeaderContainer} container justifyContent='space-between' alignItems='center'>
                     <text className={classes.textTitle}>
                         Documentación por vencer
                     </text>
+                    <MuiPickersUtilsProvider utils={MomentUtils}>
+                        <KeyboardDatePicker
+                            autoOk
+                            disablePast
+                            variant="inline"
+                            format="DD/MM/yyyy"
+                            id="days"
+                            label="Fecha"
+                            value={date}
+                            onChange={handleDateChange}
+                            KeyboardButtonProps={{
+                                'aria-label': 'change date',
+                            }}
+                        />
+                    </MuiPickersUtilsProvider>
                 </Grid>
                 {Object.keys(contractorExpiringDocuments)?.length === 0 ?
                     <Typography className={classes.textCenter}> No hay documentos por vencer</Typography>
@@ -92,7 +111,6 @@ const Home = () => {
                                     type={contractorExpiringDocuments[parseInt(key)].type}
                                     expiration={contractorExpiringDocuments[parseInt(key)].expirationDate}
                                     state={contractorExpiringDocuments[parseInt(key)].state}
-                                    images={contractorExpiringDocuments[parseInt(key)].photos}
                                 />
                             </Button>
                             )}

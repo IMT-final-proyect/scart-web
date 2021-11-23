@@ -1,16 +1,14 @@
 import { Button, Card, Grid, Typography } from '@material-ui/core';
+import { useEffect, useState } from 'react';
+import { IDriver } from '../../../../../utils/interfaces';
 
 import useStyles from './styles';
 
 interface props {
-  drivers: number,
-  vehicles: number
+  drivers: IDriver[]
 }
 
-const DriversCard = ({
-  drivers,
-  vehicles 
-}: props) => {
+const DriversCard = ({ drivers }: props) => {
   const classes = useStyles();
 
   return (
@@ -25,13 +23,13 @@ const DriversCard = ({
         <Grid item xs={6}>
           <Typography className={classes.subtitle}> Fuera de regla </Typography>
           <Button className={classes.button}>
-            <Typography className={classes.number}> 7 </Typography>
+            <Typography className={classes.number}> {Object.keys(drivers).length} </Typography>
           </Button>
         </Grid>
         <Grid item xs={6}>
           <Typography className={classes.subtitle}> En evaluación </Typography>
           <Button className={classes.button}>
-            <Typography className={classes.number}> 3 </Typography>
+            <Typography className={classes.number}>  </Typography>
           </Button>
         </Grid>
       </Grid>
