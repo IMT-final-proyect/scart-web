@@ -365,7 +365,7 @@ export const createDocument = (
 export const getDocumentByState = (state: number): AppThunk => async (dispatch) => {
    dispatch(getDocumentByStateRequest());
    try{
-      const response: AxiosResponse = await Axios.get(`/documents?state=${state}`);
+      const response: AxiosResponse = await Axios.get(`/documents?state=${state}&expand[]=contractor`);
       dispatch(getDocumentByStateSuccess(response.data));
    }
    catch(error){
