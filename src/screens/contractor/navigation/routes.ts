@@ -5,4 +5,8 @@ export enum ROUTES {
     driver = '/conductor',
     vehicle = '/vehiculo',
     documentacion= '/documentacion',
+    invalidDrivers='/conductores-invalidos',
+    pendingDrivers='/conductores-pendientes',
+    invalidVehicles='/vehiculos-invalidos',
+    pendingVehicles='/vehiculos-pendientes'
 }

@@ -21,7 +21,6 @@ import DeleteModal from '../../../components/DeleteModal';
 const Resources = () => {
     const classes = useStyles();
     const dispatch = useDispatch()
-    const history = useHistory()
     const [selectedDriverId, setSelectedDriverId] = useState(-1)
     const [selectedVehicleId, setSelectedVehicleId] = useState(-1)
     const [openDriverModal, setOpenDriverModal] = useState(false)

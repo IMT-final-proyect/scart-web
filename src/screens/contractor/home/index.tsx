@@ -1,20 +1,18 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import useStyles from './styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { getContractorData } from '../../../redux/slices/userSlice';
 import { RootState } from '../../../redux/rootReducer';
-import { getAllDrivers, getAllVehicles } from '../../../redux/slices/resourcesSlice';
-import { getContractorDocuments, getContractorExpiringDocuments } from '../../../redux/slices/documentsSlice';
+import { getContractorExpiringDocuments } from '../../../redux/slices/documentsSlice';
 import DriversCard from './components/driversCard';
 import VehiclesCard from './components/vehicleCard';
-import { States } from '../../../utils/constants';
 import { IDocument, IDriver, IVehicle } from '../../../utils/interfaces';
-import { Button, Card, Grid, TextField, Typography } from '@material-ui/core';
+import { Button, Card, Grid, Typography } from '@material-ui/core';
 import { ROUTES } from '../navigation/routes';
 import DocumentRow from '../documentation/components/documentRow/DocumentRow';
 import { Link } from 'react-router-dom';
-import { getInvalidDrivers } from '../../../redux/slices/contractorsSlice';
+import { getInvalidDrivers, getPendingDrivers, getPendingVehicles } from '../../../redux/slices/contractorsSlice';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import MomentUtils from '@date-io/moment';
 import moment from 'moment';
@@ -25,17 +23,20 @@ const Home = () => {
     const [date, setDate] = useState<moment.Moment | null>()
     const id = useSelector((state: RootState) => state.user.accountData?.entityId)
     const invalidDrivers: IDriver[] = useSelector((state: RootState) => state.contractors.invalid.drivers);
+    const pendingDrivers: IDriver[] = useSelector((state: RootState) => state.contractors.pending.drivers);
     const invalidVehicles: IVehicle[] = useSelector((state: RootState) => state.contractors.invalid.vehicles);
+    const pendingVehicles: IVehicle[] = useSelector((state: RootState) => state.contractors.pending.vehicles);
     const contractorExpiringDocuments: IDocument[] = useSelector((state: RootState) => state.documents.contractor.expiring);
 
     useEffect(() => {
       if(!!id){
           dispatch(getContractorData(id))
           dispatch(getInvalidDrivers(id))
-          dispatch(getAllVehicles(id))
+          dispatch(getPendingDrivers(id))
+          dispatch(getPendingVehicles(id))
           dispatch(getContractorExpiringDocuments(id, date))
       }
-    }, [dispatch, id])
+    }, [date, dispatch, id])
 
     useEffect(() => {
         dispatch(getContractorExpiringDocuments(id, date))
@@ -45,11 +46,15 @@ const Home = () => {
         setDate(d);
       };
 
+
     return (
         <Grid className={classes.container}>
             <Grid className={classes.cardContainer}>
-                <DriversCard drivers={invalidDrivers} />
-                <VehiclesCard vehicles={invalidVehicles} />
+                <DriversCard 
+                    invalid={Object.keys(invalidDrivers).length} 
+                    pending={Object.keys(pendingDrivers).length} 
+                />
+                <VehiclesCard invalid={Object.keys(invalidVehicles).length} pending={Object.keys(pendingVehicles).length}/>
             </Grid>
             <Grid container className={classes.container} direction='row' justifyContent='space-between' >
             <Card className={classes.leftCard}>

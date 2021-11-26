@@ -65,6 +65,23 @@ const resourcesSlice = createSlice({
          state.drivers.error = payload;
          state.drivers.success = initialState.drivers.success;
       },
+      getDriverByIdRequest(state) {
+         state.drivers.loading = true;
+         state.drivers.success = initialState.drivers.success;
+      },
+      getDriverByIdSuccess(state, action: any) {
+         const { payload } = action
+         state.drivers.data = {...state.drivers.data, [payload.id]: payload}
+         state.drivers.loading = false;
+         state.drivers.error = initialState.drivers.error
+      },
+      getDriverByIdFailure(state, action: any) {
+         const { payload } = action
+         state.drivers.data = initialState.drivers.data;
+         state.drivers.loading = false;
+         state.drivers.error = payload;
+         state.drivers.success = initialState.drivers.success;
+      },
       createDriverRequest(state) {
          state.drivers.loading = true;
          state.drivers.error = initialState.drivers.error;
@@ -192,6 +209,9 @@ const {
     getAllDriversSuccess,
     getAllDriversRequest,
     getAllDriversFailure,
+    getDriverByIdSuccess,
+    getDriverByIdRequest,
+    getDriverByIdFailure,
     createDriverRequest,
     createDriverSuccess,
     createDriverFailure,
@@ -231,6 +251,19 @@ export const getAllDrivers = (contractorId?: number): AppThunk => async (dispatc
       dispatch(getAllDriversFailure(error.response.data));
    }
 };
+
+export const getDriverById = (id: number): AppThunk => async (dispatch) => {
+   dispatch(getDriverByIdRequest());
+   try{
+      const response: AxiosResponse = await Axios.get(`/drivers/${id}`);
+      console.log(response.data);
+      
+      dispatch(getDriverByIdSuccess(response.data));
+   }
+   catch(error){
+      dispatch(getDriverByIdFailure(error.response.data));
+   }
+}
 
 export const getAllVehicles = (contractorId?: number): AppThunk => async (dispatch) => {
    dispatch(getAllVehiclesRequest());

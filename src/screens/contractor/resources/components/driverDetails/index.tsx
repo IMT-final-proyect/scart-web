@@ -13,7 +13,7 @@ import DocumentRow from '../../../documentation/components/documentRow/DocumentR
 import { ROUTES } from '../../../navigation/routes';
 import EditDriverModal from '../../../../../components/editDriverModal';
 import EditIcon from '@mui/icons-material/Edit';
-import { editDriver } from '../../../../../redux/slices/resourcesSlice';
+import { editDriver, getDriverById } from '../../../../../redux/slices/resourcesSlice';
 import { Alert } from '@mui/material';
 
 
@@ -38,8 +38,9 @@ const DriverDetails = () => {
     const success: boolean = useSelector((state: RootState) => state.resources.drivers.success)
 
     useEffect(() => { 
-        dispatch(getDriverDocuments(driver.id))
-    }, [dispatch, driver.id])
+        dispatch(getDriverById(params.id))
+        dispatch(getDriverDocuments(params.id))
+    }, [dispatch, params.id])
 
     useEffect(() => {
         setOpenEditDriverSuccess(success)
@@ -64,7 +65,7 @@ const DriverDetails = () => {
                 <CreateDriverDocumentModal
                     setOpenDocumentModal={setOpenDriverDocumentModal}
                     addDocument={addDocument}
-                    driverId={driver.id}
+                    driverId={params.id}
                 />
             </Modal>
             <Modal open={openEditDriverModal} onClose={() => setOpenEditDriverModal(false)}>
@@ -76,7 +77,7 @@ const DriverDetails = () => {
                     setChangePassword={setChangePassword}
                 />
             </Modal>
-            {loading ?
+            {loading || !driver ?
                 <Grid container alignContent='center' justifyContent='center' >
                     <CircularProgress className={classes.spinner} />
                 </Grid>

@@ -5,7 +5,6 @@ import HomeIcon from '@material-ui/icons/Home';
 import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
 import StarIcon from '@material-ui/icons/Star';
 import { BrowserRouter, Route, Switch, Link, useLocation } from 'react-router-dom';
-
 import TemplateBar from '../../../components/templateBar';
 import { ROUTES } from './routes';
 import Home from '../home';
@@ -15,6 +14,8 @@ import VehicleDetails from '../resources/components/vehicleDetails'
 import Documentation from '../documentation';
 import useStyles from './styles'
 import DocumentDetails from '../../../components/documentDetails';
+import InvalidDrivers from '../home/invalidDrivers';
+import PendingDrivers from '../home/pendingDrivers';
 
 const ContractorNavigator = () => {
     const classes = useStyles();
@@ -29,7 +30,7 @@ const ContractorNavigator = () => {
             else if(location.pathname.includes('documentacion'))
                 setTitle('Documentación')
         
-    }, [])
+    }, [location.pathname])
 
     const ButtonList = (
         <>
@@ -77,6 +78,8 @@ const ContractorNavigator = () => {
         />
         <Switch>
             <Route exact path={ROUTES.root+ROUTES.home} component={Home} />
+            <Route exact path={ROUTES.root+ROUTES.home+ROUTES.invalidDrivers} component={InvalidDrivers} />
+            <Route exact path={ROUTES.root+ROUTES.home+ROUTES.pendingDrivers} component={PendingDrivers} />
             <Route exact path={ROUTES.root+ROUTES.resources} component={Resources} />
             <Route exact path={ROUTES.root+ROUTES.documentacion} component={Documentation} />
             <Route exact path={ROUTES.root+ROUTES.driver+'/:id'} component={DriverDetails} />

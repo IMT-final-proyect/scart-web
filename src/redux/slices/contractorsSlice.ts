@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 import Axios, {AxiosResponse} from 'axios';
-import moment from 'moment';
 import { IContractor, IDriver, IVehicle } from '../../utils/interfaces';
 import { AppThunk } from '../store';
 var _ = require('lodash');
@@ -10,7 +9,7 @@ interface IError {
    message: string
 }
 
-interface IInvalid {
+interface IResourceIndicator {
    drivers: IDriver[]
    vehicles: IVehicle[]
    loading: boolean
@@ -20,7 +19,8 @@ interface IInvalid {
 
 export interface ContractorState {
     data: IContractor[]
-    invalid: IInvalid
+    invalid: IResourceIndicator
+    pending: IResourceIndicator
     loading: boolean
     success: boolean
     error: IError|null
@@ -29,6 +29,13 @@ export interface ContractorState {
 const initialState: ContractorState = {
    data: [],
    invalid: {
+      drivers: [],
+      vehicles: [],
+      loading: false,
+      success: false,
+      error: null
+   },
+   pending: {
       drivers: [],
       vehicles: [],
       loading: false,
@@ -92,8 +99,23 @@ const resourcesSlice = createSlice({
          state.invalid.loading = false;
          state.invalid.error = payload;
       },
+      getPendingDriversRequest(state) {
+         state.pending.loading = true;
+      },
+      getPendingDriversSuccess(state, action: any) {
+         const { payload } = action
+         state.pending.drivers = payload
+         state.pending.loading = false;
+         state.pending.error = initialState.error
+      },
+      getPendingDriversFailure(state, action: any) {
+         const { payload } = action
+         state.pending.drivers = initialState.pending.drivers;
+         state.pending.loading = false;
+         state.pending.error = payload;
+      },
       getInvalidVehiclesRequest(state) {
-         state.invalid.loading = true;
+         state.pending.loading = true;
       },
       getInvalidVehiclesSuccess(state, action: any) {
          const { payload } = action
@@ -106,6 +128,21 @@ const resourcesSlice = createSlice({
          state.invalid.vehicles = initialState.invalid.vehicles;
          state.invalid.loading = false;
          state.invalid.error = payload;
+      },
+      getPendingVehiclesRequest(state) {
+         state.pending.loading = true;
+      },
+      getPendingVehiclesSuccess(state, action: any) {
+         const { payload } = action
+         state.pending.vehicles = payload
+         state.pending.loading = false;
+         state.pending.error = initialState.error
+      },
+      getPendingVehiclesFailure(state, action: any) {
+         const { payload } = action
+         state.pending.vehicles = initialState.pending.vehicles;
+         state.pending.loading = false;
+         state.pending.error = payload;
       },
    },
 });
@@ -120,9 +157,15 @@ const {
     getInvalidDriversSuccess,
     getInvalidDriversRequest,
     getInvalidDriversFailure,
+    getPendingDriversSuccess,
+    getPendingDriversRequest,
+    getPendingDriversFailure,
     getInvalidVehiclesSuccess,
     getInvalidVehiclesRequest,
-    getInvalidVehiclesFailure
+    getInvalidVehiclesFailure,
+    getPendingVehiclesSuccess,
+    getPendingVehiclesRequest,
+    getPendingVehiclesFailure
 } = resourcesSlice.actions;
 
 
@@ -171,7 +214,7 @@ export const createContractor = (
 export const getInvalidDrivers = (contractorId: number): AppThunk => async (dispatch) => {
    dispatch(getInvalidDriversRequest());
    try{
-      const response: AxiosResponse = await Axios.get(`/contractors/${contractorId}/invalid-drivers`);
+      const response: AxiosResponse = await Axios.get(`/contractors/${contractorId}/documents/drivers?states=2,3&missing=true`);
       dispatch(getInvalidDriversSuccess(response.data));
    }
    catch(error){
@@ -179,13 +222,35 @@ export const getInvalidDrivers = (contractorId: number): AppThunk => async (disp
    }
 }
 
+export const getPendingDrivers = (contractorId: number): AppThunk => async (dispatch) => {
+   dispatch(getPendingDriversRequest());
+   try{
+      const response: AxiosResponse = await Axios.get(`/contractors/${contractorId}/documents/drivers?states=0&missing=true`);
+      dispatch(getPendingDriversSuccess(response.data));
+   }
+   catch(error){
+      dispatch(getPendingDriversFailure(error.response.data));
+   }
+}
+
 export const getInvalidVehicles = (contractorId: number): AppThunk => async (dispatch) => {
    dispatch(getInvalidVehiclesRequest());
    try{
-      const response: AxiosResponse = await Axios.get(`/contractors/${contractorId}/invalid-vehicles`);
+      const response: AxiosResponse = await Axios.get(`/contractors/${contractorId}/documents/vehicles?states=2,3&missing=true`);
       dispatch(getInvalidVehiclesSuccess(response.data));
    }
    catch(error){
       dispatch(getInvalidVehiclesFailure(error.response.data));
+   }
+}
+
+export const getPendingVehicles = (contractorId: number): AppThunk => async (dispatch) => {
+   dispatch(getPendingVehiclesRequest());
+   try{
+      const response: AxiosResponse = await Axios.get(`/contractors/${contractorId}/documents/vehicles?states=0&missing=true`);
+      dispatch(getPendingVehiclesSuccess(response.data));
+   }
+   catch(error){
+      dispatch(getPendingVehiclesFailure(error.response.data));
    }
 }

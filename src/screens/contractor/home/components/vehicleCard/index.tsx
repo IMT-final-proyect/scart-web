@@ -4,10 +4,11 @@ import { IVehicle } from '../../../../../utils/interfaces';
 import useStyles from './styles';
 
 interface props {
-  vehicles: IVehicle[]
+  invalid: number
+  pending: number
 }
 
-const VehiclesCard = ({ vehicles }: props) => {
+const VehiclesCard = ({ invalid, pending }: props) => {
   const classes = useStyles();
 
   return (
@@ -22,13 +23,13 @@ const VehiclesCard = ({ vehicles }: props) => {
         <Grid item xs={6}>
           <Typography className={classes.subtitle}>Fuera de regla</Typography>
             <Button className={classes.button}>
-              <Typography className={classes.number}> {Object.keys(vehicles).length} </Typography>
+              <Typography className={classes.number}> {invalid} </Typography>
             </Button>
         </Grid>
         <Grid item xs={6}>
           <Typography className={classes.subtitle}>En evaluación</Typography>
           <Button className={classes.button}>
-            <Typography className={classes.number}>  </Typography>
+            <Typography className={classes.number}> {pending} </Typography>
           </Button>
         </Grid>
       </Grid>
