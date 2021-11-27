@@ -42,6 +42,11 @@ const Documentation = () => {
                             </Grid>
                             <Grid item xs={2} className={classes.headerText}>
                                 <text className={classes.headerText}>
+                                    Contratista
+                                </text>
+                            </Grid>
+                            <Grid item xs={2} className={classes.headerText}>
+                                <text className={classes.headerText}>
                                     Tipo
                                 </text>
                             </Grid>
@@ -60,6 +65,7 @@ const Documentation = () => {
                             {Object.keys(documents).map((key: string, i: any) =>
                                 <DocumentRow 
                                     key={documents[parseInt(key)].id}
+                                    contractor={documents[parseInt(key)].contractor}
                                     type={documents[parseInt(key)].type}
                                     owner={documents[parseInt(key)].entityId}
                                     route={ROUTES.root+ROUTES.documentDetails+'/'+documents[parseInt(key)].id}

@@ -35,9 +35,14 @@ const Documentation = () => {
                             </text>
                         </Grid>
                         <Grid container justifyContent='space-between'>
-                            <Grid item xs={6} className={classes.headerText}>
+                            <Grid item xs={4} className={classes.headerText}>
                                 <text className={classes.headerText}>
                                     Documento
+                                </text>
+                            </Grid>
+                            <Grid item xs={2} className={classes.headerText}>
+                                <text className={classes.headerText}>
+                                    Contratista
                                 </text>
                             </Grid>
                             <Grid item xs={2} className={classes.headerText}>
@@ -60,6 +65,7 @@ const Documentation = () => {
                             {Object.keys(documents).map((key: string, i: any) =>
                                 <DocumentRow 
                                     key={documents[parseInt(key)].id}
+                                    contractor={documents[parseInt(key)].contractor}
                                     type={documents[parseInt(key)].type}
                                     owner={documents[parseInt(key)].entityId}
                                     route={ROUTES.root+'/'+documents[parseInt(key)].id}
