@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import Axios, {AxiosResponse} from 'axios';
 import moment from 'moment';
-import { contractor, driver, vehicle } from '../../utils/constants';
+import { AllowedRol, contractor, driver, vehicle } from '../../utils/constants';
 import { getRolName } from '../../utils/functions/roles';
 import { IContractor, IDocument, IDriver, IVehicle } from '../../utils/interfaces';
 import { AppThunk } from '../store';
@@ -327,30 +327,33 @@ export const createDocument = (
       type: number,
       entityType: number,
       entityId: number,
-      images: string[]
+      images: string[],
+      contractorId: number
    ): AppThunk => async (dispatch) => {
    dispatch(createDocumentRequest());
-   try{
+   try{      
       await Axios.post('/documents',{
          expirationDate,
          state: 0,
          type,
          entityId,
          entityType,
-         photos: images
+         photos: images,
+         contractorId
       });
       dispatch(createDocumentSuccess());
-
-      switch(getRolName(entityType)){
-         case contractor: {
+      
+      switch(entityType){
+         case AllowedRol.contractor: {
             dispatch(getContractorDocuments(entityId));
             break;
          }
-         case driver: {
+         case AllowedRol.driver: {
             dispatch(getDriverDocuments(entityId));
             break;
          }
-         case vehicle: {
+         case AllowedRol.vehicle: {
+            console.log('despacho get vehicles');
             dispatch(getVehicleDocuments(entityId));
             break
          }

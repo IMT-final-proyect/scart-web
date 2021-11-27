@@ -33,6 +33,7 @@ const DriverDetails = () => {
         const drivers = state.resources.drivers.data
         return drivers[params.id]
     })
+    const accountData = useSelector((state: RootState) => state.user.accountData)
     const documents: IDocument[] = useSelector((state: RootState) => state.documents.drivers.data)
     const loading: boolean = useSelector((state: RootState) => state.documents.drivers.loading)
     const success: boolean = useSelector((state: RootState) => state.resources.drivers.success)
@@ -47,7 +48,8 @@ const DriverDetails = () => {
     }, [success])
 
     const addDocument = (expirationDate: moment.Moment, type: number, entityType: number, entityId: number, images: string[]) => {
-        dispatch(createDocument(expirationDate, type, entityType, entityId, images))
+        if (!!accountData)
+            dispatch(createDocument(expirationDate, type, entityType, entityId, images, accountData.entityId))
         setOpenDriverDocumentModal(false)
     }
 

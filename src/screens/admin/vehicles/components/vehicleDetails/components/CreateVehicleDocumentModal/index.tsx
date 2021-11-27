@@ -16,14 +16,16 @@ import { Alert } from '@mui/material';
 import { RootState } from '../../../../../../../redux/rootReducer';
 import { getDocumentTypesByEntity } from '../../../../../../../redux/slices/documentTypesSlice';
 import globalColors from '../../../../../../../utils/styles/globalColors';
+import { AllowedRol } from '../../../../../../../utils/constants';
 
 interface Props{
-    addDocument: (expirationDate: moment.Moment, type: number, entityType: number, entityId: number, images: string[]) => void
+    addDocument: (expirationDate: moment.Moment, type: number, entityType: number, entityId: number, images: string[], contractorId: number) => void
     setOpenVehicleDocumentModal: React.Dispatch<React.SetStateAction<boolean>>
     vehicleId: number
+    contractorId: number
 }
 
-const CreateVehicleDocumentModal = ({ addDocument, setOpenVehicleDocumentModal, vehicleId }: Props) => {
+const CreateVehicleDocumentModal = ({ addDocument, setOpenVehicleDocumentModal, vehicleId, contractorId }: Props) => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const [emptyField, setEmptyField] = useState(false)
@@ -58,7 +60,7 @@ const CreateVehicleDocumentModal = ({ addDocument, setOpenVehicleDocumentModal, 
             }))
             
             if(!!typeId && !!vehicleId){
-                addDocument(moment(expirationDate), typeId, 1, vehicleId, images)
+                addDocument(moment(expirationDate), typeId, AllowedRol.vehicle, vehicleId, images, contractorId)
                 setOpenVehicleDocumentModal(false)
             }
         }
@@ -70,7 +72,7 @@ const CreateVehicleDocumentModal = ({ addDocument, setOpenVehicleDocumentModal, 
     return (
         <Grid className={classes.modal} container direction='column' justify='center' alignItems='center'>
             <text className={classes.title}>Cargar documentación</text>
-            <text className={classes.subtitle}>Conductor</text>
+            <text className={classes.subtitle}>Vehiculo</text>
             {documentTypes &&
                 <CustomSelectObject value={documentType} placeholder='Documento' setValue={setDocumentType} data={documentTypes}/>
             }

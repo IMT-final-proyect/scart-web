@@ -42,8 +42,8 @@ const DriverDetails = () => {
         setOpenEditDriverSuccess(success)
     }, [success])
 
-    const addDocument = (expirationDate: moment.Moment, type: number, entityType: number, entityId: number, images: string[]) => {
-        dispatch(createDocument(expirationDate, type, entityType, entityId, images))
+    const addDocument = (expirationDate: moment.Moment, type: number, entityType: number, entityId: number, images: string[], contractorId: number) => {
+        dispatch(createDocument(expirationDate, type, entityType, entityId, images, contractorId))
         setOpenDriverDocumentModal(false)
     }
     
@@ -62,6 +62,7 @@ const DriverDetails = () => {
                     setOpenDriverDocumentModal={setOpenDriverDocumentModal}
                     addDocument={addDocument}
                     driverId={driver.id}
+                    contractorId={driver.contractor.id}
                 />
             </Modal>
             <Modal open={openEditDriverModal} onClose={() => setOpenEditDriverModal(false)}>
@@ -83,15 +84,15 @@ const DriverDetails = () => {
                     <Grid container justifyContent='space-between' direction='row' alignItems={'center'}>
                             <div className={classes.dataContainer}>
                                 <text className={classes.dataField}> Nombre: </text>
-                                <text className={classes.data}> {driver.name} </text>
+                                <text className={classes.data}> {driver?.name} </text>
                             </div>
                             <div className={classes.dataContainer}>
                                 <text className={classes.dataField}> Apellido: </text>
-                                <text className={classes.data}> {driver.surname} </text>
+                                <text className={classes.data}> {driver?.surname} </text>
                             </div>
                             <div className={classes.dataContainer}>
                                 <text className={classes.dataField}> Cuit: </text>
-                                <text className={classes.data}> {driver.cuit} </text>
+                                <text className={classes.data}> {driver?.cuit} </text>
                             </div>
                             <Button onClick={() => {setOpenEditDriverModal(true)}}>
                                 <EditIcon />

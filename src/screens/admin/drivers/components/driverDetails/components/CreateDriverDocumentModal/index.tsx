@@ -16,14 +16,16 @@ import { Alert } from '@mui/material';
 import { RootState } from '../../../../../../../redux/rootReducer';
 import { getDocumentTypesByEntity } from '../../../../../../../redux/slices/documentTypesSlice';
 import globalColors from '../../../../../../../utils/styles/globalColors';
+import { AllowedRol } from '../../../../../../../utils/constants';
 
 interface Props{
-    addDocument: (expirationDate: moment.Moment, type: number, entityType: number, entityId: number, images: string[]) => void
+    addDocument: (expirationDate: moment.Moment, type: number, entityType: number, entityId: number, images: string[], contractorId: number) => void
     setOpenDriverDocumentModal: React.Dispatch<React.SetStateAction<boolean>>
     driverId: number
+    contractorId: number
 }
 
-const CreateDriverDocumentModal = ({ addDocument, setOpenDriverDocumentModal, driverId }: Props) => {
+const CreateDriverDocumentModal = ({ addDocument, setOpenDriverDocumentModal, driverId, contractorId }: Props) => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const [emptyField, setEmptyField] = useState(false)
@@ -40,7 +42,7 @@ const CreateDriverDocumentModal = ({ addDocument, setOpenDriverDocumentModal, dr
     
     useEffect(() => {
         dispatch(getDocumentTypesByEntity(1))
-    }, [])
+    }, [dispatch])
 
     const handleExpirationChange = (date: moment.Moment | null) => {
         setExpirationDate(date);
@@ -58,7 +60,7 @@ const CreateDriverDocumentModal = ({ addDocument, setOpenDriverDocumentModal, dr
             }))
             
             if(!!typeId && !!driverId){
-                addDocument(moment(expirationDate), typeId, 1, driverId, images)
+                addDocument(moment(expirationDate), typeId, AllowedRol.driver, driverId, images, contractorId)
                 setOpenDriverDocumentModal(false)
             }
         }

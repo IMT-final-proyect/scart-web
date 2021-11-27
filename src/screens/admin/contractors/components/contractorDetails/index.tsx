@@ -29,7 +29,7 @@ const ContractorDetails = () => {
     }, [contractor.id, dispatch])
 
     const addDocument = (expirationDate: moment.Moment, type: number, entityType: number, entityId: number, images: string[]) => {
-        dispatch(createDocument(expirationDate, type, entityType, entityId, images))
+        dispatch(createDocument(expirationDate, type, entityType, entityId, images, entityId))
         setOpenContractorDocumentModal(false)
     }
 

@@ -15,6 +15,8 @@ import Documentation from '../documentation';
 import useStyles from './styles'
 import DocumentDetails from '../../../components/documentDetails';
 import InvalidDrivers from '../home/invalidDrivers';
+import InvalidVehicles from '../home/invalidVehicles';
+import PendingVehicles from '../home/pendingVehicles';
 import PendingDrivers from '../home/pendingDrivers';
 
 const ContractorNavigator = () => {
@@ -80,6 +82,8 @@ const ContractorNavigator = () => {
             <Route exact path={ROUTES.root+ROUTES.home} component={Home} />
             <Route exact path={ROUTES.root+ROUTES.home+ROUTES.invalidDrivers} component={InvalidDrivers} />
             <Route exact path={ROUTES.root+ROUTES.home+ROUTES.pendingDrivers} component={PendingDrivers} />
+            <Route exact path={ROUTES.root+ROUTES.home+ROUTES.invalidVehicles} component={InvalidVehicles} />
+            <Route exact path={ROUTES.root+ROUTES.home+ROUTES.pendingVehicles} component={PendingVehicles} />
             <Route exact path={ROUTES.root+ROUTES.resources} component={Resources} />
             <Route exact path={ROUTES.root+ROUTES.documentacion} component={Documentation} />
             <Route exact path={ROUTES.root+ROUTES.driver+'/:id'} component={DriverDetails} />

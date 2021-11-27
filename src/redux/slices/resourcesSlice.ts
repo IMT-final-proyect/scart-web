@@ -116,6 +116,23 @@ const resourcesSlice = createSlice({
          state.vehicles.loading = false;
          state.vehicles.error = payload;
       },
+      getVehicleByIdRequest(state) {
+         state.vehicles.loading = true;
+         state.vehicles.success = initialState.vehicles.success;
+      },
+      getVehicleByIdSuccess(state, action: any) {
+         const { payload } = action
+         state.vehicles.data = {...state.vehicles.data, [payload.id]: payload}
+         state.vehicles.loading = false;
+         state.vehicles.error = initialState.vehicles.error
+      },
+      getVehicleByIdFailure(state, action: any) {
+         const { payload } = action
+         state.vehicles.data = initialState.vehicles.data;
+         state.vehicles.loading = false;
+         state.vehicles.error = payload;
+         state.vehicles.success = initialState.vehicles.success;
+      },
       createVehicleRequest(state) {
          state.vehicles.loading = true;
          state.vehicles.error = initialState.vehicles.error;
@@ -218,6 +235,9 @@ const {
     getAllVehiclesRequest,
     getAllVehiclesSuccess,
     getAllVehiclesFailure,
+    getVehicleByIdSuccess,
+    getVehicleByIdRequest,
+    getVehicleByIdFailure,
     createVehicleRequest,
     createVehicleSuccess,
     createVehicleFailure,
@@ -278,6 +298,19 @@ export const getAllVehicles = (contractorId?: number): AppThunk => async (dispat
    }
 }; 
 
+export const getVehicleById = (id: number): AppThunk => async (dispatch) => {
+   dispatch(getVehicleByIdRequest());
+   try{
+      const response: AxiosResponse = await Axios.get(`/vehicles/${id}`);
+      console.log(response.data);
+      
+      dispatch(getVehicleByIdSuccess(response.data));
+   }
+   catch(error){
+      dispatch(getVehicleByIdFailure(error.response.data));
+   }
+}
+
 export const createDriver = (
    username: string,
    password: string,
@@ -329,7 +362,7 @@ export const createVehicle = (
 export const deleteDriver = (id: number, contractorId?: number): AppThunk => async (dispatch) => {
    dispatch(deleteDriverRequest());
    try{
-      const response: AxiosResponse = await Axios.put(`/drivers/${id}`,{
+      await Axios.put(`/drivers/${id}`,{
          active: 0
       });
       
@@ -344,7 +377,7 @@ export const deleteDriver = (id: number, contractorId?: number): AppThunk => asy
 export const deleteVehicle = (id: number, contractorId?: number): AppThunk => async (dispatch) => {
    dispatch(deleteVehicleRequest());
    try{
-      const response: AxiosResponse = await Axios.put(`/vehicles/${id}`,{
+      await Axios.put(`/vehicles/${id}`,{
          active: 0
       });
       

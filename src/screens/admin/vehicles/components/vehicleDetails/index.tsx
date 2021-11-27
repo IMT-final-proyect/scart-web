@@ -14,7 +14,7 @@ import { ROUTES } from '../../../navigation/routes';
 import DocumentRow from './components/documentRow/DocumentRow';
 import { Alert } from '@mui/material';
 import EditVehicleModal from '../../../../../components/editVehicleModal';
-import { editVehicle } from '../../../../../redux/slices/resourcesSlice';
+import { editVehicle, getVehicleById } from '../../../../../redux/slices/resourcesSlice';
 
 const VehicleDetails = () => {
     const classes = useStyles();
@@ -33,16 +33,17 @@ const VehicleDetails = () => {
     const loading: boolean = useSelector((state: RootState) => state.documents.vehicles.loading)
 
     useEffect(() => { 
-        dispatch(getVehicleDocuments(vehicle.id))
-    }, [dispatch, vehicle.id])
+        dispatch(getVehicleById(params.id))
+        dispatch(getVehicleDocuments(params.id))
+    }, [dispatch, params.id])
 
     useEffect(() => {
         setOpenEditVehicleSuccess(success)
     }, [success])
 
 
-    const addDocument = (expirationDate: moment.Moment, type: number, entityType: number, entityId: number, images: string[]) => {
-        dispatch(createDocument(expirationDate, type, entityType, entityId, images))
+    const addDocument = (expirationDate: moment.Moment, type: number, entityType: number, entityId: number, images: string[], contractorId: number) => {
+        dispatch(createDocument(expirationDate, type, entityType, entityId, images, contractorId))
         setOpenVehicleDocumentModal(false)
     }
 
@@ -57,7 +58,8 @@ const VehicleDetails = () => {
                 <CreateVehicleDocumentModal
                     setOpenVehicleDocumentModal={setOpenVehicleDocumentModal}
                     addDocument={addDocument}
-                    vehicleId={vehicle.id}
+                    vehicleId={params.id}
+                    contractorId={vehicle.contractor.id}
                 />
             </Modal>
             <Modal open={openEditVehicleModal} onClose={() => setOpenEditVehicleModal(false)}>
@@ -114,17 +116,17 @@ const VehicleDetails = () => {
                             </Grid>
                             <Grid item xs={3} className={classes.headerText}>
                                 <text className={classes.headerText}>
-                                    Contratista
-                                </text>
-                            </Grid>
-                            <Grid item xs={2} className={classes.headerText}>
-                                <text className={classes.headerText}>
                                     Fecha de vencimiento
                                 </text>
                             </Grid>
                             <Grid item xs={2} className={classes.headerText}>
                                 <text className={classes.headerText}>
                                     Estado
+                                </text>
+                            </Grid>
+                            <Grid item xs={2} className={classes.headerText}>
+                                <text className={classes.headerText}>
+                                    Severidad
                                 </text>
                             </Grid>
                         </Grid>

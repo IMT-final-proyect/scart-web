@@ -13,7 +13,7 @@ import { Link } from 'react-router-dom';
 import { getStateName } from '../../../utils/functions/states';
 import CustomInput from '../../../components/customInput';
 import CustomSelect from '../../../components/customSelect';
-import { EXPIRED, PENDING, REJECTED, VALID } from '../../../utils/constants';
+import { contractor, EXPIRED, PENDING, REJECTED, VALID } from '../../../utils/constants';
 
 const Documentacion = () => {
     const classes = useStyles();
@@ -78,7 +78,8 @@ const Documentacion = () => {
     }, [documents, searchName, searchState])
 
     const addDocument = (expirationDate: moment.Moment, type: number, entityType: number, entityId: number, images: string[]) => {
-        dispatch(createDocument(expirationDate, type, entityType, entityId, images))
+        if (!!accountData)
+            dispatch(createDocument(expirationDate, type, entityType, entityId, images, accountData.entityId))
         setOpenModal(false)
     }
 

@@ -21,7 +21,7 @@ export interface IDriver {
    cuit: string;
    birth_date: moment.Moment;
    contractor: {
-      id: string;
+      id: number;
       name: string;
       cuit: string;
    };
@@ -34,7 +34,7 @@ export interface IVehicle {
    model: string;
    year: number;
    contractor: {
-      id: string;
+      id: number;
       name: string;
       cuit: string;
    };

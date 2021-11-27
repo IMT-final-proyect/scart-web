@@ -54,7 +54,10 @@ const Home = () => {
                     invalid={Object.keys(invalidDrivers).length} 
                     pending={Object.keys(pendingDrivers).length} 
                 />
-                <VehiclesCard invalid={Object.keys(invalidVehicles).length} pending={Object.keys(pendingVehicles).length}/>
+                <VehiclesCard 
+                    invalid={Object.keys(invalidVehicles).length}
+                    pending={Object.keys(pendingVehicles).length}
+                />
             </Grid>
             <Grid container className={classes.container} direction='row' justifyContent='space-between' >
             <Card className={classes.leftCard}>

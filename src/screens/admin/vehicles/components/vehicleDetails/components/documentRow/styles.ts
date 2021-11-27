@@ -1,7 +1,8 @@
 import { makeStyles, Theme } from '@material-ui/core';
 
 interface Props {
-    color: string
+    stateColor: string
+    severityColor: string
 }
 
 const useStyles = makeStyles<Theme, Props>((theme: Theme) => ({
@@ -29,8 +30,23 @@ const useStyles = makeStyles<Theme, Props>((theme: Theme) => ({
             fontSize: 7,
         },
     },
+    severity:{
+        maxWidth: 'auto',
+        textAlign: 'start',
+        [theme.breakpoints.down('sm')]: {
+            fontSize: 11,
+        },
+    },
     stateColor: {
-        backgroundColor: ({color}) => color,
+        backgroundColor: ({stateColor}) => stateColor,
+        borderRadius: 20,
+        paddingLeft: '4%',
+        paddingRight: '4%',
+        paddingTop: '1%',
+        paddingBottom: '1%'
+    },
+    severityColor: {
+        backgroundColor: ({severityColor}) => severityColor,
         borderRadius: 20,
         paddingLeft: '4%',
         paddingRight: '4%',

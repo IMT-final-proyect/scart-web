@@ -42,7 +42,7 @@ const CreateVehicleDocumentModal = ({ vehicleId, addDocument, setOpenDocumentMod
     
     useEffect(() => {
         dispatch(getDocumentTypesByEntity(6))
-    }, [])
+    }, [dispatch])
 
     const handleExpirationChange = (date: moment.Moment | null) => {
         setExpirationDate(date);

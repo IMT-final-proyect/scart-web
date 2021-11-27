@@ -14,7 +14,7 @@ import CreateVehicleDocumentModal from './components/CreateVehicleDocumentModal'
 import DocumentRow from '../../../documentation/components/documentRow/DocumentRow';
 import { ROUTES } from '../../../navigation/routes';
 import EditVehicleModal from '../../../../../components/editVehicleModal';
-import { editVehicle } from '../../../../../redux/slices/resourcesSlice';
+import { editVehicle, getVehicleById } from '../../../../../redux/slices/resourcesSlice';
 import { Alert } from '@mui/material';
 
 
@@ -32,20 +32,23 @@ const VehicleDetails = () => {
         const vehicles = state.resources.vehicles.data
         return vehicles[params.id]
     })
+    const accountData = useSelector((state: RootState) => state.user.accountData)
     const documents: IDocument[] = useSelector((state: RootState) => state.documents.vehicles.data)
     const success: boolean = useSelector((state: RootState) => state.resources.vehicles.success)
     const loading: boolean = useSelector((state: RootState) => state.documents.vehicles.loading)
 
     useEffect(() => { 
-        dispatch(getVehicleDocuments(vehicle.id))
-    }, [dispatch, vehicle.id])
+        dispatch(getVehicleById(params.id))
+        dispatch(getVehicleDocuments(params.id))
+    }, [dispatch, params.id])
 
     useEffect(() => {
         setOpenEditVehicleSuccess(success)
     }, [success])
 
     const addDocument = (expirationDate: moment.Moment, type: number, entityType: number, entityId: number, images: string[]) => {
-        dispatch(createDocument(expirationDate, type, entityType, entityId, images))
+        if (!!accountData)
+            dispatch(createDocument(expirationDate, type, entityType, entityId, images, accountData.entityId))
         setOpenVehicleDocumentModal(false)
     }
 
@@ -59,7 +62,7 @@ const VehicleDetails = () => {
         <>
             <Modal open={openVehicleDocumentModal} onClose={() => setOpenVehicleDocumentModal(false)}>
                 <CreateVehicleDocumentModal
-                    vehicleId={vehicle.id}
+                    vehicleId={params.id}
                     setOpenDocumentModal={setOpenVehicleDocumentModal}
                     addDocument={addDocument}
                 />
@@ -81,19 +84,19 @@ const VehicleDetails = () => {
                         <Grid container justifyContent='space-between' direction='row' alignItems={'center'}>
                                 <div className={classes.dataContainer}>
                                     <text className={classes.dataField}> Marca: </text>
-                                    <text className={classes.data}> {vehicle.brand} </text>
+                                    <text className={classes.data}> {vehicle?.brand} </text>
                                 </div>
                                 <div className={classes.dataContainer}>
                                     <text className={classes.dataField}> Modelo: </text>
-                                    <text className={classes.data}> {vehicle.model} </text>
+                                    <text className={classes.data}> {vehicle?.model} </text>
                                 </div>
                                 <div className={classes.dataContainer}>
                                     <text className={classes.dataField}> Patente: </text>
-                                    <text className={classes.data}> {vehicle.plate} </text>
+                                    <text className={classes.data}> {vehicle?.plate} </text>
                                 </div>
                                 <div className={classes.dataContainer}>
                                     <text className={classes.dataField}> Año: </text>
-                                    <text className={classes.data}> {vehicle.year} </text>
+                                    <text className={classes.data}> {vehicle?.year} </text>
                                 </div>
                                 <Button onClick={() => {setOpenEditVehicleModal(true)}}>
                                     <EditIcon />
