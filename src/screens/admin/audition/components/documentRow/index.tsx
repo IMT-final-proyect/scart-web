@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Grid, } from '@material-ui/core';
 import useStyles from './styles';
-import { IDocumentType } from '../../../../../utils/interfaces';
+import { IContractor, IDocumentType } from '../../../../../utils/interfaces';
 import { getRolName } from '../../../../../utils/functions/roles';
 import { Link } from 'react-router-dom';
 import { getSeverityColor, getSeverityName } from '../../../../../utils/functions/severities';
@@ -9,9 +9,10 @@ import { getSeverityColor, getSeverityName } from '../../../../../utils/function
 interface Props{
     type: IDocumentType
     owner: number
+    contractor?: IContractor
     route: string
 }
-const DocumentRow = ({ type, owner, route }: Props) => {
+const DocumentRow = ({ type, owner, contractor, route }: Props) => {
     const typeName = getRolName(type.appliesTo)
     const severity =  getSeverityName(type.severity)
     const color = getSeverityColor(severity)
@@ -21,6 +22,11 @@ const DocumentRow = ({ type, owner, route }: Props) => {
         <Grid container className={classes.container} direction="row" justifyContent='space-between'>
             <Grid item xs={6} className={classes.text}>
                 <text> {type.name.length > 60 ? type.name.substring(0, 87)+'...' : type.name} </text>
+            </Grid>
+            <Grid item xs={2} className={classes.text}>
+              { contractor && 
+                <text> {contractor.name.length > 60 ? contractor.name.substring(0, 87)+'...' : contractor.name} </text>
+              }
             </Grid>
             <Grid item xs={2}>
                 <div className={classes.state}>

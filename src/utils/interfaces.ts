@@ -48,6 +48,7 @@ export interface IDocument {
    state: number;
    expirationDate: moment.Moment;
    photos: string[];
+   contractor?: IContractor;
 }
 
 export interface IDocumentType {
