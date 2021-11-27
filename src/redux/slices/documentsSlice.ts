@@ -407,13 +407,18 @@ export const getOwner = (entityType: number, entityId: number): AppThunk => asyn
 export const postDocumentEvaluation = (id: number, isApprovation: boolean, comment: string, uuid?: string): AppThunk => async (dispatch) => {
    dispatch(postDocumentEvaluationRequest());
    try{
+      
       if(uuid){
          let nextState
-         if(isApprovation) 
-            nextState = 1
-         else
-            nextState = 2
-         await Axios.post(`/documents/${id}`,{ state: nextState });
+         if(isApprovation) nextState = 1
+         else nextState = 2
+         console.log(nextState, comment, uuid);
+         await Axios.post(`/documents/${id}`,
+         { 
+            state: nextState, 
+            comment, 
+            auditorUuid: uuid
+         });
          dispatch(postDocumentEvaluationSuccess());
       }
    }

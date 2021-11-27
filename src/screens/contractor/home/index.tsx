@@ -12,7 +12,7 @@ import { Button, Card, Grid, Typography } from '@material-ui/core';
 import { ROUTES } from '../navigation/routes';
 import DocumentRow from '../documentation/components/documentRow/DocumentRow';
 import { Link } from 'react-router-dom';
-import { getInvalidDrivers, getPendingDrivers, getPendingVehicles } from '../../../redux/slices/contractorsSlice';
+import { getInvalidDrivers, getInvalidVehicles, getPendingDrivers, getPendingVehicles } from '../../../redux/slices/contractorsSlice';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import MomentUtils from '@date-io/moment';
 import moment from 'moment';
@@ -32,6 +32,7 @@ const Home = () => {
       if(!!id){
           dispatch(getContractorData(id))
           dispatch(getInvalidDrivers(id))
+          dispatch(getInvalidVehicles(id))
           dispatch(getPendingDrivers(id))
           dispatch(getPendingVehicles(id))
           dispatch(getContractorExpiringDocuments(id, date))

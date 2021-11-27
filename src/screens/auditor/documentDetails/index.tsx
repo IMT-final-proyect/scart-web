@@ -26,6 +26,7 @@ const DocumentDetails = () => {
     const [evaluated, setEvaluated] = useState(false)
     const { activeDocument, loading } = useSelector((state: RootState) => state.documents)
     const evaluationLoading = useSelector((state:RootState) => state.documents.evaluationLoading)
+    const userId = useSelector((state: RootState) => state.user.accountData?.uuid)
     const owner = useSelector((state: RootState) => state.documents.owner)
     const severity =  getSeverityName(activeDocument.type.severity)
     const color = getSeverityColor(severity)
@@ -65,12 +66,12 @@ const DocumentDetails = () => {
     }
 
     const handleRejected = () => {
-        dispatch(postDocumentEvaluation(activeDocument.id, false, comment))
+        dispatch(postDocumentEvaluation(activeDocument.id, false, comment, userId))
         setEvaluated(true)
     }
     
     const handleApprove = () => {
-        dispatch(postDocumentEvaluation(activeDocument.id, true, comment))
+        dispatch(postDocumentEvaluation(activeDocument.id, true, comment, userId))
         setEvaluated(true)
     }
 

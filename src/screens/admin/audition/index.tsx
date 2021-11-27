@@ -35,7 +35,7 @@ const Documentation = () => {
                             </text>
                         </Grid>
                         <Grid container justifyContent='space-between'>
-                            <Grid item xs={6} className={classes.headerText}>
+                            <Grid item xs={4} className={classes.headerText}>
                                 <text className={classes.headerText}>
                                     Documento
                                 </text>

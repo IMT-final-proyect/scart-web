@@ -1,4 +1,4 @@
-import { admin, AllowedRol, auditor, contractor, driver, manager, security } from "../constants"
+import { admin, AllowedRol, auditor, contractor, driver, manager, security, vehicle } from "../constants"
 import { ROUTES as AdminRoutes } from "../../screens/admin/navigation/routes"
 import { ROUTES as ContractorRoutes } from "../../screens/contractor/navigation/routes"
 import { ROUTES as AuditorRoutes } from "../../screens/auditor/navigation/routes"
@@ -34,6 +34,7 @@ export const getRolName = (rolNumber: number): string => {
         case (AllowedRol.auditor): return auditor
         case (AllowedRol.driver): return driver
         case (AllowedRol.security): return security
+        case (AllowedRol.vehicle): return vehicle
         default: return ''
     }
 }
