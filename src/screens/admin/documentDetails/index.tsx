@@ -50,7 +50,7 @@ const DocumentDetails = () => {
     }, [image])
 
     useEffect(() => {
-        if(evaluated) history.push(ROUTES.root)
+        if(evaluated) history.push(ROUTES.root+ROUTES.audition)
     }, [evaluated, evaluationLoading, history])
 
     const closeImagePicker = (value: any) => {
