@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Button } from '@material-ui/core';
 import HomeIcon from '@material-ui/icons/Home';
 import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
-import StarIcon from '@material-ui/icons/Star';
+import DriveEtaOutlinedIcon from '@mui/icons-material/DriveEtaOutlined';
 import { BrowserRouter, Route, Switch, Link, useLocation } from 'react-router-dom';
 import TemplateBar from '../../../components/templateBar';
 import { ROUTES } from './routes';
@@ -54,7 +54,7 @@ const ContractorNavigator = () => {
                 onClick={() => setTitle("Recursos")}
             >
                 <div className={classes.icon}>
-                    <StarIcon/>
+                    <DriveEtaOutlinedIcon/>
                 </div>
                 Recursos
             </Button>

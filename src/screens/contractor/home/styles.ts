@@ -69,45 +69,60 @@ const useStyles = makeStyles((theme: Theme) => ({
       [theme.breakpoints.down('sm')]: {
           marginTop: '17%'
       },
-  },
-  textTitle:{
-      fontSize:20,
-      [theme.breakpoints.down('sm')]: {
-          fontSize: 15,
-      },
-  },
-  circleIcon:{
-      marginTop: '3%',
-      marginBottom: '3%',
-      marginRight: '3%',
-  },
-  headerText:{
-    marginBottom: '2%',
-    color: globalColors.darkGrey,
-    fontSize: 12,
-    [theme.breakpoints.down('md')]: {
-        fontSize: 9,
     },
-  },
-  button:{
-    height: '35px',
-    textTransform: 'none',
-    paddingTop: '2%',
-    paddingBottom: '2%',
-    alignItems: 'center',
-  },
-  textCenter: {
-    textAlign: 'center'
-  },
-  textInput: {
-    color: globalColors.lightBlue,
-    marginTop: 0,
-    marginBottom: '5%'
-  },
-  documentHeaderContainer: {
-      paddingTop: '1%',
-      paddingBottom: '1%'
-  }
+    textTitle:{
+        fontSize:20,
+        fontWeight: 'bold',
+        color: globalColors.lightBlue,
+        [theme.breakpoints.down('sm')]: {
+            fontSize: 15,
+        },
+        paddingLeft: '1%'
+    },
+    circleIcon:{
+        marginTop: '3%',
+        marginBottom: '3%',
+        marginRight: '3%',
+    },
+    headerText:{
+        marginTop: '1%',
+        marginBottom: '1%',
+        color: globalColors.darkGrey,
+        fontSize: 12,
+        [theme.breakpoints.down('md')]: {
+            fontSize: 9,
+        },
+    },
+    button:{
+        height: '35px',
+        textTransform: 'none',
+        paddingTop: '1%',
+        paddingBottom: '1%',
+        alignItems: 'center',
+    },
+    textCenter: {
+        textAlign: 'center'
+    },
+    textInput: {
+        color: globalColors.lightBlue,
+        marginTop: 0,
+        marginBottom: '5%'
+    },
+    documentHeaderContainer: {
+        paddingTop: '1%',
+        paddingBottom: '1%'
+    },
+    box:{
+        backgroundColor: globalColors.darkBlue,
+        width: "0.5%",
+        height: "auto"
+    },
+    icon: {
+        color: globalColors.lightBlue,
+        paddingTop: "0.1%"
+
+
+    },
 }));
 
 export default useStyles

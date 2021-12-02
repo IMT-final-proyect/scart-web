@@ -11,9 +11,11 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     rightCard:{
         marginTop: '10%',
+        marginLeft: '2.5%',
         paddingLeft: '2.5%',
         paddingRight: '2.5%',
         paddingBottom: '2.5%',
+        paddingTop: '2.5%',
         [theme.breakpoints.up('xs')]: {
             marginLeft: '2.5%',
             marginRight: '2.5%'
@@ -28,6 +30,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         paddingRight: '2.5%',
         paddingLeft: '2.5%',
         paddingBottom: '2.5%',
+        paddingTop: '2.5%',
         [theme.breakpoints.up('xs')]: {
             marginLeft: '2.5%',
             marginRight: '2.5%'
@@ -38,9 +41,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     textTitle:{
         fontSize:20,
-        marginTop: '4%',
-        marginBottom: '3%',
-        marginLeft: '3%',
+        marginTop: '2%',
+        marginBottom: '2%',
+        marginLeft: '2%',
         fontWeight: 'bold',
         color: globalColors.lightBlue,
         [theme.breakpoints.down('sm')]: {
@@ -51,8 +54,8 @@ const useStyles = makeStyles((theme: Theme) => ({
         textAlign: 'center'
     },
     circleIcon:{
-        marginTop: '3%',
-        marginBottom: '3%',
+        marginTop: '4%',
+        marginBottom: '4%',
         marginRight: '3%',
     },
     headerText:{
@@ -70,6 +73,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         marginRight: '3%',
     },
     button:{
+        fontSize: 15,
         height: '50px',
         cursor: 'pointer',
         background: globalColors.white,
@@ -115,6 +119,11 @@ const useStyles = makeStyles((theme: Theme) => ({
             marginTop: '5%'
         },
     },
+    box:{
+        backgroundColor: globalColors.darkBlue,
+        width: "1%",
+        height: "auto"
+    }
 }));
 
 export default useStyles
