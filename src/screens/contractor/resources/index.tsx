@@ -204,13 +204,20 @@ const Resources = () => {
         <Grid container className={classes.container} direction='row' justifyContent='space-between'>
             <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
                 <Card className={classes.leftCard}>
-                    <Grid container justifyContent='space-between'>
-                        <text className={classes.textTitle}>
-                            Conductores asociados
-                        </text>
-                        <Button onClick={() => setOpenDriverModal(true)}>
-                            <AddCircleIcon className={classes.circleIcon}/>
-                        </Button>
+                    <Grid container justifyContent='space-between' alignItems='center'>
+                        <Grid item xs={11}>
+                            <Grid container direction='row'>
+                                <div className={classes.box}/>
+                                <text className={classes.textTitle}>
+                                    Conductores asociados
+                                </text>
+                            </Grid>
+                        </Grid>
+                        <Grid item xs={1}>
+                            <Button onClick={() => setOpenDriverModal(true)}>
+                                <AddCircleIcon className={classes.circleIcon}/>
+                            </Button>
+                        </Grid>
                     </Grid>
                     <Typography className={classes.searchTitle}> Filtar por </Typography>
                     <Grid className={classes.inputContainer} container  direction='row' justifyContent='space-between' >
@@ -245,7 +252,7 @@ const Resources = () => {
                                 </Grid>
                                 <Grid item xs={3} className={classes.headerText}>
                                     <text className={classes.headerText}>
-                                        Fecha Nac.
+                                        Fecha Nacimiento
                                     </text>
                                 </Grid>
                                 <Grid item xs={2} className={classes.headerText}>
@@ -280,13 +287,20 @@ const Resources = () => {
             </Grid>
             <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
                 <Card className={classes.rightCard}>
-                    <Grid container justifyContent='space-between'>
-                        <text className={classes.textTitle}>
-                            Vehículos asociados
-                        </text>
-                        <Button onClick={() => setOpenVehicleModal(true)}>
-                            <AddCircleIcon className={classes.circleIcon}/>
-                        </Button>
+                    <Grid container justifyContent='space-between' alignItems='center'>
+                        <Grid item xs={11}>
+                            <Grid container direction='row' >
+                                <div className={classes.box}/>
+                                <text className={classes.textTitle}>
+                                    Vehículos asociados
+                                </text>
+                            </Grid>
+                        </Grid>
+                        <Grid item xs={1}>
+                            <Button onClick={() => setOpenVehicleModal(true)}>
+                                <AddCircleIcon className={classes.circleIcon}/>
+                            </Button>
+                        </Grid>
                     </Grid>
                     <Typography className={classes.searchTitle}> Filtar por </Typography>
                     <Grid className={classes.inputContainer} container  direction='row' justifyContent='space-between' >

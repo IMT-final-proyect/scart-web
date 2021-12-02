@@ -225,7 +225,7 @@ export const getInvalidDrivers = (contractorId: number): AppThunk => async (disp
 export const getPendingDrivers = (contractorId: number): AppThunk => async (dispatch) => {
    dispatch(getPendingDriversRequest());
    try{
-      const response: AxiosResponse = await Axios.get(`/contractors/${contractorId}/documents/drivers?states=0&missing=true`);
+      const response: AxiosResponse = await Axios.get(`/contractors/${contractorId}/documents/drivers?states=0`);
       dispatch(getPendingDriversSuccess(response.data));
    }
    catch(error){
@@ -247,7 +247,7 @@ export const getInvalidVehicles = (contractorId: number): AppThunk => async (dis
 export const getPendingVehicles = (contractorId: number): AppThunk => async (dispatch) => {
    dispatch(getPendingVehiclesRequest());
    try{
-      const response: AxiosResponse = await Axios.get(`/contractors/${contractorId}/documents/vehicles?states=0&missing=true`);
+      const response: AxiosResponse = await Axios.get(`/contractors/${contractorId}/documents/vehicles?states=0`);
       dispatch(getPendingVehiclesSuccess(response.data));
    }
    catch(error){

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-
+import HistoryIcon from '@mui/icons-material/History';
 import useStyles from './styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { getContractorData } from '../../../redux/slices/userSlice';
@@ -63,24 +63,33 @@ const Home = () => {
             <Grid container className={classes.container} direction='row' justifyContent='space-between' >
             <Card className={classes.leftCard}>
                 <Grid className={classes.documentHeaderContainer} container justifyContent='space-between' alignItems='center'>
-                    <text className={classes.textTitle}>
-                        Documentación por vencer
-                    </text>
-                    <MuiPickersUtilsProvider utils={MomentUtils}>
-                        <KeyboardDatePicker
-                            autoOk
-                            disablePast
-                            variant="inline"
-                            format="DD/MM/yyyy"
-                            id="days"
-                            label="Fecha"
-                            value={date}
-                            onChange={handleDateChange}
-                            KeyboardButtonProps={{
-                                'aria-label': 'change date',
-                            }}
-                        />
-                    </MuiPickersUtilsProvider>
+                    <Grid item xs={10}>
+                        <Grid container direction='row'>
+                            <div className={classes.icon}>
+                                <HistoryIcon/>
+                            </div>
+                            <text className={classes.textTitle}>
+                                Documentación por vencer
+                            </text>
+                        </Grid>
+                    </Grid>
+                    <Grid item xs={2}>
+                        <MuiPickersUtilsProvider utils={MomentUtils}>
+                            <KeyboardDatePicker
+                                autoOk
+                                disablePast
+                                variant="inline"
+                                format="DD/MM/yyyy"
+                                id="days"
+                                label="Fecha"
+                                value={date}
+                                onChange={handleDateChange}
+                                KeyboardButtonProps={{
+                                    'aria-label': 'change date',
+                                }}
+                            />
+                        </MuiPickersUtilsProvider>
+                    </Grid>
                 </Grid>
                 {Object.keys(contractorExpiringDocuments)?.length === 0 ?
                     <Typography className={classes.textCenter}> No hay documentos por vencer</Typography>
@@ -94,7 +103,7 @@ const Home = () => {
                             </Grid>
                             <Grid item xs={3} className={classes.headerText}>
                                 <text className={classes.headerText}>
-                                    Fecha de venc.
+                                    Fecha de vencimiento
                                 </text>
                             </Grid>
                             <Grid item xs={2} className={classes.headerText}>
