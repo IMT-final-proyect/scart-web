@@ -9,12 +9,12 @@ import moment from 'moment';
 import { IDocument, IDriver } from '../../../../../utils/interfaces';
 import CreateDriverDocumentModal from './components/CreateDriverDocumentModal';
 import { createDocument, getDriverDocuments } from '../../../../../redux/slices/documentsSlice';
-import DocumentRow from '../../../documentation/components/documentRow/DocumentRow';
 import { ROUTES } from '../../../navigation/routes';
 import EditDriverModal from '../../../../../components/editDriverModal';
 import EditIcon from '@mui/icons-material/Edit';
 import { editDriver, getDriverById } from '../../../../../redux/slices/resourcesSlice';
 import { Alert } from '@mui/material';
+import DocumentRow from '../documentRow/DocumentRow';
 
 
 const autos: string[] = []
@@ -67,7 +67,7 @@ const DriverDetails = () => {
                 <CreateDriverDocumentModal
                     setOpenDocumentModal={setOpenDriverDocumentModal}
                     addDocument={addDocument}
-                    driverId={params.id}
+                    driverId={parseInt(params.id)}
                 />
             </Modal>
             <Modal open={openEditDriverModal} onClose={() => setOpenEditDriverModal(false)}>

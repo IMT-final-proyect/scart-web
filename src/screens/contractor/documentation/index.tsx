@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Button, Card, CircularProgress, Grid, Modal, Typography, } from '@material-ui/core';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import useStyles from './styles';
-import DocumentRow from './components/documentRow/DocumentRow';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../redux/rootReducer';
 import { createDocument, getContractorDocuments } from '../../../redux/slices/documentsSlice';
@@ -13,7 +12,8 @@ import { Link } from 'react-router-dom';
 import { getStateName } from '../../../utils/functions/states';
 import CustomInput from '../../../components/customInput';
 import CustomSelect from '../../../components/customSelect';
-import { contractor, EXPIRED, PENDING, REJECTED, VALID } from '../../../utils/constants';
+import { EXPIRED, PENDING, REJECTED, VALID } from '../../../utils/constants';
+import DocumentRow from './components/documentRow/DocumentRow';
 
 const Documentacion = () => {
     const classes = useStyles();
@@ -133,12 +133,17 @@ const Documentacion = () => {
                         :
                         <>
                             <Grid container justifyContent='space-between'>
-                                <Grid item xs={5} className={classes.headerText}>
+                                <Grid item xs={3} className={classes.headerText}>
                                     <text className={classes.headerText}>
                                         Documento
                                     </text>
                                 </Grid>
                                 <Grid item xs={3} className={classes.headerText}>
+                                    <text className={classes.headerText}>
+                                        Tipo
+                                    </text>
+                            </Grid>
+                                <Grid item xs={2} className={classes.headerText}>
                                     <text className={classes.headerText}>
                                         Fecha de venc.
                                     </text>
@@ -163,6 +168,7 @@ const Documentacion = () => {
                                 >  
                                     <DocumentRow 
                                         key={documentsFiltered[parseInt(key)].id}
+                                        ownerType={documentsFiltered[parseInt(key)].entityType}
                                         type={documentsFiltered[parseInt(key)].type}
                                         expiration={documentsFiltered[parseInt(key)].expirationDate}
                                         state={documentsFiltered[parseInt(key)].state}

@@ -11,10 +11,13 @@ import { ROUTES } from './routes';
 import Documentation from '../documentation';
 import useStyles from './styles'
 import DocumentDetails from '../documentDetails';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../redux/rootReducer';
 
 const AuditorNavigation = () => {
     const classes = useStyles();
     const [title, setTitle] = useState('Auditor');
+    const user = useSelector((state: RootState) => state.user.userData?.name)
 
     const ButtonList = (
         <>
@@ -34,6 +37,7 @@ const AuditorNavigation = () => {
     return(
     <BrowserRouter>
         <TemplateBar
+            user={user}
             title={title}
             ButtonList = {ButtonList}
         />

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AppBar, Button, Drawer, Toolbar, Typography, } from '@material-ui/core';
+import { AppBar, Button, Drawer, Grid, Hidden, Toolbar, Typography, } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
 
@@ -10,6 +10,7 @@ import { postLogout } from '../../redux/slices/userSlice';
 import { useHistory } from 'react-router-dom';
 
 interface Props {
+    user?: string;
     title: string;
     ButtonList: React.ReactNode;
 }
@@ -40,32 +41,47 @@ const TemplateBar = (props : Props) => {
     };
 
     return(
-        <>
-        <AppBar>
-            <Toolbar className={classes.customizeToolbar}>
-                <Button  onClick={() => setOpen(true)}>
-                  <MenuIcon color='secondary'/>
-                </Button>
-                <Typography variant="h6" className={classes.title} color='secondary'>
+        <Grid>
+          <AppBar>
+              <Toolbar className={classes.customizeToolbar}>
+                <Grid container justifyContent='space-between' alignItems='center'>
+                  <Grid item xs={2}>
+                    <Button  onClick={() => setOpen(true)}>
+                      <MenuIcon color='secondary'/>
+                      <Hidden mdDown>
+                        <Typography variant="h6" className={classes.user} color='secondary'>
+                            {props.user}
+                        </Typography>
+                      </Hidden>
+                    </Button>
+                  </Grid>
+                  <Grid item xs={8}>
+                    <Typography variant="h6" className={classes.title} color='secondary'>
+                        {props.title}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={2}>
+                    <Grid container justifyContent='flex-end'>
+                      <Button onClick={handleLogout}>
+                        <MeetingRoomIcon  color='secondary'/>
+                        <Typography variant="h6" className={classes.salir}>
+                          Salir
+                        </Typography>
+                      </Button>
+                    </Grid>
+                  </Grid>
+                </Grid>
+              </Toolbar>
+          </AppBar>
+          <Drawer open={open} onClose={toggleDrawer(false)}>
+            <div className={classes.drawer} onClick={() => setOpen(false)}>
+                <Typography variant="h6" className={classes.title}>
                     {props.title}
                 </Typography>
-                <Button onClick={handleLogout}>
-                  <MeetingRoomIcon  color='secondary'/>
-                  <Typography variant="h6" className={classes.salir}>
-                    Salir
-                  </Typography>
-                </Button>
-            </Toolbar>
-        </AppBar>
-        <Drawer open={open} onClose={toggleDrawer(false)}>
-          <div className={classes.drawer} onClick={() => setOpen(false)}>
-              <Typography variant="h6" className={classes.title}>
-                  {props.title}
-              </Typography>
-              {props.ButtonList}
-          </div>
-        </Drawer>
-        </>
+                {props.ButtonList}
+            </div>
+          </Drawer>
+        </Grid>
     )
 }
 

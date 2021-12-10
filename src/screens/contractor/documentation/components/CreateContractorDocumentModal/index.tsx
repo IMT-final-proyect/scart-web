@@ -40,7 +40,7 @@ const CreateContractorDocumentModal = ({ addDocument, setOpenDriverModal }: Prop
     
     useEffect(() => {
         dispatch(getDocumentTypesByEntity(2))
-    }, [])
+    }, [dispatch])
 
     const handleExpirationChange = (date: moment.Moment | null) => {
         setExpirationDate(date);

@@ -353,7 +353,6 @@ export const createDocument = (
             break;
          }
          case AllowedRol.vehicle: {
-            console.log('despacho get vehicles');
             dispatch(getVehicleDocuments(entityId));
             break
          }

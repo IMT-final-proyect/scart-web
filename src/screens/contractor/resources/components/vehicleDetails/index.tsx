@@ -11,11 +11,11 @@ import { RootState } from '../../../../../redux/rootReducer';
 import { IDocument, IVehicle } from '../../../../../utils/interfaces';
 import { createDocument, getVehicleDocuments } from '../../../../../redux/slices/documentsSlice';
 import CreateVehicleDocumentModal from './components/CreateVehicleDocumentModal';
-import DocumentRow from '../../../documentation/components/documentRow/DocumentRow';
 import { ROUTES } from '../../../navigation/routes';
 import EditVehicleModal from '../../../../../components/editVehicleModal';
 import { editVehicle, getVehicleById } from '../../../../../redux/slices/resourcesSlice';
 import { Alert } from '@mui/material';
+import DocumentRow from '../documentRow/DocumentRow';
 
 
 const conductores = []
@@ -62,7 +62,7 @@ const VehicleDetails = () => {
         <>
             <Modal open={openVehicleDocumentModal} onClose={() => setOpenVehicleDocumentModal(false)}>
                 <CreateVehicleDocumentModal
-                    vehicleId={params.id}
+                    vehicleId={parseInt(params.id)}
                     setOpenDocumentModal={setOpenVehicleDocumentModal}
                     addDocument={addDocument}
                 />
