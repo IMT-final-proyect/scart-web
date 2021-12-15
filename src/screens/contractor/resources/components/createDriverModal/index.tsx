@@ -7,7 +7,18 @@ import moment from 'moment';
 import { Alert } from '@mui/material';
 
 interface Props{
-    addDriver: (username: string, password: string, name: string, surname: string, cuit: string, birthdate: moment.Moment) => void
+    addDriver: (
+        username: string,
+        password: string,
+        name: string,
+        surname: string,
+        cuit: string,
+        birthdate: moment.Moment,
+        street: string,
+        number: number,
+        city: string,
+        province: string,
+        zipCode: string ) => void
     setOpenDriverModal: React.Dispatch<React.SetStateAction<boolean>>
 }
 
@@ -21,7 +32,7 @@ const CreateDriverModal = ({ addDriver, setOpenDriverModal }: Props) => {
     const [surname, setSurname] = useState('')
     const [cuit, setCuit] = useState('')
     const [street, setStreet] = useState('')
-    const [number, setNumber] = useState(-1)
+    const [number, setNumber] = useState(0)
     const [city, setCity] = useState('')
     const [province, setProvince] = useState('')
     const [zipCode, setZipCode] = useState('')
@@ -80,7 +91,7 @@ const CreateDriverModal = ({ addDriver, setOpenDriverModal }: Props) => {
     const _handleOnClick = () => {
         if(!!username && !!password && !!repeatPassword && !!name && !!surname && !!cuit && !!birthdate){
             if (password === repeatPassword){
-                addDriver(username, password, name, surname, cuit, moment(birthdate));
+                addDriver(username, password, name, surname, cuit, moment(birthdate), street, number, city, province, zipCode);
                 setOpenDriverModal(false);
             } else {
                 setPasswordNotRepeated(true);
