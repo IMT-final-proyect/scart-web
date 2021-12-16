@@ -8,11 +8,12 @@ const useStyles = makeStyles((theme: Theme) => ({
         marginTop: '60px',
         paddingLeft: '2.5%',
         paddingRight: '2.5%',
-        paddingBottom: '1%',
+        paddingBottom: '2%',
         paddingTop: '1%',
     },
     dataContainer:{
-        textAlign: 'start'
+        textAlign: 'start',
+        marginBottom: '1.5%'
     },
     dataField:{
         marginBottom: '10%',

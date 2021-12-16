@@ -25,6 +25,7 @@ export interface IDriver {
       name: string;
       cuit: string;
    };
+   address: IAddress
 }
 
 export interface IVehicle {
