@@ -8,9 +8,9 @@ const useStyles = makeStyles((theme: Theme) => ({
         marginTop: '2.5%',
         marginBottom: '2.5%'
     },
-    datePicker: {
-        marginBottom: '10%',
-        marginTop: '5%'
+    lastTextInput: {
+        marginBottom: '5%',
+        marginTop: '2.5%'
     },
     modal: {
         position: 'absolute', 
