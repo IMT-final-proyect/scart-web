@@ -307,7 +307,7 @@ export const getVehicleById = (id: number): AppThunk => async (dispatch) => {
       dispatch(getVehicleByIdSuccess(response.data));
    }
    catch(error){
-      dispatch(getVehicleByIdFailure(error.response.data));
+      dispatch(getVehicleByIdFailure(error.response?.data));
    }
 }
 

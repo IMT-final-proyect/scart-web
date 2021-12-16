@@ -59,7 +59,7 @@ const VehicleDetails = () => {
                     setOpenVehicleDocumentModal={setOpenVehicleDocumentModal}
                     addDocument={addDocument}
                     vehicleId={params.id}
-                    contractorId={vehicle.contractor.id}
+                    contractorId={vehicle?.contractor?.id}
                 />
             </Modal>
             <Modal open={openEditVehicleModal} onClose={() => setOpenEditVehicleModal(false)}>
@@ -79,19 +79,19 @@ const VehicleDetails = () => {
                     <Grid container justifyContent='space-between' direction='row' alignItems={'center'}>
                             <div className={classes.dataContainer}>
                                 <text className={classes.dataField}> Patente: </text>
-                                <text className={classes.data}> {vehicle.plate} </text>
+                                <text className={classes.data}> {vehicle?.plate} </text>
                             </div>
                             <div className={classes.dataContainer}>
                                 <text className={classes.dataField}> Marca: </text>
-                                <text className={classes.data}> {vehicle.brand} </text>
+                                <text className={classes.data}> {vehicle?.brand} </text>
                             </div>
                             <div className={classes.dataContainer}>
                                 <text className={classes.dataField}> Modelo: </text>
-                                <text className={classes.data}> {vehicle.model} </text>
+                                <text className={classes.data}> {vehicle?.model} </text>
                             </div>
                             <div className={classes.dataContainer}>
                                 <text className={classes.dataField}> Año: </text>
-                                <text className={classes.data}> {vehicle.year} </text>
+                                <text className={classes.data}> {vehicle?.year} </text>
                             </div>
                             <Button onClick={() => {setOpenEditVehicleModal(true)}}>
                                     <EditIcon />

@@ -194,7 +194,7 @@ const Contractors = () => {
                                         brand={vehiclesFiltered[parseInt(key)].brand}
                                         model={vehiclesFiltered[parseInt(key)].model}
                                         plate={vehiclesFiltered[parseInt(key)].plate}
-                                        contractor={vehiclesFiltered[parseInt(key)].contractor.name}
+                                        contractor={vehiclesFiltered[parseInt(key)].contractor?.name}
                                         id={vehiclesFiltered[parseInt(key)].id}
                                         handleDeleteVehicle={handleDeleteVehicleModal}
                                     />
