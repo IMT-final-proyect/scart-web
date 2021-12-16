@@ -29,7 +29,7 @@ const Login = () => {
 
     useEffect(() => {
         let route
-        if(accountData?.rol !== undefined && accountData?.rol >= 0 && isTokenValid(accountData?.access_token)){
+        if(accountData?.rol !== undefined && accountData?.rol >= 0 && isTokenValid(localStorage.getItem(('access_token')))){
             route = getRolPath(accountData?.rol)
             history.push(route)
         }
