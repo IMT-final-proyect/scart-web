@@ -6,11 +6,11 @@ const useStyles = makeStyles((theme: Theme) => ({
     textInput: {
         color: globalColors.lightBlue,
         marginTop: '2.5%',
-        marginBottom: '2.5%',
+        marginBottom: '2.5%'
     },
-    datePicker: {
-        marginBottom: '2.5%',
-        marginTop: '5%'
+    lastTextInput: {
+        marginBottom: '10%',
+        marginTop: '2.5%'
     },
     modal: {
         position: 'absolute', 

@@ -126,8 +126,8 @@ const CreateDriverModal = ({ addDriver, setOpenDriverModal }: Props) => {
         <Grid className={classes.modal} container direction='column' justify='center' alignItems='center'>
                 <text className={classes.title}>Crear conductor</text>
                 <text className={classes.subtitle}>Registrar un nuevo conductor</text>
-                <CustomSelect value={contractorName} placeholder='Contratista' setValue={setContractorName} data={contractors.names}/>
                 <Grid item>
+                    <CustomSelect value={contractorName} placeholder='Contratista' setValue={setContractorName} data={contractors.names}/>
                     <TextField
                         id="driver-username"
                         className= {classes.textInput}
@@ -220,31 +220,37 @@ const CreateDriverModal = ({ addDriver, setOpenDriverModal }: Props) => {
                         onChange={_onChangeNumber}
                     />
                 </Grid>
-                <Grid item>
-                    <TextField
-                        id="driver-city"
-                        className= {classes.lastTextInput}
-                        size="medium"
-                        label="Ciudad"
-                        value={city}
-                        onChange={_onChangeCity}
-                    />
-                     <TextField
-                        id="driver-province"
-                        className= {classes.lastTextInput}
-                        size="medium"
-                        label="Provincia"
-                        value={province}
-                        onChange={_onChangeProvince}
-                    />
-                     <TextField
-                        id="driver-zipCode"
-                        className= {classes.lastTextInput}
-                        size="medium"
-                        label="Codigo Postal"
-                        value={zipCode}
-                        onChange={_onChangeZipCode}
-                    />
+                <Grid container>
+                    <Grid item xs={4}>
+                        <TextField
+                            id="driver-city"
+                            className= {classes.lastTextInput}
+                            size="medium"
+                            label="Ciudad"
+                            value={city}
+                            onChange={_onChangeCity}
+                        />
+                    </Grid>
+                    <Grid item xs={4}>
+                        <TextField
+                            id="driver-province"
+                            className= {classes.lastTextInput}
+                            size="medium"
+                            label="Provincia"
+                            value={province}
+                            onChange={_onChangeProvince}
+                        />
+                    </Grid>
+                    <Grid item xs={4}>
+                        <TextField
+                            id="driver-zipCode"
+                            className= {classes.lastTextInput}
+                            size="medium"
+                            label="Codigo Postal"
+                            value={zipCode}
+                            onChange={_onChangeZipCode}
+                        />
+                    </Grid>
                 </Grid>
                 <Snackbar className={classes.snackbar} open={emptyField} autoHideDuration={6000} onClose={() => setEmptyField(false)} >
                     <Alert onClose={() => setEmptyField(false)} severity="error" sx={{ width: '100%' }}>

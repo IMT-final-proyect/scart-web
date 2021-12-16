@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         marginBottom: '2.5%'
     },
     lastTextInput: {
-        marginBottom: '5%',
+        marginBottom: '10%',
         marginTop: '2.5%'
     },
     modal: {

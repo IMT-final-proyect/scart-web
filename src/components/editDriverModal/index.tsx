@@ -24,6 +24,11 @@ const EditDriverModal = ( {driver, changePassword, editDriver, setOpenEditDriver
     const [password, setPassword] = useState('')
     const [message, setMessage] = useState('')
     const [repeatPassword, setRepeatPassword] = useState('')
+    const [street, setStreet] = useState('')
+    const [number, setNumber] = useState(0)
+    const [city, setCity] = useState('')
+    const [province, setProvince] = useState('')
+    const [zipCode, setZipCode] = useState('')
     const [birthdate, setBirthdate] = useState<moment.Moment | null>(driver.birth_date);
     
     const _onChangePassword = useCallback((event) => {
@@ -49,7 +54,28 @@ const EditDriverModal = ( {driver, changePassword, editDriver, setOpenEditDriver
     
     const handleBirthdateChange = (date: moment.Moment | null) => {
         setBirthdate(date);
-      };
+    };
+
+      const _onChangeStreet = useCallback((event) => {
+        setStreet(event.target.value);
+    }, [setStreet]);
+
+    const _onChangeNumber = useCallback((event) => {
+        setNumber(event.target.value);
+    }, [setNumber]);
+
+    const _onChangeCity = useCallback((event) => {
+        setCity(event.target.value);
+    }, [setCity]);
+
+    const _onChangeProvince = useCallback((event) => {
+        setProvince(event.target.value);
+    }, [setProvince]);
+
+    const _onChangeZipCode = useCallback((event) => {
+        setZipCode(event.target.value);
+    }, [setZipCode]);
+
 
       const _handleOnClick = () => {
         if(!!name && !!surname && !!cuit && !!birthdate){
@@ -114,7 +140,7 @@ const EditDriverModal = ( {driver, changePassword, editDriver, setOpenEditDriver
                 />
                 <MuiPickersUtilsProvider utils={MomentUtils}>
                     <KeyboardDatePicker
-                        className={classes.datePicker}
+                        className={classes.textInput}
                         autoOk
                         disableFuture
                         variant="inline"
@@ -128,6 +154,62 @@ const EditDriverModal = ( {driver, changePassword, editDriver, setOpenEditDriver
                         }}
                     />
                 </MuiPickersUtilsProvider>
+                <Grid item>
+                    <TextField
+                        id="driver-street"
+                        variant="standard"
+                        className= {classes.textInput}
+                        size="medium"
+                        label="Calle"
+                        value={street}
+                        onChange={_onChangeStreet}
+                    />
+                     <TextField
+                        id="driver-number"
+                        variant="standard"
+                        className= {classes.textInput}
+                        size="medium"
+                        type='number'
+                        label="Numero"
+                        value={number}
+                        onChange={_onChangeNumber}
+                    />
+                </Grid>
+                <Grid container>
+                    <Grid item xs={4}>
+                        <TextField
+                            id="driver-city"
+                            variant="standard"
+                            className= {classes.lastTextInput}
+                            size="medium"
+                            label="Ciudad"
+                            value={city}
+                            onChange={_onChangeCity}
+                        />
+                    </Grid>
+                    <Grid item xs={4}>
+                        <TextField
+                            id="driver-province"
+                            variant="standard"
+                            className= {classes.lastTextInput}
+                            size="medium"
+                            label="Provincia"
+                            value={province}
+                            onChange={_onChangeProvince}
+                        />
+                    </Grid>
+                    <Grid item xs={4}>
+                        <TextField
+                            id="driver-zipCode"
+                            variant="standard"
+                            className= {classes.lastTextInput}
+                            size="medium"
+                            label="Codigo Postal"
+                            value={zipCode}
+                            onChange={_onChangeZipCode}
+                        />
+                    </Grid>
+                </Grid>
                 <Grid container className={classes.checkbox}>
                     <FormControlLabel control={<Checkbox  defaultChecked checked={changePassword} onChange={() => {setChangePassword(!changePassword)}} />} label="Cambiar contraseña" />
                 </Grid>
