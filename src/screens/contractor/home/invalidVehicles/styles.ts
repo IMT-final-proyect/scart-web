@@ -18,13 +18,25 @@ const useStyles = makeStyles((theme: Theme) => ({
         paddingBottom: '2%',
         paddingLeft: '2.5%',
         paddingRight: '2.5%,',
-        minWidth: '95%'
+        [theme.breakpoints.up('xs')]: {
+            width: '130%',
+            marginLeft: '2.5%',
+        },
+        [theme.breakpoints.up('sm')]: {
+            width: '730px',
+        },
+        [theme.breakpoints.up('md')]: {
+            width: '95%',
+        },
+        [theme.breakpoints.down('sm')]: {
+            marginTop: '17%'
+        },
     },
     textTitle:{
-        fontSize:20,
-        marginTop: '4%',
-        marginBottom: '3%',
-        marginLeft: '3%',
+        fontSize: 20,
+        marginTop: '1%',
+        marginBottom: '1%',
+        marginLeft: '1%',
         fontWeight: 'bold',
         color: globalColors.lightBlue,
         [theme.breakpoints.down('sm')]: {
@@ -99,6 +111,11 @@ const useStyles = makeStyles((theme: Theme) => ({
             marginTop: '5%'
         },
     },
+    box:{
+        backgroundColor: globalColors.red,
+        width: "0.5%",
+        height: "auto"
+    }
 }));
 
 export default useStyles

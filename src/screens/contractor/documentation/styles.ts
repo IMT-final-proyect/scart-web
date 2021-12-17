@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         fontSize:20,
         marginTop: '1%',
         marginBottom: '1%',
-        marginLeft: '3%',
+        marginLeft: '1%',
         fontWeight: 'bold',
         color: globalColors.lightBlue,
         [theme.breakpoints.down('sm')]: {
@@ -107,6 +107,11 @@ const useStyles = makeStyles((theme: Theme) => ({
     spinner: {
         marginTop: '10%',
         color: globalColors.lightBlue
+    },
+    box:{
+        backgroundColor: globalColors.darkBlue,
+        width: "0.5%",
+        height: "auto"
     }
 }));
 

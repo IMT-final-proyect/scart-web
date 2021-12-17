@@ -98,7 +98,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         textTransform: 'none',
         paddingTop: '1%',
         paddingBottom: '1%',
-        alignItems: 'center',
+        alignItems: 'center'
     },
     textCenter: {
         textAlign: 'center'
@@ -120,8 +120,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     icon: {
         color: globalColors.lightBlue,
         paddingTop: "0.1%"
-
-
     },
 }));
 

@@ -93,13 +93,20 @@ const Documentacion = () => {
         </Modal>
         <Grid container className={classes.container} direction='row' justifyContent='space-between'>
             <Card className={classes.card}>
-                <Grid container justifyContent='space-between'>
-                    <text className={classes.textTitle}>
-                        Documentación
-                    </text>
-                    <Button onClick={() => setOpenModal(true)}>
-                        <AddCircleIcon className={classes.circleIcon}/>
-                    </Button>
+                <Grid container justifyContent='space-between' alignItems='center'>
+                    <Grid item xs={11}>
+                        <Grid container direction='row'>
+                            <div className={classes.box}/>
+                            <text className={classes.textTitle}>
+                                Documentación
+                            </text>
+                        </Grid>
+                    </Grid>
+                    <Grid item xs={1}>
+                        <Button onClick={() => setOpenModal(true)}>
+                            <AddCircleIcon className={classes.circleIcon}/>
+                        </Button>
+                    </Grid>
                 </Grid>
                 <Typography className={classes.searchTitle}> Filtar por </Typography>
                 <Grid className={classes.inputContainer} container  direction='row' justifyContent='space-between' alignItems='center'>

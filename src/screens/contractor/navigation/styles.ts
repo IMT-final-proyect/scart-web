@@ -1,4 +1,5 @@
 import { makeStyles, Theme } from '@material-ui/core';
+import globalColors from '../../../utils/styles/globalColors';
 
 const useStyles = makeStyles((theme: Theme) => ({
     container:{
@@ -14,8 +15,13 @@ const useStyles = makeStyles((theme: Theme) => ({
         paddingTop: '1%',
     },
     icon: {
+        background: globalColors.darkBlue,
+        color: globalColors.white,
         paddingTop: '3%',
-        paddingRight: '5%',
+        paddingRight: '3%',
+        paddingLeft: '3%',
+        marginRight: '4%',
+        borderRadius: '10%',
     },
 }));
 

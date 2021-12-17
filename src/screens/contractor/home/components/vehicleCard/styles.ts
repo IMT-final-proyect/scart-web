@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     textAlign: 'center',
     paddingBottom: '1%',
     paddingTop: '1%',
-    backgroundColor: "#0C4395",
+    background: `linear-gradient(to right, ${globalColors.lightBlue} , ${globalColors.darkBlue});`
   },
   container: {
     alignContent: 'center',

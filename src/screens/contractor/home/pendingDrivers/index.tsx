@@ -75,10 +75,13 @@ const PendingDrivers = () => {
     return (
         <Grid container className={classes.container} direction='row' justifyContent='space-between'>
             <Card className={classes.card}>
-                <Grid container justifyContent='space-between'>
-                    <text className={classes.textTitle}>
-                        Conductores con documentación pendiente de revisión
-                    </text>
+                <Grid container justifyContent='space-between' alignItems='center'>
+                    <Grid container direction='row'>
+                        <div className={classes.box}/>
+                        <text className={classes.textTitle}>
+                            Conductores con documentación pendiente de revisión
+                        </text>
+                    </Grid>
                 </Grid>
                 <Typography className={classes.searchTitle}> Filtar por </Typography>
                 <Grid className={classes.inputContainer} container  direction='row' justifyContent='space-between' >
