@@ -8,9 +8,9 @@ const useStyles = makeStyles((theme: Theme) => ({
         marginTop: '2.5%',
         marginBottom: '2.5%'
     },
-    datePicker: {
-        marginBottom: '10%',
-        marginTop: '5%'
+    lastTextInput: {
+        marginBottom: '5%',
+        marginTop: '2.5%'
     },
     modal: {
         position: 'absolute', 
@@ -19,8 +19,8 @@ const useStyles = makeStyles((theme: Theme) => ({
         transform: `translate(-50%, -50%)`,
         margin: 0,
         width: 'auto',
-        paddingLeft: '5%',
-        paddingRight: '5%',
+        paddingLeft: '2.5%',
+        paddingRight: '2.5%',
         paddingTop: '1.5%',
         paddingBottom: '2.5%',
         backgroundColor: globalColors.white,

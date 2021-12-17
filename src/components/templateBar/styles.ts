@@ -11,8 +11,16 @@ const useStyles = makeStyles((theme: Theme) => ({
         minHeight: headerSize,
         height: headerSize,
     },
+    user:{
+        fontSize: 18,
+        marginLeft: theme.spacing(2),
+        textTransform: 'none',
+        textAlign: 'center'
+    },
     title:{
         marginLeft: theme.spacing(2),
+        textTransform: 'none',
+        textAlign: 'center'
     },
     menuButton: {
         marginRight: theme.spacing(2),

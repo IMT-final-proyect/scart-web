@@ -49,7 +49,7 @@ const CreateDriverDocumentModal = ({ driverId, addDocument, setOpenDocumentModal
         };
 
     const _handleOnClick = () => {
-        if(!!expirationDate && (!!documentType)){
+        if(!!expirationDate && (!!documentType) && (filesContent.length > 0)){
             let typeId
             (Object.keys(documentTypes).map((key: string) => {
                 if (documentTypes[parseInt(key)].name === documentType) typeId = documentTypes[parseInt(key)].id
@@ -103,7 +103,7 @@ const CreateDriverDocumentModal = ({ driverId, addDocument, setOpenDocumentModal
             <text className={classes.filesUploaded}>Archivos cargados: {filesContent.length}</text>
             <Snackbar className={classes.snackbar} open={emptyField} autoHideDuration={6000} onClose={() => setEmptyField(false)} >
                 <Alert onClose={() => setEmptyField(false)} severity="error" sx={{ width: '100%' }}>
-                    Falta completar algún campo
+                    Falta completar algún campo o adjuntar alguna imagen
                 </Alert>
             </Snackbar>
             <Snackbar className={classes.snackbar} open={!!error} autoHideDuration={6000} onClose={() => setEmptyField(false)} >

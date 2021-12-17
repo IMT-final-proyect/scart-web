@@ -9,12 +9,12 @@ import moment from 'moment';
 import { IDocument, IDriver } from '../../../../../utils/interfaces';
 import CreateDriverDocumentModal from './components/CreateDriverDocumentModal';
 import { createDocument, getDriverDocuments } from '../../../../../redux/slices/documentsSlice';
-import DocumentRow from '../../../documentation/components/documentRow/DocumentRow';
 import { ROUTES } from '../../../navigation/routes';
 import EditDriverModal from '../../../../../components/editDriverModal';
 import EditIcon from '@mui/icons-material/Edit';
 import { editDriver, getDriverById } from '../../../../../redux/slices/resourcesSlice';
 import { Alert } from '@mui/material';
+import DocumentRow from '../documentRow/DocumentRow';
 
 
 const autos: string[] = []
@@ -67,7 +67,7 @@ const DriverDetails = () => {
                 <CreateDriverDocumentModal
                     setOpenDocumentModal={setOpenDriverDocumentModal}
                     addDocument={addDocument}
-                    driverId={params.id}
+                    driverId={parseInt(params.id)}
                 />
             </Modal>
             <Modal open={openEditDriverModal} onClose={() => setOpenEditDriverModal(false)}>
@@ -87,25 +87,65 @@ const DriverDetails = () => {
             <Grid container className={classes.container} direction='column' justifyContent='space-between'>
                 <Card className={classes.cardContainer}>
                     <Grid container justifyContent='space-between' direction='row' alignItems={'center'}>
-                        <div className={classes.dataContainer}>
-                            <text className={classes.dataField}> Nombre: </text>
-                            <text className={classes.data}> {driver.name} </text>
-                        </div>
-                        <div className={classes.dataContainer}>
-                            <text className={classes.dataField}> Apellido: </text>
-                            <text className={classes.data}> {driver.surname} </text>
-                        </div>
-                        <div className={classes.dataContainer}>
-                            <text className={classes.dataField}> Fecha de Nac.: </text>
-                            <text className={classes.data}> {moment(driver.birth_date).format('DD/MM/YY')} </text>
-                        </div>
-                        <div className={classes.dataContainer}>
-                            <text className={classes.dataField}> CUIT: </text>
-                            <text className={classes.data}> {driver.cuit} </text>
-                        </div>
-                        <Button onClick={() => {setOpenEditDriverModal(true)}}>
-                            <EditIcon />
-                        </Button>
+                        <Grid item xs={6}>
+                            <div className={classes.dataContainer}>
+                                <text className={classes.dataField}> Nombre: </text>
+                                <text className={classes.data}> {driver?.name} </text>
+                            </div>
+                        </Grid>
+                        <Grid item xs={5}>
+                            <div className={classes.dataContainer}>
+                                <text className={classes.dataField}> Apellido: </text>
+                                <text className={classes.data}> {driver?.surname} </text>
+                            </div>
+                        </Grid>
+                        <Grid item xs={1}>
+                            <Button onClick={() => {setOpenEditDriverModal(true)}}>
+                                <EditIcon />
+                            </Button>
+                        </Grid>
+                    </Grid>
+                    <Grid container justifyContent='flex-start' direction='row' alignItems={'center'}>
+                        <Grid item xs={6}>
+                            <div className={classes.dataContainer}>
+                                <text className={classes.dataField}> Direccion: </text>
+                                <text className={classes.data}> {driver?.address?.street || '-'} </text>
+                            </div>
+                        </Grid>
+                        <Grid item xs={6}>
+                            <div className={classes.dataContainer}>
+                                <text className={classes.dataField}> Numero: </text>
+                                <text className={classes.data}> {driver?.address?.number || '-'} </text>
+                            </div>
+                        </Grid>
+                    </Grid>
+                    <Grid container justifyContent='flex-start' direction='row' alignItems={'center'}>
+                        <Grid item xs={6}>
+                            <div className={classes.dataContainer}>
+                                <text className={classes.dataField}> Ciudad: </text>
+                                <text className={classes.data}> {driver?.address?.city ||'-'} </text>
+                            </div>
+                        </Grid>
+                        <Grid item xs={6}>
+                            <div className={classes.dataContainer}>
+                                <text className={classes.dataField}> Provincia: </text>
+                                <text className={classes.data}> {driver?.address?.province || '-'} </text>
+                            </div>
+                        </Grid>
+                    </Grid>
+                    <Grid container justifyContent='flex-start' direction='row' alignItems={'center'}>
+                        <Grid item xs={6}>
+                            <div className={classes.dataContainer}>
+                                <text className={classes.dataField}> Codigo Postal: </text>
+                                <text className={classes.data}> {driver?.address?.zipcode || '-'} </text>
+                            </div>
+                        </Grid>
+                        <Grid item xs={6}>
+                            <div className={classes.dataContainer}>
+                                <text className={classes.dataField}> Fecha de nacimiento: </text>
+                                <text className={classes.data}> {moment(driver.birth_date).format('DD/MM/YY') || '-'} </text>
+                            </div>
+                        </Grid>
                     </Grid>
                 </Card>
                 <Grid container className={classes.container} direction='row' justifyContent='space-between'>

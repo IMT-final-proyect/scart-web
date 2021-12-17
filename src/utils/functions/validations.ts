@@ -2,17 +2,17 @@ import { getRolNumber } from "./roles"
 import jwt_decode from "jwt-decode";
 import moment from "moment";
 
-export const isTokenValid = (accessToken?: string) => {
+export const isTokenValid = (accessToken: string | null) => {
     if(!!accessToken){
         const decodedToken: any = jwt_decode(accessToken)
         const expirationDate = moment(decodedToken.exp*1000)
         const now = moment()
-        if(now < expirationDate){
+        if(now < expirationDate)
             return true
-        }
         return false
     }
-    else return false
+    console.log('retorno false');
+    return false
 }
 
 export const isRolAuthored = (rolName: string, accountRol?: number) => {

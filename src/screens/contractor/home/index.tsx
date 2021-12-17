@@ -96,12 +96,17 @@ const Home = () => {
                     :
                     <>
                         <Grid container justifyContent='space-between'>
-                            <Grid item xs={5} className={classes.headerText}>
+                            <Grid item xs={3} className={classes.headerText}>
                                 <text className={classes.headerText}>
                                     Documento
                                 </text>
                             </Grid>
                             <Grid item xs={3} className={classes.headerText}>
+                                <text className={classes.headerText}>
+                                    Tipo
+                                </text>
+                            </Grid>
+                            <Grid item xs={2} className={classes.headerText}>
                                 <text className={classes.headerText}>
                                     Fecha de vencimiento
                                 </text>
@@ -126,6 +131,7 @@ const Home = () => {
                             >  
                                 <DocumentRow 
                                     key={contractorExpiringDocuments[parseInt(key)].id}
+                                    ownerType={contractorExpiringDocuments[parseInt(key)].entityType}
                                     type={contractorExpiringDocuments[parseInt(key)].type}
                                     expiration={contractorExpiringDocuments[parseInt(key)].expirationDate}
                                     state={contractorExpiringDocuments[parseInt(key)].state}

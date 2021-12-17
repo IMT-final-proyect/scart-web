@@ -20,6 +20,7 @@ const rootReducer = (state: any, action: any) => {
     
     if (action.type === postLogout) {
         storage.removeItem(`persist:root`);
+        localStorage.removeItem('access_token')
         state = initialState;
     }
     return appReducer(state, action);

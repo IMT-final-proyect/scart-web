@@ -82,21 +82,65 @@ const DriverDetails = () => {
             <Grid container direction='column' justifyContent='space-between'>
                 <Card className={classes.cardContainer}>
                     <Grid container justifyContent='space-between' direction='row' alignItems={'center'}>
+                        <Grid item xs={6}>
                             <div className={classes.dataContainer}>
                                 <text className={classes.dataField}> Nombre: </text>
                                 <text className={classes.data}> {driver?.name} </text>
                             </div>
+                        </Grid>
+                        <Grid item xs={5}>
                             <div className={classes.dataContainer}>
                                 <text className={classes.dataField}> Apellido: </text>
                                 <text className={classes.data}> {driver?.surname} </text>
                             </div>
-                            <div className={classes.dataContainer}>
-                                <text className={classes.dataField}> Cuit: </text>
-                                <text className={classes.data}> {driver?.cuit} </text>
-                            </div>
+                        </Grid>
+                        <Grid item xs={1}>
                             <Button onClick={() => {setOpenEditDriverModal(true)}}>
                                 <EditIcon />
                             </Button>
+                        </Grid>
+                    </Grid>
+                    <Grid container justifyContent='flex-start' direction='row' alignItems={'center'}>
+                        <Grid item xs={6}>
+                            <div className={classes.dataContainer}>
+                                <text className={classes.dataField}> Direccion: </text>
+                                <text className={classes.data}> {driver?.address?.street || '-'} </text>
+                            </div>
+                        </Grid>
+                        <Grid item xs={6}>
+                            <div className={classes.dataContainer}>
+                                <text className={classes.dataField}> Numero: </text>
+                                <text className={classes.data}> {driver?.address?.number || '-'} </text>
+                            </div>
+                        </Grid>
+                    </Grid>
+                    <Grid container justifyContent='flex-start' direction='row' alignItems={'center'}>
+                        <Grid item xs={6}>
+                            <div className={classes.dataContainer}>
+                                <text className={classes.dataField}> Ciudad: </text>
+                                <text className={classes.data}> {driver?.address?.city ||'-'} </text>
+                            </div>
+                        </Grid>
+                        <Grid item xs={6}>
+                            <div className={classes.dataContainer}>
+                                <text className={classes.dataField}> Provincia: </text>
+                                <text className={classes.data}> {driver?.address?.province || '-'} </text>
+                            </div>
+                        </Grid>
+                    </Grid>
+                    <Grid container justifyContent='flex-start' direction='row' alignItems={'center'}>
+                        <Grid item xs={6}>
+                            <div className={classes.dataContainer}>
+                                <text className={classes.dataField}> Codigo Postal: </text>
+                                <text className={classes.data}> {driver?.address?.zipcode || '-'} </text>
+                            </div>
+                        </Grid>
+                        <Grid item xs={6}>
+                            <div className={classes.dataContainer}>
+                                <text className={classes.dataField}> Fecha de nacimiento: </text>
+                                <text className={classes.data}> {moment(driver.birth_date).format('DD/MM/YY') || '-'} </text>
+                            </div>
+                        </Grid>
                     </Grid>
                 </Card>
                 <Grid item xs={12}>

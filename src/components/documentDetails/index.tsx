@@ -12,6 +12,7 @@ import DownloadIcon from '@mui/icons-material/Download';
 import { getDocumentById } from '../../redux/slices/documentsSlice';
 import globalColors from '../../utils/styles/globalColors';
 import { getStateColor, getStateName } from '../../utils/functions/states';
+import { getSeverityName } from '../../utils/functions/severities';
 
 const DocumentDetails = () => {
     const { activeDocument, loading, error } = useSelector((state: RootState) => state.documents)
@@ -21,6 +22,7 @@ const DocumentDetails = () => {
     const dispatch = useDispatch()
     const params: any = useParams();
     const [image, setImage] = useState('')
+    const severityName = getSeverityName(activeDocument?.type?.severity)
 
     useEffect(() => {
         dispatch(getDocumentById(params.id))        
@@ -42,7 +44,7 @@ const DocumentDetails = () => {
                             </div>
                             <div className={classes.dataContainer}>
                                 <text className={classes.dataField}> Importancia: </text>
-                                <text className={classes.data}> {activeDocument?.type?.severity} </text>
+                                <text className={classes.data}> {severityName} </text>
                             </div>
                             <div className={classes.dataContainer}>
                                 <text className={classes.dataField}> Fecha de vencimiento: </text>

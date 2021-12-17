@@ -18,12 +18,15 @@ import InvalidDrivers from '../home/invalidDrivers';
 import InvalidVehicles from '../home/invalidVehicles';
 import PendingVehicles from '../home/pendingVehicles';
 import PendingDrivers from '../home/pendingDrivers';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../redux/rootReducer';
 
 
 const ContractorNavigator = () => {
     const classes = useStyles();
     const [title, setTitle] = useState('Inicio');
     const location = useLocation()
+    const user = useSelector((state: RootState) => state.user.userData?.name)
 
     useEffect(() => {
         if(location.pathname.includes('home'))
@@ -76,6 +79,7 @@ const ContractorNavigator = () => {
     return(
     <BrowserRouter>
         <TemplateBar
+            user={user}
             title={title}
             ButtonList = {ButtonList}
         />

@@ -141,9 +141,20 @@ const Resources = () => {
         setLoadingVehiclesFilter(false)
     }, [searchPlate, vehicles])
     
-    const addDriver = (username: string, password: string, name: string, surname: string, cuit: string, birthdate: moment.Moment) => {
+    const addDriver = (
+        username: string,
+        password: string,
+        name: string,
+        surname: string,
+        cuit: string,
+        birthdate: moment.Moment,
+        street: string,
+        number: number,
+        city: string,
+        province: string,
+        zipCode: string) => {
         if(!!contractorId){
-            dispatch(createDriver(username, password, name, surname, cuit, moment(birthdate), contractorId))
+            dispatch(createDriver(username, password, name, surname, cuit, moment(birthdate), street, number, city, province, zipCode, contractorId))
             setOpenDriverModal(false)
             setMessageSnackbar('Conductor creado con exito')
         }
