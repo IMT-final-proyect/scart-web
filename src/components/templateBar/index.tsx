@@ -8,6 +8,7 @@ import useStyles from './styles'
 import { useDispatch } from 'react-redux';
 import { postLogout } from '../../redux/slices/userSlice';
 import { useHistory } from 'react-router-dom';
+import { ROUTES } from '../../routes/routes';
 
 interface Props {
     user?: string;
@@ -23,7 +24,7 @@ const TemplateBar = (props : Props) => {
 
     const handleLogout = () => {
       dispatch({type: postLogout})
-      history.push('/login')
+      history.push(ROUTES.login)
       window.location.reload();
     }
 
