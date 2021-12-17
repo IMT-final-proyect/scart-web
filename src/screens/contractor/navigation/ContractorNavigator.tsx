@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Button } from '@material-ui/core';
 import HomeIcon from '@material-ui/icons/Home';
 import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
-import DriveEtaOutlinedIcon from '@mui/icons-material/DriveEtaOutlined';
+import DriveEtaIcon from '@mui/icons-material/DriveEta';
 import { BrowserRouter, Route, Switch, Link, useLocation } from 'react-router-dom';
 import TemplateBar from '../../../components/templateBar';
 import { ROUTES } from './routes';
@@ -18,6 +18,7 @@ import InvalidDrivers from '../home/invalidDrivers';
 import InvalidVehicles from '../home/invalidVehicles';
 import PendingVehicles from '../home/pendingVehicles';
 import PendingDrivers from '../home/pendingDrivers';
+
 
 const ContractorNavigator = () => {
     const classes = useStyles();
@@ -54,7 +55,7 @@ const ContractorNavigator = () => {
                 onClick={() => setTitle("Recursos")}
             >
                 <div className={classes.icon}>
-                    <DriveEtaOutlinedIcon/>
+                    <DriveEtaIcon/>
                 </div>
                 Recursos
             </Button>

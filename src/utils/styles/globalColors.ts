@@ -8,9 +8,11 @@ const globalColors = {
     lightBlue: '#1874D0',
     green: '#67D134',
     lightGreen: '#D1FFC6',
-    red: '#E5532B',
+    red: '#D82830',
     yellow: '#CE9400',
-    darkBlue: '#042163'
+    darkBlue: '#042163',
+    darkRed: '#780A2C',
+    darkYellow: '#F99B02'
 };
 
 export default globalColors;
