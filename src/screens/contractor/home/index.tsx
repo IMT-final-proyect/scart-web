@@ -69,7 +69,7 @@ const Home = () => {
                                 <HistoryIcon/>
                             </div>
                             <text className={classes.textTitle}>
-                                Documentación por vencer
+                                Documentación del Contratista por vencer
                             </text>
                         </Grid>
                     </Grid>

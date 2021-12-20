@@ -128,6 +128,29 @@ const useStyles = makeStyles<Theme, Props>((theme: Theme) => ({
         marginBottom: '1%',
         paddingRight: '1%'
     },
+    leftCard: {
+        paddingTop: '5%',
+        paddingLeft: '5%',
+        paddingRight: '5%',
+        paddingBottom: '2.5%',
+        marginRight: '1%',
+        marginBottom: '3%',
+        marginLeft: '10%',
+        textAlign: 'center',
+        [theme.breakpoints.down('sm')]: {
+            marginLeft: '2.5%',
+            marginRight: '2.5%',
+        },
+    },
+    rightCard: {
+        marginLeft: '2%',
+        marginRight: '3.5%',
+        [theme.breakpoints.down('sm')]: {
+            marginLeft: '2.5%',
+            marginRight: '2.5%',
+            marginTop: '5%'
+        },
+    },
     noImageSelected: {
         marginLeft: '2%',
         marginRight: '3.5%',
@@ -175,6 +198,13 @@ const useStyles = makeStyles<Theme, Props>((theme: Theme) => ({
         paddingRight: '20%',
         paddingTop: '7%',
         paddingBottom: '7%'
+    },
+    bottomCardContainer: {
+        flexGrow: 1,
+        marginTop: '2%',
+        [theme.breakpoints.down('md')]: {
+            marginTop: '5%'
+        },
     },
 }));
 
