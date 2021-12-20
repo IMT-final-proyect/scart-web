@@ -67,7 +67,7 @@ const TripleSearchBar = ({
     return (
         <>
             <Grid container direction='row' alignItems='flex-end'>
-                <Typography className={classes.searchTitle}> Filtar por </Typography>
+                <Typography className={classes.searchTitle}> Filtrar por </Typography>
                 <CustomSelect value={placeholder} setValue={setPlaceholder} data={placeholders}/>
             </Grid>
             <Grid className={className} container  direction='row' justifyContent='space-between' >

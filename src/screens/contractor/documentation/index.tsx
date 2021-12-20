@@ -121,7 +121,7 @@ const Documentacion = () => {
                             </Button>
                         </Grid>
                     </Grid>
-                    <Typography className={classes.searchTitle}> Filtar por </Typography>
+                    <Typography className={classes.searchTitle}> Filtrar por </Typography>
                     <Grid className={classes.inputContainer} container  direction='row' justifyContent='space-between' alignItems='center'>
                             <Grid item xs={10} md={5}>
                                 <CustomInput 

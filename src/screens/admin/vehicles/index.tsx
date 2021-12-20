@@ -137,7 +137,7 @@ const Contractors = () => {
                         <AddCircleIcon className={classes.circleIcon}/>
                     </Button>
                 </Grid>
-                <Typography className={classes.searchTitle}> Filtar por </Typography>
+                <Typography className={classes.searchTitle}> Filtrar por </Typography>
                 <Grid className={classes.inputContainer} container  direction='row' justifyContent='space-between' >
                         <Grid item xs={10} md={5}>
                             <CustomInput variant='outlined' className={classes.input} value={searchPlate} setValue={setSearchPlate} placeholder={'Patente'} size='small' />
