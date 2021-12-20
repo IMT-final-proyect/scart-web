@@ -239,7 +239,7 @@ const DocumentDetails = () => {
                 </Grid>
             </Grid>
         }
-            <CustomSnackbar open={errorSnackbar} message={error?.message || 'Hubo un error evaluando el documento'} type='error' onClose={() => setErrorSnackbar(false)} />
+        <CustomSnackbar open={errorSnackbar} message={error?.message || 'Hubo un error evaluando el documento'} type='error' onClose={() => setErrorSnackbar(false)} />
     </>
     )
 }

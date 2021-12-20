@@ -9,12 +9,13 @@ import PreviewIcon from '@mui/icons-material/Preview';
 import useStyles from './styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
-import { getDocumentById, getOwner, postDocumentEvaluation } from '../../../redux/slices/documentsSlice';
+import { getDocumentById, getOwner, postDocumentEvaluation, _cleanSnackbar } from '../../../redux/slices/documentsSlice';
 import { RootState } from '../../../redux/rootReducer';
 import moment from 'moment';
 import globalColors from '../../../utils/styles/globalColors';
 import { ROUTES } from '../navigation/routes';
 import { getSeverityColor, getSeverityName } from '../../../utils/functions/severities';
+import CustomSnackbar from '../../../components/customSnackbar';
 
 const DocumentDetails = () => {
     const dispatch = useDispatch()
@@ -23,11 +24,13 @@ const DocumentDetails = () => {
     const [comment, setComment] = useState('')
     const [image, setImage] = useState('')
     const [modalImage, setModalImage] = useState(false)
-    const [evaluated, setEvaluated] = useState(false)
+    const [errorSnackbar, setErrorSnackbar] = useState(false)
     const { activeDocument, loading } = useSelector((state: RootState) => state.documents)
     const evaluationLoading = useSelector((state:RootState) => state.documents.evaluationLoading)
     const userId = useSelector((state: RootState) => state.user.accountData?.uuid)
     const owner = useSelector((state: RootState) => state.documents.owner)
+    const evaluationSuccess = useSelector((state: RootState) => state.documents.evaluationSuccess)
+    const error = useSelector((state: RootState) => state.documents.error)
     const severity =  getSeverityName(activeDocument.type.severity)
     const color = getSeverityColor(severity)
     const classes = useStyles({color});
@@ -50,8 +53,13 @@ const DocumentDetails = () => {
     }, [image])
 
     useEffect(() => {
-        if(evaluated) history.push(ROUTES.root)
-    }, [evaluated, evaluationLoading, history])
+        if(evaluationSuccess){
+            history.push(ROUTES.root)
+        }
+        else{
+            if(!!error?.message) setErrorSnackbar(true)
+        }
+    }, [error?.message, evaluationSuccess, history])
 
     const closeImagePicker = (value: any) => {
         setModalImage(false)
@@ -67,12 +75,12 @@ const DocumentDetails = () => {
 
     const handleRejected = () => {
         dispatch(postDocumentEvaluation(activeDocument.id, false, comment, userId))
-        setEvaluated(true)
+        dispatch(_cleanSnackbar())
     }
     
     const handleApprove = () => {
         dispatch(postDocumentEvaluation(activeDocument.id, true, comment, userId))
-        setEvaluated(true)
+        dispatch(_cleanSnackbar())
     }
 
 
@@ -83,7 +91,7 @@ const DocumentDetails = () => {
                 <img src={image} alt='document' className={classes.image}/>
             </div>
         </Modal>
-        {loading ?
+        {loading || evaluationLoading ?
             <Grid container alignContent='center' justifyContent='center' >
                 <CircularProgress className={classes.spinner} />
             </Grid>
@@ -231,6 +239,8 @@ const DocumentDetails = () => {
                 </Grid>
             </Grid>
         }
+        <CustomSnackbar open={errorSnackbar} message={error?.message || 'Hubo un error evaluando el documento'} type='error' onClose={() => setErrorSnackbar(false)} />
+
     </>
     )
 }

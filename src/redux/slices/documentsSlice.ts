@@ -401,7 +401,7 @@ export const getDocumentByState = (state: number): AppThunk => async (dispatch) 
       dispatch(getDocumentByStateSuccess(response.data));
    }
    catch(error){
-      dispatch(getDocumentByStateFailure(error.response.data));
+      dispatch(getDocumentByStateFailure(error?.response?.data));
    }
 };
 
