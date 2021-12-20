@@ -53,6 +53,8 @@ const resourcesSlice = createSlice({
    reducers: {
       getContractorsRequest(state) {
          state.loading = true;
+         state.error = initialState.error;
+         state.success = initialState.success;
       },
       getContractorsSuccess(state, action: any) {
          const { payload } = action
@@ -188,10 +190,10 @@ export const createContractor = (
    password: string,
    name: string, 
    cuit: string, 
-   street: string, 
-   number: string,
-   city: string, 
-   province: string): AppThunk => async (dispatch) => {
+   street_address: string, 
+   number_address: string,
+   city_address: string, 
+   province_address: string): AppThunk => async (dispatch) => {
    dispatch(createContractorRequest());
    try{
       const response: AxiosResponse = await Axios.post('/register/Contractor',{
@@ -199,10 +201,10 @@ export const createContractor = (
          password,
          name,
          cuit,
-         street,
-         number,
-         city,
-         province
+         street_address,
+         number_address,
+         city_address,
+         province_address
       });
       dispatch(createContractorSuccess(response.data.userData));
    }

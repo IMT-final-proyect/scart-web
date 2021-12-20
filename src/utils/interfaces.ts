@@ -4,7 +4,7 @@ export interface IAddress {
    street: string;
    city: string;
    province: string;
-   zipcode: string
+   zip_code: string
 }
 
 export interface IContractor {

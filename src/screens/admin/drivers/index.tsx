@@ -15,6 +15,7 @@ import { getContractors } from '../../../redux/slices/contractorsSlice';
 import { IDriver } from '../../../utils/interfaces';
 import DeleteModal from '../../../components/DeleteModal';
 import { Alert } from '@mui/material';
+import CustomSnackbar from '../../../components/customSnackbar';
 
 const Drivers = () => {
     const classes = useStyles();
@@ -133,6 +134,7 @@ const Drivers = () => {
         if(!!contractorId){
             dispatch(createDriver(username, password, name, surname, cuit, moment(birthdate), street, number, city, province, zipCode, contractorId))
             setOpenDriverModal(false)
+            setMessageSnackbar('Conductor creado con exito')
         }
     }
 
@@ -237,16 +239,8 @@ const Drivers = () => {
                         }
                     </Card>
                 }
-                <Snackbar className={classes.snackbar} open={openSnackbarError} autoHideDuration={6000} onClose={() => setOpenSnackbarError(false)} >
-                    <Alert onClose={() => setOpenSnackbarError(false)} severity="error" sx={{ width: '50%' }}>
-                        {error?.message}
-                    </Alert>
-                </Snackbar>
-                <Snackbar className={classes.snackbar} open={openDriverSuccess && !!messageSnackbar} autoHideDuration={6000} onClose={() => setOpenDriverSuccess(false)} >
-                    <Alert onClose={() => setOpenDriverSuccess(false)} severity="success" sx={{ width: '50%' }}>
-                        {messageSnackbar}
-                    </Alert>
-                </Snackbar>
+                <CustomSnackbar open={openSnackbarError} message={error?.message || ''} type='error' onClose={() =>  setOpenSnackbarError(false)} />
+                <CustomSnackbar open={openDriverSuccess} message={messageSnackbar} type='success' onClose={() => setOpenDriverSuccess(false)} />
             </Grid>
         </>
     )

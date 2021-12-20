@@ -12,6 +12,7 @@ import { createContractor, getContractors } from '../../../redux/slices/contract
 import ContractorRow from './components/contratorRow';
 import CustomInput from '../../../components/customInput';
 import { IContractor } from '../../../utils/interfaces';
+import CustomSnackbar from '../../../components/customSnackbar';
 
 const Contractors = () => {
     const classes = useStyles();
@@ -20,13 +21,25 @@ const Contractors = () => {
     const [searchName, setSearchName] = useState('')
     const [searchCuit, setSearchCuit] = useState('')
     const [loadingFilter, setLoadingFilter] = useState(false)
+    const [contractorsFiltered, setContractorsFiltered] = useState<IContractor[]>([])
+    const [openCreateSuccess, setOpenCreateSuccess] = useState(false)
+    const [openCreateFailure, setOpenCreateFailure] = useState(false)
     const contractors = useSelector((state: RootState) => state.contractors.data)
     const loadingContractor = useSelector((state: RootState) => state.contractors.loading)
-    const [contractorsFiltered, setContractorsFiltered] = useState<IContractor[]>([])
+    const success = useSelector((state: RootState) => state.contractors.success)
+    const error = useSelector((state: RootState) => state.contractors.error)
 
     useEffect(() => {
         dispatch(getContractors())
     }, [dispatch])
+
+    useEffect(() => {
+        setOpenCreateSuccess(success)
+    }, [success])
+
+    useEffect(() => {
+        setOpenCreateFailure(!!error)
+    }, [error])
 
     useEffect(() => {
         setContractorsFiltered(() => {
@@ -72,7 +85,7 @@ const Contractors = () => {
         }
         setContractorsFiltered(contractorsAux)
         setLoadingFilter(false)
-    }, [searchName, searchCuit])
+    }, [searchName, searchCuit, contractors])
 
     const addContractor = (username: string, password: string, name: string, cuit: string, street: string, number: string, city: string, province: string) => {
         dispatch(createContractor(username, password, name, cuit, street, number, city, province))
@@ -146,6 +159,8 @@ const Contractors = () => {
                     }
                 </Card>
             }
+            <CustomSnackbar open={openCreateSuccess} message='Contratista creado con éxito' type='success' onClose={() => setOpenCreateSuccess(false)} />
+            <CustomSnackbar open={openCreateFailure} message='Error creando contratista' type='error' onClose={() => setOpenCreateFailure(false)} />
         </Grid>
         </>
     )

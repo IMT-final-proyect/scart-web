@@ -2,6 +2,7 @@ import { Button, Grid, Snackbar, TextField, } from '@material-ui/core';
 import useStyles from './styles';
 import { useCallback, useState } from 'react';
 import { Alert } from '@mui/material';
+import CustomSnackbar from '../../../../../components/customSnackbar';
 
 interface Props{
     addVehicle: (brand: string, model: string, year: string, plate: string) => void
@@ -78,11 +79,7 @@ const CreateVehicleModal = ({ addVehicle, setOpenVehicleModal }: Props) => {
                     value={model}
                     onChange={_onChangeModel}
                 />
-                <Snackbar className={classes.snackbar} open={emptyField} autoHideDuration={6000} onClose={() => setEmptyField(false)} >
-                    <Alert onClose={() => setEmptyField(false)} severity="error" sx={{ width: '100%' }}>
-                        Falta completar algún campo
-                    </Alert>
-                </Snackbar>
+                <CustomSnackbar open={emptyField} message='Falta completar algún campo' type='error' onClose={() => setEmptyField(false)} />
                 <Grid container direction='row' className={classes.buttonContainer} justifyContent='space-between'>
                     <Button variant="contained" className={classes.cancel} onClick={ () => setOpenVehicleModal(false)}>Cancelar</Button>
                     <Button variant="contained" color='primary' onClick={_handleOnClick}>Crear</Button>

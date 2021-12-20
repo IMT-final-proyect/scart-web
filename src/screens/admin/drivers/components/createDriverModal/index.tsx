@@ -8,6 +8,7 @@ import { Alert } from '@mui/material';
 import { RootState } from '../../../../../redux/rootReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import CustomSelect from '../../../../../components/customSelect'
+import CustomSnackbar from '../../../../../components/customSnackbar';
 
 interface Props{
     addDriver: (username: string,
@@ -252,16 +253,8 @@ const CreateDriverModal = ({ addDriver, setOpenDriverModal }: Props) => {
                         />
                     </Grid>
                 </Grid>
-                <Snackbar className={classes.snackbar} open={emptyField} autoHideDuration={6000} onClose={() => setEmptyField(false)} >
-                    <Alert onClose={() => setEmptyField(false)} severity="error" sx={{ width: '100%' }}>
-                        Falta completar algún campo
-                    </Alert>
-                </Snackbar>
-                <Snackbar className={classes.snackbar} open={passwordNotRepeated} autoHideDuration={6000} onClose={() => setPasswordNotRepeated(false)}>
-                    <Alert onClose={() => setPasswordNotRepeated(false)} severity="error" sx={{ width: '100%' }}>
-                        Las contraseñas no coinciden
-                    </Alert>
-                </Snackbar>
+                <CustomSnackbar open={emptyField} message='Falta completar algún campo' type='error' onClose={() => setEmptyField(false)} />
+                <CustomSnackbar open={passwordNotRepeated} message={'Las contraseñas no coinciden'} type='error' onClose={() =>  setPasswordNotRepeated(false)} />
                 <Grid container direction='row' justifyContent='space-between'>
                     <Button variant="contained" className={classes.cancel} onClick={ () => setOpenDriverModal(false)}>Cancelar</Button>
                     <Button variant="contained" color='primary' onClick={_handleOnClick}>Crear</Button>

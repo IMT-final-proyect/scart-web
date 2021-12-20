@@ -12,9 +12,9 @@ import CreateVehicleDocumentModal from './components/CreateVehicleDocumentModal'
 import { createDocument, getVehicleDocuments } from '../../../../../redux/slices/documentsSlice';
 import { ROUTES } from '../../../navigation/routes';
 import DocumentRow from './components/documentRow/DocumentRow';
-import { Alert } from '@mui/material';
 import EditVehicleModal from '../../../../../components/editVehicleModal';
 import { editVehicle, getVehicleById } from '../../../../../redux/slices/resourcesSlice';
+import CustomSnackbar from '../../../../../components/customSnackbar';
 
 const VehicleDetails = () => {
     const classes = useStyles();
@@ -23,14 +23,20 @@ const VehicleDetails = () => {
     const [openVehicleDocumentModal, setOpenVehicleDocumentModal] = useState(false)
     const [openEditVehicleModal, setOpenEditVehicleModal] = useState(false)
     const [openEditVehicleSuccess, setOpenEditVehicleSuccess] = useState(false)
+    const [openEditVehicleError, setOpenEditVehicleError] = useState(false)
     const [messageSnackbar, setMessageSnackbar] = useState('')
+    const [openSuccess, setOpenSuccess] = useState(false)
+    const [openFailure, setOpenFailure] = useState(false)
     const vehicle: IVehicle = useSelector((state: RootState) => {
         const vehicles = state.resources.vehicles.data
         return vehicles[params.id]
     })
     const documents: IDocument[] = useSelector((state: RootState) => state.documents.vehicles.data)
     const success: boolean = useSelector((state: RootState) => state.resources.vehicles.success)
+    const error = useSelector((state: RootState) => state.resources.vehicles.error)
     const loading: boolean = useSelector((state: RootState) => state.documents.vehicles.loading)
+    const documentSuccess = useSelector((state: RootState) => state.documents.success)
+    const documentError = useSelector((state: RootState) => state.documents.error)
 
     useEffect(() => { 
         dispatch(getVehicleById(params.id))
@@ -40,7 +46,18 @@ const VehicleDetails = () => {
     useEffect(() => {
         setOpenEditVehicleSuccess(success)
     }, [success])
+    
+    useEffect(() => {
+        setOpenSuccess(documentSuccess)
+    }, [documentSuccess])
 
+    useEffect(() => {
+        setOpenFailure(!!error)
+    }, [error])
+
+    useEffect(() => {
+        setOpenFailure(!!documentError)
+    }, [documentError])
 
     const addDocument = (expirationDate: moment.Moment, type: number, entityType: number, entityId: number, images: string[], contractorId: number) => {
         dispatch(createDocument(expirationDate, type, entityType, entityId, images, contractorId))
@@ -156,11 +173,10 @@ const VehicleDetails = () => {
                 </Grid>
             </Grid>
             }
-            <Snackbar className={classes.snackbar} open={openEditVehicleSuccess && !!messageSnackbar} autoHideDuration={6000} onClose={() => setOpenEditVehicleSuccess(false)} >
-                <Alert onClose={() => setOpenEditVehicleSuccess(false)} severity="success" sx={{ width: '50%' }}>
-                    {messageSnackbar}
-                </Alert>
-            </Snackbar>
+            <CustomSnackbar open={openEditVehicleSuccess && !!messageSnackbar} message={messageSnackbar} type='success' onClose={() => setOpenEditVehicleSuccess(false)} />
+            <CustomSnackbar open={openEditVehicleError} message={'Error editando conductor'} type='error' onClose={() =>  setOpenEditVehicleError(false)} />
+            <CustomSnackbar open={openSuccess} message='Documento creado con éxito' type='success' onClose={() => setOpenSuccess(false)} />
+            <CustomSnackbar open={openFailure} message='Error creando documento' type='error' onClose={() => setOpenFailure(false)} />
         </>
     )
 }

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { Button, Card, CircularProgress, Grid, Modal, Snackbar, Typography } from '@material-ui/core'
+import { Button, Card, CircularProgress, Grid, Modal, Typography } from '@material-ui/core'
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import EditIcon from '@mui/icons-material/Edit';
 import { Link, useParams } from 'react-router-dom';
@@ -14,8 +14,8 @@ import CreateVehicleDocumentModal from './components/CreateVehicleDocumentModal'
 import { ROUTES } from '../../../navigation/routes';
 import EditVehicleModal from '../../../../../components/editVehicleModal';
 import { editVehicle, getVehicleById } from '../../../../../redux/slices/resourcesSlice';
-import { Alert } from '@mui/material';
 import DocumentRow from '../documentRow/DocumentRow';
+import CustomSnackbar from '../../../../../components/customSnackbar';
 
 
 const conductores = []
@@ -27,6 +27,9 @@ const VehicleDetails = () => {
     const [openVehicleDocumentModal, setOpenVehicleDocumentModal] = useState(false)
     const [openEditVehicleModal, setOpenEditVehicleModal] = useState(false)
     const [openEditVehicleSuccess, setOpenEditVehicleSuccess] = useState(false)
+    const [openEditVehicleFailure, setOpenEditVehicleFailure] = useState(false)
+    const [openSnackbarDocError, setOpenSnackbarDocError] = useState(false)
+    const [openSnackbarDocSuccess, setOpenSnackbarDocSuccess] = useState(false)
     const [messageSnackbar, setMessageSnackbar] = useState('')
     const vehicle: IVehicle = useSelector((state: RootState) => {
         const vehicles = state.resources.vehicles.data
@@ -35,6 +38,9 @@ const VehicleDetails = () => {
     const accountData = useSelector((state: RootState) => state.user.accountData)
     const documents: IDocument[] = useSelector((state: RootState) => state.documents.vehicles.data)
     const success: boolean = useSelector((state: RootState) => state.resources.vehicles.success)
+    const error = useSelector((state: RootState) => state.resources.vehicles.error)
+    const documentError = useSelector((state: RootState) => state.documents.error)
+    const documentSuccess = useSelector((state: RootState) => state.documents.success)
     const loading: boolean = useSelector((state: RootState) => state.documents.vehicles.loading)
 
     useEffect(() => { 
@@ -45,6 +51,18 @@ const VehicleDetails = () => {
     useEffect(() => {
         setOpenEditVehicleSuccess(success)
     }, [success])
+
+    useEffect(() => {
+        setOpenSnackbarDocSuccess(documentSuccess)
+    }, [documentSuccess])
+
+    useEffect(() => {
+        setOpenEditVehicleFailure(!!error)
+    }, [error])
+
+    useEffect(() => {
+        setOpenSnackbarDocError(!!documentError)
+    }, [documentError])
 
     const addDocument = (expirationDate: moment.Moment, type: number, entityType: number, entityId: number, images: string[]) => {
         if (!!accountData)
@@ -210,11 +228,10 @@ const VehicleDetails = () => {
                     </Grid>
                 </Grid>
             }
-            <Snackbar className={classes.snackbar} open={openEditVehicleSuccess && !!messageSnackbar} autoHideDuration={6000} onClose={() => setOpenEditVehicleSuccess(false)} >
-                <Alert onClose={() => setOpenEditVehicleSuccess(false)} severity="success" sx={{ width: '50%' }}>
-                    {messageSnackbar}
-                </Alert>
-            </Snackbar>
+            <CustomSnackbar open={openEditVehicleSuccess && !!messageSnackbar} message={messageSnackbar} type='success' onClose={() => setOpenEditVehicleSuccess(false)} />
+            <CustomSnackbar open={openSnackbarDocSuccess} message='Documento creado con exito' type='success' onClose={() => setOpenEditVehicleSuccess(false)} />
+            <CustomSnackbar open={openEditVehicleFailure} message='Error editando vehiculo' type='error' onClose={() => setOpenEditVehicleFailure(false)} />
+            <CustomSnackbar open={openSnackbarDocError} message='Error creando documento' type='error' onClose={() => setOpenEditVehicleSuccess(false)} />
         </>
     )
 }

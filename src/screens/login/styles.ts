@@ -61,9 +61,6 @@ const useStyles = makeStyles((theme: Theme) => ({
             marginBottom:'3%'
         },
     },
-    
-    snackbar: {
-    }
 }));
 
 export default useStyles

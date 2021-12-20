@@ -2,7 +2,7 @@
 
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import MomentUtils from '@date-io/moment';
-import { Button, Grid, Snackbar, } from '@material-ui/core';
+import { Button, Grid, } from '@material-ui/core';
 import useStyles from './styles';
 import { useEffect, useState } from 'react';
 import moment from 'moment';
@@ -12,11 +12,11 @@ import { useFilePicker } from 'use-file-picker';
 
 import CustomSelectObject from '../../../../../../../components/customSelectObject'; 
 import { useDispatch, useSelector } from 'react-redux';
-import { Alert } from '@mui/material';
 import { RootState } from '../../../../../../../redux/rootReducer';
 import { getDocumentTypesByEntity } from '../../../../../../../redux/slices/documentTypesSlice';
 import globalColors from '../../../../../../../utils/styles/globalColors';
 import { AllowedRol } from '../../../../../../../utils/constants';
+import CustomSnackbar from '../../../../../../../components/customSnackbar';
 
 interface Props{
     addDocument: (expirationDate: moment.Moment, type: number, entityType: number, entityId: number, images: string[], contractorId: number) => void
@@ -42,7 +42,7 @@ const CreateVehicleDocumentModal = ({ addDocument, setOpenVehicleDocumentModal, 
     
     useEffect(() => {
         dispatch(getDocumentTypesByEntity(6))
-    }, [])
+    }, [dispatch])
 
     const handleExpirationChange = (date: moment.Moment | null) => {
         setExpirationDate(date);
@@ -102,16 +102,8 @@ const CreateVehicleDocumentModal = ({ addDocument, setOpenVehicleDocumentModal, 
                 }
             </Button>
             <text className={classes.filesUploaded}>Archivos cargados: {filesContent.length}</text>
-            <Snackbar className={classes.snackbar} open={emptyField} autoHideDuration={6000} onClose={() => setEmptyField(false)} >
-                <Alert onClose={() => setEmptyField(false)} severity="error" sx={{ width: '100%' }}>
-                    Falta completar algún campo o adjuntar alguna imagen
-                </Alert>
-            </Snackbar>
-            <Snackbar className={classes.snackbar} open={!!error} autoHideDuration={6000} onClose={() => setEmptyField(false)} >
-                <Alert onClose={() => setEmptyField(false)} severity="error" sx={{ width: '100%' }}>
-                    {error?.message}
-                </Alert>
-            </Snackbar>
+            <CustomSnackbar open={emptyField} message='Falta completar algún campo o adjuntar alguna imagen' type='error' onClose={() => setEmptyField(false)} />
+            <CustomSnackbar open={!!error} message={error?.message || ''} type='error' onClose={() => setEmptyField(false)} />
             <Grid container direction='row' justifyContent='space-between'>
                 <Button variant="contained" className={classes.cancel} onClick={ () => setOpenVehicleDocumentModal(false)}>Cancelar</Button>
                 <Button variant="contained" color='primary' onClick={_handleOnClick}>Crear</Button>

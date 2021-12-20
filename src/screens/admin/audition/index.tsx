@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Card, CircularProgress, Grid, } from '@material-ui/core';
 
@@ -9,16 +9,23 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getDocumentByState } from '../../../redux/slices/documentsSlice';
 import { States } from '../../../utils/constants';
 import { RootState } from '../../../redux/rootReducer';
+import CustomSnackbar from '../../../components/customSnackbar';
 
 const Documentation = () => {
     const classes = useStyles();
     const dispatch = useDispatch()
+    const [openSuccess, setOpenSuccess] = useState(false)
     const documents = useSelector((state: RootState) => state.documents.pendingDocuments)
     const loading = useSelector((state: RootState) => state.documents.loading)
+    const success = useSelector((state: RootState) => state.documents.success)
     
     useEffect(() => {
         dispatch(getDocumentByState(States.PENDING))
     }, [dispatch])
+
+    useEffect(() => {
+        setOpenSuccess(success)
+    }, [success])
 
     return (
         <>
@@ -68,13 +75,14 @@ const Documentation = () => {
                                     contractor={documents[parseInt(key)].contractor}
                                     type={documents[parseInt(key)].type}
                                     owner={documents[parseInt(key)].entityId}
-                                    route={ROUTES.root+ROUTES.documentDetails+'/'+documents[parseInt(key)].id}
+                                    route={ROUTES.root+ROUTES.audition+'/'+documents[parseInt(key)].id}
                                 />
                             )}
                         </Grid>
                     </Card>
                 </Grid>
             }
+            <CustomSnackbar open={openSuccess} message='Documento evaluado con éxito' type='success' onClose={() => setOpenSuccess(false)} />
         </>
     )
 }

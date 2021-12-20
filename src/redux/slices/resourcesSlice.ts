@@ -51,6 +51,7 @@ const resourcesSlice = createSlice({
       getAllDriversRequest(state) {
          state.drivers.loading = true;
          state.drivers.success = initialState.drivers.success;
+         state.drivers.error = initialState.drivers.error;
       },
       getAllDriversSuccess(state, action: any) {
          const { payload } = action
@@ -68,6 +69,7 @@ const resourcesSlice = createSlice({
       getDriverByIdRequest(state) {
          state.drivers.loading = true;
          state.drivers.success = initialState.drivers.success;
+         state.drivers.error = initialState.drivers.error;
       },
       getDriverByIdSuccess(state, action: any) {
          const { payload } = action
@@ -102,6 +104,7 @@ const resourcesSlice = createSlice({
       },
       getAllVehiclesRequest(state) {
          state.vehicles.loading = true;
+         state.vehicles.error = initialState.vehicles.error;
       },
       getAllVehiclesSuccess(state, action: any) {
          const { payload } = action
@@ -119,6 +122,7 @@ const resourcesSlice = createSlice({
       getVehicleByIdRequest(state) {
          state.vehicles.loading = true;
          state.vehicles.success = initialState.vehicles.success;
+         state.vehicles.error = initialState.vehicles.error;
       },
       getVehicleByIdSuccess(state, action: any) {
          const { payload } = action
@@ -275,7 +279,7 @@ export const getAllDrivers = (contractorId?: number): AppThunk => async (dispatc
 export const getDriverById = (id: number): AppThunk => async (dispatch) => {
    dispatch(getDriverByIdRequest());
    try{
-      const response: AxiosResponse = await Axios.get(`/drivers/${id}`);
+      const response: AxiosResponse = await Axios.get(`/drivers/${id}?relations=address`);
       console.log(response.data);
       
       dispatch(getDriverByIdSuccess(response.data));
@@ -401,7 +405,18 @@ export const deleteVehicle = (id: number, contractorId?: number): AppThunk => as
    }
 }
 
-export const editDriver = (driver: IDriver, name: string, surname: string, cuit: string, birth_date: moment.Moment, password?: string): AppThunk => async (dispatch) => {
+export const editDriver = (
+   driver: IDriver, 
+   name: string, 
+   surname: string, 
+   cuit: string, 
+   birth_date: moment.Moment, 
+   street: string,
+   number: number,
+   city: string,
+   province: string,
+   zip_code: string,
+   password?: string): AppThunk => async (dispatch) => {
    dispatch(editDriverRequest());
    try{
       let body
@@ -411,6 +426,13 @@ export const editDriver = (driver: IDriver, name: string, surname: string, cuit:
             surname,
             cuit,
             birth_date,
+            address: {
+               street,
+               number,
+               city,
+               province,
+               zip_code
+            },
             password
          }
       else
@@ -418,7 +440,14 @@ export const editDriver = (driver: IDriver, name: string, surname: string, cuit:
             name,
             surname,
             cuit,
-            birth_date
+            birth_date,
+            address: {
+               street,
+               number,
+               city,
+               province,
+               zip_code
+            }
          } 
       const response: AxiosResponse = await Axios.put(`/drivers/${driver.id}`,body);
       

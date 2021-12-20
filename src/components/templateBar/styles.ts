@@ -5,9 +5,6 @@ import globalColors from '../../utils/styles/globalColors';
 
 const useStyles = makeStyles((theme: Theme) => ({
     customizeToolbar:{
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
         minHeight: headerSize,
         height: headerSize,
     },
@@ -25,12 +22,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     menuButton: {
         marginRight: theme.spacing(2),
     },
-    hide: {
-        display: 'none',
-    },
     drawer: {
-      marginTop: '2.5%',
-      width: 250,
+        marginTop: '2.5%',
+        width: 250,
     },
     salir: {
         textTransform: "none",
@@ -38,6 +32,9 @@ const useStyles = makeStyles((theme: Theme) => ({
         fontSize: 16,
         marginLeft: '5%',
         marginRight: '5%'
-    }
+    },
+    image: {
+        width: '100%'
+    },
 }));
 export default useStyles

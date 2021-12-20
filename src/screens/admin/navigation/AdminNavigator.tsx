@@ -18,6 +18,7 @@ import DocumentDetails from '../documentDetails'
 import contractorDetails from '../contractors/components/contractorDetails';
 import DriverDetails from '../drivers/components/driverDetails';
 import VehicleDetails from '../vehicles/components/vehicleDetails';
+import AuditionDetails from '../audition/components/auditionDetails'
 import { RootState } from '../../../redux/rootReducer';
 import { useSelector } from 'react-redux';
 const AdminNavigator = () => {
@@ -89,6 +90,7 @@ const AdminNavigator = () => {
                 <Route exact path={ROUTES.root+ROUTES.vehicles} component={vehicles} />
                 <Route exact path={ROUTES.root+ROUTES.vehicles+'/:id'} component={VehicleDetails} />
                 <Route exact path={ROUTES.root+ROUTES.audition} component={audition} />
+                <Route exact path={ROUTES.root+ROUTES.audition+'/:id'} component={AuditionDetails} />
                 <Route exact path={ROUTES.root+ROUTES.documentDetails+'/:id'} component={DocumentDetails} />
                 <Route path={ROUTES.root} component={contractors} />
             </Switch>

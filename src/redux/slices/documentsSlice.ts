@@ -13,6 +13,7 @@ interface IContractorDocuments {
     expiring: IDocument[]
     loading: boolean
     error: IError|null
+    success : boolean
 }
 
 interface IDriverDocuments {
@@ -20,6 +21,7 @@ interface IDriverDocuments {
     expiring: IDocument[]
     loading: boolean
     error: IError|null
+    success : boolean
 }
 
 interface IVehicleDocuments {
@@ -27,6 +29,7 @@ interface IVehicleDocuments {
     expiring: IDocument[]
     loading: boolean
     error: IError|null
+    success : boolean
 }
 
 interface IEntitiesDocuments {
@@ -38,7 +41,9 @@ interface IEntitiesDocuments {
     owner: any
     loading: boolean
     evaluationLoading: boolean
+    evaluationSuccess: boolean
     error: IError|null
+    success : boolean
 }
 
 interface IError {
@@ -51,19 +56,22 @@ const initialState: IEntitiesDocuments = {
         data: [],
         expiring: [],
         loading: false,
-        error: null
+        error: null,
+        success: false
     },
     drivers: {
         data: [],
         expiring: [],
         loading: false,
-        error: null
+        error: null,
+        success: false
     },
     vehicles: {
         data: [],
         expiring: [],
         loading: false,
-        error: null
+        error: null,
+        success: false
     },
     activeDocument: {
       id: -1,
@@ -83,7 +91,9 @@ const initialState: IEntitiesDocuments = {
     owner: null,
     loading: false,
     evaluationLoading: false,
-    error: null
+    evaluationSuccess: false,
+    error: null,
+    success: false
 };
 
 const documentsSlice = createSlice({
@@ -92,6 +102,8 @@ const documentsSlice = createSlice({
    reducers: {
       getContractorDocumentsRequest(state) {
          state.contractor.loading = true;
+         state.error = initialState.error
+         state.success = initialState.success
       },
       getContractorDocumentsSuccess(state, action: any) {
          const { payload } = action
@@ -122,6 +134,8 @@ const documentsSlice = createSlice({
       },
       getDriverDocumentsRequest(state) {
          state.drivers.loading = true;
+         state.error = initialState.error
+         state.success = initialState.success
       },
       getDriverDocumentsSuccess(state, action: any) {
          const { payload } = action
@@ -137,6 +151,8 @@ const documentsSlice = createSlice({
       },
       getVehicleDocumentsRequest(state) {
          state.vehicles.loading = true;
+         state.error = initialState.error
+         state.success = initialState.success
       },
       getVehicleDocumentsSuccess(state, action: any) {
          const { payload } = action
@@ -167,10 +183,13 @@ const documentsSlice = createSlice({
       },
       createDocumentRequest(state) {
          state.loading = true;
+         state.success = initialState.success
+         state.error = initialState.error
       },
       createDocumentSuccess(state) {
          state.loading = false;
          state.error = initialState.error
+         state.success = true
       },
       createDocumentFailure(state, action: any) {
          const { payload } = action
@@ -179,6 +198,8 @@ const documentsSlice = createSlice({
       },
       getDocumentByStateRequest(state) {
          state.loading = true
+         state.error = initialState.error
+         state.evaluationSuccess = initialState.evaluationSuccess
       },
       getDocumentByStateSuccess(state, action: any) {
          const { payload } = action
@@ -209,16 +230,24 @@ const documentsSlice = createSlice({
       },
       postDocumentEvaluationRequest(state) {
          state.evaluationLoading = true
+         state.success = false
+         state.evaluationSuccess = false
       },
       postDocumentEvaluationSuccess(state) {
          state.evaluationLoading = false
          state.error = initialState.error
+         state.success = true
+         state.evaluationSuccess = true
       },
       postDocumentEvaluationFailure(state, action: any) {
          const { payload } = action
          state.evaluationLoading = false
          state.error = payload
       },
+      cleanSnackbar(state) {
+         state.error = initialState.error
+         state.success = initialState.success
+      }
    },
 });
 
@@ -249,7 +278,8 @@ const {
     getOwnerFailure,
     postDocumentEvaluationRequest,
     postDocumentEvaluationSuccess,
-    postDocumentEvaluationFailure
+    postDocumentEvaluationFailure,
+    cleanSnackbar
 } = documentsSlice.actions;
 
 
@@ -416,7 +446,7 @@ export const postDocumentEvaluation = (id: number, isApprovation: boolean, comme
          { 
             state: nextState, 
             comment, 
-            auditorUuid: uuid
+            auditorUuid: uuid,
          });
          dispatch(postDocumentEvaluationSuccess());
       }
@@ -424,4 +454,11 @@ export const postDocumentEvaluation = (id: number, isApprovation: boolean, comme
    catch(error){
       dispatch(postDocumentEvaluationFailure(error.response.data));
    }
+};
+
+
+export const _cleanSnackbar = (): AppThunk => async (dispatch) => {
+   setTimeout(() => {
+      dispatch(cleanSnackbar());
+    }, 6000);
 };

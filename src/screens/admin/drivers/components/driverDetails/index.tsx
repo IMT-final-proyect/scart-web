@@ -15,6 +15,7 @@ import DocumentRow from './components/documentRow/DocumentRow';
 import EditDriverModal from '../../../../../components/editDriverModal';
 import { Alert } from '@mui/material';
 import { editDriver } from '../../../../../redux/slices/resourcesSlice';
+import CustomSnackbar from '../../../../../components/customSnackbar';
 
 const DriverDetails = () => {
     const classes = useStyles();
@@ -23,8 +24,11 @@ const DriverDetails = () => {
     const [openDriverDocumentModal, setOpenDriverDocumentModal] = useState(false)
     const [openEditDriverModal, setOpenEditDriverModal] = useState(false)
     const [openEditDriverSuccess, setOpenEditDriverSuccess] = useState(false)
+    const [openEditDriverError, setOpenEditDriverError] = useState(false)
     const [messageSnackbar, setMessageSnackbar] = useState('')
     const [changePassword, setChangePassword] = useState(false)
+    const [openSuccess, setOpenSuccess] = useState(false)
+    const [openFailure, setOpenFailure] = useState(false)
     const driver: IDriver = useSelector((state: RootState) => {
         const drivers = state.resources.drivers.data
         return drivers[params.id]
@@ -32,7 +36,9 @@ const DriverDetails = () => {
     const documents: IDocument[] = useSelector((state: RootState) => state.documents.drivers.data)
     const loading: boolean = useSelector((state: RootState) => state.documents.drivers.loading)
     const success: boolean = useSelector((state: RootState) => state.resources.drivers.success)
-    
+    const error: boolean = useSelector((state: RootState) => state.resources.drivers.success)
+    const documentSuccess = useSelector((state: RootState) => state.documents.success)
+    const documentError = useSelector((state: RootState) => state.documents.error)
 
     useEffect(() => { 
         dispatch(getDriverDocuments(driver.id))
@@ -42,16 +48,40 @@ const DriverDetails = () => {
         setOpenEditDriverSuccess(success)
     }, [success])
 
+    useEffect(() => {
+        setOpenSuccess(documentSuccess)
+    }, [documentSuccess])
+
+    useEffect(() => {
+        setOpenFailure(!!error)
+    }, [error])
+
+    useEffect(() => {
+        setOpenFailure(!!documentError)
+    }, [documentError])
+
+
     const addDocument = (expirationDate: moment.Moment, type: number, entityType: number, entityId: number, images: string[], contractorId: number) => {
         dispatch(createDocument(expirationDate, type, entityType, entityId, images, contractorId))
         setOpenDriverDocumentModal(false)
     }
     
-    const _editDriver = (driver: IDriver, name: string, surname: string, cuit: string, birthdate: moment.Moment, password: string) => {
+    const _editDriver = (
+        driver: IDriver, 
+        name: string, 
+        surname: string, 
+        cuit: string, 
+        birthdate: moment.Moment, 
+        street: string,
+        number: number,
+        city: string,
+        province: string,
+        zipCode: string,
+        password?: string) => {
         if (changePassword)
-            dispatch(editDriver(driver, name, surname, cuit, birthdate, password))
+            dispatch(editDriver(driver, name, surname, cuit, birthdate, street, number, city, province, zipCode, password))
         else
-            dispatch(editDriver(driver, name, surname, cuit, birthdate))
+            dispatch(editDriver(driver, name, surname, cuit, birthdate, street, number, city, province, zipCode))
         setMessageSnackbar('Conductor modificado con exito')
     }
 
@@ -132,7 +162,7 @@ const DriverDetails = () => {
                         <Grid item xs={6}>
                             <div className={classes.dataContainer}>
                                 <text className={classes.dataField}> Codigo Postal: </text>
-                                <text className={classes.data}> {driver?.address?.zipcode || '-'} </text>
+                                <text className={classes.data}> {driver?.address?.zip_code || '-'} </text>
                             </div>
                         </Grid>
                         <Grid item xs={6}>
@@ -201,11 +231,10 @@ const DriverDetails = () => {
                 </Grid>
             </Grid>
             }
-            <Snackbar className={classes.snackbar} open={openEditDriverSuccess && !!messageSnackbar} autoHideDuration={6000} onClose={() => setOpenEditDriverSuccess(false)} >
-                <Alert onClose={() => setOpenEditDriverSuccess(false)} severity="success" sx={{ width: '50%' }}>
-                    {messageSnackbar}
-                </Alert>
-            </Snackbar>
+            <CustomSnackbar open={openEditDriverSuccess && !!messageSnackbar} message={messageSnackbar} type='success' onClose={() =>  setOpenEditDriverSuccess(false)} />
+            <CustomSnackbar open={openEditDriverError} message={'Error editando conductor'} type='error' onClose={() =>  setOpenEditDriverError(false)} />
+            <CustomSnackbar open={openSuccess} message='Documento creado con éxito' type='success' onClose={() => setOpenSuccess(false)} />
+            <CustomSnackbar open={openFailure} message='Error creando documento' type='error' onClose={() => setOpenFailure(false)} />
         </>
     )
 }

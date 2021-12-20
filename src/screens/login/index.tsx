@@ -14,6 +14,7 @@ import { getRolPath } from '../../utils/functions/roles';
 import LogoNutreco from '../../assets/images/logoNutreco.png'
 import { isTokenValid } from '../../utils/functions/validations';
 import { Alert } from '@mui/material';
+import CustomSnackbar from '../../components/customSnackbar';
 
 
 const Login = () => {
@@ -151,11 +152,7 @@ const Login = () => {
                         </Grid>
                     </CardContent>
                 </Card>
-                <Snackbar className={classes.snackbar} open={error !== null} autoHideDuration={6000} onClose={() => handleClearError()}>
-                    <Alert onClose={() => handleClearError()} severity="error" sx={{ width: '100%' }}>
-                        {error?.message}
-                    </Alert>
-                </Snackbar>
+                <CustomSnackbar open={error !== null} message={error?.message || ''} type='error' onClose={() => handleClearError()} />
             </Grid>
     )
 }

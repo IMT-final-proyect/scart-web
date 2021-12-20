@@ -5,6 +5,7 @@ import { Alert, Snackbar, TextField } from "@mui/material"
 import moment from "moment";
 import { useCallback, useEffect, useState } from "react";
 import { IVehicle } from "../../utils/interfaces";
+import CustomSnackbar from "../customSnackbar";
 import useStyles from './styles';
 
 interface Props{
@@ -96,11 +97,7 @@ const EditDriverModal = ( { vehicle, editVehicle, setOpenEditVehicleModal }: Pro
                         onChange={_onChangeYear}
                     />
                 </Grid>
-                <Snackbar className={classes.snackbar} open={emptyField} autoHideDuration={6000} onClose={() => setEmptyField(false)} >
-                    <Alert onClose={() => setEmptyField(false)} severity="error" sx={{ width: '100%' }}>
-                        Falta completar algún campo
-                    </Alert>
-                </Snackbar>
+                <CustomSnackbar open={emptyField} message='Falta completar algún campo' type='error' onClose={() => setEmptyField(false)} />
                 <Grid container className={classes.buttons} direction='row' justifyContent='space-between'>
                     <Button variant="contained" className={classes.cancel} onClick={ () => setOpenEditVehicleModal(false)}>Cancelar</Button>
                     <Button variant="contained" color='primary' onClick={_handleOnClick}>Editar</Button>

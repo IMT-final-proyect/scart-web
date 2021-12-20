@@ -17,6 +17,7 @@ import { RootState } from '../../../../../../../redux/rootReducer';
 import { getDocumentTypesByEntity } from '../../../../../../../redux/slices/documentTypesSlice';
 import globalColors from '../../../../../../../utils/styles/globalColors';
 import { AllowedRol } from '../../../../../../../utils/constants';
+import CustomSnackbar from '../../../../../../../components/customSnackbar';
 
 interface Props{
     addDocument: (expirationDate: moment.Moment, type: number, entityType: number, entityId: number, images: string[], contractorId: number) => void
@@ -102,16 +103,8 @@ const CreateDriverDocumentModal = ({ addDocument, setOpenDriverDocumentModal, dr
                 }
             </Button>
             <text className={classes.filesUploaded}>Archivos cargados: {filesContent.length}</text>
-            <Snackbar className={classes.snackbar} open={emptyField} autoHideDuration={6000} onClose={() => setEmptyField(false)} >
-                <Alert onClose={() => setEmptyField(false)} severity="error" sx={{ width: '100%' }}>
-                    Falta completar algún campo o adjuntar alguna imagen
-                </Alert>
-            </Snackbar>
-            <Snackbar className={classes.snackbar} open={!!error} autoHideDuration={6000} onClose={() => setEmptyField(false)} >
-                <Alert onClose={() => setEmptyField(false)} severity="error" sx={{ width: '100%' }}>
-                    {error?.message}
-                </Alert>
-            </Snackbar>
+            <CustomSnackbar open={emptyField} message='Falta completar algún campo o adjuntar alguna imagen' type='error' onClose={() => setEmptyField(false)} />
+            <CustomSnackbar open={!!error} message={error?.message || ''} type='error' onClose={() => setEmptyField(false)} />
             <Grid container direction='row' justifyContent='space-between'>
                 <Button variant="contained" className={classes.cancel} onClick={ () => setOpenDriverDocumentModal(false)}>Cancelar</Button>
                 <Button variant="contained" color='primary' onClick={_handleOnClick}>Crear</Button>

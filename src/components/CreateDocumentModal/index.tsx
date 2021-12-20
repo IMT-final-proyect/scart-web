@@ -15,7 +15,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getDocumentTypesByEntity } from '../../redux/slices/documentTypesSlice';
 import { RootState } from '../../redux/rootReducer';
 import globalColors from '../../utils/styles/globalColors';
-import { Alert } from '@mui/material';
+import CustomSnackbar from '../customSnackbar';
 
 const entities = [
     {
@@ -107,11 +107,7 @@ const CreateDocumentModal = ({ addDocument, setOpenDriverModal }: Props) => {
                 }
             </Button>
             <text className={classes.filesUploaded}>Archivos cargados: {filesContent.length}</text>
-            <Snackbar className={classes.snackbar} open={emptyField} autoHideDuration={6000} onClose={() => setEmptyField(false)} >
-                <Alert onClose={() => setEmptyField(false)} severity="error" sx={{ width: '100%' }}>
-                    Falta completar algún campo o adjuntar alguna imagen
-                </Alert>
-            </Snackbar>
+            <CustomSnackbar open={emptyField} message='Falta completar algún campo o adjuntar alguna imagen' type='error' onClose={() => setEmptyField(false)} />
             <Grid container direction='row' justifyContent='space-between'>
                 <Button variant="contained" className={classes.cancel} onClick={ () => setOpenDriverModal(false)}>Cancelar</Button>
                 <Button variant="contained" color='primary' onClick={_handleOnClick}>Crear</Button>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Card, CircularProgress, Grid, Modal, Snackbar, Typography, } from '@material-ui/core'
+import { Button, Card, CircularProgress, Grid, Modal, Typography, } from '@material-ui/core'
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import useStyles from './styles' 
 import { Link, useParams } from 'react-router-dom';
@@ -13,8 +13,8 @@ import { ROUTES } from '../../../navigation/routes';
 import EditDriverModal from '../../../../../components/editDriverModal';
 import EditIcon from '@mui/icons-material/Edit';
 import { editDriver, getDriverById } from '../../../../../redux/slices/resourcesSlice';
-import { Alert } from '@mui/material';
 import DocumentRow from '../documentRow/DocumentRow';
+import CustomSnackbar from '../../../../../components/customSnackbar';
 
 
 const autos: string[] = []
@@ -27,7 +27,10 @@ const DriverDetails = () => {
     const [openDriverDocumentModal, setOpenDriverDocumentModal] = useState(false)
     const [openEditDriverModal, setOpenEditDriverModal] = useState(false)
     const [openEditDriverSuccess, setOpenEditDriverSuccess] = useState(false)
-    const [messageSnackbar, setMessageSnackbar] = useState('')
+    const [openSnackbarError, setOpenSnackbarError] = useState(false)
+    const [openSnackbarDocError, setOpenSnackbarDocError] = useState(false)
+    const [openSnackbarDocSuccess, setOpenSnackbarDocSuccess] = useState(false)
+    const [messageSuccessSnackbar, setSuccessMessageSnackbar] = useState('')
     const [changePassword, setChangePassword] = useState(false)
     const driver: IDriver = useSelector((state: RootState) => {
         const drivers = state.resources.drivers.data
@@ -37,6 +40,9 @@ const DriverDetails = () => {
     const documents: IDocument[] = useSelector((state: RootState) => state.documents.drivers.data)
     const loading: boolean = useSelector((state: RootState) => state.documents.drivers.loading)
     const success: boolean = useSelector((state: RootState) => state.resources.drivers.success)
+    const error = useSelector((state: RootState) => state.resources.drivers.error)
+    const documentError = useSelector((state: RootState) => state.documents.error)
+    const documentSuccess = useSelector((state: RootState) => state.documents.success)
 
     useEffect(() => { 
         dispatch(getDriverById(params.id))
@@ -47,18 +53,41 @@ const DriverDetails = () => {
         setOpenEditDriverSuccess(success)
     }, [success])
 
+    useEffect(() => {
+        setOpenSnackbarDocSuccess(documentSuccess)
+    }, [documentSuccess])
+
+    useEffect(() => {
+        setOpenSnackbarError(!!error)
+    }, [error])
+
+    useEffect(() => {
+        setOpenSnackbarError(!!documentError)
+    }, [documentError])
+
     const addDocument = (expirationDate: moment.Moment, type: number, entityType: number, entityId: number, images: string[]) => {
         if (!!accountData)
             dispatch(createDocument(expirationDate, type, entityType, entityId, images, accountData.entityId))
         setOpenDriverDocumentModal(false)
     }
 
-    const _editDriver = (driver: IDriver, name: string, surname: string, cuit: string, birthdate: moment.Moment, password: string) => {
+    const _editDriver = (
+        driver: IDriver, 
+        name: string, 
+        surname: string, 
+        cuit: string, 
+        birthdate: moment.Moment, 
+        street: string,
+        number: number,
+        city: string,
+        province: string,
+        zipCode: string,
+        password?: string) => {
         if (changePassword)
-            dispatch(editDriver(driver, name, surname, cuit, birthdate, password))
+            dispatch(editDriver(driver, name, surname, cuit, birthdate, street, number, city, province, zipCode, password))
         else
-            dispatch(editDriver(driver, name, surname, cuit, birthdate))
-        setMessageSnackbar('Conductor modificado con exito')
+            dispatch(editDriver(driver, name, surname, cuit, birthdate, street, number, city, province, zipCode))
+        setSuccessMessageSnackbar('Conductor modificado con exito')
     }
 
     return (
@@ -137,7 +166,7 @@ const DriverDetails = () => {
                         <Grid item xs={6}>
                             <div className={classes.dataContainer}>
                                 <text className={classes.dataField}> Codigo Postal: </text>
-                                <text className={classes.data}> {driver?.address?.zipcode || '-'} </text>
+                                <text className={classes.data}> {driver?.address?.zip_code || '-'} </text>
                             </div>
                         </Grid>
                         <Grid item xs={6}>
@@ -250,11 +279,11 @@ const DriverDetails = () => {
                 </Grid>
             </Grid>
             }
-            <Snackbar className={classes.snackbar} open={openEditDriverSuccess && !!messageSnackbar} autoHideDuration={6000} onClose={() => setOpenEditDriverSuccess(false)} >
-                <Alert onClose={() => setOpenEditDriverSuccess(false)} severity="success" sx={{ width: '50%' }}>
-                    {messageSnackbar}
-                </Alert>
-            </Snackbar>
+            <CustomSnackbar open={openEditDriverSuccess && !!messageSuccessSnackbar} message={messageSuccessSnackbar} type='success' onClose={() => setOpenEditDriverSuccess(false)} />
+            <CustomSnackbar open={openSnackbarDocSuccess} message='Documento creado con exito' type='success' onClose={() => setOpenSnackbarDocSuccess(false)} />
+            <CustomSnackbar open={openSnackbarError} message='Ocurrio un error' type='error' onClose={() => setOpenSnackbarError(false)} />
+            <CustomSnackbar open={openSnackbarDocError} message='No se pudo crear el documento' type='error' onClose={() => setOpenSnackbarDocError(false)} />
+            
         </>
     )
 }

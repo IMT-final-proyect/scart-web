@@ -16,6 +16,7 @@ import { IDriver, IVehicle } from '../../../utils/interfaces';
 import { Alert } from '@mui/material';
 import CustomInput from '../../../components/customInput'
 import DeleteModal from '../../../components/DeleteModal';
+import CustomSnackbar from '../../../components/customSnackbar';
 
 
 const Resources = () => {
@@ -374,21 +375,9 @@ const Resources = () => {
                         }
                     </Card>
                 }
-                <Snackbar className={classes.snackbar} open={openSnackbarError} autoHideDuration={6000} onClose={() => setOpenSnackbarError(false)} >
-                    <Alert onClose={() => setOpenSnackbarError(false)} severity="error" sx={{ width: '50%' }}>
-                        {error?.message}
-                    </Alert>
-                </Snackbar>
-                <Snackbar className={classes.snackbar} open={openDriverSuccess && !!messageSnackbar} autoHideDuration={6000} onClose={() => setOpenDriverSuccess(false)} >
-                    <Alert onClose={() => setOpenDriverSuccess(false)} severity="success" sx={{ width: '50%' }}>
-                        {messageSnackbar}
-                    </Alert>
-                </Snackbar>
-                <Snackbar className={classes.snackbar} open={openVehicleSuccess && !!messageSnackbar} autoHideDuration={6000} onClose={() => setOpenVehicleSuccess(false)} >
-                    <Alert onClose={() => setOpenVehicleSuccess(false)} severity="success" sx={{ width: '50%' }}>
-                        {messageSnackbar}
-                    </Alert>
-                </Snackbar>
+                <CustomSnackbar open={openSnackbarError} message={error?.message || ''} type='error' onClose={() => setOpenSnackbarError(false)} />
+                <CustomSnackbar open={openDriverSuccess && !!messageSnackbar} message= {messageSnackbar} type='success' onClose={() => setOpenDriverSuccess(false)} />
+                <CustomSnackbar open={openVehicleSuccess && !!messageSnackbar} message={messageSnackbar} type='success' onClose={() => setOpenVehicleSuccess(false)} />
             </Grid>
         </Grid>
         </>

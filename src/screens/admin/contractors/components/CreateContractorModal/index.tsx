@@ -2,6 +2,7 @@ import { Button, Grid, Snackbar, TextField, } from '@material-ui/core';
 import useStyles from './styles';
 import { useCallback, useState } from 'react';
 import { Alert } from '@mui/material';
+import CustomSnackbar from '../../../../../components/customSnackbar';
 
 interface Props{
     addContractor: (username: string, password: string, name: string, cuit: string, street: string, number: string, city: string, province: string) => void
@@ -171,11 +172,7 @@ const CreateDriverModal = ({ addContractor, setOpenModal }: Props) => {
                         onChange={_onChangeProvince}
                     />
                 </Grid>
-                <Snackbar className={classes.snackbar} open={error} autoHideDuration={6000} onClose={() => setError(false)} >
-                    <Alert onClose={() => setError(false)} severity="error" sx={{ width: '100%' }}>
-                        {message}
-                    </Alert>
-                </Snackbar>
+                <CustomSnackbar open={error} message={message} type='error' onClose={() => setError(false)} />
                 <Grid container direction='row' justifyContent='space-between'>
                     <Button variant="contained" className={classes.cancel} onClick={ () => setOpenModal(false)}>Cancelar</Button>
                     <Button variant="contained" color='primary' onClick={_handleOnClick}>Crear</Button>

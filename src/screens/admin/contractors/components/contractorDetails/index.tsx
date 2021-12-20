@@ -11,6 +11,7 @@ import CreateContractorDocumentModal from './components/CreateContractorDocument
 import { createDocument, getContractorDocuments } from '../../../../../redux/slices/documentsSlice';
 import { ROUTES } from '../../../navigation/routes';
 import DocumentRow from './components/documentRow/DocumentRow';
+import CustomSnackbar from '../../../../../components/customSnackbar';
 
 
 const ContractorDetails = () => {
@@ -18,15 +19,28 @@ const ContractorDetails = () => {
     const params: any = useParams();
     const dispatch = useDispatch();
     const [openContractorDocumentModal, setOpenContractorDocumentModal] = useState(false)
+    const [openSuccess, setOpenSuccess] = useState(false)
+    const [openFailure, setOpenFailure] = useState(false)
     const contractor: IContractor = useSelector((state: RootState) => {
         const contractors = state.contractors.data
         return contractors[params.id]
     })
     const documents: IDocument[] = useSelector((state: RootState) => state.documents.contractor.data)
+    const success = useSelector((state: RootState) => state.documents.success)
+    const error = useSelector((state: RootState) => state.documents.error)
 
     useEffect(() => { 
         dispatch(getContractorDocuments(contractor.id))
     }, [contractor.id, dispatch])
+
+    useEffect(() => {
+        setOpenSuccess(success)
+    }, [success])
+
+    useEffect(() => {
+        setOpenFailure(!!error)
+    }, [error])
+
 
     const addDocument = (expirationDate: moment.Moment, type: number, entityType: number, entityId: number, images: string[]) => {
         dispatch(createDocument(expirationDate, type, entityType, entityId, images, entityId))
@@ -86,7 +100,7 @@ const ContractorDetails = () => {
                         <Grid item xs={3}>
                             <div className={classes.dataContainer}>
                                 <text className={classes.dataField}> Codigo Postal: </text>
-                                <text className={classes.data}> {contractor.address?.zipcode} </text>
+                                <text className={classes.data}> {contractor.address?.zip_code} </text>
                             </div>
                         </Grid>
                         <Grid item xs={3}>
@@ -152,6 +166,8 @@ const ContractorDetails = () => {
                     </Card>
                 </Grid>
             </Grid>
+            <CustomSnackbar open={openSuccess} message='Documento creado con éxito' type='success' onClose={() => setOpenSuccess(false)} />
+            <CustomSnackbar open={openFailure} message='Error creando documento' type='error' onClose={() => setOpenFailure(false)} />
         </>
     )
 }

@@ -3,8 +3,8 @@ import { AppBar, Button, Drawer, Grid, Hidden, Toolbar, Typography, } from '@mat
 import MenuIcon from '@material-ui/icons/Menu';
 import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
 
-
-import useStyles from './styles'
+import logo from '../../assets/images/logo_transparent.png';
+import useStyles from './styles';
 import { useDispatch } from 'react-redux';
 import { postLogout } from '../../redux/slices/userSlice';
 import { useHistory } from 'react-router-dom';
@@ -75,12 +75,17 @@ const TemplateBar = (props : Props) => {
               </Toolbar>
           </AppBar>
           <Drawer open={open} onClose={toggleDrawer(false)}>
-            <div className={classes.drawer} onClick={() => setOpen(false)}>
+            <Grid container className={classes.drawer} direction='row' justifyContent='space-between' onClick={() => setOpen(false)}>
+              <Grid>
                 <Typography variant="h6" className={classes.title}>
                     {props.title}
                 </Typography>
                 {props.ButtonList}
-            </div>
+              </Grid>
+              {/* <Grid>
+                <img src={logo} className={classes.image}/>
+              </Grid> */}
+            </Grid>
           </Drawer>
         </Grid>
     )

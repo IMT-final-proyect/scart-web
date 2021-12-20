@@ -9,12 +9,13 @@ import PreviewIcon from '@mui/icons-material/Preview';
 import useStyles from './styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
-import { getDocumentById, getOwner, postDocumentEvaluation } from '../../../redux/slices/documentsSlice';
-import { RootState } from '../../../redux/rootReducer';
 import moment from 'moment';
-import globalColors from '../../../utils/styles/globalColors';
-import { ROUTES } from '../navigation/routes';
-import { getSeverityColor, getSeverityName } from '../../../utils/functions/severities';
+import { getDocumentById, getOwner, postDocumentEvaluation, _cleanSnackbar } from '../../../../../redux/slices/documentsSlice';
+import globalColors from '../../../../../utils/styles/globalColors';
+import { RootState } from '../../../../../redux/rootReducer';
+import { getSeverityColor, getSeverityName } from '../../../../../utils/functions/severities';
+import { ROUTES } from '../../../navigation/routes';
+import CustomSnackbar from '../../../../../components/customSnackbar';
 
 const DocumentDetails = () => {
     const dispatch = useDispatch()
@@ -23,11 +24,13 @@ const DocumentDetails = () => {
     const [comment, setComment] = useState('')
     const [image, setImage] = useState('')
     const [modalImage, setModalImage] = useState(false)
-    const [evaluated, setEvaluated] = useState(false)
+    const [errorSnackbar, setErrorSnackbar] = useState(false)
     const { activeDocument, loading } = useSelector((state: RootState) => state.documents)
     const evaluationLoading = useSelector((state:RootState) => state.documents.evaluationLoading)
-    const owner = useSelector((state: RootState) => state.documents.owner)
     const userId = useSelector((state: RootState) => state.user.accountData?.uuid)
+    const owner = useSelector((state: RootState) => state.documents.owner)
+    const evaluationSuccess = useSelector((state: RootState) => state.documents.evaluationSuccess)
+    const error = useSelector((state: RootState) => state.documents.error)
     const severity =  getSeverityName(activeDocument.type.severity)
     const color = getSeverityColor(severity)
     const classes = useStyles({color});
@@ -42,7 +45,7 @@ const DocumentDetails = () => {
     }, [activeDocument, dispatch])
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setComment(event.target.value)
+        setComment(event.target.value);
     }
 
     useEffect(() => {
@@ -50,13 +53,19 @@ const DocumentDetails = () => {
     }, [image])
 
     useEffect(() => {
-        if(evaluated) history.push(ROUTES.root+ROUTES.audition)
-    }, [evaluated, evaluationLoading, history])
+        if(evaluationSuccess){
+            history.push(ROUTES.root+ROUTES.audition)
+        }
+        else{
+            if(!!error?.message) setErrorSnackbar(true)
+        }
+    }, [error?.message, evaluationSuccess, history])
 
     const closeImagePicker = (value: any) => {
         setModalImage(false)
         setImage('')
     }
+
 
     const DocumentOwner = {
         name: activeDocument.entityType === 1 || activeDocument.entityType === 2 ? owner?.name : owner?.plate,
@@ -66,18 +75,23 @@ const DocumentDetails = () => {
 
     const handleRejected = () => {
         dispatch(postDocumentEvaluation(activeDocument.id, false, comment, userId))
-        setEvaluated(true)
+        dispatch(_cleanSnackbar())
     }
     
     const handleApprove = () => {
         dispatch(postDocumentEvaluation(activeDocument.id, true, comment, userId))
-        setEvaluated(true)
+        dispatch(_cleanSnackbar())
     }
 
 
     return (
     <>
-        {loading ?
+        <Modal open={modalImage} onClose={() => closeImagePicker} onBackdropClick={closeImagePicker}>
+            <div className={classes.imageCard}>
+                <img src={image} alt='document' className={classes.image}/>
+            </div>
+        </Modal>
+        {loading || evaluationLoading ?
             <Grid container alignContent='center' justifyContent='center' >
                 <CircularProgress className={classes.spinner} />
             </Grid>
@@ -150,9 +164,9 @@ const DocumentDetails = () => {
                         </Grid>
                     }
                 </Card>
-                <Grid container className={classes.bottomCardContainer} direction='row' justifyContent='space-between'>
-                    <Grid item xs={12} md={3}>
-                        <Card className={classes.leftCard}>
+                <Grid container className={classes.bottomContainer} direction='row' justifyContent='space-between'>
+                    <Grid item md={4}>
+                        <Card className={classes.filesCard}>
                             <Grid container className={classes.titleContainer} justifyContent='space-between'>
                                 <text className={classes.textTitle}>
                                     Archivos
@@ -163,7 +177,7 @@ const DocumentDetails = () => {
                                     <Grid container justifyContent='space-between'>
                                         {activeDocument.photos.map((value: string, index: number) => {
                                                 return(
-                                                    <Grid key={index} className={classes.leftCard} container direction='row'>
+                                                    <Grid key={index} className={classes.filesCard} container direction='row'>
                                                         <Grid item xs={1}>
                                                             <AttachFileIcon/>
                                                         </Grid>
@@ -183,7 +197,13 @@ const DocumentDetails = () => {
                                                             </Base64Downloader>
                                                         </Grid>
                                                         <Grid item xs={2}>
-                                                            <Button size="small" style={{padding: 0}} onClick={() => setImage(value)}>
+                                                            <Button 
+                                                                size="small" 
+                                                                style={{padding: 0}} 
+                                                                onClick={() => 
+                                                                    setImage(value)
+                                                                }
+                                                            >
                                                                 <PreviewIcon style={{fontSize: 30}} />
                                                             </Button>
                                                         </Grid>
@@ -193,25 +213,33 @@ const DocumentDetails = () => {
                                         }
                                     </Grid>
                                 </Grid>
-                            :
-                            <text className={classes.textCenter}> No hay archivos cargados</text>
-                        } 
+                                :
+                                <text className={classes.textCenter}> No hay archivos cargados</text>
+                            } 
                         </Card>
                     </Grid>
-                    <Grid item xs={12} md={9}>
-                        {!image ?
-                            <Card className={classes.noImageSelected}>
-                                <text>Selecciona una imagen para visualizar</text> 
-                            </Card>
-                        :
-                            <Card className={classes.rightCard}>
-                                <img src={image} className={classes.image}/>
-                            </Card>
-                        }
+                    <Grid item md={8}>
+                        <Card className={classes.commentCard}>
+                            <TextField
+                                className={classes.textField}
+                                id="Comentario"
+                                label="Observación"
+                                multiline
+                                value={comment}
+                                onChange={handleChange}
+                                variant="outlined"
+                                rows={4}
+                            />
+                            <Grid container justifyContent='flex-end'>
+                                <Button variant="contained" color="inherit" className={classes.rechazar} onClick={handleRejected}>Rechazar</Button>
+                                <Button variant="contained" color="primary" className={classes.text} onClick={handleApprove}>Aceptar</Button>
+                            </Grid>
+                        </Card>
                     </Grid>
                 </Grid>
             </Grid>
         }
+            <CustomSnackbar open={errorSnackbar} message={error?.message || 'Hubo un error evaluando el documento'} type='error' onClose={() => setErrorSnackbar(false)} />
     </>
     )
 }
