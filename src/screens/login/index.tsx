@@ -30,8 +30,14 @@ const Login = () => {
 
     useEffect(() => {
         let route
+        console.log('here')
+        console.log((accountData?.rol !== undefined && accountData?.rol >= 0 && isTokenValid(localStorage.getItem(('access_token')))));
+        
+        
         if(accountData?.rol !== undefined && accountData?.rol >= 0 && isTokenValid(localStorage.getItem(('access_token')))){
             route = getRolPath(accountData?.rol)
+            console.log(accountData?.rol);
+            
             history.push(route)
         }
     }, [history, accountData])
