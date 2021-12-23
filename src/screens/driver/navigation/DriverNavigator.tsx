@@ -10,10 +10,8 @@ import useStyles from './styles'
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../redux/rootReducer';
 import Home from '../Home';
-import EntityDetails from '../EntityDetails';
-import Scanner from '../Scanner';
 
-const SecurityNavigation = () => {
+const DriverNavigation = () => {
     const classes = useStyles();
     const [title, setTitle] = useState('Inicio');
     const user = useSelector((state: RootState) => state.user.userData?.name)
@@ -42,12 +40,10 @@ const SecurityNavigation = () => {
             ButtonList = {ButtonList}
         />
         <Switch>
-            <Route exact path={ROUTES.root+ROUTES.details} component={EntityDetails} />
-            <Route exact path={ROUTES.root+ROUTES.scanner} component={Scanner} />
             <Route path={ROUTES.root} component={Home} />
         </Switch>
     </BrowserRouter>
     )
 }
 
-export default SecurityNavigation;
+export default DriverNavigation;

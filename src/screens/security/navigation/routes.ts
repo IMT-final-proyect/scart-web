@@ -1,3 +1,5 @@
 export enum ROUTES {
-    root = '/seguridad'
+    root = '/seguridad',
+    scanner = '/scanner',
+    details = '/detalle'
 }

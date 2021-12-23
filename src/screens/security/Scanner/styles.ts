@@ -5,16 +5,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     container:{
         flexGrow: 1,
         marginTop: headerSize + 40
-    },
-    cardLeft: {
-        minWidth: 'auto',
-        textAlign: 'center'
-    },
-    cardRight: {
-        textAlign: 'center'
-    },
-    cardContainer: {
-        marginBottom: '5%'
     }
 }));
 
