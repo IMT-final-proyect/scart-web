@@ -4,5 +4,6 @@ export enum ROUTES {
     manager = '/encargado',
     auditor= '/auditor',
     admin = '/admin',
-    security = '/seguridad'
+    security = '/seguridad',
+    driver= '/conductor'
 }

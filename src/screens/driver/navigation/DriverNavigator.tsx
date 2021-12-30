@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 import { Button } from '@material-ui/core';
 import HomeIcon from '@material-ui/icons/Home';
@@ -10,6 +10,8 @@ import useStyles from './styles'
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../redux/rootReducer';
 import Home from '../Home';
+import QRGenerator from '../QRGenerator';
+import QrCodeScannerIcon from '@mui/icons-material/QrCodeScanner';
 
 const DriverNavigation = () => {
     const classes = useStyles();
@@ -29,6 +31,17 @@ const DriverNavigation = () => {
                 </div>
                 Inicio
             </Button>
+            <Button 
+                className = {classes.button}
+                component={Link}
+                to={ROUTES.root+ROUTES.QR}
+                onClick={() => setTitle("Código QR")}
+            >
+                <div className={classes.icon}>
+                    <QrCodeScannerIcon/>
+                </div>
+                Inicio
+            </Button>
         </>
     )
 
@@ -40,7 +53,8 @@ const DriverNavigation = () => {
             ButtonList = {ButtonList}
         />
         <Switch>
-            <Route path={ROUTES.root} component={Home} />
+            <Route exact path={ROUTES.root} component={Home} />
+            <Route exact path={ROUTES.root+ROUTES.QR} component={QRGenerator} />
         </Switch>
     </BrowserRouter>
     )

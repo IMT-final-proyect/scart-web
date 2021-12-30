@@ -13,6 +13,7 @@ import { useSelector } from 'react-redux';
 import { admin, auditor, contractor, manager, security } from '../utils/constants';
 import { isRolAuthored, isTokenValid } from '../utils/functions/validations';
 import SecurityNavigator from '../screens/security/navigation/SecurityNavigator';
+import DriverNavigation from '../screens/driver/navigation/DriverNavigator';
 
 const App = () => {
     const accountData = useSelector((state: RootState) => state.user.accountData)
@@ -35,6 +36,7 @@ const App = () => {
                 <PrivateRoute path={ROUTES.auditor} rol={auditor} component={AuditorNavigator} />
                 <PrivateRoute path={ROUTES.admin} rol={admin} component={AdminNavigator} />
                 <PrivateRoute path={ROUTES.security} rol={security} component={SecurityNavigator} />
+                <Route exact path={ROUTES.driver} component={DriverNavigation} />
                 <Route component={NotFound} />
             </Switch>
         </BrowserRouter>

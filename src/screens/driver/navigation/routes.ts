@@ -1,3 +1,4 @@
 export enum ROUTES {
-    root = '/seguridad'
+    root = '/conductor',
+    QR = '/QR'
 }
