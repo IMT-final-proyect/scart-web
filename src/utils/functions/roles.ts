@@ -4,6 +4,7 @@ import { ROUTES as ContractorRoutes } from "../../screens/contractor/navigation/
 import { ROUTES as AuditorRoutes } from "../../screens/auditor/navigation/routes"
 import { ROUTES as ManagerRoutes } from "../../screens/manager/navigation/routes"
 import { ROUTES as SecurityRoutes } from "../../screens/security/navigation/routes"
+import { ROUTES as DriverRoutes } from "../../screens/driver/navigation/routes"
 import { ROUTES as defaultRoutes } from "../../routes/routes"
 
 export const getRolPath = (rol?: number) => {
@@ -13,6 +14,7 @@ export const getRolPath = (rol?: number) => {
         case (AllowedRol.manager): return ManagerRoutes.root+ManagerRoutes.exceptions
         case (AllowedRol.auditor): return AuditorRoutes.root
         case (AllowedRol.security): return SecurityRoutes.root
+        case (AllowedRol.driver): return DriverRoutes.root
         default: return defaultRoutes.login
     }
 }

@@ -9,10 +9,12 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     cardLeft: {
         minWidth: 'auto',
-        textAlign: 'center'
+        textAlign: 'center',
+        cursor:'pointer'
     },
     cardRight: {
-        textAlign: 'center'
+        textAlign: 'center',
+        cursor:'pointer'
     },
     cardContainer: {
         marginBottom: '5%'

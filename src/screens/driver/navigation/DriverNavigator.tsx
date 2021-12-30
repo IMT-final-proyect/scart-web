@@ -12,6 +12,9 @@ import { RootState } from '../../../redux/rootReducer';
 import Home from '../Home';
 import QRGenerator from '../QRGenerator';
 import QrCodeScannerIcon from '@mui/icons-material/QrCodeScanner';
+import AssignmentIndIcon from '@mui/icons-material/AssignmentInd'
+
+import MyData from '../MyData';
 
 const DriverNavigation = () => {
     const classes = useStyles();
@@ -40,7 +43,18 @@ const DriverNavigation = () => {
                 <div className={classes.icon}>
                     <QrCodeScannerIcon/>
                 </div>
-                Inicio
+                 Mi QR
+            </Button>
+            <Button 
+                className = {classes.button}
+                component={Link}
+                to={ROUTES.root+ROUTES.myData}
+                onClick={() => setTitle("Mis Datos")}
+            >
+                <div className={classes.icon}>
+                    <AssignmentIndIcon/>
+                </div>
+                Mis Datos
             </Button>
         </>
     )
@@ -55,6 +69,7 @@ const DriverNavigation = () => {
         <Switch>
             <Route exact path={ROUTES.root} component={Home} />
             <Route exact path={ROUTES.root+ROUTES.QR} component={QRGenerator} />
+            <Route exact path={ROUTES.root+ROUTES.myData} component={MyData} />
         </Switch>
     </BrowserRouter>
     )

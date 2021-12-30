@@ -17,11 +17,13 @@ export interface IAccount {
 export interface IUser {
    id: number;
    name: string;
+   surname?: string;
    cuit: string;
    street: string;
    number: number;
    city: string;
    province: string;
+   birth_date?: string
    drivers?: []
    vehicles?: []
 }
@@ -129,6 +131,18 @@ export const getContractorData = (id: number | undefined): AppThunk => async (di
       dispatch(getUserDataFailure(error.response.data))
    }
 }
+
+export const getDriverData = (id: number | undefined): AppThunk => async (dispatch) => {
+   dispatch(getUserDataRequest())
+   try{
+      const response = await Axios.get(`/drivers/${id}`);
+      dispatch(getUserDataSuccess(response.data));
+   }
+   catch(error){
+      dispatch(getUserDataFailure(error.response.data))
+   }
+}
+
 
 export const clearError = (): AppThunk => async (dispatch) => {
    dispatch(clearLoginError())
