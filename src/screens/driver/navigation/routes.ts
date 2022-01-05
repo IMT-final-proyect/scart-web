@@ -3,5 +3,6 @@ export enum ROUTES {
     QR = '/QR',
     myData = '/MisDatos',
     myDocuments = '/MisDocumentos',
+    documentDetails = '/detalleDocumento',
     myVehicles = '/MisVehiculos'
 }

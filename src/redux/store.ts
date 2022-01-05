@@ -5,7 +5,6 @@ import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 import rootReducer, { initialState, RootState } from './rootReducer';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import localforage from 'localforage';
 
 export type AppThunkDispatch = ThunkDispatch<RootState, Promise<any>, Action<string>>;
 
@@ -18,7 +17,7 @@ export type AppThunk<ReturnType = void> = ThunkAction<
 
 const persistConfig = {
     key: 'root',
-    storage: localforage
+    storage
 }
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)

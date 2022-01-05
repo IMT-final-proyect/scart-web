@@ -2,6 +2,8 @@
 import { makeStyles, Theme } from '@material-ui/core';
 import globalColors from '../../utils/styles/globalColors';
 
+const { innerWidth } = window;
+
 const useStyles = makeStyles((theme: Theme) => ({
     textInput: {
         color: globalColors.lightBlue,
@@ -23,6 +25,9 @@ const useStyles = makeStyles((theme: Theme) => ({
         backgroundColor: globalColors.white,
         borderRadius: 10,
         borderWidth: 1,
+        [theme.breakpoints.down('xs')]: {
+            minWidth: innerWidth * 0.8
+        },
     },
     title: {
         marginTop: '3%',

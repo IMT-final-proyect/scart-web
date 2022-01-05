@@ -5,7 +5,7 @@ import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
 import ArticleIcon from '@mui/icons-material/Article';
 import useStyles from './styles';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { RootState } from '../../../redux/rootReducer';
 import { getDriverData } from '../../../redux/slices/userSlice';
 import { useHistory } from 'react-router-dom';
@@ -15,6 +15,7 @@ const Home = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const history = useHistory();
+    const [enabled, setEnabled] = useState(false)
     const id = useSelector((state: RootState) => state.user.accountData?.entityId)
 
     useEffect(() => {
@@ -23,6 +24,9 @@ const Home = () => {
 
     return (
         <Grid container className={classes.container} justifyContent='space-evenly' alignItems='center'>
+            <Grid container >
+                {}
+            </Grid>
             <Grid container className={classes.cardContainer} justifyContent='space-evenly'>
                 <Grid item >
                     <Card className={classes.cardLeft}  onClick={() => history.push(ROUTES.root+ROUTES.QR)}>
@@ -39,13 +43,13 @@ const Home = () => {
             </Grid>
             <Grid container justifyContent='space-evenly'>
                 <Grid item >
-                    <Card className={classes.cardLeft}>
+                    <Card className={classes.cardLeft} onClick={() => history.push(ROUTES.root+ROUTES.myDocuments)}>
                         <ArticleIcon sx={{ fontSize: 150 }}/>
                         <Typography>Mi Documentación</Typography>
                     </Card>
                 </Grid>
                 <Grid item >
-                    <Card className={classes.cardRight}>
+                    <Card className={classes.cardRight} onClick={() => history.push(ROUTES.root+ROUTES.myVehicles)}>
                         <DirectionsCarIcon sx={{ fontSize: 150 }}/>
                         <Typography>Vehiculos</Typography>
                     </Card>

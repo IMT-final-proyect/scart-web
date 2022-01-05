@@ -12,9 +12,14 @@ import { RootState } from '../../../redux/rootReducer';
 import Home from '../Home';
 import QRGenerator from '../QRGenerator';
 import QrCodeScannerIcon from '@mui/icons-material/QrCodeScanner';
-import AssignmentIndIcon from '@mui/icons-material/AssignmentInd'
-
+import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
+import ArticleIcon from '@mui/icons-material/Article';
+import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
 import MyData from '../MyData';
+import MyDocuments from '../MyDocuments';
+import DocumentDetails from '../../../components/documentDetails';
+import MyVehicles from '../MyVehicles';
+import VehicleDetails from '../MyVehicles/components/vehicleDetails';
 
 const DriverNavigation = () => {
     const classes = useStyles();
@@ -27,7 +32,7 @@ const DriverNavigation = () => {
                 className = {classes.button}
                 component={Link}
                 to={ROUTES.root}
-                onClick={() => setTitle("Inicio")}
+                onClick={() => setTitle('Conductor')}
             >
                 <div className={classes.icon}>
                     <HomeIcon/>
@@ -56,6 +61,28 @@ const DriverNavigation = () => {
                 </div>
                 Mis Datos
             </Button>
+            <Button 
+                className = {classes.button}
+                component={Link}
+                to={ROUTES.root+ROUTES.myDocuments}
+                onClick={() => setTitle("Mis Documentos")}
+            >
+                <div className={classes.icon}>
+                    <ArticleIcon/>
+                </div>
+                Mis Documentos
+            </Button>
+            <Button 
+                className = {classes.button}
+                component={Link}
+                to={ROUTES.root+ROUTES.myVehicles}
+                onClick={() => setTitle("Mis Vehiculos")}
+            >
+                <div className={classes.icon}>
+                    <DirectionsCarIcon/>
+                </div>
+                Mis Vehiculos
+            </Button>
         </>
     )
 
@@ -70,6 +97,11 @@ const DriverNavigation = () => {
             <Route exact path={ROUTES.root} component={Home} />
             <Route exact path={ROUTES.root+ROUTES.QR} component={QRGenerator} />
             <Route exact path={ROUTES.root+ROUTES.myData} component={MyData} />
+            <Route exact path={ROUTES.root+ROUTES.myDocuments} component={MyDocuments} />
+            <Route exact path={ROUTES.root+ROUTES.documentDetails+'/:id'} component={DocumentDetails} />
+            <Route exact path={ROUTES.root+ROUTES.myVehicles} component={MyVehicles} />
+            <Route exact path={ROUTES.root+ROUTES.myVehicles+'/:id'} component={VehicleDetails} />
+
         </Switch>
     </BrowserRouter>
     )
