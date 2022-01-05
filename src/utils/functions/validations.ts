@@ -11,7 +11,6 @@ export const isTokenValid = (accessToken: string | null) => {
             return true
         return false
     }
-    console.log('retorno false');
     return false
 }
 

@@ -60,6 +60,8 @@ const VehicleDetails = () => {
     }, [documentError])
 
     const addDocument = (expirationDate: moment.Moment, type: number, entityType: number, entityId: number, images: string[], contractorId: number) => {
+        console.log('contractor id', vehicle);
+        
         dispatch(createDocument(expirationDate, type, entityType, entityId, images, contractorId))
         setOpenVehicleDocumentModal(false)
     }
@@ -75,7 +77,7 @@ const VehicleDetails = () => {
                 <CreateVehicleDocumentModal
                     setOpenVehicleDocumentModal={setOpenVehicleDocumentModal}
                     addDocument={addDocument}
-                    vehicleId={params.id}
+                    vehicleId={parseInt(params.id)}
                     contractorId={vehicle?.contractor?.id}
                 />
             </Modal>

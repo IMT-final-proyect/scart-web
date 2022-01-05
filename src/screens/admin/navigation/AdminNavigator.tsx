@@ -23,7 +23,7 @@ import { RootState } from '../../../redux/rootReducer';
 import { useSelector } from 'react-redux';
 const AdminNavigator = () => {
     const classes = useStyles();
-    const [title, setTitle] = useState('Contratistas');
+    const [title, setTitle] = useState('Administrador');
     const user = useSelector((state: RootState) => state.user.userData?.name)
 
     const ButtonList = (

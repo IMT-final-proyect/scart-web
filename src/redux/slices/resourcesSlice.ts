@@ -305,7 +305,7 @@ export const getAllVehicles = (contractorId?: number): AppThunk => async (dispat
 export const getVehicleById = (id: number): AppThunk => async (dispatch) => {
    dispatch(getVehicleByIdRequest());
    try{
-      const response: AxiosResponse = await Axios.get(`/vehicles/${id}`);
+      const response: AxiosResponse = await Axios.get(`/vehicles/${id}?relations=contractor`);
       console.log(response.data);
       
       dispatch(getVehicleByIdSuccess(response.data));
