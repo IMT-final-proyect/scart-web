@@ -6,9 +6,9 @@ import globalColors from '../../../utils/styles/globalColors';
 const useStyles = makeStyles((theme: Theme) => ({
     container:{
         flexGrow: 1,
-        marginTop: headerSize + 40,
+        paddingTop: headerSize + 40,
         [theme.breakpoints.down('xs')]: {
-            marginTop: headerSize + 20
+            paddingTop: headerSize + 20
         },
     },
     cardLeft: {
@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     enabled: {
         marginLeft: '10%',
         marginRight: '10%',
-        marginBottom: '5%',
+        marginBottom: '2.5%',
         paddingLeft: '2.5%',
         paddingRight: '2.5%',
         borderRadius: 10,
@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     disabled: {
         marginLeft: '10%',
         marginRight: '10%',
-        marginBottom: '5%',
+        marginBottom: '2.5%',
         paddingLeft: '2.5%',
         paddingRight: '2.5%',
         borderRadius: 10,
