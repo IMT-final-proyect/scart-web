@@ -1,18 +1,19 @@
 import MomentUtils from "@date-io/moment";
 import { Checkbox, FormControlLabel, Grid, Button } from "@material-ui/core";
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
-import { Alert, Snackbar, TextField } from "@mui/material"
+import { TextField } from "@mui/material"
 import moment from "moment";
 import { useCallback, useState } from "react";
+import { IUser } from "../../redux/slices/userSlice";
 import { IDriver } from "../../utils/interfaces";
 import CustomSnackbar from "../customSnackbar";
 import useStyles from './styles';
 
 interface Props{
-    driver: IDriver
+    driver: IDriver | IUser
     changePassword: boolean
     editDriver: (
-        driver: IDriver, 
+        driver: IDriver | IUser, 
         name: string, 
         surname: string, 
         cuit: string, 
@@ -41,7 +42,7 @@ const EditDriverModal = ( {driver, changePassword, editDriver, setOpenEditDriver
     const [city, setCity] = useState('')
     const [province, setProvince] = useState('')
     const [zipCode, setZipCode] = useState('')
-    const [birthdate, setBirthdate] = useState<moment.Moment | null>(driver.birth_date);
+    const [birthdate, setBirthdate] = useState<moment.Moment | null>(moment(driver.birth_date));
     
     const _onChangePassword = useCallback((event) => {
         setPassword(event.target.value);
@@ -119,7 +120,7 @@ const EditDriverModal = ( {driver, changePassword, editDriver, setOpenEditDriver
     }
 
     return (
-            <Grid container className={classes.modal} direction='column' justify='center' alignItems='center'>
+            <Grid container className={classes.modal} direction='column' justify='space-between' alignItems='center'>
                 <text className={classes.title}>Editar conductor</text>
                 <Grid item className={classes.textInput}>
                     <TextField

@@ -3,6 +3,7 @@ import Axios, {AxiosResponse} from 'axios';
 import moment from 'moment';
 import { IDriver, IVehicle } from '../../utils/interfaces';
 import { AppThunk } from '../store';
+import { IUser } from './userSlice';
 var _ = require('lodash');
 
 interface IError {
@@ -406,7 +407,7 @@ export const deleteVehicle = (id: number, contractorId?: number): AppThunk => as
 }
 
 export const editDriver = (
-   driver: IDriver, 
+   driver: IDriver | IUser, 
    name: string, 
    surname: string, 
    cuit: string, 

@@ -2,13 +2,16 @@
 import { makeStyles, Theme } from '@material-ui/core';
 import globalColors from '../../utils/styles/globalColors';
 
-const { innerWidth } = window;
+const { innerWidth, innerHeight } = window;
 
 const useStyles = makeStyles((theme: Theme) => ({
     textInput: {
         color: globalColors.lightBlue,
         marginTop: '2.5%',
-        marginBottom: '2.5%'
+        marginBottom: '2.5%',
+        [theme.breakpoints.down('xs')]: {
+            maxWidth: '50%'
+        },
     },
     lastTextInput: {
         marginBottom: '10%',
@@ -23,11 +26,11 @@ const useStyles = makeStyles((theme: Theme) => ({
         width: 'auto',
         paddingLeft: '5%',
         paddingRight: '5%',
-        paddingTop: '1.5%',
-        paddingBottom: '2.5%',
+        paddingBottom: '1%',
         backgroundColor: globalColors.white,
         borderRadius: 10,
         borderWidth: 1,
+        maxHeight: innerHeight,
         [theme.breakpoints.down('xs')]: {
             minWidth: innerWidth * 0.8
         },

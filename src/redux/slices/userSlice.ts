@@ -1,6 +1,6 @@
 import { createAction, createSlice } from '@reduxjs/toolkit';
 import Axios from 'axios';
-import { IContractor } from '../../utils/interfaces';
+import { IAddress, IContractor } from '../../utils/interfaces';
 import { AppThunk } from '../store';
 
 export interface IAccount {
@@ -21,10 +21,8 @@ export interface IUser {
    surname?: string;
    cuit: string;
    street: string;
-   number: number;
-   city: string;
-   province: string;
-   birth_date?: string
+   address: IAddress
+   birth_date: string
    drivers?: []
    vehicles?: []
    contractor?: IContractor
@@ -137,7 +135,7 @@ export const getContractorData = (id: number | undefined): AppThunk => async (di
 export const getDriverData = (id: number | undefined): AppThunk => async (dispatch) => {
    dispatch(getUserDataRequest())
    try{
-      const response = await Axios.get(`/drivers/${id}?relations=contractor`);
+      const response = await Axios.get(`/drivers/${id}?relations=address,contractor`);
       dispatch(getUserDataSuccess(response.data));
    }
    catch(error){

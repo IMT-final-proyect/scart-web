@@ -5,7 +5,7 @@ import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
 import ArticleIcon from '@mui/icons-material/Article';
 import useStyles from './styles';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { RootState } from '../../../redux/rootReducer';
 import { getDriverData } from '../../../redux/slices/userSlice';
 import { useHistory } from 'react-router-dom';
@@ -15,7 +15,7 @@ const Home = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const history = useHistory();
-    const [enabled, setEnabled] = useState(false)
+    const enabled = false
     const id = useSelector((state: RootState) => state.user.accountData?.entityId)
 
     useEffect(() => {
@@ -24,8 +24,16 @@ const Home = () => {
 
     return (
         <Grid container className={classes.container} justifyContent='space-evenly' alignItems='center'>
-            <Grid container >
-                {}
+            <Grid container className={classes.status} >
+                {enabled ? 
+                <Grid container className={classes.enabled}>
+                    <Typography className={classes.statusText}>Usted está habilitado para acceder a la planta</Typography>
+                </Grid>
+                :
+                <Grid container className={classes.disabled}>
+                    <Typography className={classes.statusText}>Usted NO está habilitado para acceder a la planta</Typography>
+                </Grid>
+                }
             </Grid>
             <Grid container className={classes.cardContainer} justifyContent='space-evenly'>
                 <Grid item >

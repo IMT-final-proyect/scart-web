@@ -16,6 +16,7 @@ import EditDriverModal from '../../../../../components/editDriverModal';
 import { Alert } from '@mui/material';
 import { editDriver } from '../../../../../redux/slices/resourcesSlice';
 import CustomSnackbar from '../../../../../components/customSnackbar';
+import { IUser } from '../../../../../redux/slices/userSlice';
 
 const DriverDetails = () => {
     const classes = useStyles();
@@ -60,14 +61,13 @@ const DriverDetails = () => {
         setOpenFailure(!!documentError)
     }, [documentError])
 
-
     const addDocument = (expirationDate: moment.Moment, type: number, entityType: number, entityId: number, images: string[], contractorId: number) => {
         dispatch(createDocument(expirationDate, type, entityType, entityId, images, contractorId))
         setOpenDriverDocumentModal(false)
     }
     
     const _editDriver = (
-        driver: IDriver, 
+        driver: IDriver | IUser, 
         name: string, 
         surname: string, 
         cuit: string, 

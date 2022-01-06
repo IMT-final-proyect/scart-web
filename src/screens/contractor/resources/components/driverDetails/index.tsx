@@ -15,6 +15,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import { editDriver, getDriverById } from '../../../../../redux/slices/resourcesSlice';
 import DocumentRow from '../documentRow/DocumentRow';
 import CustomSnackbar from '../../../../../components/customSnackbar';
+import { IUser } from '../../../../../redux/slices/userSlice';
 
 
 const autos: string[] = []
@@ -72,7 +73,7 @@ const DriverDetails = () => {
     }
 
     const _editDriver = (
-        driver: IDriver, 
+        driver: IDriver | IUser, 
         name: string, 
         surname: string, 
         cuit: string, 
