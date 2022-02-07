@@ -1,35 +1,35 @@
 import React from 'react';
 import { Button, Grid, } from '@material-ui/core';
 import useStyles from './styles';
+import { IContractor } from '../../../../../utils/interfaces';
 
 interface Props{
-    name: string,
-    contractor: string,
-    state: string,
-    resource: string
+    driverId: number,
+    vehicleId: number,
+    securityId: number
+    contractor?: IContractor,
 }
-const Exception = ({ name, contractor, state, resource }: Props) => {
+const ExceptionRow = ({ driverId, contractor, vehicleId, securityId }: Props) => {
     const classes = useStyles();
     return(
         <Grid container direction="row" justifyContent='space-between' alignItems='center'>
-            <Grid item xs={4} className={classes.text}>
-                <text> {name} </text>
+            <Grid item xs={3} className={classes.text}>
+                <text> {driverId} </text>
             </Grid>
-            <Grid item xs={2} className={classes.text}>
-                <text> {resource} </text>
+            <Grid item xs={3} className={classes.text}>
+                <text> {vehicleId} </text>
             </Grid>
-            <Grid item xs={2} className={classes.text}>
+            <Grid item xs={3} className={classes.text}>
                 <text> {contractor} </text>
             </Grid>
             <Grid item xs={2} className={classes.text}>
-                <text> {state} </text>
+                <text> {securityId} </text>
             </Grid>
-            <Grid item xs={2} className={classes.container}>
-                <Button color="primary" className={classes.text}>Aceptar</Button>
-                <Button className={classes.rechazar}>Rechazar</Button>
+            <Grid item xs={1} className={classes.container}>
+                <Button color="primary" className={classes.text}>Evaluar</Button>
             </Grid>
     </Grid>
     )
 }
 
-export default Exception;
+export default ExceptionRow;

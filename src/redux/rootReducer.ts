@@ -5,6 +5,7 @@ import documentsSlice from './slices/documentsSlice';
 import resourcesSlice from './slices/resourcesSlice';
 import documentTypesSlice from './slices/documentTypesSlice';
 import userReducer, { postLogout } from './slices/userSlice';
+import exceptionsSlice from './slices/exceptionsSlice';
 
 export const initialState = {}
 
@@ -13,7 +14,8 @@ const appReducer = combineReducers({
     resources: resourcesSlice,
     documents: documentsSlice,
     documentTypes: documentTypesSlice,
-    contractors: contractorsSlice
+    contractors: contractorsSlice,
+    exceptions: exceptionsSlice
 });
 
 const rootReducer = (state: any, action: any) => {

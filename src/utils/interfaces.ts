@@ -58,3 +58,11 @@ export interface IDocumentType {
    appliesTo: number;
    severity: number;
 }
+
+export interface IException {
+   id: number,
+   driverId: number
+   vehicleId: number
+   securityId: number
+   state: number
+}
