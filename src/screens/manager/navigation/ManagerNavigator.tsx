@@ -9,10 +9,10 @@ import TemplateBar from '../../../components/templateBar';
 import { ROUTES } from './routes';
 import Exceptions from '../exceptions';
 import Reports from '../reports';
-import ReportDetails from '../reportDetails';
 import useStyles from './styles';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../redux/rootReducer';
+import ExceptionDetails from '../exceptionDetails';
 
 const ManagerNavigator = () => {
     const classes = useStyles();
@@ -63,8 +63,8 @@ const ManagerNavigator = () => {
         />
         <Switch>
             <Route exact path={ROUTES.root+ROUTES.exceptions} component={Exceptions} />
+            <Route exact path={ROUTES.root+ROUTES.exceptions+'/:id/:driverId/:vehicleId/:securityId'} component={ExceptionDetails} />
             <Route exact path={ROUTES.root+ROUTES.reports} component={Reports} />
-            <Route exact path={ROUTES.root+ROUTES.reportDetails} component={ReportDetails} />
             <Route path={ROUTES.root} component= {Exceptions} />
         </Switch>
     </BrowserRouter>

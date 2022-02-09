@@ -23,11 +23,9 @@ const ReportTable = ({resources}: Props) => {
     const classes = useStyles();
 
     const addDriver = () => {
-        console.log("add driver");
     }
 
     const addCar = () => {
-        console.log("add driver");
     }
 
     const handleBackward = () => {

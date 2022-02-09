@@ -143,7 +143,6 @@ export const getDriverData = (id: number | undefined): AppThunk => async (dispat
    }
 }
 
-
 export const clearError = (): AppThunk => async (dispatch) => {
    dispatch(clearLoginError())
 }

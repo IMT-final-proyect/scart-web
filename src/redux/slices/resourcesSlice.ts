@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import Axios, {AxiosResponse} from 'axios';
 import moment from 'moment';
-import { IDriver, IVehicle } from '../../utils/interfaces';
+import { IDriver, ISecurity, IVehicle } from '../../utils/interfaces';
 import { AppThunk } from '../store';
 import { IUser } from './userSlice';
 var _ = require('lodash');
@@ -25,9 +25,18 @@ interface IVehicleData {
    error: IError|null
 }
 
+interface ISecurityData {
+   data: ISecurity[]
+   loading: boolean
+   success: boolean
+   error: IError|null
+}
+
+
 export interface UserState {
    drivers: IDriverData;
    vehicles: IVehicleData;
+   securities: ISecurityData;
 }
 
 const initialState: UserState = {
@@ -38,6 +47,12 @@ const initialState: UserState = {
       error: null
     },
     vehicles: {
+      data:[],
+      loading: false,
+      success: false,
+      error: null
+    },
+    securities: {
       data:[],
       loading: false,
       success: false,
@@ -84,6 +99,24 @@ const resourcesSlice = createSlice({
          state.drivers.loading = false;
          state.drivers.error = payload;
          state.drivers.success = initialState.drivers.success;
+      },
+      getSecurityByIdRequest(state) {
+         state.securities.loading = true;
+         state.securities.success = initialState.securities.success;
+         state.securities.error = initialState.securities.error;
+      },
+      getSecurityByIdSuccess(state, action: any) {
+         const { payload } = action
+         state.securities.data = {...state.securities.data, [payload.id]: payload}
+         state.securities.loading = false;
+         state.securities.error = initialState.securities.error
+      },
+      getSecurityByIdFailure(state, action: any) {
+         const { payload } = action
+         state.securities.data = initialState.securities.data;
+         state.securities.loading = false;
+         state.securities.error = payload;
+         state.securities.success = initialState.securities.success;
       },
       createDriverRequest(state) {
          state.drivers.loading = true;
@@ -243,6 +276,9 @@ const {
     getVehicleByIdSuccess,
     getVehicleByIdRequest,
     getVehicleByIdFailure,
+    getSecurityByIdSuccess,
+    getSecurityByIdRequest,
+    getSecurityByIdFailure,
     createVehicleRequest,
     createVehicleSuccess,
     createVehicleFailure,
@@ -280,9 +316,7 @@ export const getAllDrivers = (contractorId?: number): AppThunk => async (dispatc
 export const getDriverById = (id: number): AppThunk => async (dispatch) => {
    dispatch(getDriverByIdRequest());
    try{
-      const response: AxiosResponse = await Axios.get(`/drivers/${id}?relations=address`);
-      console.log(response.data);
-      
+      const response: AxiosResponse = await Axios.get(`/drivers/${id}?relations=address`);      
       dispatch(getDriverByIdSuccess(response.data));
    }
    catch(error){
@@ -306,13 +340,22 @@ export const getAllVehicles = (contractorId?: number): AppThunk => async (dispat
 export const getVehicleById = (id: number): AppThunk => async (dispatch) => {
    dispatch(getVehicleByIdRequest());
    try{
-      const response: AxiosResponse = await Axios.get(`/vehicles/${id}?relations=contractor`);
-      console.log(response.data);
-      
+      const response: AxiosResponse = await Axios.get(`/vehicles/${id}?relations=contractor`);      
       dispatch(getVehicleByIdSuccess(response.data));
    }
    catch(error){
       dispatch(getVehicleByIdFailure(error.response?.data));
+   }
+}
+
+export const getSecurityById = (id: number): AppThunk => async (dispatch) => {
+   dispatch(getSecurityByIdRequest());
+   try{
+      const response: AxiosResponse = await Axios.get(`/securities/${id}`);      
+      dispatch(getSecurityByIdSuccess(response.data));
+   }
+   catch(error){
+      dispatch(getSecurityByIdFailure(error.response?.data));
    }
 }
 

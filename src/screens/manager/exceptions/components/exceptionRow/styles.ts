@@ -20,7 +20,11 @@ const useStyles = makeStyles((theme: Theme) => ({
             fontSize: 10,
         },
         color: globalColors.red
-    }
+    },
+    button:{
+        height: '35px',
+        color: globalColors.lightBlue
+    },
 }));
 
 export default useStyles

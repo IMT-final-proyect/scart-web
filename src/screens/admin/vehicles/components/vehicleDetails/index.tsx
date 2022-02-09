@@ -59,9 +59,7 @@ const VehicleDetails = () => {
         setOpenFailure(!!documentError)
     }, [documentError])
 
-    const addDocument = (expirationDate: moment.Moment, type: number, entityType: number, entityId: number, images: string[], contractorId: number) => {
-        console.log('contractor id', vehicle);
-        
+    const addDocument = (expirationDate: moment.Moment, type: number, entityType: number, entityId: number, images: string[], contractorId: number) => {        
         dispatch(createDocument(expirationDate, type, entityType, entityId, images, contractorId))
         setOpenVehicleDocumentModal(false)
     }

@@ -441,7 +441,6 @@ export const postDocumentEvaluation = (id: number, isApprovation: boolean, comme
          let nextState
          if(isApprovation) nextState = 1
          else nextState = 2
-         console.log(nextState, comment, uuid);
          await Axios.post(`/documents/${id}`,
          { 
             state: nextState, 

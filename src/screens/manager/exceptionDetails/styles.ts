@@ -4,11 +4,9 @@ import { headerSize } from '../../../utils/constants';
 
 import globalColors from '../../../utils/styles/globalColors';
 
-interface Props {
-    color: string
-}
 
-const useStyles = makeStyles<Theme, Props>((theme: Theme) => ({
+
+const useStyles = makeStyles<Theme>((theme: Theme) => ({
     container:{
         display: 'flex',
         flexGrow: 1,
@@ -24,7 +22,8 @@ const useStyles = makeStyles<Theme, Props>((theme: Theme) => ({
         marginLeft: '2.5%',
         paddingRight: '2.5%',
         paddingLeft: '2.5%',
-        paddingBottom: '2.5%',
+        paddingBottom: '1.5%',
+        paddingTop: '2.5%',
         [theme.breakpoints.up('xs')]: {
             width: '130%',
             marginLeft: '2.5%',
@@ -44,7 +43,6 @@ const useStyles = makeStyles<Theme, Props>((theme: Theme) => ({
         paddingLeft: '5%',
         paddingRight: '5%',
         paddingBottom: '2.5%',
-        textAlign: 'center',
         [theme.breakpoints.down('sm')]: {
             marginLeft: '2.5%',
             marginRight: '2.5%',
@@ -61,9 +59,16 @@ const useStyles = makeStyles<Theme, Props>((theme: Theme) => ({
     },
     textTitle:{
         fontSize:20,
-        marginTop: '3%',
-        marginBottom: '3%',
+        marginBottom: '1%',
+        [theme.breakpoints.down('sm')]: {
+            fontSize: 15,
+        },
+    },
+    textTitleField:{
+        fontSize:20,
+        marginBottom: '1%',
         marginLeft: '1%',
+        fontWeight: 'bold',
         [theme.breakpoints.down('sm')]: {
             fontSize: 15,
         },
@@ -74,16 +79,21 @@ const useStyles = makeStyles<Theme, Props>((theme: Theme) => ({
         marginRight: '3%',
     },
     field:{
-        marginBottom: '2%',
+        marginLeft: '1%',
         color: globalColors.darkGrey,
+        textAlign: 'start',
         fontSize: 13,
         [theme.breakpoints.down('md')]: {
             fontSize: 12,
         },
     },
+    dataFieldContainer: {
+        marginBottom: '1%'
+    },
     dataField:{
-        marginLeft: '2%',
+        marginLeft: '1%',
         textAlign: 'start',
+        fontSize: 15,
         [theme.breakpoints.down('md')]: {
             fontSize: 10,
         }
@@ -170,12 +180,39 @@ const useStyles = makeStyles<Theme, Props>((theme: Theme) => ({
         },
     },
     stateColor: {
-        backgroundColor: ({color}) => color,
         borderRadius: 20,
-        paddingLeft: '20%',
-        paddingRight: '20%',
-        paddingTop: '7%',
-        paddingBottom: '7%'
+        textAlign: 'center',
+        paddingTop: '2%',
+        paddingBottom: '2%'
+    },
+    stateText: {
+        marginLeft: '1.5%',
+        color: globalColors.white,
+        fontSize: 13,
+        [theme.breakpoints.down('md')]: {
+            fontSize: 12,
+        },
+    },
+    entityName: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginBottom: '2.5%'
+    },
+    fieldFile:{
+        fontSize:22,
+        marginTop: '2.5%',
+        marginBottom: '2.5%',
+        [theme.breakpoints.down('sm')]: {
+            fontSize: 15,
+        },
+    },
+    fileTitle:{
+        color: globalColors.darkGrey,
+        textAlign: 'start',
+        fontSize: 15,
+        [theme.breakpoints.down('md')]: {
+            fontSize: 12,
+        },
     },
 }));
 

@@ -41,6 +41,13 @@ export interface IVehicle {
    };
 }
 
+export interface ISecurity {
+   id: number;
+   name: string;
+   surname: string;
+   document: string;
+}
+
 export interface IDocument {
    id: number;
    entityId: number;
@@ -62,7 +69,10 @@ export interface IDocumentType {
 export interface IException {
    id: number,
    driverId: number
+   driver: string
    vehicleId: number
+   vehicle: string
    securityId: number
+   contractor: string
    state: number
 }

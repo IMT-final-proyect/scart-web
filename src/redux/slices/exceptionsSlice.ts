@@ -10,6 +10,8 @@ interface IExceptionData {
     loading: boolean
     error: IError|null
     success : boolean
+    evaluationLoading: boolean
+    evaluationSuccess: boolean
 }
 
 interface IError {
@@ -21,7 +23,9 @@ const initialState: IExceptionData = {
     data: [],
     loading: false,
     error: null,
-    success: false
+    success: false,
+    evaluationLoading: false,
+    evaluationSuccess: false
 };
 
 const excpetionsSlice = createSlice({
@@ -45,6 +49,27 @@ const excpetionsSlice = createSlice({
          state.loading = false;
          state.error = payload;
       },
+      putUpdateExceptionsRequest(state) {
+         state.evaluationLoading = true;
+         state.error = initialState.error
+         state.success = initialState.success
+      },
+      putUpdateExceptionsSuccess(state) {
+         state.evaluationLoading = false;
+         state.error = initialState.error
+         state.success = true
+         state.evaluationSuccess = true
+      },
+      putUpdateExceptionsFailure(state, action: any) {
+         const { payload } = action
+         state.evaluationLoading = false;
+         state.error = payload;
+      },
+      cleanSnackbar(state) {
+         state.error = initialState.error
+         state.success = initialState.success
+         state.evaluationSuccess = initialState.evaluationSuccess
+      }
    },
 });
 
@@ -52,6 +77,10 @@ const {
     getPendingExceptionsSuccess,
     getPendingExceptionsRequest,
     getPendingExceptionsFailure,
+    putUpdateExceptionsSuccess,
+    putUpdateExceptionsRequest,
+    putUpdateExceptionsFailure,
+    cleanSnackbar
 } = excpetionsSlice.actions;
 
 
@@ -68,4 +97,26 @@ export const getPendingExceptions = (): AppThunk => async (dispatch) => {
    catch(error){
       dispatch(getPendingExceptionsFailure(error.response.data));
    }
+};
+
+export const putUpdateExceptions = (exceptionId: string, comment: string, managerId: number , nextState: number): AppThunk => async (dispatch) => {
+   dispatch(putUpdateExceptionsRequest());
+   try{
+      await Axios.put(`/notifications/exceptions/${exceptionId}`,
+      {
+         comment,
+         managerId,
+         state: nextState
+      });
+      dispatch(putUpdateExceptionsSuccess());
+   }
+   catch(error){
+      dispatch(putUpdateExceptionsFailure(error.response.data));
+   }
+};
+
+export const _cleanSnackbar = (): AppThunk => async (dispatch) => {
+   setTimeout(() => {
+      dispatch(cleanSnackbar());
+    }, 6000);
 };
