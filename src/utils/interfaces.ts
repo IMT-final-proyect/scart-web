@@ -76,3 +76,9 @@ export interface IException {
    contractor: string
    state: number
 }
+
+export interface IMissingDocument {
+   id: number,
+   name: string,
+   severity: number
+}

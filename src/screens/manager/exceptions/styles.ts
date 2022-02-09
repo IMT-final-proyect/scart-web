@@ -106,6 +106,9 @@ const useStyles = makeStyles((theme: Theme) => ({
         [theme.breakpoints.down('md')]: {
             marginBottom: '3%',
         },
+    },
+    emptyText: {
+        textAlign: 'center',
     }
 }));
 

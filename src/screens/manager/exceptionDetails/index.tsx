@@ -8,7 +8,7 @@ import DownloadIcon from '@mui/icons-material/Download';
 import PreviewIcon from '@mui/icons-material/Preview';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
-import { getDriverDocuments, getVehicleDocuments } from '../../../redux/slices/documentsSlice';
+import { getDriverDocuments, getInvalidDocuments, getVehicleDocuments } from '../../../redux/slices/documentsSlice';
 import { RootState } from '../../../redux/rootReducer';
 import globalColors from '../../../utils/styles/globalColors';
 import { ROUTES } from '../navigation/routes';
@@ -40,17 +40,13 @@ const ExceptionDetails = () => {
     const security = useSelector((state: RootState) => state.resources.securities?.data[securityId])
     const driverDocuments = useSelector((state: RootState) => state.documents.drivers.data)
     const vehicleDocuments = useSelector((state: RootState) => state.documents.vehicles.data)
-    
-    // const severity =  getSeverityName(activeDocument.type.severity)
-    // const color = getSeverityColor(severity)
     const classes = useStyles();
 
     useEffect(() => {
         dispatch(getDriverById(driverId))
         dispatch(getVehicleById(vehicleId))
         dispatch(getSecurityById(securityId))
-        dispatch(getDriverDocuments(driverId))
-        dispatch(getVehicleDocuments(vehicleId))
+        dispatch(getInvalidDocuments(driverId, vehicleId))
     }, [dispatch, driverId, securityId, vehicleId])
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -102,7 +98,7 @@ const ExceptionDetails = () => {
                 <img src={image} alt='document' className={classes.image}/>
             </div>
         </Modal>
-        {loadingDriver || loadingVehicle || loadingSecurity || evaluationLoading ?
+        {/* {loadingDriver || loadingVehicle || loadingSecurity || evaluationLoading ?
             <Grid container alignContent='center' justifyContent='center' >
                 <CircularProgress className={classes.spinner} />
             </Grid>
@@ -326,7 +322,7 @@ const ExceptionDetails = () => {
                     </Grid>
                 </Grid>
             </Grid>
-        }
+        } */}
         <CustomSnackbar open={errorSnackbar} message={error?.message || 'Hubo un error evaluando el documento'} type='error' onClose={() => setErrorSnackbar(false)} />
 
     </>

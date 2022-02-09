@@ -57,8 +57,6 @@ const Exceptions = () => {
     }, [exceptions, searchContractor])
 
     useEffect(() => {
-        console.log('cambio la bandera a ', success);
-        
         setOpenSuccess(success)
     }, [success])
 
@@ -84,39 +82,47 @@ const Exceptions = () => {
                     </Grid>
                     :
                     <Card className={classes.contentCard}>
-                        <Grid container justifyContent='space-between'>
-                            <Grid item xs={3} className={classes.headerText}>
-                                <text className={classes.headerText}>
-                                    Conductor
-                                </text>
+                        {exceptionsFiltered.length > 0 ?
+                            <>
+                                <Grid container justifyContent='space-between'>
+                                    <Grid item xs={3} className={classes.headerText}>
+                                        <text className={classes.headerText}>
+                                            Conductor
+                                        </text>
+                                    </Grid>
+                                    <Grid item xs={3} className={classes.headerText}>
+                                        <text className={classes.headerText}>
+                                            Vehiculo
+                                        </text>
+                                    </Grid>
+                                    <Grid item xs={3} className={classes.headerText}>
+                                        <text className={classes.headerText}>
+                                            Contratista
+                                        </text>
+                                    </Grid>
+                                    <Grid item xs={2} className={classes.headerText}>
+                                        <text className={classes.headerText}>
+                                            Acciones
+                                        </text>
+                                    </Grid>
+                                </Grid>
+                                <Grid container direction='column' justifyContent='space-between' >
+                                    {Object.keys(exceptionsFiltered).map((key: string, i: any) =>
+                                        <ExceptionRow 
+                                            key={exceptionsFiltered[parseInt(key)].id}
+                                            driver={exceptionsFiltered[parseInt(key)].driver}
+                                            vehicle={exceptionsFiltered[parseInt(key)].vehicle}
+                                            contractor={exceptionsFiltered[parseInt(key)].contractor}
+                                            route={ROUTES.root+ROUTES.exceptions+'/'+exceptionsFiltered[parseInt(key)].id+'/'+exceptionsFiltered[parseInt(key)].driverId+'/'+exceptionsFiltered[parseInt(key)].vehicleId+'/'+exceptionsFiltered[parseInt(key)].securityId}
+                                        />
+                                    )}
+                                </Grid>
+                            </>
+                            :
+                            <Grid className={classes.emptyText}>
+                                    <text>No hay excepciones</text>
                             </Grid>
-                            <Grid item xs={3} className={classes.headerText}>
-                                <text className={classes.headerText}>
-                                    Vehiculo
-                                </text>
-                            </Grid>
-                            <Grid item xs={3} className={classes.headerText}>
-                                <text className={classes.headerText}>
-                                    Contratista
-                                </text>
-                            </Grid>
-                            <Grid item xs={2} className={classes.headerText}>
-                                <text className={classes.headerText}>
-                                    Acciones
-                                </text>
-                            </Grid>
-                        </Grid>
-                        <Grid container direction='column' justifyContent='space-between' >
-                            {Object.keys(exceptionsFiltered).map((key: string, i: any) =>
-                                <ExceptionRow 
-                                    key={exceptionsFiltered[parseInt(key)].id}
-                                    driver={exceptionsFiltered[parseInt(key)].driver}
-                                    vehicle={exceptionsFiltered[parseInt(key)].vehicle}
-                                    contractor={exceptionsFiltered[parseInt(key)].contractor}
-                                    route={ROUTES.root+ROUTES.exceptions+'/'+exceptionsFiltered[parseInt(key)].id+'/'+exceptionsFiltered[parseInt(key)].driverId+'/'+exceptionsFiltered[parseInt(key)].vehicleId+'/'+exceptionsFiltered[parseInt(key)].securityId}
-                                />
-                            )}
-                        </Grid>
+                        }
                     </Card>
                 }
             </Grid>

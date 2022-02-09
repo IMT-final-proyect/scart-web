@@ -40,3 +40,7 @@ export enum Severities {
     LOW,
   }
   
+export enum ExceptionResults {
+    APPROVED,
+    REJECTED
+}

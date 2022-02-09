@@ -99,14 +99,14 @@ export const getPendingExceptions = (): AppThunk => async (dispatch) => {
    }
 };
 
-export const putUpdateExceptions = (exceptionId: string, comment: string, managerId: number , nextState: number): AppThunk => async (dispatch) => {
+export const putUpdateExceptions = (exceptionId: string, comment: string, managerId: number , result: number): AppThunk => async (dispatch) => {
    dispatch(putUpdateExceptionsRequest());
    try{
       await Axios.put(`/notifications/exceptions/${exceptionId}`,
       {
          comment,
          managerId,
-         state: nextState
+         result
       });
       dispatch(putUpdateExceptionsSuccess());
    }

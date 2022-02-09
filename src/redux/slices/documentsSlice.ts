@@ -3,7 +3,7 @@ import Axios, {AxiosResponse} from 'axios';
 import moment from 'moment';
 import { AllowedRol, contractor, driver, vehicle } from '../../utils/constants';
 import { getRolName } from '../../utils/functions/roles';
-import { IContractor, IDocument, IDriver, IVehicle } from '../../utils/interfaces';
+import { IContractor, IDocument, IDriver, IVehicle, IMissingDocument } from '../../utils/interfaces';
 import { AppThunk } from '../store';
 var _ = require('lodash');
 
@@ -13,7 +13,7 @@ interface IContractorDocuments {
     expiring: IDocument[]
     loading: boolean
     error: IError|null
-    success : boolean
+    success: boolean
 }
 
 interface IDriverDocuments {
@@ -21,7 +21,7 @@ interface IDriverDocuments {
     expiring: IDocument[]
     loading: boolean
     error: IError|null
-    success : boolean
+    success: boolean
 }
 
 interface IVehicleDocuments {
@@ -29,13 +29,27 @@ interface IVehicleDocuments {
     expiring: IDocument[]
     loading: boolean
     error: IError|null
-    success : boolean
+    success: boolean
+}
+
+interface IDriverExceptionDocuments {
+   invalidDocuments: IDocument[]
+   missingDocuments: IMissingDocument[]
+}
+
+interface IExceptionDocuments {
+    driver: IDriverExceptionDocuments
+    vehicle: IDriverExceptionDocuments
+    loading: boolean
+    error: IError|null
+    success: boolean
 }
 
 interface IEntitiesDocuments {
     contractor: IContractorDocuments
     drivers: IDriverDocuments
     vehicles: IVehicleDocuments
+    exceptionDocuments: IExceptionDocuments
     activeDocument: IDocument
     pendingDocuments: IDocument[]
     owner: any
@@ -43,7 +57,7 @@ interface IEntitiesDocuments {
     evaluationLoading: boolean
     evaluationSuccess: boolean
     error: IError|null
-    success : boolean
+    success: boolean
 }
 
 interface IError {
@@ -69,6 +83,19 @@ const initialState: IEntitiesDocuments = {
     vehicles: {
         data: [],
         expiring: [],
+        loading: false,
+        error: null,
+        success: false
+    },
+    exceptionDocuments: {
+        driver: {
+         invalidDocuments: [],
+         missingDocuments: []
+        },
+        vehicle: {
+         invalidDocuments: [],
+         missingDocuments: []
+        },
         loading: false,
         error: null,
         success: false
@@ -244,6 +271,25 @@ const documentsSlice = createSlice({
          state.evaluationLoading = false
          state.error = payload
       },
+      getInvalidDocumentsRequest(state) {
+         state.exceptionDocuments.loading = true
+         state.exceptionDocuments.error = initialState.exceptionDocuments.error
+         state.exceptionDocuments.success = initialState.exceptionDocuments.success
+      },
+      getInvalidDocumentsSuccess(state, action: any) {
+         const { payload } = action
+         state.exceptionDocuments.driver.invalidDocuments = payload.driver.invalidDocuments
+         state.exceptionDocuments.driver.missingDocuments = payload.driver.missingDocuments
+         state.exceptionDocuments.vehicle.invalidDocuments = payload.vehicle.invalidDocuments
+         state.exceptionDocuments.vehicle.missingDocuments = payload.vehicle.missingDocuments
+         state.exceptionDocuments.loading = false
+         state.exceptionDocuments.error = initialState.exceptionDocuments.error
+      },
+      getInvalidDocumentsFailure(state, action: any) {
+         const { payload } = action
+         state.exceptionDocuments.loading = false
+         state.exceptionDocuments.error = payload
+      },
       cleanSnackbar(state) {
          state.error = initialState.error
          state.success = initialState.success
@@ -279,6 +325,9 @@ const {
     postDocumentEvaluationRequest,
     postDocumentEvaluationSuccess,
     postDocumentEvaluationFailure,
+    getInvalidDocumentsRequest,
+    getInvalidDocumentsSuccess,
+    getInvalidDocumentsFailure,
     cleanSnackbar
 } = documentsSlice.actions;
 
@@ -308,6 +357,20 @@ export const getDriverDocuments = (driverId: number|undefined): AppThunk => asyn
    }
    catch(error){
       dispatch(getDriverDocumentsFailure(error.response.data));
+   }
+};
+
+export const getInvalidDocuments = (driverId: number, vehicleId: number): AppThunk => async (dispatch) => {
+   dispatch(getInvalidDocumentsRequest());
+   try{
+      const response: AxiosResponse = await Axios.get(`/documents/visit/validate?driverId=${driverId}&vehicleId=${vehicleId}`);
+      const driver = response.data.driver
+      const vehicle = response.data.vehicle
+      
+      dispatch(getInvalidDocumentsSuccess({driver, vehicle}));
+   }
+   catch(error){
+      dispatch(getInvalidDocumentsFailure(error.response.data));
    }
 };
 
