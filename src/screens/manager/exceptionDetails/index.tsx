@@ -8,7 +8,7 @@ import DownloadIcon from '@mui/icons-material/Download';
 import PreviewIcon from '@mui/icons-material/Preview';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
-import { getDriverDocuments, getInvalidDocuments, getVehicleDocuments } from '../../../redux/slices/documentsSlice';
+import { getDriverDocuments, getVehicleDocuments } from '../../../redux/slices/documentsSlice';
 import { RootState } from '../../../redux/rootReducer';
 import globalColors from '../../../utils/styles/globalColors';
 import { ROUTES } from '../navigation/routes';
@@ -17,7 +17,7 @@ import { getDriverById, getSecurityById, getVehicleById } from '../../../redux/s
 import useStyles from './styles';
 import { getStateColor, getStateName } from '../../../utils/functions/states';
 import { States } from '../../../utils/constants';
-import { putUpdateExceptions, _cleanSnackbar } from '../../../redux/slices/exceptionsSlice';
+import { putUpdateExceptions, _cleanSnackbar, getInvalidDocuments } from '../../../redux/slices/exceptionsSlice';
 
 const ExceptionDetails = () => {
     const dispatch = useDispatch()
@@ -38,8 +38,10 @@ const ExceptionDetails = () => {
     const driver = useSelector((state: RootState) => state.resources.drivers?.data[driverId])
     const vehicle = useSelector((state: RootState) => state.resources.vehicles?.data[vehicleId])
     const security = useSelector((state: RootState) => state.resources.securities?.data[securityId])
-    const driverDocuments = useSelector((state: RootState) => state.documents.drivers.data)
-    const vehicleDocuments = useSelector((state: RootState) => state.documents.vehicles.data)
+    const driverInvalidDocuments = useSelector((state: RootState) => state.exceptions.exceptionDocuments.driver.invalidDocuments)
+    const driverMissingDocuments = useSelector((state: RootState) => state.exceptions.exceptionDocuments.driver.missingDocuments)
+    const vehicleInvalidDocuments = useSelector((state: RootState) => state.exceptions.exceptionDocuments.vehicle.invalidDocuments)
+    const vehicleMissingDocuments = useSelector((state: RootState) => state.exceptions.exceptionDocuments.vehicle.missingDocuments)
     const classes = useStyles();
 
     useEffect(() => {
@@ -98,7 +100,7 @@ const ExceptionDetails = () => {
                 <img src={image} alt='document' className={classes.image}/>
             </div>
         </Modal>
-        {/* {loadingDriver || loadingVehicle || loadingSecurity || evaluationLoading ?
+        {loadingDriver || loadingVehicle || loadingSecurity || evaluationLoading ?
             <Grid container alignContent='center' justifyContent='center' >
                 <CircularProgress className={classes.spinner} />
             </Grid>
@@ -151,7 +153,7 @@ const ExceptionDetails = () => {
                         <Card className={classes.filesCard}>
                             <Grid container className={classes.titleContainer} justifyContent='space-between'>
                                 <text className={classes.fieldFile}>
-                                    Archivos inválidos
+                                    Archivos inválidos o faltantes
                                 </text>
                             </Grid>
                             <Grid container className={classes.titleContainer} justifyContent='space-between'>
@@ -160,28 +162,28 @@ const ExceptionDetails = () => {
                                 </text>
                             </Grid>
                             <Grid container justifyContent='space-between'>
-                                {Object.keys(driverDocuments).map((key: string) => {
-                                    if(driverDocuments[parseInt(key)].state === States.VALID)
-                                        return true
-                                    else                                
+                                <text className={classes.fieldFile}>
+                                    Inválidos
+                                </text>
+                                {Object.keys(driverInvalidDocuments).map((key: string) => {                       
                                         return(
                                             <>
                                                 <Grid item xs={9}>
                                                     <text className={classes.fileTitle}>
-                                                        {driverDocuments[parseInt(key)].type.name}
+                                                        {driverInvalidDocuments[parseInt(key)].type.name}
                                                     </text>
                                                 </Grid>
                                                 <Grid item xs={3}>
-                                                    <Grid className={classes.stateColor} style={{backgroundColor: getStateColor(getStateName(driverDocuments[parseInt(key)].state))}}>
+                                                    <Grid className={classes.stateColor} style={{backgroundColor: getStateColor(getStateName(driverInvalidDocuments[parseInt(key)].state))}}>
                                                         <text className={classes.stateText} >
-                                                            {getStateName(driverDocuments[parseInt(key)].state)}
+                                                            {getStateName(driverInvalidDocuments[parseInt(key)].state)}
                                                         </text>
                                                     </Grid>
                                                 </Grid>
-                                                {driverDocuments[parseInt(key)].photos.length > 0 ? 
+                                                {/* {driverInvalidDocuments[parseInt(key)].photos.length > 0 ? 
                                                     <Grid container direction='column' justifyContent='space-between'>
                                                         <Grid container justifyContent='space-between'>
-                                                            {driverDocuments[parseInt(key)].photos.map((value: string, index: number) => {
+                                                            {driverInvalidDocuments[parseInt(key)].photos.map((value: string, index: number) => {
                                                                     return(
                                                                         <Grid key={index} className={classes.filesCard} container direction='row'>
                                                                             <Grid item xs={1}>
@@ -221,9 +223,22 @@ const ExceptionDetails = () => {
                                                     </Grid>
                                                     :
                                                     <text className={classes.textCenter}> No hay archivos cargados</text>
-                                                }
+                                                } */}
                                             </>
-                                            )
+                                        )
+                                    })
+                                }
+                            </Grid>
+                            <Grid container justifyContent='space-between'>
+                                <text className={classes.fieldFile}>
+                                    Faltantes
+                                </text>
+                                {Object.keys(driverMissingDocuments).map((key: string) => {                       
+                                        return(
+                                            <text className={classes.fileTitle}>
+                                                {driverMissingDocuments[parseInt(key)].name}
+                                            </text>
+                                        )
                                     })
                                 }
                             </Grid>
@@ -233,28 +248,31 @@ const ExceptionDetails = () => {
                                 </text>
                             </Grid>
                             <Grid container justifyContent='space-between'>
-                                {Object.keys(vehicleDocuments).map((key: string) => {
-                                    if(vehicleDocuments[parseInt(key)].state === States.VALID)
+                                <text className={classes.fieldFile}>
+                                    Invalidos
+                                </text>
+                                {Object.keys(vehicleInvalidDocuments).map((key: string) => {
+                                    if(vehicleInvalidDocuments[parseInt(key)].state === States.VALID)
                                         return true
                                     else                                
                                         return(
                                             <>
                                                 <Grid item xs={9}>
                                                     <text className={classes.fileTitle}>
-                                                        {vehicleDocuments[parseInt(key)].type.name}
+                                                        {vehicleInvalidDocuments[parseInt(key)].type.name}
                                                     </text>
                                                 </Grid>
                                                 <Grid item xs={3}>
-                                                    <Grid className={classes.stateColor} style={{backgroundColor: getStateColor(getStateName(vehicleDocuments[parseInt(key)].state))}}>
+                                                    <Grid className={classes.stateColor} style={{backgroundColor: getStateColor(getStateName(vehicleInvalidDocuments[parseInt(key)].state))}}>
                                                         <text className={classes.stateText} >
-                                                            {getStateName(vehicleDocuments[parseInt(key)].state)}
+                                                            {getStateName(vehicleInvalidDocuments[parseInt(key)].state)}
                                                         </text>
                                                     </Grid>
                                                 </Grid>
-                                                {vehicleDocuments[parseInt(key)].photos.length > 0 ? 
+                                                {/* {vehicleInvalidDocuments[parseInt(key)].photos.length > 0 ? 
                                                     <Grid container direction='column' justifyContent='space-between'>
                                                         <Grid container justifyContent='space-between'>
-                                                            {vehicleDocuments[parseInt(key)].photos.map((value: string, index: number) => {
+                                                            {vehicleInvalidDocuments[parseInt(key)].photos.map((value: string, index: number) => {
                                                                     return(
                                                                         <Grid key={index} className={classes.filesCard} container direction='row'>
                                                                             <Grid item xs={1}>
@@ -294,9 +312,22 @@ const ExceptionDetails = () => {
                                                     </Grid>
                                                     :
                                                     <text className={classes.textCenter}> No hay archivos cargados</text>
-                                                }
+                                                } */}
                                             </>
                                             )
+                                    })
+                                }
+                            </Grid>
+                            <Grid container justifyContent='space-between'>
+                                <text className={classes.fieldFile}>
+                                    Faltantes
+                                </text>
+                                {Object.keys(vehicleMissingDocuments).map((key: string) => {                       
+                                        return(
+                                            <text className={classes.fileTitle}>
+                                                {vehicleMissingDocuments[parseInt(key)].name}
+                                            </text>
+                                        )
                                     })
                                 }
                             </Grid>
@@ -322,7 +353,7 @@ const ExceptionDetails = () => {
                     </Grid>
                 </Grid>
             </Grid>
-        } */}
+        }
         <CustomSnackbar open={errorSnackbar} message={error?.message || 'Hubo un error evaluando el documento'} type='error' onClose={() => setErrorSnackbar(false)} />
 
     </>

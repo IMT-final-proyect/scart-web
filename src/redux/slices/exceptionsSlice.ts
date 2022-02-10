@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import Axios, {AxiosResponse} from 'axios';
-import { IException } from '../../utils/interfaces';
+import { IDocument, IException, IMissingDocument } from '../../utils/interfaces';
 import { AppThunk } from '../store';
 var _ = require('lodash');
 
@@ -12,6 +12,20 @@ interface IExceptionData {
     success : boolean
     evaluationLoading: boolean
     evaluationSuccess: boolean
+    exceptionDocuments: IExceptionDocuments
+}
+
+interface IDriverExceptionDocuments {
+   invalidDocuments: IDocument[]
+   missingDocuments: IMissingDocument[]
+}
+
+interface IExceptionDocuments {
+    driver: IDriverExceptionDocuments
+    vehicle: IDriverExceptionDocuments
+    loading: boolean
+    error: IError|null
+    success: boolean
 }
 
 interface IError {
@@ -25,11 +39,24 @@ const initialState: IExceptionData = {
     error: null,
     success: false,
     evaluationLoading: false,
-    evaluationSuccess: false
+    evaluationSuccess: false,
+    exceptionDocuments: {
+      driver: {
+       invalidDocuments: [],
+       missingDocuments: []
+      },
+      vehicle: {
+       invalidDocuments: [],
+       missingDocuments: []
+      },
+      loading: false,
+      error: null,
+      success: false
+  },
 };
 
-const excpetionsSlice = createSlice({
-   name: 'excpetions',
+const exceptionsSlice = createSlice({
+   name: 'exceptions',
    initialState,
    reducers: {
       getPendingExceptionsRequest(state) {
@@ -65,6 +92,25 @@ const excpetionsSlice = createSlice({
          state.evaluationLoading = false;
          state.error = payload;
       },
+      getInvalidDocumentsRequest(state) {
+         state.exceptionDocuments.loading = true
+         state.exceptionDocuments.error = initialState.exceptionDocuments.error
+         state.exceptionDocuments.success = initialState.exceptionDocuments.success
+      },
+      getInvalidDocumentsSuccess(state, action: any) {
+         const { payload } = action
+         state.exceptionDocuments.driver.invalidDocuments = payload?.driver?.invalidDocuments || []
+         state.exceptionDocuments.driver.missingDocuments = payload?.driver?.missingDocuments || []
+         state.exceptionDocuments.vehicle.invalidDocuments = payload?.vehicle?.invalidDocuments || []
+         state.exceptionDocuments.vehicle.missingDocuments = payload?.vehicle?.missingDocuments || []
+         state.exceptionDocuments.loading = false
+         state.exceptionDocuments.error = initialState.exceptionDocuments.error
+      },
+      getInvalidDocumentsFailure(state, action: any) {
+         const { payload } = action
+         state.exceptionDocuments.loading = false
+         state.exceptionDocuments.error = payload
+      },
       cleanSnackbar(state) {
          state.error = initialState.error
          state.success = initialState.success
@@ -80,11 +126,14 @@ const {
     putUpdateExceptionsSuccess,
     putUpdateExceptionsRequest,
     putUpdateExceptionsFailure,
+    getInvalidDocumentsRequest,
+    getInvalidDocumentsSuccess,
+    getInvalidDocumentsFailure,
     cleanSnackbar
-} = excpetionsSlice.actions;
+} = exceptionsSlice.actions;
 
 
-export default excpetionsSlice.reducer;
+export default exceptionsSlice.reducer;
 
 export const getPendingExceptions = (): AppThunk => async (dispatch) => {
    dispatch(getPendingExceptionsRequest());
@@ -114,6 +163,21 @@ export const putUpdateExceptions = (exceptionId: string, comment: string, manage
       dispatch(putUpdateExceptionsFailure(error.response.data));
    }
 };
+
+export const getInvalidDocuments = (driverId: number, vehicleId: number): AppThunk => async (dispatch) => {
+   dispatch(getInvalidDocumentsRequest());
+   try{
+      const response: AxiosResponse = await Axios.get(`/documents/visit/validate?driverId=${driverId}&vehicleId=${vehicleId}`);
+      
+      dispatch(getInvalidDocumentsSuccess(response.data));
+   }
+   catch(error){
+      console.log(error);
+      
+      dispatch(getInvalidDocumentsFailure(error));
+   }
+};
+
 
 export const _cleanSnackbar = (): AppThunk => async (dispatch) => {
    setTimeout(() => {
