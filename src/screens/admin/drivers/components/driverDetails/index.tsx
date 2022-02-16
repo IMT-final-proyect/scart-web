@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Card, CircularProgress, Grid, Modal, Snackbar, } from '@material-ui/core'
+import { Button, Card, CircularProgress, Grid, Modal } from '@material-ui/core'
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import useStyles from './styles' 
 import { Link, useParams } from 'react-router-dom';
@@ -13,7 +13,6 @@ import { ROUTES } from '../../../navigation/routes';
 import EditIcon from '@mui/icons-material/Edit';
 import DocumentRow from './components/documentRow/DocumentRow';
 import EditDriverModal from '../../../../../components/editDriverModal';
-import { Alert } from '@mui/material';
 import { editDriver } from '../../../../../redux/slices/resourcesSlice';
 import CustomSnackbar from '../../../../../components/customSnackbar';
 import { IUser } from '../../../../../redux/slices/userSlice';
@@ -37,7 +36,7 @@ const DriverDetails = () => {
     const documents: IDocument[] = useSelector((state: RootState) => state.documents.drivers.data)
     const loading: boolean = useSelector((state: RootState) => state.documents.drivers.loading)
     const success: boolean = useSelector((state: RootState) => state.resources.drivers.success)
-    const error: boolean = useSelector((state: RootState) => state.resources.drivers.success)
+    const errorMessage = useSelector((state: RootState) => state.resources.drivers.error?.message)
     const documentSuccess = useSelector((state: RootState) => state.documents.success)
     const documentError = useSelector((state: RootState) => state.documents.error)
 
@@ -49,13 +48,15 @@ const DriverDetails = () => {
         setOpenEditDriverSuccess(success)
     }, [success])
 
+
+    useEffect(() => {
+        setOpenEditDriverError(errorMessage ? true : false)
+        setMessageSnackbar(errorMessage || '')
+    }, [errorMessage])
+
     useEffect(() => {
         setOpenSuccess(documentSuccess)
     }, [documentSuccess])
-
-    useEffect(() => {
-        setOpenFailure(!!error)
-    }, [error])
 
     useEffect(() => {
         setOpenFailure(!!documentError)
@@ -70,6 +71,7 @@ const DriverDetails = () => {
         driver: IDriver | IUser, 
         name: string, 
         surname: string, 
+        username: string,
         cuit: string, 
         birthdate: moment.Moment, 
         street: string,
@@ -79,9 +81,9 @@ const DriverDetails = () => {
         zipCode: string,
         password?: string) => {
         if (changePassword)
-            dispatch(editDriver(driver, name, surname, cuit, birthdate, street, number, city, province, zipCode, password))
+            dispatch(editDriver(driver, name, surname, username, cuit, birthdate, street, number, city, province, zipCode, password))
         else
-            dispatch(editDriver(driver, name, surname, cuit, birthdate, street, number, city, province, zipCode))
+            dispatch(editDriver(driver, name, surname, username, cuit, birthdate, street, number, city, province, zipCode))
         setMessageSnackbar('Conductor modificado con exito')
     }
 
@@ -232,7 +234,7 @@ const DriverDetails = () => {
             </Grid>
             }
             <CustomSnackbar open={openEditDriverSuccess && !!messageSnackbar} message={messageSnackbar} type='success' onClose={() =>  setOpenEditDriverSuccess(false)} />
-            <CustomSnackbar open={openEditDriverError} message={'Error editando conductor'} type='error' onClose={() =>  setOpenEditDriverError(false)} />
+            <CustomSnackbar open={openEditDriverError} message={messageSnackbar} type='error' onClose={() =>  setOpenEditDriverError(false)} />
             <CustomSnackbar open={openSuccess} message='Documento creado con éxito' type='success' onClose={() => setOpenSuccess(false)} />
             <CustomSnackbar open={openFailure} message='Error creando documento' type='error' onClose={() => setOpenFailure(false)} />
         </>

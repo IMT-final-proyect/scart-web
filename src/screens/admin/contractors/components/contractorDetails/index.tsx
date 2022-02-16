@@ -7,11 +7,14 @@ import { RootState } from '../../../../../redux/rootReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import { IContractor, IDocument } from '../../../../../utils/interfaces';
+import EditIcon from '@mui/icons-material/Edit';
 import CreateContractorDocumentModal from './components/CreateContractorDocumentModal';
 import { createDocument, getContractorDocuments } from '../../../../../redux/slices/documentsSlice';
 import { ROUTES } from '../../../navigation/routes';
 import DocumentRow from './components/documentRow/DocumentRow';
 import CustomSnackbar from '../../../../../components/customSnackbar';
+import { editContractor } from '../../../../../redux/slices/contractorsSlice';
+import EditContractorModal from '../../../../../components/editContractorModal';
 
 
 const ContractorDetails = () => {
@@ -19,12 +22,19 @@ const ContractorDetails = () => {
     const params: any = useParams();
     const dispatch = useDispatch();
     const [openContractorDocumentModal, setOpenContractorDocumentModal] = useState(false)
+    const [openEditContractorModal, setOpenEditContractorModal] = useState(false)
+    const [openEditContractorSuccess, setOpenEditContractorSuccess] = useState(false)
+    const [openEditContractorError, setOpenEditContractorError] = useState(false)
+    const [changePassword, setChangePassword] = useState(false)
     const [openSuccess, setOpenSuccess] = useState(false)
     const [openFailure, setOpenFailure] = useState(false)
+    const [messageSnackbar, setMessageSnackbar] = useState('')
     const contractor: IContractor = useSelector((state: RootState) => {
         const contractors = state.contractors.data
         return contractors[params.id]
     })
+    const contractorSuccess = useSelector((state: RootState) => state.contractors.success)
+    const contractorError = useSelector((state: RootState) => state.contractors.error?.message)
     const documents: IDocument[] = useSelector((state: RootState) => state.documents.contractor.data)
     const success = useSelector((state: RootState) => state.documents.success)
     const error = useSelector((state: RootState) => state.documents.error)
@@ -34,6 +44,16 @@ const ContractorDetails = () => {
     }, [contractor.id, dispatch])
 
     useEffect(() => {
+        setOpenEditContractorSuccess(contractorSuccess)
+    }, [contractorSuccess])
+    
+
+    useEffect(() => {
+        setOpenEditContractorError(contractorError ? true : false)
+        setMessageSnackbar(contractorError || '')
+    }, [contractorError])
+
+    useEffect(() => {
         setOpenSuccess(success)
     }, [success])
 
@@ -41,10 +61,27 @@ const ContractorDetails = () => {
         setOpenFailure(!!error)
     }, [error])
 
-
     const addDocument = (expirationDate: moment.Moment, type: number, entityType: number, entityId: number, images: string[]) => {
         dispatch(createDocument(expirationDate, type, entityType, entityId, images, entityId))
         setOpenContractorDocumentModal(false)
+    }
+
+    const _editContractor = (
+        contractor: IContractor, 
+        name: string,
+        username: string,
+        cuit: string, 
+        street: string,
+        number: number,
+        city: string,
+        province: string,
+        zipCode: string,
+        password?: string) => {
+        if (changePassword)
+            dispatch(editContractor(contractor, name, username, cuit, street, number, city, province, zipCode, password))
+        else
+            dispatch(editContractor(contractor, name, username, cuit, street, number, city, province, zipCode))
+        setMessageSnackbar('Contratista modificado con exito')
     }
 
     return (
@@ -56,51 +93,72 @@ const ContractorDetails = () => {
                     contractorId={contractor.id}
                 />
             </Modal>
+            <Modal open={openEditContractorModal} onClose={() => setOpenEditContractorModal(false)}>
+                <EditContractorModal 
+                    contractor={contractor} 
+                    changePassword={changePassword}
+                    editContractor={_editContractor} 
+                    setOpenEditContractorModal={setOpenEditContractorModal} 
+                    setChangePassword={setChangePassword}
+                />
+            </Modal>
             <Grid container direction='column' justifyContent='space-between'>
                 <Card className={classes.cardContainer}>
                     <Grid container className={classes.contractorDataRow} justifyContent='space-between' direction='row' alignItems={'center'}>
                         <Grid item xs={3}>
                             <div className={classes.dataContainer}>
                                 <text className={classes.dataField}> Nombre: </text>
-                                <text className={classes.data}> {contractor.name} </text>
+                                <text className={classes.data}> {contractor.name || '-'} </text>
                             </div>
                         </Grid>
                         <Grid item xs={3}>
                             <div className={classes.dataContainer}>
                                 <text className={classes.dataField}> Cuit: </text>
-                                <text className={classes.data}> {contractor.cuit} </text>
+                                <text className={classes.data}> {contractor.cuit || '-'} </text>
                             </div>
                         </Grid>
                         <Grid item xs={3}>
                             <div className={classes.dataContainer}>
                                 <text className={classes.dataField}> Calle: </text>
-                                <text className={classes.data}> {contractor.address?.street} </text>
+                                <text className={classes.data}> {contractor.address?.street || '-'} </text>
                             </div>
                         </Grid>
-                        <Grid item xs={3}>
+                        <Grid item xs={2}>
                             <div className={classes.dataContainer}>
-                                <text className={classes.dataField}> Numero: </text>
-                                <text className={classes.data}> {contractor.address?.number} </text>
+                                <text className={classes.dataField}> Usuario: </text>
+                                <text className={classes.data}> {contractor?.username || '-'} </text>
                             </div>
                         </Grid>
+                        <Grid item xs={1}>
+                            <Button onClick={() => {setOpenEditContractorModal(true)}}>
+                                <EditIcon />
+                            </Button>
+                        </Grid>
+                        
                     </Grid>
                     <Grid container className={classes.contractorDataRow} justifyContent='space-between' direction='row' alignItems={'center'}>
                         <Grid item xs={3}>
                             <div className={classes.dataContainer}>
+                                <text className={classes.dataField}> Numero: </text>
+                                <text className={classes.data}> {contractor.address?.number || '-'} </text>
+                            </div>
+                        </Grid>
+                        <Grid item xs={3}>
+                            <div className={classes.dataContainer}>
                                 <text className={classes.dataField}> Ciudad: </text>
-                                <text className={classes.data}> {contractor.address?.city} </text>
+                                <text className={classes.data}> {contractor.address?.city || '-'} </text>
                             </div>
                         </Grid>
                         <Grid item xs={3}>
                             <div className={classes.dataContainer}>
                                 <text className={classes.dataField}> Provincia: </text>
-                                <text className={classes.data}> {contractor.address?.province} </text>
+                                <text className={classes.data}> {contractor.address?.province || '-'} </text>
                             </div>
                         </Grid>
                         <Grid item xs={3}>
                             <div className={classes.dataContainer}>
                                 <text className={classes.dataField}> Codigo Postal: </text>
-                                <text className={classes.data}> {contractor.address?.zip_code} </text>
+                                <text className={classes.data}> {contractor.address?.zip_code || '-'} </text>
                             </div>
                         </Grid>
                         <Grid item xs={3}>
@@ -166,6 +224,8 @@ const ContractorDetails = () => {
                     </Card>
                 </Grid>
             </Grid>
+            <CustomSnackbar open={openEditContractorSuccess && !!messageSnackbar} message={messageSnackbar} type='success' onClose={() =>  setOpenEditContractorSuccess(false)} />
+            <CustomSnackbar open={openEditContractorError && !!messageSnackbar} message={messageSnackbar} type='error' onClose={() =>  setOpenEditContractorSuccess(false)} />
             <CustomSnackbar open={openSuccess} message='Documento creado con éxito' type='success' onClose={() => setOpenSuccess(false)} />
             <CustomSnackbar open={openFailure} message='Error creando documento' type='error' onClose={() => setOpenFailure(false)} />
         </>

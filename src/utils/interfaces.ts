@@ -11,13 +11,15 @@ export interface IContractor {
    id: number;
    name: string;
    cuit: string;
-   address: IAddress
+   address: IAddress;
+   username: string;
 }
 
 export interface IDriver {
    id: number;
    name: string;
    surname: string;
+   username: string;
    cuit: string;
    birth_date: moment.Moment;
    contractor: {

@@ -146,6 +146,24 @@ const resourcesSlice = createSlice({
          state.pending.loading = false;
          state.pending.error = payload;
       },
+      editContractorRequest(state) {
+         state.loading = true;
+         state.error = initialState.error;
+         state.success = initialState.success;
+      },
+      editContractorSuccess(state, action: any) {
+         const { payload } = action
+         state.data[payload.id] = payload
+         state.loading = false;
+         state.success = true;
+         state.error = initialState.error
+      },
+      editContractorFailure(state, action: any) {
+         const { payload } = action
+         state.loading = false;
+         state.error = payload;
+         state.success = initialState.success;
+      },
    },
 });
 
@@ -167,7 +185,10 @@ const {
     getInvalidVehiclesFailure,
     getPendingVehiclesSuccess,
     getPendingVehiclesRequest,
-    getPendingVehiclesFailure
+    getPendingVehiclesFailure,
+    editContractorRequest,
+    editContractorSuccess,
+    editContractorFailure
 } = resourcesSlice.actions;
 
 
@@ -254,5 +275,58 @@ export const getPendingVehicles = (contractorId: number): AppThunk => async (dis
    }
    catch(error){
       dispatch(getPendingVehiclesFailure(error.response.data));
+   }
+}
+
+export const editContractor = (
+   contractor: IContractor, 
+   name: string, 
+   username: string,
+   cuit: string, 
+   street: string,
+   number: number,
+   city: string,
+   province: string,
+   zip_code: string,
+   password?: string): AppThunk => async (dispatch) => {
+   dispatch(editContractorRequest());
+   try{
+      let body
+      if (!!password) 
+         body = {
+            name,
+            username,
+            cuit,
+            address: {
+               street,
+               number,
+               city,
+               province,
+               zip_code
+            },
+            password
+         }
+      else
+         body = {
+            name,
+            username,
+            cuit,
+            address: {
+               street,
+               number,
+               city,
+               province,
+               zip_code
+            }
+         } 
+      const response: AxiosResponse = await Axios.put(`/contractors/${contractor.id}`, body);
+      
+      const editedContractor = {...contractor, ...response.data}
+      
+      
+      dispatch(editContractorSuccess(editedContractor));
+   }
+   catch(error){
+      dispatch(editContractorFailure(error.response.data)); 
    }
 }

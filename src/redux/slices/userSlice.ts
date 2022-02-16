@@ -19,6 +19,7 @@ export interface IUser {
    id: number;
    name: string;
    surname?: string;
+   username: string;
    cuit: string;
    street: string;
    address: IAddress
