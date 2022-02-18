@@ -29,44 +29,9 @@ jobs:
           run: yarn run build
         # Share artifact inside workflow
         - name: Share artifact inside workflow
-          uses: actions/upload-artifact@v1
+          uses: actions/upload-artifact@v2
           with:
-            name: react-github-actions-build
+            name: scart_web_${{ github.sha }}
             path: build
-            
-    copy-artifact:
-      runs-on: ubuntu-latest
-      steps:
-      - uses: actions/checkout@master
-      - name: copy file via ssh password
-        uses: appleboy/scp-action@master
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_KEY }}
-          source: "tests/a.txt,tests/b.txt"
-          target: "test"
-    
-    deploy:
-      runs-on: ubuntu-latest
-      needs: build
 
-      steps:
-          # Download previously shared build
-        - name: Get artifact
-          uses: actions/download-artifact@v1
-          with:
-            name: react-github-actions-build
-          # Set the credentials from repository settings/secrets
-        - name: Deploy to Digital Ocean droplet via SSH action
-          uses: appleboy/ssh-action@v0.1.3
-          with:
-            HOST: ${{ secrets.SSH_HOST }}
-            USERNAME: ${{ secrets.SSH_USERNAME }}
-            KEY: ${{ secrets.SSH_KEY }}
-            envs: IMAGE_NAME,CONTAINER_NAME,SERVICE_NAME
-            script: |
-              # Copy artifact
-              docker stop $(echo $CONTAINER_NAME)
-              # Remove old container
              
