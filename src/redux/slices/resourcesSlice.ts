@@ -453,6 +453,7 @@ export const editDriver = (
    driver: IDriver | IUser, 
    name: string, 
    surname: string, 
+   username: string,
    cuit: string, 
    birth_date: moment.Moment, 
    street: string,
@@ -468,6 +469,7 @@ export const editDriver = (
          body = {
             name,
             surname,
+            username,
             cuit,
             birth_date,
             address: {
@@ -483,6 +485,7 @@ export const editDriver = (
          body = {
             name,
             surname,
+            username,
             cuit,
             birth_date,
             address: {

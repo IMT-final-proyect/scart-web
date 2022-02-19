@@ -8,10 +8,11 @@ const useStyles = makeStyles((theme: Theme) => ({
         marginTop: '60px',
         paddingLeft: '2.5%',
         paddingRight: '2.5%',
-        paddingTop: '1%',
+        paddingTop: '2.5%',
+        paddingBottom: '1.5%',
     },
     dataContainer:{
-        marginBottom: '1%',
+        marginBottom: '5%',
         textAlign: 'start'
     },
     dataField:{
@@ -42,6 +43,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     rightCard:{
         marginTop: '2.5%',
+        paddingTop: '2.5%',
         paddingLeft: '2.5%',
         paddingRight: '2.5%',
         paddingBottom: '2.5%',
@@ -52,7 +54,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     textTitle:{
         fontSize:20,
-        marginTop: '3%',
         marginBottom: '3%',
         marginLeft: '3%',
     },
@@ -67,10 +68,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     textCenter: {
         textAlign: 'center',
-        marginTop: '2%'
     },
     contractorDataRow: {
-        marginTop: '1%',
     }
 }));
 

@@ -76,6 +76,7 @@ const DriverDetails = () => {
         driver: IDriver | IUser, 
         name: string, 
         surname: string, 
+        username: string,
         cuit: string, 
         birthdate: moment.Moment, 
         street: string,
@@ -85,9 +86,9 @@ const DriverDetails = () => {
         zipCode: string,
         password?: string) => {
         if (changePassword)
-            dispatch(editDriver(driver, name, surname, cuit, birthdate, street, number, city, province, zipCode, password))
+            dispatch(editDriver(driver, name, surname, username, cuit, birthdate, street, number, city, province, zipCode, password))
         else
-            dispatch(editDriver(driver, name, surname, cuit, birthdate, street, number, city, province, zipCode))
+            dispatch(editDriver(driver, name, surname, username, cuit, birthdate, street, number, city, province, zipCode))
         setSuccessMessageSnackbar('Conductor modificado con exito')
     }
 

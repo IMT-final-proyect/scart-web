@@ -8,20 +8,14 @@ const useStyles = makeStyles((theme: Theme) => ({
     textInput: {
         color: globalColors.lightBlue,
         marginTop: '2.5%',
-        marginBottom: '5%',
-        width: '90%',
+        marginBottom: '2.5%',
         [theme.breakpoints.down('xs')]: {
             maxWidth: '50%'
         },
     },
     lastTextInput: {
         marginBottom: '10%',
-        marginTop: '2.5%',
-        width: '90%',
-        color: globalColors.lightBlue,
-        [theme.breakpoints.down('xs')]: {
-            maxWidth: '50%'
-        },
+        marginTop: '2.5%'
     },
     modal: {
         position: 'absolute', 
@@ -45,7 +39,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         marginTop: '3%',
         fontSize: 25,
         fontWeight: 'bold',
-        marginBottom: '2.5%',
+        marginBottom: '2.5%'
     },
     subtitle:{
         fontSize: 15,
