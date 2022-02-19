@@ -8,7 +8,7 @@ import DownloadIcon from '@mui/icons-material/Download';
 import PreviewIcon from '@mui/icons-material/Preview';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
-import { getDriverDocuments, getVehicleDocuments } from '../../../redux/slices/documentsSlice';
+import CloseIcon from '@mui/icons-material/Close';
 import { RootState } from '../../../redux/rootReducer';
 import globalColors from '../../../utils/styles/globalColors';
 import { ROUTES } from '../navigation/routes';
@@ -161,176 +161,229 @@ const ExceptionDetails = () => {
                                     Conductor
                                 </text>
                             </Grid>
-                            <Grid container justifyContent='space-between'>
-                                <text className={classes.fieldFile}>
-                                    Inválidos
-                                </text>
-                                {Object.keys(driverInvalidDocuments).map((key: string) => {                       
-                                        return(
-                                            <>
-                                                <Grid item xs={9}>
-                                                    <text className={classes.fileTitle}>
-                                                        {driverInvalidDocuments[parseInt(key)].type.name}
-                                                    </text>
-                                                </Grid>
-                                                <Grid item xs={3}>
-                                                    <Grid className={classes.stateColor} style={{backgroundColor: getStateColor(getStateName(driverInvalidDocuments[parseInt(key)].state))}}>
-                                                        <text className={classes.stateText} >
-                                                            {getStateName(driverInvalidDocuments[parseInt(key)].state)}
-                                                        </text>
-                                                    </Grid>
-                                                </Grid>
-                                                {/* {driverInvalidDocuments[parseInt(key)].photos.length > 0 ? 
-                                                    <Grid container direction='column' justifyContent='space-between'>
-                                                        <Grid container justifyContent='space-between'>
-                                                            {driverInvalidDocuments[parseInt(key)].photos.map((value: string, index: number) => {
-                                                                    return(
-                                                                        <Grid key={index} className={classes.filesCard} container direction='row'>
-                                                                            <Grid item xs={1}>
-                                                                                <AttachFileIcon/>
-                                                                            </Grid>
-                                                                            <Grid item xs={7}>
-                                                                                <text style={{fontSize: 15}}>Archivo {index+1}</text>
-                                                                            </Grid>
-                                                                            <Grid item xs={2}>
-                                                                                <Base64Downloader 
-                                                                                    base64={value}
-                                                                                    downloadName={`archivo${index+1}`}
-                                                                                    Tag="a"
-                                                                                    extraAttributes={{ href: '#' }}
-                                                                                    className="my-class-name"
-                                                                                    style={{ color: globalColors.lightBlue }}
-                                                                                >
-                                                                                        <DownloadIcon style={{fontSize: 30}}/>
-                                                                                </Base64Downloader>
-                                                                            </Grid>
-                                                                            <Grid item xs={2}>
-                                                                                <Button 
-                                                                                    size="small" 
-                                                                                    style={{padding: 0}} 
-                                                                                    onClick={() => 
-                                                                                        setImage(value)
-                                                                                    }
-                                                                                >
-                                                                                    <PreviewIcon style={{fontSize: 30}} />
-                                                                                </Button>
-                                                                            </Grid>
-                                                                        </Grid>
-                                                                    )
-                                                                })
-                                                            }
+                            {driverInvalidDocuments.length === 0 && driverMissingDocuments.length === 0 &&
+                                <div className={classes.areValidDiv}>
+                                    <text className={classes.areValidText}>
+                                        Todos los documentos estan en regla
+                                    </text>
+                                </div>
+                            }
+                            {driverInvalidDocuments.length > 0 &&
+                                <>
+                                    <Grid container className={classes.titleContainer} justifyContent='space-between'>
+                                        <text className={classes.entityName}>
+                                            Inválidos
+                                        </text>
+                                    </Grid>
+                                    <Grid container justifyContent='space-between'>
+                                        {Object.keys(driverInvalidDocuments).map((key: string) => {                       
+                                                return(
+                                                    <>
+                                                        <Grid item xs={9}>
+                                                            <text className={classes.fileTitle}>
+                                                                {driverInvalidDocuments[parseInt(key)].type.name}
+                                                            </text>
                                                         </Grid>
-                                                    </Grid>
-                                                    :
-                                                    <text className={classes.textCenter}> No hay archivos cargados</text>
-                                                } */}
-                                            </>
-                                        )
-                                    })
-                                }
-                            </Grid>
-                            <Grid container justifyContent='space-between'>
-                                <text className={classes.fieldFile}>
-                                    Faltantes
-                                </text>
-                                {Object.keys(driverMissingDocuments).map((key: string) => {                       
-                                        return(
-                                            <text className={classes.fileTitle}>
-                                                {driverMissingDocuments[parseInt(key)].name}
-                                            </text>
-                                        )
-                                    })
-                                }
-                            </Grid>
+                                                        <Grid item xs={3}>
+                                                            <Grid className={classes.stateColor} style={{backgroundColor: getStateColor(getStateName(driverInvalidDocuments[parseInt(key)].state))}}>
+                                                                <text className={classes.stateText} >
+                                                                    {getStateName(driverInvalidDocuments[parseInt(key)].state)}
+                                                                </text>
+                                                            </Grid>
+                                                        </Grid>
+                                                        {driverInvalidDocuments[parseInt(key)].photos.length > 0 ? 
+                                                            <Grid container direction='column' justifyContent='space-between'>
+                                                                <Grid container justifyContent='space-between'>
+                                                                    {driverInvalidDocuments[parseInt(key)].photos.map((value: string, index: number) => {
+                                                                            return(
+                                                                                <Grid key={index} className={classes.filesCard} container direction='row'>
+                                                                                    <Grid item xs={1}>
+                                                                                        <AttachFileIcon/>
+                                                                                    </Grid>
+                                                                                    <Grid item xs={7}>
+                                                                                        <text style={{fontSize: 15}}>Archivo {index+1}</text>
+                                                                                    </Grid>
+                                                                                    <Grid item xs={2}>
+                                                                                        <Base64Downloader 
+                                                                                            base64={value}
+                                                                                            downloadName={`archivo${index+1}`}
+                                                                                            Tag="a"
+                                                                                            extraAttributes={{ href: '#' }}
+                                                                                            className="my-class-name"
+                                                                                            style={{ color: globalColors.lightBlue }}
+                                                                                        >
+                                                                                                <DownloadIcon style={{fontSize: 30}}/>
+                                                                                        </Base64Downloader>
+                                                                                    </Grid>
+                                                                                    <Grid item xs={2}>
+                                                                                        <Button 
+                                                                                            size="small" 
+                                                                                            style={{padding: 0}} 
+                                                                                            onClick={() => 
+                                                                                                setImage(value)
+                                                                                            }
+                                                                                        >
+                                                                                            <PreviewIcon style={{fontSize: 30}} />
+                                                                                        </Button>
+                                                                                    </Grid>
+                                                                                </Grid>
+                                                                            )
+                                                                        })
+                                                                    }
+                                                                </Grid>
+                                                            </Grid>
+                                                            :
+                                                            <text className={classes.textCenter}> No hay archivos cargados</text>
+                                                        }
+                                                    </>
+                                                )
+                                            })
+                                        }
+                                    </Grid>
+                                </>
+                            }
+                            {driverMissingDocuments.length > 0 &&
+                                <>
+                                    <Grid container className={classes.titleContainer} justifyContent='space-between'>
+                                        <text className={classes.entityName}>
+                                        Faltantes
+                                        </text>
+                                    </Grid>
+                                    <Grid container justifyContent='space-between' alignItems='center'>
+                                        {Object.keys(driverMissingDocuments).map((key: string) => {
+                                                return(
+                                                    <>
+                                                        <Grid item xs={11}>
+                                                            <div className={classes.invalidText}>
+                                                                <text className={classes.fileTitle}>
+                                                                    {driverMissingDocuments[parseInt(key)].name}
+                                                                </text>
+                                                            </div>
+                                                        </Grid>
+                                                        <Grid item xs={1}>
+                                                            <CloseIcon color='error' />
+                                                        </Grid>
+                                                    </>
+                                                )
+                                            })
+                                        }
+                                    </Grid>
+                                </>
+                            }
                             <Grid container className={classes.titleContainer} justifyContent='space-between'>
                                 <text className={classes.entityName}>
                                     Vehiculos
                                 </text>
                             </Grid>
-                            <Grid container justifyContent='space-between'>
-                                <text className={classes.fieldFile}>
-                                    Invalidos
-                                </text>
-                                {Object.keys(vehicleInvalidDocuments).map((key: string) => {
-                                    if(vehicleInvalidDocuments[parseInt(key)].state === States.VALID)
-                                        return true
-                                    else                                
-                                        return(
-                                            <>
-                                                <Grid item xs={9}>
-                                                    <text className={classes.fileTitle}>
-                                                        {vehicleInvalidDocuments[parseInt(key)].type.name}
-                                                    </text>
-                                                </Grid>
-                                                <Grid item xs={3}>
-                                                    <Grid className={classes.stateColor} style={{backgroundColor: getStateColor(getStateName(vehicleInvalidDocuments[parseInt(key)].state))}}>
-                                                        <text className={classes.stateText} >
-                                                            {getStateName(vehicleInvalidDocuments[parseInt(key)].state)}
+                            {vehicleInvalidDocuments.length === 0 && vehicleMissingDocuments.length === 0 &&
+                                <div className={classes.areValidDiv}>
+                                    <text className={classes.areValidText}>
+                                        Todos los documentos estan en regla
+                                    </text>
+                                </div>
+                            }
+                            {vehicleInvalidDocuments.length > 0 &&
+                                <>
+                                    <Grid container className={classes.titleContainer} justifyContent='space-between'>
+                                        <text className={classes.entityName}>
+                                            Inválidos
+                                        </text>
+                                    </Grid>
+                                    <Grid container justifyContent='space-between'>
+                                        {Object.keys(vehicleInvalidDocuments).map((key: string) => {                        
+                                            return(
+                                                <>
+                                                    <Grid item xs={9}>
+                                                        <text className={classes.fileTitle}>
+                                                            {vehicleInvalidDocuments[parseInt(key)].type.name}
                                                         </text>
                                                     </Grid>
-                                                </Grid>
-                                                {/* {vehicleInvalidDocuments[parseInt(key)].photos.length > 0 ? 
-                                                    <Grid container direction='column' justifyContent='space-between'>
-                                                        <Grid container justifyContent='space-between'>
-                                                            {vehicleInvalidDocuments[parseInt(key)].photos.map((value: string, index: number) => {
-                                                                    return(
-                                                                        <Grid key={index} className={classes.filesCard} container direction='row'>
-                                                                            <Grid item xs={1}>
-                                                                                <AttachFileIcon/>
-                                                                            </Grid>
-                                                                            <Grid item xs={7}>
-                                                                                <text style={{fontSize: 15}}>Archivo {index+1}</text>
-                                                                            </Grid>
-                                                                            <Grid item xs={2}>
-                                                                                <Base64Downloader 
-                                                                                    base64={value}
-                                                                                    downloadName={`archivo${index+1}`}
-                                                                                    Tag="a"
-                                                                                    extraAttributes={{ href: '#' }}
-                                                                                    className="my-class-name"
-                                                                                    style={{ color: globalColors.lightBlue }}
-                                                                                >
-                                                                                        <DownloadIcon style={{fontSize: 30}}/>
-                                                                                </Base64Downloader>
-                                                                            </Grid>
-                                                                            <Grid item xs={2}>
-                                                                                <Button 
-                                                                                    size="small" 
-                                                                                    style={{padding: 0}} 
-                                                                                    onClick={() => 
-                                                                                        setImage(value)
-                                                                                    }
-                                                                                >
-                                                                                    <PreviewIcon style={{fontSize: 30}} />
-                                                                                </Button>
-                                                                            </Grid>
-                                                                        </Grid>
-                                                                    )
-                                                                })
-                                                            }
+                                                    <Grid item xs={3}>
+                                                        <Grid className={classes.stateColor} style={{backgroundColor: getStateColor(getStateName(vehicleInvalidDocuments[parseInt(key)].state))}}>
+                                                            <text className={classes.stateText} >
+                                                                {getStateName(vehicleInvalidDocuments[parseInt(key)].state)}
+                                                            </text>
                                                         </Grid>
                                                     </Grid>
-                                                    :
-                                                    <text className={classes.textCenter}> No hay archivos cargados</text>
-                                                } */}
-                                            </>
+                                                    {vehicleInvalidDocuments[parseInt(key)].photos.length > 0 ? 
+                                                        <Grid container direction='column' justifyContent='space-between'>
+                                                            <Grid container justifyContent='space-between'>
+                                                                {vehicleInvalidDocuments[parseInt(key)].photos.map((value: string, index: number) => {
+                                                                        return(
+                                                                            <Grid key={index} className={classes.filesCard} container direction='row'>
+                                                                                <Grid item xs={1}>
+                                                                                    <AttachFileIcon/>
+                                                                                </Grid>
+                                                                                <Grid item xs={7}>
+                                                                                    <text style={{fontSize: 15}}>Archivo {index+1}</text>
+                                                                                </Grid>
+                                                                                <Grid item xs={2}>
+                                                                                    <Base64Downloader 
+                                                                                        base64={value}
+                                                                                        downloadName={`archivo${index+1}`}
+                                                                                        Tag="a"
+                                                                                        extraAttributes={{ href: '#' }}
+                                                                                        className="my-class-name"
+                                                                                        style={{ color: globalColors.lightBlue }}
+                                                                                    >
+                                                                                            <DownloadIcon style={{fontSize: 30}}/>
+                                                                                    </Base64Downloader>
+                                                                                </Grid>
+                                                                                <Grid item xs={2}>
+                                                                                    <Button 
+                                                                                        size="small" 
+                                                                                        style={{padding: 0}} 
+                                                                                        onClick={() => 
+                                                                                            setImage(value)
+                                                                                        }
+                                                                                    >
+                                                                                        <PreviewIcon style={{fontSize: 30}} />
+                                                                                    </Button>
+                                                                                </Grid>
+                                                                            </Grid>
+                                                                        )
+                                                                    })
+                                                                }
+                                                            </Grid>
+                                                        </Grid>
+                                                        :
+                                                        <text className={classes.textCenter}> No hay archivos cargados</text>
+                                                    }
+                                                </>
                                             )
-                                    })
-                                }
-                            </Grid>
-                            <Grid container justifyContent='space-between'>
-                                <text className={classes.fieldFile}>
-                                    Faltantes
-                                </text>
-                                {Object.keys(vehicleMissingDocuments).map((key: string) => {                       
-                                        return(
-                                            <text className={classes.fileTitle}>
-                                                {vehicleMissingDocuments[parseInt(key)].name}
-                                            </text>
-                                        )
-                                    })
-                                }
-                            </Grid>
+                                            })
+                                        }
+                                    </Grid>
+                                </>
+                            }
+                            {vehicleMissingDocuments.length > 0 &&
+                                <>
+                                    <Grid container className={classes.titleContainer} justifyContent='space-between'>
+                                        <text className={classes.entityName}>
+                                        Faltantes
+                                        </text>
+                                    </Grid>
+                                    <Grid container justifyContent='space-between' alignItems='center'>
+                                        {Object.keys(vehicleMissingDocuments).map((key: string) => {
+                                                return(
+                                                    <>
+                                                        <Grid item xs={11}>
+                                                            <div className={classes.invalidText}>
+                                                                <text className={classes.fileTitle}>
+                                                                    {vehicleMissingDocuments[parseInt(key)].name}
+                                                                </text>
+                                                            </div>
+                                                        </Grid>
+                                                        <Grid item xs={1}>
+                                                            <CloseIcon color='error' />
+                                                        </Grid>
+                                                    </>
+                                                )
+                                            })
+                                        }
+                                    </Grid>
+                                </>
+                            }
                         </Card>
                     </Grid>
                     <Grid item md={6}>

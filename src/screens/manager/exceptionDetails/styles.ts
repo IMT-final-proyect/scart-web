@@ -195,6 +195,7 @@ const useStyles = makeStyles<Theme>((theme: Theme) => ({
     },
     entityName: {
         fontSize: 20,
+        marginTop: '2.5%',
         fontWeight: 'bold',
         marginBottom: '2.5%'
     },
@@ -214,6 +215,17 @@ const useStyles = makeStyles<Theme>((theme: Theme) => ({
             fontSize: 12,
         },
     },
+    invalidText:{
+        marginTop: '1.5%',
+        marginBottom: '1.5%'
+    },
+    areValidDiv: {
+        textAlign:'center'
+    },
+    areValidText:{
+        color: globalColors.darkGrey,
+        fontSize: 15,
+    }
 }));
 
 export default useStyles
