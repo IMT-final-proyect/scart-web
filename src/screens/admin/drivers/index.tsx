@@ -200,7 +200,12 @@ const Drivers = () => {
                                             Nombre
                                         </text>
                                     </Grid>
-                                    <Grid item xs={3} className={classes.headerText}>
+                                    <Grid item xs={2} className={classes.headerText}>
+                                        <text className={classes.headerText}>
+                                            Usuario
+                                        </text>
+                                    </Grid>
+                                    <Grid item xs={2} className={classes.headerText}>
                                         <text className={classes.headerText}>
                                             Documento
                                         </text>
@@ -210,7 +215,7 @@ const Drivers = () => {
                                             Contratista
                                         </text>
                                     </Grid>
-                                    <Grid item xs={2} className={classes.headerText}>
+                                    <Grid item xs={1} className={classes.headerText}>
                                         <text className={classes.headerText}>
                                             Acciones
                                         </text>
@@ -227,6 +232,7 @@ const Drivers = () => {
                                             key={driversFiltered[parseInt(key)].id}
                                             name={driversFiltered[parseInt(key)].name}
                                             surname={driversFiltered[parseInt(key)].surname}
+                                            username={driversFiltered[parseInt(key)].username}
                                             document={driversFiltered[parseInt(key)].cuit}
                                             contractor={driversFiltered[parseInt(key)].contractor.name}
                                             id={driversFiltered[parseInt(key)].id}

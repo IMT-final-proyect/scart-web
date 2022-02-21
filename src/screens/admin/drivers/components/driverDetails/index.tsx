@@ -72,6 +72,7 @@ const DriverDetails = () => {
         name: string, 
         surname: string, 
         username: string,
+        phone: string,
         cuit: string, 
         birthdate: moment.Moment, 
         street: string,
@@ -81,9 +82,9 @@ const DriverDetails = () => {
         zipCode: string,
         password?: string) => {
         if (changePassword)
-            dispatch(editDriver(driver, name, surname, username, cuit, birthdate, street, number, city, province, zipCode, password))
+            dispatch(editDriver(driver, name, surname, username, phone, cuit, birthdate, street, number, city, province, zipCode, password))
         else
-            dispatch(editDriver(driver, name, surname, username, cuit, birthdate, street, number, city, province, zipCode))
+            dispatch(editDriver(driver, name, surname, username, phone, cuit, birthdate, street, number, city, province, zipCode))
         setMessageSnackbar('Conductor modificado con exito')
     }
 
@@ -135,36 +136,22 @@ const DriverDetails = () => {
                     <Grid container justifyContent='flex-start' direction='row' alignItems={'center'}>
                         <Grid item xs={6}>
                             <div className={classes.dataContainer}>
-                                <text className={classes.dataField}> Direccion: </text>
-                                <text className={classes.data}> {driver?.address?.street || '-'} </text>
+                                <text className={classes.dataField}> Telefono: </text>
+                                <text className={classes.data}> {driver?.phone || '-'} </text>
                             </div>
                         </Grid>
                         <Grid item xs={6}>
                             <div className={classes.dataContainer}>
-                                <text className={classes.dataField}> Numero: </text>
-                                <text className={classes.data}> {driver?.address?.number || '-'} </text>
-                            </div>
-                        </Grid>
-                    </Grid>
-                    <Grid container justifyContent='flex-start' direction='row' alignItems={'center'}>
-                        <Grid item xs={6}>
-                            <div className={classes.dataContainer}>
-                                <text className={classes.dataField}> Ciudad: </text>
-                                <text className={classes.data}> {driver?.address?.city ||'-'} </text>
-                            </div>
-                        </Grid>
-                        <Grid item xs={6}>
-                            <div className={classes.dataContainer}>
-                                <text className={classes.dataField}> Provincia: </text>
-                                <text className={classes.data}> {driver?.address?.province || '-'} </text>
+                                <text className={classes.dataField}> Email: </text>
+                                <text className={classes.data}> {driver?.email || '-'} </text>
                             </div>
                         </Grid>
                     </Grid>
                     <Grid container justifyContent='flex-start' direction='row' alignItems={'center'}>
                         <Grid item xs={6}>
                             <div className={classes.dataContainer}>
-                                <text className={classes.dataField}> Codigo Postal: </text>
-                                <text className={classes.data}> {driver?.address?.zip_code || '-'} </text>
+                                <text className={classes.dataField}> CUIL: </text>
+                                <text className={classes.data}> {driver?.cuit || '-'} </text>
                             </div>
                         </Grid>
                         <Grid item xs={6}>

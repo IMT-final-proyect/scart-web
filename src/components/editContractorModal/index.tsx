@@ -1,6 +1,4 @@
-import MomentUtils from "@date-io/moment";
 import { Checkbox, FormControlLabel, Grid, Button } from "@material-ui/core";
-import { KeyboardDatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import { TextField } from "@mui/material"
 import moment from "moment";
 import { useCallback, useState } from "react";
@@ -16,6 +14,7 @@ interface Props{
         contractor: IContractor, 
         name: string, 
         username: string,
+        email: string,
         cuit: string,
         street: string,
         number: number,
@@ -31,6 +30,7 @@ const EditContractorModal = ( {contractor, changePassword, editContractor, setOp
     const classes = useStyles();
     const [error, setError] = useState(false)
     const [name, setName] = useState(contractor?.name)
+    const [email, setEmail] = useState(contractor?.email)
     const [username, setUsername] = useState(contractor?.username)
     const [cuit, setCuit] = useState(contractor?.cuit)
     const [password, setPassword] = useState('')
@@ -53,6 +53,10 @@ const EditContractorModal = ( {contractor, changePassword, editContractor, setOp
     const _onChangeName = useCallback((event) => {
         setName(event.target.value);
     }, [setName]);
+
+    const _onChangeEmail = useCallback((event) => {
+        setEmail(event.target.value);
+    }, [setEmail]);
 
     const _onChangeUsername = useCallback((event) => {
         setUsername(event.target.value);
@@ -89,7 +93,7 @@ const EditContractorModal = ( {contractor, changePassword, editContractor, setOp
             if(cuit.length === 11){
                 if (changePassword){
                     if (password === repeatPassword){
-                        editContractor(contractor, name, username, cuit, street, number, city, province, zipCode, password);
+                        editContractor(contractor, name, username, email, cuit, street, number, city, province, zipCode, password);
                         setOpenEditContractorModal(false);
                     }
                     else {
@@ -98,7 +102,7 @@ const EditContractorModal = ( {contractor, changePassword, editContractor, setOp
                     }
                 }
                 else {
-                    editContractor(contractor, name, username, cuit, street, number, city, province, zipCode);
+                    editContractor(contractor, name, username, email, cuit, street, number, city, province, zipCode);
                     setOpenEditContractorModal(false);
                 };
             }
@@ -115,37 +119,54 @@ const EditContractorModal = ( {contractor, changePassword, editContractor, setOp
 
     return (
             <Grid container className={classes.modal} direction='column' justify='space-between' alignItems='center'>
-                <text className={classes.title}>Editar conductor</text>
-                <Grid item className={classes.textInput}>
+                <Grid container>
+                    <text className={classes.title}>Editar mis datos</text>
+                </Grid>
+                <Grid container className={classes.textInput}>
+                    <Grid item xs={4}>
+                        <TextField
+                            id="contractor-name"
+                            variant="standard"
+                            className= {classes.textInput}
+                            size="medium"
+                            label="Nombre"
+                            value={name}
+                            onChange={_onChangeName}
+                        />
+                    </Grid>
+                    <Grid item xs={4}>
+                        <TextField
+                            id="contractor-username"
+                            variant="standard"
+                            className= {classes.textInput}
+                            size="medium"
+                            label="Usuario"
+                            value={username}
+                            onChange={_onChangeUsername}
+                        />
+                    </Grid>
+                </Grid>
+                <Grid container>
                     <TextField
-                        id="contractor-name"
+                        id="contractor-cuit"
                         variant="standard"
                         className= {classes.textInput}
                         size="medium"
-                        label="Nombre"
-                        value={name}
-                        onChange={_onChangeName}
+                        label="CUIT"
+                        value={cuit}
+                        onChange={_onChangeCuit}
                     />
                     <TextField
-                        id="contractor-username"
+                        id="contractor-email"
                         variant="standard"
                         className= {classes.textInput}
                         size="medium"
-                        label="Usuario"
-                        value={username}
-                        onChange={_onChangeUsername}
+                        label="Email"
+                        value={email}
+                        onChange={_onChangeEmail}
                     />
                 </Grid>
-                <TextField
-                    id="contractor-cuit"
-                    variant="standard"
-                    className= {classes.textInput}
-                    size="medium"
-                    label="CUIT"
-                    value={cuit}
-                    onChange={_onChangeCuit}
-                />
-                <Grid item>
+                <Grid container>
                     <TextField
                         id="contractor-street"
                         variant="standard"

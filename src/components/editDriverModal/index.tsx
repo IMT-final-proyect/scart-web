@@ -17,6 +17,7 @@ interface Props{
         name: string, 
         surname: string, 
         username: string,
+        phone: string,
         cuit: string, 
         birthdate: moment.Moment, 
         street: string,
@@ -35,6 +36,7 @@ const EditDriverModal = ( {driver, changePassword, editDriver, setOpenEditDriver
     const [name, setName] = useState(driver?.name)
     const [surname, setSurname] = useState(driver?.surname)
     const [username, setUsername] = useState(driver?.username)
+    const [phone, setPhone] = useState(driver?.phone)
     const [cuit, setCuit] = useState(driver?.cuit)
     const [password, setPassword] = useState('')
     const [message, setMessage] = useState('')
@@ -65,6 +67,10 @@ const EditDriverModal = ( {driver, changePassword, editDriver, setOpenEditDriver
     const _onChangeUsername = useCallback((event) => {
         setUsername(event.target.value);
     }, [setUsername]);
+
+    const _onChangePhone = useCallback((event) => {
+        setPhone(event.target.value);
+    }, [setPhone]);
     
     const _onChangeCuit = useCallback((event) => {
         if (!event.target.value.includes("-") && !event.target.value.includes(" "))
@@ -101,7 +107,7 @@ const EditDriverModal = ( {driver, changePassword, editDriver, setOpenEditDriver
             if(cuit.length === 11){
                 if (changePassword){
                     if (password === repeatPassword){
-                        editDriver(driver, name, surname, username, cuit, moment(birthdate), street, number, city, province, zipCode, password);
+                        editDriver(driver, name, surname, username, cuit, phone, moment(birthdate), street, number, city, province, zipCode, password);
                         setOpenEditDriverModal(false);
                     }
                     else {
@@ -110,7 +116,7 @@ const EditDriverModal = ( {driver, changePassword, editDriver, setOpenEditDriver
                     }
                 }
                 else {
-                    editDriver(driver, name, surname, username, cuit, moment(birthdate), street, number, city, province, zipCode);
+                    editDriver(driver, name, surname, username, cuit, phone, moment(birthdate), street, number, city, province, zipCode);
                     setOpenEditDriverModal(false);
                 };
             }
@@ -253,6 +259,17 @@ const EditDriverModal = ( {driver, changePassword, editDriver, setOpenEditDriver
                             label="Codigo Postal"
                             value={zipCode}
                             onChange={_onChangeZipCode}
+                        />
+                    </Grid>
+                    <Grid item xs={4}>
+                        <TextField
+                            id="driver-phone"
+                            variant="standard"
+                            className= {classes.lastTextInput}
+                            size="medium"
+                            label="Telefono"
+                            value={phone}
+                            onChange={_onChangePhone}
                         />
                     </Grid>
                 </Grid>

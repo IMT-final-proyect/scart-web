@@ -70,6 +70,7 @@ const ContractorDetails = () => {
         contractor: IContractor, 
         name: string,
         username: string,
+        email: string,
         cuit: string, 
         street: string,
         number: number,
@@ -78,9 +79,9 @@ const ContractorDetails = () => {
         zipCode: string,
         password?: string) => {
         if (changePassword)
-            dispatch(editContractor(contractor, name, username, cuit, street, number, city, province, zipCode, password))
+            dispatch(editContractor(contractor, name, username, email, cuit, street, number, city, province, zipCode, password))
         else
-            dispatch(editContractor(contractor, name, username, cuit, street, number, city, province, zipCode))
+            dispatch(editContractor(contractor, name, username, email, cuit, street, number, city, province, zipCode))
         setMessageSnackbar('Contratista modificado con exito')
     }
 
@@ -105,25 +106,19 @@ const ContractorDetails = () => {
             <Grid container direction='column' justifyContent='space-between'>
                 <Card className={classes.cardContainer}>
                     <Grid container className={classes.contractorDataRow} justifyContent='space-between' direction='row' alignItems={'center'}>
-                        <Grid item xs={3}>
+                        <Grid item xs={4}>
                             <div className={classes.dataContainer}>
                                 <text className={classes.dataField}> Nombre: </text>
                                 <text className={classes.data}> {contractor.name || '-'} </text>
                             </div>
                         </Grid>
-                        <Grid item xs={3}>
+                        <Grid item xs={4}>
                             <div className={classes.dataContainer}>
                                 <text className={classes.dataField}> Cuit: </text>
                                 <text className={classes.data}> {contractor.cuit || '-'} </text>
                             </div>
                         </Grid>
                         <Grid item xs={3}>
-                            <div className={classes.dataContainer}>
-                                <text className={classes.dataField}> Calle: </text>
-                                <text className={classes.data}> {contractor.address?.street || '-'} </text>
-                            </div>
-                        </Grid>
-                        <Grid item xs={2}>
                             <div className={classes.dataContainer}>
                                 <text className={classes.dataField}> Usuario: </text>
                                 <text className={classes.data}> {contractor?.username || '-'} </text>
@@ -136,33 +131,43 @@ const ContractorDetails = () => {
                         </Grid>
                         
                     </Grid>
-                    <Grid container className={classes.contractorDataRow} justifyContent='space-between' direction='row' alignItems={'center'}>
-                        <Grid item xs={3}>
+                    <Grid container className={classes.contractorDataRow} justifyContent='space-between' direction='row' alignItems={'center'}>      
+                        <Grid item xs={4}>
+                            <div className={classes.dataContainer}>
+                                <text className={classes.dataField}> Calle: </text>
+                                <text className={classes.data}> {contractor.address?.street || '-'} </text>
+                            </div>
+                        </Grid>
+                        <Grid item xs={4}>
                             <div className={classes.dataContainer}>
                                 <text className={classes.dataField}> Numero: </text>
                                 <text className={classes.data}> {contractor.address?.number || '-'} </text>
                             </div>
                         </Grid>
-                        <Grid item xs={3}>
+                        <Grid item xs={4}>
                             <div className={classes.dataContainer}>
                                 <text className={classes.dataField}> Ciudad: </text>
                                 <text className={classes.data}> {contractor.address?.city || '-'} </text>
                             </div>
                         </Grid>
-                        <Grid item xs={3}>
+                    </Grid>
+                    <Grid container className={classes.contractorDataRow} justifyContent='space-between' direction='row' alignItems={'center'}>
+                        <Grid item xs={4}>
                             <div className={classes.dataContainer}>
                                 <text className={classes.dataField}> Provincia: </text>
                                 <text className={classes.data}> {contractor.address?.province || '-'} </text>
                             </div>
                         </Grid>
-                        <Grid item xs={3}>
-                            <div className={classes.dataContainer}>
-                                <text className={classes.dataField}> Codigo Postal: </text>
-                                <text className={classes.data}> {contractor.address?.zip_code || '-'} </text>
-                            </div>
+                        <Grid item xs={4}>
+                                <div className={classes.dataContainer}>
+                                    <text className={classes.dataField}> Codigo Postal: </text>
+                                    <text className={classes.data}> {contractor.address?.zip_code || '-'} </text>
+                                </div>
                         </Grid>
-                        <Grid item xs={3}>
+                        <Grid item xs={4}>
                             <div className={classes.dataContainer}>
+                                <text className={classes.dataField}> Email: </text>
+                                <text className={classes.data}> {contractor.email || '-'} </text>
                             </div>
                         </Grid>
                     </Grid>

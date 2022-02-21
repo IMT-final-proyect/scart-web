@@ -282,6 +282,7 @@ export const editContractor = (
    contractor: IContractor, 
    name: string, 
    username: string,
+   email: string,
    cuit: string, 
    street: string,
    number: number,
@@ -296,6 +297,7 @@ export const editContractor = (
          body = {
             name,
             username,
+            email,
             cuit,
             address: {
                street,
@@ -310,6 +312,7 @@ export const editContractor = (
          body = {
             name,
             username,
+            email,
             cuit,
             address: {
                street,

@@ -131,14 +131,19 @@ const Contractors = () => {
                         :
                         <>
                             <Grid container justifyContent='space-between'>
-                                <Grid item xs={5} className={classes.headerText}>
+                                <Grid item xs={4} className={classes.headerText}>
                                     <text className={classes.headerText}>
                                         Nombre
                                     </text>
                                 </Grid>
-                                <Grid item xs={5} className={classes.headerText}>
+                                <Grid item xs={4} className={classes.headerText}>
                                     <text className={classes.headerText}>
                                         CUIT
+                                    </text>
+                                </Grid>
+                                <Grid item xs={4} className={classes.headerText}>
+                                    <text className={classes.headerText}>
+                                        Usuario
                                     </text>
                                 </Grid>
                             </Grid>

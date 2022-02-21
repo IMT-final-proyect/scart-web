@@ -20,6 +20,8 @@ export interface IUser {
    name: string;
    surname?: string;
    username: string;
+   phone: string;
+   email: string
    cuit: string;
    street: string;
    address: IAddress

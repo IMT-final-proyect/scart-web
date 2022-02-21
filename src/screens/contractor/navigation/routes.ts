@@ -8,5 +8,6 @@ export enum ROUTES {
     invalidDrivers='/conductores-invalidos',
     pendingDrivers='/conductores-pendientes',
     invalidVehicles='/vehiculos-invalidos',
-    pendingVehicles='/vehiculos-pendientes'
+    pendingVehicles='/vehiculos-pendientes',
+    myData='/perfil'
 }

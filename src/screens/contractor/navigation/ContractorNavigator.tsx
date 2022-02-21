@@ -5,6 +5,7 @@ import HomeIcon from '@material-ui/icons/Home';
 import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
 import DriveEtaIcon from '@mui/icons-material/DriveEta';
 import { BrowserRouter, Route, Switch, Link, useLocation } from 'react-router-dom';
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import TemplateBar from '../../../components/templateBar';
 import { ROUTES } from './routes';
 import Home from '../home';
@@ -20,6 +21,7 @@ import PendingVehicles from '../home/pendingVehicles';
 import PendingDrivers from '../home/pendingDrivers';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../redux/rootReducer';
+import MyData from '../MyData';
 
 
 const ContractorNavigator = () => {
@@ -73,6 +75,17 @@ const ContractorNavigator = () => {
                 </div>
                 Documentación
             </Button>
+            <Button 
+                className = {classes.button}
+                component={Link}
+                to={'/contratista'+ROUTES.myData}
+                onClick={() => setTitle("Mi Perfil")}
+            >
+                <div className={classes.icon}>
+                    <AccountBoxIcon/>
+                </div>
+                Mi Perfil
+            </Button>
         </>
     )
 
@@ -94,6 +107,7 @@ const ContractorNavigator = () => {
             <Route exact path={ROUTES.root+ROUTES.driver+'/:id'} component={DriverDetails} />
             <Route exact path={ROUTES.root+ROUTES.vehicle+'/:id'} component={VehicleDetails} />
             <Route exact path={ROUTES.root+ROUTES.documentacion+'/:id'} component={DocumentDetails} />
+            <Route exact path={ROUTES.root+ROUTES.myData} component={MyData} />
             <Route path={ROUTES.root} component= {Home} />
         </Switch>
     </BrowserRouter>

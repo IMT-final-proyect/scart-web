@@ -454,6 +454,7 @@ export const editDriver = (
    name: string, 
    surname: string, 
    username: string,
+   phone: string,
    cuit: string, 
    birth_date: moment.Moment, 
    street: string,
@@ -470,6 +471,7 @@ export const editDriver = (
             name,
             surname,
             username,
+            phone,
             cuit,
             birth_date,
             address: {
@@ -486,6 +488,7 @@ export const editDriver = (
             name,
             surname,
             username,
+            phone,
             cuit,
             birth_date,
             address: {

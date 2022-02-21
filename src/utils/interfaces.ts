@@ -13,6 +13,7 @@ export interface IContractor {
    cuit: string;
    address: IAddress;
    username: string;
+   email: string;
 }
 
 export interface IDriver {
@@ -21,6 +22,8 @@ export interface IDriver {
    surname: string;
    username: string;
    cuit: string;
+   email: string;
+   phone: string;
    birth_date: moment.Moment;
    contractor: {
       id: number;

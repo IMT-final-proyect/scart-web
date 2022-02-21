@@ -11,11 +11,14 @@ const ContractorRow = ({ contractor }: Props) => {
     return(
         <>
             <Grid container direction="row" justifyContent='space-between'>
-                <Grid item xs={5} className={classes.text}>
+                <Grid item xs={4} className={classes.text}>
                     <text> {contractor.name} </text>
                 </Grid>
-                <Grid item xs={5} className={classes.text}>
+                <Grid item xs={4} className={classes.text}>
                     <text> {contractor.cuit} </text>
+                </Grid>
+                <Grid item xs={4} className={classes.text}>
+                    <text> {contractor?.username || '-'} </text>
                 </Grid>
             </Grid>
         </>

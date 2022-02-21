@@ -1,45 +1,42 @@
 import { Button, Card, CircularProgress, Grid, Modal, Typography } from "@material-ui/core"
-import moment from "moment"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import EditIcon from '@mui/icons-material/Edit';
 import CustomSnackbar from "../../../components/customSnackbar"
-import EditDriverModal from "../../../components/editDriverModal"
+import EditContractorModal from "../../../components/editContractorModal"
 import { RootState } from "../../../redux/rootReducer"
-import { editDriver } from "../../../redux/slices/resourcesSlice"
 import { IUser } from "../../../redux/slices/userSlice"
-import { IDriver } from "../../../utils/interfaces"
+import { IContractor } from "../../../utils/interfaces"
 import useStyles from "./styles"
+import { editContractor } from "../../../redux/slices/contractorsSlice";
 
 const MyData = () => {
     const classes = useStyles()
     const dispatch = useDispatch()
-    const [openEditDriverModal, setOpenEditDriverModal] = useState(false)
-    const [openEditDriverSuccess, setOpenEditDriverSuccess] = useState(false)
-    const [openEditDriverError, setOpenEditDriverError] = useState(false)
+    const [openEditContractorModal, setOpenEditContractorModal] = useState(false)
+    const [openEditContractorSuccess, setOpenEditContractorSuccess] = useState(false)
+    const [openEditContractorError, setOpenEditContractorError] = useState(false)
     const [changePassword, setChangePassword] = useState(false)
     const [messageSnackbar, setMessageSnackbar] = useState('')
-    const loading: boolean = useSelector((state: RootState) => state.resources.drivers.loading)
-    const success: boolean = useSelector((state: RootState) => state.resources.drivers.success)
-    const error = useSelector((state: RootState) => state.resources.drivers.error)
+    const loading: boolean = useSelector((state: RootState) => state.documents.contractor.loading)
+    const success: boolean = useSelector((state: RootState) => state.documents.contractor.success)
+    const error = useSelector((state: RootState) => state.documents.contractor.error)
     const data: IUser | null = useSelector((state: RootState) => state.user.userData)
     
     useEffect(() => {
-        setOpenEditDriverSuccess(success)
+        setOpenEditContractorSuccess(success)
     }, [success])
 
     useEffect(() => {
-        setOpenEditDriverError(!!error)
+        setOpenEditContractorError(!!error)
     }, [error])
 
-    const _editDriver = (
-        driver: IDriver | IUser, 
-        name: string, 
-        surname: string, 
+    const _editContractor = (
+        contractor: IContractor, 
+        name: string,
         username: string,
-        phone: string,
+        email: string,
         cuit: string, 
-        birthdate: moment.Moment, 
         street: string,
         number: number,
         city: string,
@@ -47,20 +44,20 @@ const MyData = () => {
         zipCode: string,
         password?: string) => {
         if (changePassword)
-            dispatch(editDriver(driver, name, surname, username, cuit, phone, birthdate, street, number, city, province, zipCode, password))
+            dispatch(editContractor(contractor, name, username, email, cuit, street, number, city, province, zipCode, password))
         else
-            dispatch(editDriver(driver, name, surname, username, cuit, phone, birthdate, street, number, city, province, zipCode))
+            dispatch(editContractor(contractor, name, username, email, cuit, street, number, city, province, zipCode))
         setMessageSnackbar('Conductor modificado con exito')
     }
 
     return (
         <>
-            <Modal open={openEditDriverModal} onClose={() => setOpenEditDriverModal(false)}>
-                <EditDriverModal 
-                    driver={data as IUser} 
+            <Modal open={openEditContractorModal} onClose={() => setOpenEditContractorModal(false)}>
+                <EditContractorModal 
+                    contractor={data as IUser} 
                     changePassword={changePassword}
-                    editDriver={_editDriver} 
-                    setOpenEditDriverModal={setOpenEditDriverModal} 
+                    editContractor={_editContractor} 
+                    setOpenEditContractorModal={setOpenEditContractorModal} 
                     setChangePassword={setChangePassword}
                 />
             </Modal>
@@ -79,7 +76,7 @@ const MyData = () => {
                                 <Typography className={classes.title}>Mis Datos</Typography>
                             </Grid>
                             <Grid item xs={2}>
-                                <Button onClick={() => {setOpenEditDriverModal(true)}}>
+                                <Button onClick={() => {setOpenEditContractorModal(true)}}>
                                     <EditIcon />
                                 </Button>
                             </Grid>
@@ -89,20 +86,16 @@ const MyData = () => {
                             <Typography className={classes.data}>{data?.name || '-'}</Typography>
                         </Grid>
                         <Grid container direction='row' justifyContent="center" alignItems="center">
-                            <Typography className={classes.field}>Apellido:</Typography>
-                            <Typography className={classes.data}>{data?.surname || '-'}</Typography>
+                            <Typography className={classes.field}>Usuario:</Typography>
+                            <Typography className={classes.data}>{data?.username || '-'}</Typography>
                         </Grid>
                         <Grid container direction='row' justifyContent="center" alignItems="center">
-                            <Typography className={classes.field}>CUIL:</Typography>
+                            <Typography className={classes.field}>CUIT:</Typography>
                             <Typography className={classes.data}>{data?.cuit || '-'}</Typography>
                         </Grid>
                         <Grid container direction='row' justifyContent="center" alignItems="center">
-                            <Typography className={classes.field}>Contratista:</Typography>
-                            <Typography className={classes.data}>{data?.contractor?.name || '-'}</Typography>
-                        </Grid>
-                        <Grid container direction='row' justifyContent="center" alignItems="center">
-                            <Typography className={classes.field}>Fecha de Nacimiento:</Typography>
-                            <Typography className={classes.data}>{moment(data?.birth_date).format('DD/MM/YYYY') || '-'}</Typography>
+                            <Typography className={classes.field}>E-Mail:</Typography>
+                            <Typography className={classes.data}>{data?.contractor?.email || '-'}</Typography>
                         </Grid>
                         <Grid container direction='row' justifyContent="center" alignItems="center">
                             <Typography className={classes.field}>Dirección:</Typography>
@@ -123,8 +116,8 @@ const MyData = () => {
                     </Card>
                 </Grid>
             }
-            <CustomSnackbar open={openEditDriverSuccess && !!messageSnackbar} message={messageSnackbar} type='success' onClose={() =>  setOpenEditDriverSuccess(false)} />
-            <CustomSnackbar open={openEditDriverError} message={'Error editando conductor'} type='error' onClose={() =>  setOpenEditDriverError(false)} />
+            <CustomSnackbar open={openEditContractorSuccess && !!messageSnackbar} message={messageSnackbar} type='success' onClose={() =>  setOpenEditContractorSuccess(false)} />
+            <CustomSnackbar open={openEditContractorError} message={'Error editando conductor'} type='error' onClose={() =>  setOpenEditContractorError(false)} />
         </>
     )
 }
