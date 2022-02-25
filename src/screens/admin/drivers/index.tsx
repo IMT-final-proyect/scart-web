@@ -123,7 +123,9 @@ const Drivers = () => {
         password: string,
         name: string,
         surname: string,
+        email: string,
         cuit: string,
+        phone: string,
         birthdate: moment.Moment,
         street: string,
         number: number,
@@ -132,7 +134,7 @@ const Drivers = () => {
         zipCode: string,
         contractorId: number) => {
         if(!!contractorId){
-            dispatch(createDriver(username, password, name, surname, cuit, moment(birthdate), street, number, city, province, zipCode, contractorId))
+            dispatch(createDriver(username, password, name, surname, email, cuit, phone, moment(birthdate), street, number, city, province, zipCode, contractorId))
             setOpenDriverModal(false)
             setMessageSnackbar('Conductor creado con exito')
         }

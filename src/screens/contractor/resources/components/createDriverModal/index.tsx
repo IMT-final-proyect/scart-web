@@ -1,10 +1,9 @@
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import MomentUtils from '@date-io/moment';
-import { Button, Grid, Snackbar, TextField, } from '@material-ui/core';
+import { Button, Grid, TextField, } from '@material-ui/core';
 import useStyles from './styles';
 import { useCallback, useState } from 'react';
 import moment from 'moment';
-import { Alert } from '@mui/material';
 import CustomSnackbar from '../../../../../components/customSnackbar';
 
 interface Props{
@@ -13,7 +12,9 @@ interface Props{
         password: string,
         name: string,
         surname: string,
+        email: string,
         cuit: string,
+        phone: string,
         birthdate: moment.Moment,
         street: string,
         number: number,
@@ -31,7 +32,9 @@ const CreateDriverModal = ({ addDriver, setOpenDriverModal }: Props) => {
     const [repeatPassword, setRepeatPassword] = useState('')
     const [name, setName] = useState('')
     const [surname, setSurname] = useState('')
+    const [email, setEmail] = useState('')
     const [cuit, setCuit] = useState('')
+    const [phone, setPhone] = useState('')
     const [street, setStreet] = useState('')
     const [number, setNumber] = useState(0)
     const [city, setCity] = useState('')
@@ -52,6 +55,15 @@ const CreateDriverModal = ({ addDriver, setOpenDriverModal }: Props) => {
         setRepeatPassword(event.target.value);
     }, [setRepeatPassword]);
 
+    const _onChangeEmail = useCallback((event) => {
+        setEmail(event.target.value);
+    }, [setEmail]);
+
+    const _onChangePhone = useCallback((event) => {
+        if (!event.target.value.includes("-") && !event.target.value.includes(" "))
+            setPhone(event.target.value);
+    }, [setPhone]);
+
     const _onChangeName = useCallback((event) => {
         setName(event.target.value);
     }, [setName]);
@@ -61,7 +73,8 @@ const CreateDriverModal = ({ addDriver, setOpenDriverModal }: Props) => {
     }, [setSurname]);
     
     const _onChangeCuit = useCallback((event) => {
-        setCuit(event.target.value);
+        if (!event.target.value.includes("-") && !event.target.value.includes(" "))
+            setCuit(event.target.value);
     }, [setCuit]);
     
     const handleBirthdateChange = (date: moment.Moment | null) => {
@@ -90,9 +103,9 @@ const CreateDriverModal = ({ addDriver, setOpenDriverModal }: Props) => {
 
 
     const _handleOnClick = () => {
-        if(!!username && !!password && !!repeatPassword && !!name && !!surname && !!cuit && !!birthdate){
+        if(!!username && !!password && !!repeatPassword && !!name && !!surname && !!cuit && !!birthdate && !!email){
             if (password === repeatPassword){
-                addDriver(username, password, name, surname, cuit, moment(birthdate), street, number, city, province, zipCode);
+                addDriver(username, password, name, surname, email, cuit, phone, moment(birthdate), street, number, city, province, zipCode);
                 setOpenDriverModal(false);
             } else {
                 setPasswordNotRepeated(true);
@@ -180,6 +193,24 @@ const CreateDriverModal = ({ addDriver, setOpenDriverModal }: Props) => {
                             }}
                         />
                     </MuiPickersUtilsProvider>
+                </Grid>
+                <Grid>
+                    <TextField
+                        id="driver-email"
+                        className= {classes.textInput}
+                        size="medium"
+                        label="Email"
+                        value={email}
+                        onChange={_onChangeEmail}
+                    />
+                    <TextField
+                        id="driver-phone"
+                        className= {classes.textInput}
+                        size="medium"
+                        label="Telefono"
+                        value={phone}
+                        onChange={_onChangePhone}
+                    />
                 </Grid>
                 <Grid item>
                     <TextField

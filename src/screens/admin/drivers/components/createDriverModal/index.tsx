@@ -15,7 +15,9 @@ interface Props{
         password: string,
         name: string,
         surname: string,
+        email: string,
         cuit: string,
+        phone: string,
         birthdate: moment.Moment,
         street: string,
         number: number,
@@ -28,14 +30,15 @@ interface Props{
 
 const CreateDriverModal = ({ addDriver, setOpenDriverModal }: Props) => {
     const classes = useStyles();
-    const dispatch = useDispatch()
     const [emptyField, setEmptyField] = useState(false)
     const [username, setUsername] = useState('')
+    const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [repeatPassword, setRepeatPassword] = useState('')
     const [name, setName] = useState('')
     const [surname, setSurname] = useState('')
     const [cuit, setCuit] = useState('')
+    const [phone, setPhone] = useState('')
     const [contractorName, setContractorName] = useState('')
     const [birthdate, setBirthdate] = useState<moment.Moment | null>(null);
     const [passwordNotRepeated, setPasswordNotRepeated] = useState(false);
@@ -68,14 +71,24 @@ const CreateDriverModal = ({ addDriver, setOpenDriverModal }: Props) => {
     const _onChangeName = useCallback((event) => {
         setName(event.target.value);
     }, [setName]);
+
+    const _onChangeEmail = useCallback((event) => {
+        setEmail(event.target.value);
+    }, [setEmail]);
     
     const _onChangeSurname = useCallback((event) => {
         setSurname(event.target.value);
     }, [setSurname]);
     
     const _onChangeCuit = useCallback((event) => {
-        setCuit(event.target.value);
+        if (!event.target.value.includes("-") && !event.target.value.includes(" "))
+            setCuit(event.target.value);
     }, [setCuit]);
+
+    const _onChangePhone = useCallback((event) => {
+        if (!event.target.value.includes("-") && !event.target.value.includes(" "))
+            setPhone(event.target.value);
+    }, [setPhone]);
     
     const handleBirthdateChange = (date: moment.Moment | null) => {
         setBirthdate(date);
@@ -103,7 +116,7 @@ const CreateDriverModal = ({ addDriver, setOpenDriverModal }: Props) => {
 
 
     const _handleOnClick = () => {
-        if(!!username && !!password && !!repeatPassword && !!name && !!surname && !!cuit && !!birthdate && !!contractorName){
+        if(!!username && !!password && !!repeatPassword && !!name && !!surname && !!cuit && !!birthdate && !!contractorName && !!email){
             if (password === repeatPassword){
                 let contractorId = -1
                 Object.keys(contractors.data).map((key: string, i: any) => {
@@ -111,7 +124,7 @@ const CreateDriverModal = ({ addDriver, setOpenDriverModal }: Props) => {
                         contractorId = parseInt(key)
                 })
                 if(contractorId>-1){
-                    addDriver(username, password, name, surname, cuit, moment(birthdate), street, number, city, province, zipCode, contractorId);
+                    addDriver(username, password, name, surname, email, cuit, phone, moment(birthdate), street, number, city, province, zipCode, contractorId);
                     setOpenDriverModal(false);
                 }
             } else {
@@ -174,6 +187,24 @@ const CreateDriverModal = ({ addDriver, setOpenDriverModal }: Props) => {
                         label="Apellido"
                         value={surname}
                         onChange={_onChangeSurname}
+                    />
+                </Grid>
+                <Grid item>
+                    <TextField
+                        id="driver-email"
+                        className= {classes.textInput}
+                        size="medium"
+                        label="Email"
+                        value={email}
+                        onChange={_onChangeEmail}
+                    />
+                    <TextField
+                        id="driver-phone"
+                        className= {classes.textInput}
+                        size="medium"
+                        label="Telefono"
+                        value={phone}
+                        onChange={_onChangePhone}
                     />
                 </Grid>
                 <Grid item>

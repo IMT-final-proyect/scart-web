@@ -161,6 +161,14 @@ const DriverDetails = () => {
                             </div>
                         </Grid>
                     </Grid>
+                    <Grid container justifyContent='flex-start' direction='row' alignItems={'center'}>
+                        <Grid item xs={6}>
+                            <div className={classes.dataContainer}>
+                                <text className={classes.dataField}> Usuario: </text>
+                                <text className={classes.data}> {driver?.username ||'-'} </text>
+                            </div>
+                        </Grid>
+                    </Grid>
                 </Card>
                 <Grid item xs={12}>
                     <Card className={classes.rightCard}>

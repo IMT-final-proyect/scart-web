@@ -167,7 +167,15 @@ const ContractorDetails = () => {
                         <Grid item xs={4}>
                             <div className={classes.dataContainer}>
                                 <text className={classes.dataField}> Email: </text>
-                                <text className={classes.data}> {contractor.email || '-'} </text>
+                                <text className={classes.data}> {contractor?.email || '-'} </text>
+                            </div>
+                        </Grid>
+                    </Grid>
+                    <Grid container justifyContent='flex-start' direction='row' alignItems={'center'}>
+                        <Grid item xs={4}>
+                            <div className={classes.dataContainer}>
+                                <text className={classes.dataField}> Usuario: </text>
+                                <text className={classes.data}> {contractor?.username ||'-'} </text>
                             </div>
                         </Grid>
                     </Grid>

@@ -87,8 +87,8 @@ const Contractors = () => {
         setLoadingFilter(false)
     }, [searchName, searchCuit, contractors])
 
-    const addContractor = (username: string, password: string, name: string, cuit: string, street: string, number: string, city: string, province: string) => {
-        dispatch(createContractor(username, password, name, cuit, street, number, city, province))
+    const addContractor = (username: string, password: string, email: string, name: string, cuit: string, phone: string, street: string, number: string, city: string, province: string) => {
+        dispatch(createContractor(username, password, email, name, cuit, phone, street, number, city, province))
         setOpenModal(false)
     }
 
@@ -165,7 +165,7 @@ const Contractors = () => {
                 </Card>
             }
             <CustomSnackbar open={openCreateSuccess} message='Contratista creado con éxito' type='success' onClose={() => setOpenCreateSuccess(false)} />
-            <CustomSnackbar open={openCreateFailure} message='Error creando contratista' type='error' onClose={() => setOpenCreateFailure(false)} />
+            <CustomSnackbar open={openCreateFailure} message={error?.message || 'Ha ocurrido un error'} type='error' onClose={() => setOpenCreateFailure(false)} />
         </Grid>
         </>
     )

@@ -5,7 +5,7 @@ import { Alert } from '@mui/material';
 import CustomSnackbar from '../../../../../components/customSnackbar';
 
 interface Props{
-    addContractor: (username: string, password: string, name: string, cuit: string, street: string, number: string, city: string, province: string) => void
+    addContractor: (username: string, password: string, email: string, name: string, cuit: string, phone: string, street: string, number: string, city: string, province: string) => void
     setOpenModal: React.Dispatch<React.SetStateAction<boolean>>
 }
 
@@ -15,8 +15,10 @@ const CreateDriverModal = ({ addContractor, setOpenModal }: Props) => {
     const [message, setMessage] = useState('');
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
+    const [email, setEmail] = useState('')
     const [repeatPassword, setRepeatPassword] = useState('')
     const [name, setName] = useState('')
+    const [phone, setPhone] = useState('')
     const [cuit, setCuit] = useState('')
     const [street, setStreet] = useState('')
     const [number, setNumber] = useState('')
@@ -39,8 +41,15 @@ const CreateDriverModal = ({ addContractor, setOpenModal }: Props) => {
     const _onChangeName = useCallback((event) => {
         setName(event.target.value);
     }, [setName]);
+
+    const _onChangePhone = useCallback((event) => {
+        setPhone(event.target.value);
+    }, [setPhone]);
     
-    
+    const _onChangeEmail = useCallback((event) => {
+        setEmail(event.target.value);
+    }, [setEmail]);
+
     const _onChangeCuit = useCallback((event) => {
         if (!event.target.value.includes("-") && !event.target.value.includes(" "))
             setCuit(event.target.value);
@@ -63,10 +72,10 @@ const CreateDriverModal = ({ addContractor, setOpenModal }: Props) => {
     }, [setProvince]);
 
     const _handleOnClick = () => {
-        if(!!username && !!password && !!repeatPassword && !!name && !!cuit && !!street && !!number && !!city && !!province){
+        if(!!username && !!password && !!email && !!repeatPassword && !!name && !!cuit){
             if (password === repeatPassword){
                 if(cuit.length === 11){
-                    addContractor(username, password, name, cuit, street, number, city, province);
+                    addContractor(username, password, email, name, cuit, phone, street, number, city, province);
                     setOpenModal(false);
                 }
                 else {
@@ -88,17 +97,28 @@ const CreateDriverModal = ({ addContractor, setOpenModal }: Props) => {
         <Grid className={classes.modal} container direction='column' justify='center' alignItems='center'>
                 <text className={classes.title}>Crear contratista</text>
                 <text className={classes.subtitle}>Registrar un nuevo contratista</text>
-                <TextField
-                    id="driver-username"
-                    className= {classes.textInput}
-                    size="medium"
-                    label="Nombre de usuario"
-                    value={username}
-                    onChange={_onChangeUsername}
-                />
+                <Grid>
+                    <TextField
+                        id="contractor-username"
+                        className= {classes.textInput}
+                        size="medium"
+                        label="Nombre de usuario"
+                        value={username}
+                        onChange={_onChangeUsername}
+                    />
+                    <TextField
+                            id="contractor-email"
+                            variant="standard"
+                            className= {classes.textInput}
+                            size="medium"
+                            label="Email"
+                            value={email}
+                            onChange={_onChangeEmail}
+                        />
+                    </Grid>
                 <Grid item>
                     <TextField
-                        id="driver-password"
+                        id="contractor-password"
                         type='password'
                         className= {classes.textInput}
                         size="medium"
@@ -107,7 +127,7 @@ const CreateDriverModal = ({ addContractor, setOpenModal }: Props) => {
                         onChange={_onChangePassword}
                     />
                     <TextField
-                        id="driver-repeatpassword"
+                        id="contractor-repeatpassword"
                         type='password'
                         className= {classes.textInput}
                         size="medium"
@@ -118,7 +138,7 @@ const CreateDriverModal = ({ addContractor, setOpenModal }: Props) => {
                 </Grid>
                 <Grid item>
                     <TextField
-                        id="driver-name"
+                        id="contractor-name"
                         className= {classes.textInput}
                         size="medium"
                         label="Nombre"
@@ -126,7 +146,7 @@ const CreateDriverModal = ({ addContractor, setOpenModal }: Props) => {
                         onChange={_onChangeName}
                     />
                     <TextField
-                        id="driver-cuit"
+                        id="contractor-cuit"
                         type="numeric"
                         className= {classes.textInput}
                         size="medium"
@@ -135,9 +155,20 @@ const CreateDriverModal = ({ addContractor, setOpenModal }: Props) => {
                         onChange={_onChangeCuit}
                     />
                 </Grid>
+                <Grid>
+                    <TextField
+                        id="contractor-phone"
+                        type="numeric"
+                        className= {classes.textInput}
+                        size="medium"
+                        label="Telefono"
+                        value={phone}
+                        onChange={_onChangePhone}
+                    />
+                </Grid>
                 <Grid item>
                     <TextField
-                        id="driver-street"
+                        id="contractor-street"
                         className= {classes.textInput}
                         size="medium"
                         label="Calle"
@@ -145,7 +176,7 @@ const CreateDriverModal = ({ addContractor, setOpenModal }: Props) => {
                         onChange={_onChangeStreet}
                     />
                     <TextField
-                        id="driver-number"
+                        id="contractor-number"
                         className= {classes.textInput}
                         type="numeric"
                         size="medium"
@@ -156,7 +187,7 @@ const CreateDriverModal = ({ addContractor, setOpenModal }: Props) => {
                 </Grid>
                 <Grid item>
                     <TextField
-                        id="driver-city"
+                        id="contractor-city"
                         className= {classes.textInput}
                         size="medium"
                         label="Ciudad"
@@ -164,7 +195,7 @@ const CreateDriverModal = ({ addContractor, setOpenModal }: Props) => {
                         onChange={_onChangeCity}
                     />
                     <TextField
-                        id="driver-province"
+                        id="contractor-province"
                         className= {classes.lastTextInput}
                         size="medium"
                         label="Provincia"

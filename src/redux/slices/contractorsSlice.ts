@@ -209,8 +209,10 @@ export const getContractors = (): AppThunk => async (dispatch) => {
 export const createContractor = (
    username: string,
    password: string,
+   email: string,
    name: string, 
-   cuit: string, 
+   cuit: string,
+   phone: string,
    street_address: string, 
    number_address: string,
    city_address: string, 
@@ -220,8 +222,10 @@ export const createContractor = (
       const response: AxiosResponse = await Axios.post('/register/Contractor',{
          username,
          password,
+         email,
          name,
          cuit,
+         phone,
          street_address,
          number_address,
          city_address,

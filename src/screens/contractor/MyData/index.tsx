@@ -94,8 +94,8 @@ const MyData = () => {
                             <Typography className={classes.data}>{data?.cuit || '-'}</Typography>
                         </Grid>
                         <Grid container direction='row' justifyContent="center" alignItems="center">
-                            <Typography className={classes.field}>E-Mail:</Typography>
-                            <Typography className={classes.data}>{data?.contractor?.email || '-'}</Typography>
+                            <Typography className={classes.field}>Email:</Typography>
+                            <Typography className={classes.data}>{data?.email || '-'}</Typography>
                         </Grid>
                         <Grid container direction='row' justifyContent="center" alignItems="center">
                             <Typography className={classes.field}>Dirección:</Typography>
