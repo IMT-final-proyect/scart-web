@@ -1,11 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Button, Card, CircularProgress, Grid, Modal, Snackbar, Typography, } from '@material-ui/core';
+import { Button, Card, CircularProgress, Grid, Modal } from '@material-ui/core';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import useStyles from './styles';
 import DriverRow from './components/driverRow';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../redux/rootReducer';
-import TripleSearchBar from '../../../components/tripleSearchBar';
+import QuadSearchBar from '../../../components/quadSearchBar';
 import CreateDriverModal from './components/createDriverModal';
 import { ROUTES } from '../navigation/routes';
 import { Link } from 'react-router-dom';
@@ -171,7 +171,7 @@ const Drivers = () => {
                             <AddCircleIcon className={classes.circleIcon}/>
                         </Button>
                     </Grid>
-                    <TripleSearchBar 
+                    <QuadSearchBar 
                         placeholders={[{name: 'Nombre'}, {name: 'Apellido'}, {name: 'Documento'}, {name: 'Contratista'} ]}
                         firstValue={searchName}
                         setFirstValue={setSearchName} 

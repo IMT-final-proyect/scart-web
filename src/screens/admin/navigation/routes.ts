@@ -5,4 +5,8 @@ export enum ROUTES {
     vehicles = '/vehiculos',
     audition = '/auditar',
     documentDetails= '/documento',
+    users='/users',
+    manager='/encargado',
+    auditor='/auditor',
+    security='/seguridad'
 }

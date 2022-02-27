@@ -4,9 +4,9 @@ import { Button } from '@material-ui/core';
 import FindInPageIcon from '@mui/icons-material/FindInPage';
 import BusinessIcon from '@mui/icons-material/Business';
 import DirectionsCarFilledIcon from '@mui/icons-material/DirectionsCarFilled';
-import PersonIcon from '@mui/icons-material/Person';
+import AirlineSeatReclineExtraIcon from '@mui/icons-material/AirlineSeatReclineExtra';
 import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
-
+import GroupIcon from '@mui/icons-material/Group';
 import TemplateBar from '../../../components/templateBar';
 import { ROUTES } from './routes';
 import useStyles from './styles';
@@ -19,8 +19,10 @@ import contractorDetails from '../contractors/components/contractorDetails';
 import DriverDetails from '../drivers/components/driverDetails';
 import VehicleDetails from '../vehicles/components/vehicleDetails';
 import AuditionDetails from '../audition/components/auditionDetails'
+import users from '../users'
 import { RootState } from '../../../redux/rootReducer';
 import { useSelector } from 'react-redux';
+import UserDetails from '../users/components/UserDetails';
 const AdminNavigator = () => {
     const classes = useStyles();
     const [title, setTitle] = useState('Administrador');
@@ -46,7 +48,7 @@ const AdminNavigator = () => {
                 onClick={() => setTitle("Conductores")}
             >
                 <div className={classes.icon}>
-                    <PersonIcon/>
+                    <AirlineSeatReclineExtraIcon/>
                 </div>
                 Conductores
             </Button>
@@ -72,6 +74,17 @@ const AdminNavigator = () => {
                 </div>
                 Auditar
             </Button>
+            <Button 
+                className = {classes.button}
+                component={Link}
+                to={ROUTES.root+ROUTES.users}
+                onClick={() => setTitle("Usuarios")}
+            >
+                <div className={classes.icon}>
+                    <GroupIcon/>
+                </div>
+                Usuarios
+            </Button>
         </>
     )
 
@@ -92,6 +105,11 @@ const AdminNavigator = () => {
                 <Route exact path={ROUTES.root+ROUTES.audition} component={audition} />
                 <Route exact path={ROUTES.root+ROUTES.audition+'/:id'} component={AuditionDetails} />
                 <Route exact path={ROUTES.root+ROUTES.documentDetails+'/:id'} component={DocumentDetails} />
+                <Route exact path={ROUTES.root+ROUTES.manager+'/:id'} component={UserDetails} />
+                <Route exact path={ROUTES.root+ROUTES.auditor+'/:id'} component={UserDetails} />
+                <Route exact path={ROUTES.root+ROUTES.security+'/:id'} component={UserDetails} />
+                <Route exact path={ROUTES.root+ROUTES.users} component={users} />
+                
                 <Route path={ROUTES.root} component={contractors} />
             </Switch>
         </BrowserRouter>

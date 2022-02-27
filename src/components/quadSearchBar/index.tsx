@@ -22,7 +22,7 @@ interface Props {
     className?: string
 }
 
-const TripleSearchBar = ({ 
+const QuadSearchBar = ({ 
     placeholders,
     firstValue, 
     secondValue, 
@@ -96,4 +96,4 @@ const TripleSearchBar = ({
     )
 }
 
-export default TripleSearchBar 
+export default QuadSearchBar 
