@@ -119,7 +119,7 @@ export const postLogin = (username: string, password: string): AppThunk => async
       localStorage.setItem('access_token', response.data.accountData.access_token);
       dispatch(postLoginSuccess(response.data));
    }
-   catch(error){
+   catch(error: any){
       dispatch(postLoginFailure(error.response.data));
    }
 };
@@ -130,7 +130,7 @@ export const getContractorData = (id: number | undefined): AppThunk => async (di
       const response = await Axios.get(`/contractors/${id}`);
       dispatch(getUserDataSuccess(response.data));
    }
-   catch(error){
+   catch(error: any){
       dispatch(getUserDataFailure(error.response.data))
    }
 }
@@ -141,7 +141,7 @@ export const getDriverData = (id: number | undefined): AppThunk => async (dispat
       const response = await Axios.get(`/drivers/${id}?relations=address,contractor`);
       dispatch(getUserDataSuccess(response.data));
    }
-   catch(error){
+   catch(error: any){
       dispatch(getUserDataFailure(error.response.data))
    }
 }

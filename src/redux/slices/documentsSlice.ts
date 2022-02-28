@@ -293,7 +293,7 @@ export const getContractorDocuments = (contractorId: number|undefined): AppThunk
       
       dispatch(getContractorDocumentsSuccess(documents));
    }
-   catch(error){
+   catch(error: any){
       dispatch(getContractorDocumentsFailure(error.response.data));
    }
 };
@@ -306,7 +306,7 @@ export const getDriverDocuments = (driverId: number|undefined): AppThunk => asyn
       
       dispatch(getDriverDocumentsSuccess(documents));
    }
-   catch(error){
+   catch(error: any){
       dispatch(getDriverDocumentsFailure(error.response.data));
    }
 };
@@ -334,7 +334,7 @@ export const getVehicleDocuments = (vehicleId: number|undefined): AppThunk => as
       
       dispatch(getVehicleDocumentsSuccess(documents));
    }
-   catch(error){
+   catch(error: any){
       dispatch(getVehicleDocumentsFailure(error.response.data));
    }
 };
@@ -347,7 +347,7 @@ export const getDocumentById = (documentId: number): AppThunk => async (dispatch
       const response: AxiosResponse = await Axios.get(`/documents/${documentId}`);
       dispatch(getDocumentByIdSuccess(response.data));
    }
-   catch(error){
+   catch(error: any){
       dispatch(getDocumentByIdFailure(error.response.data));
    }
 };
@@ -389,7 +389,7 @@ export const createDocument = (
          default: createDocumentFailure({code: 400, message: 'Entidad no encontrada'})
       }
    }
-   catch(error){
+   catch(error: any){
       dispatch(createDocumentFailure(error.response.data));
    }
 }
@@ -400,7 +400,7 @@ export const getDocumentByState = (state: number): AppThunk => async (dispatch) 
       const response: AxiosResponse = await Axios.get(`/documents?state=${state}&expand[]=contractor`);
       dispatch(getDocumentByStateSuccess(response.data));
    }
-   catch(error){
+   catch(error: any){
       dispatch(getDocumentByStateFailure(error?.response?.data));
    }
 };
@@ -428,7 +428,7 @@ export const getOwner = (entityType: number, entityId: number): AppThunk => asyn
       const response: AxiosResponse = await Axios.get(url);
       dispatch(getOwnerSuccess(response.data));
    }
-   catch(error){
+   catch(error: any){
       dispatch(getOwnerFailure(error.response.data));
    }
 };
@@ -450,7 +450,7 @@ export const postDocumentEvaluation = (id: number, isApprovation: boolean, comme
          dispatch(postDocumentEvaluationSuccess());
       }
    }
-   catch(error){
+   catch(error: any){
       dispatch(postDocumentEvaluationFailure(error.response.data));
    }
 };

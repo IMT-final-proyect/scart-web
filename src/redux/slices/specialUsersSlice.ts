@@ -13,8 +13,8 @@ interface IError {
 export interface ISpecialUser {
     id: number;
     name: string;
-    rol: number;
     surname: string;
+    rol: number;
     cuit: string;
     username: string;
     email: string;
@@ -26,6 +26,7 @@ export interface ISpecialUser {
          auditors: ISpecialUser[],
          securities: ISpecialUser[]
      },
+     userDetailed: ISpecialUser,
      loading: boolean,
      error: IError | null,
      success: boolean
@@ -36,6 +37,15 @@ const initialState: ISpecialUserState = {
         managers: [],
         auditors: [],
         securities: []
+    },
+    userDetailed: {
+      id: -1,
+      name: '',
+      surname: '',
+      rol: -1,
+      cuit: '',
+      username: '',
+      email: ''
     },
     loading: false,
     error: null,
@@ -112,6 +122,42 @@ const specialUsersSlice = createSlice({
         state.error = payload;
         state.success = initialState.success;
     },
+    getSpecialUserRequest(state) {
+      state.loading = true;
+      state.error = initialState.error;
+      state.success = initialState.success;
+    },
+    getSpecialUserSuccess(state, action: any) {
+      const { payload } = action
+      state.userDetailed = payload
+      state.loading = false;
+      state.success = true;
+      state.error = initialState.error
+    },
+    getSpecialUserFailure(state, action: any) {
+        const { payload } = action
+        state.loading = false;
+        state.error = payload;
+        state.success = initialState.success;
+    },
+    editSpecialUserRequest(state) {
+      state.loading = true;
+      state.error = initialState.error;
+      state.success = initialState.success;
+    },
+    editSpecialUserSuccess(state, action: any) {
+        const { payload } = action
+        state.userDetailed = payload
+        state.loading = false;
+        state.success = true;
+        state.error = initialState.error
+    },
+    editSpecialUserFailure(state, action: any) {
+        const { payload } = action
+        state.loading = false;
+        state.error = payload;
+        state.success = initialState.success;
+    },
   },
 });
 
@@ -126,7 +172,13 @@ const {
   createSpecialUserFailure,
   deleteSpecialUserRequest,
   deleteSpecialUserSuccess,
-  deleteSpecialUserFailure
+  deleteSpecialUserFailure,
+  getSpecialUserRequest,
+  getSpecialUserSuccess,
+  getSpecialUserFailure,
+  editSpecialUserRequest,
+  editSpecialUserSuccess,
+  editSpecialUserFailure
 } = specialUsersSlice.actions;
 
 
@@ -161,7 +213,7 @@ export const getSpecialUsers = (): AppThunk => async (dispatch) => {
       }
       dispatch(getSpecialUsersSuccess(data));
    }
-   catch(error){
+   catch(error: any){
       dispatch(getSpecialUsersFailure(error.response.data));
    }
 };
@@ -188,7 +240,7 @@ export const createSpecialUser = (
             password,
             email
           })
-          dispatch(createManagerSuccess(manager))
+          dispatch(createManagerSuccess(manager.data.userData))
           break
         }
         case AllowedRol.auditor: {
@@ -202,7 +254,7 @@ export const createSpecialUser = (
             password,
             email
           });
-          dispatch(createAuditorSuccess(auditor))
+          dispatch(createAuditorSuccess(auditor.data.userData))
           break
         }
         case AllowedRol.security: {
@@ -216,12 +268,12 @@ export const createSpecialUser = (
             password,
             email
           });
-          dispatch(createSecuritySuccess(security))
+          dispatch(createSecuritySuccess(security.data.userData))
           break
         }
       }
     }
-    catch(error){
+    catch(error: any){
        dispatch(createSpecialUserFailure(error.response.data));
     }
  };
@@ -251,8 +303,88 @@ export const createSpecialUser = (
       }
       dispatch(deleteSpecialUserSuccess())
     }
-    catch(error){
+    catch(error: any){
        dispatch(deleteSpecialUserFailure(error.response.data));
     }
  };
  
+ export const getSpecialUser = (id: string, rol: number): AppThunk => async (dispatch) => {
+    dispatch(getSpecialUserRequest());
+    let response: AxiosResponse
+    try{
+      switch(rol){
+        case AllowedRol.manager: {
+          response = await Axios.get(`/managers/${id}`)
+          dispatch(getSpecialUserSuccess(response.data))
+          break
+        }
+        case AllowedRol.auditor: {
+          response = await Axios.get(`/auditors/${id}`)
+          dispatch(getSpecialUserSuccess(response.data))
+          break
+        }
+        case AllowedRol.security: {
+          response = await Axios.get(`/securities/${id}`)
+          dispatch(getSpecialUserSuccess(response.data))
+          break
+        }
+      }
+    }
+    catch(error: any){
+      dispatch(getSpecialUserFailure(error.response.data));
+    }
+ };
+
+ export const editSpecialUser = (
+  id: number,
+  name: string,
+  surname: string,
+  rol: number,
+  cuit: string,
+  username: string,
+  email: string,
+  password?: string): AppThunk => async (dispatch) => {
+    dispatch(editSpecialUserRequest());
+    try{
+      let body
+      if (!!password) 
+        body = {
+          name,
+          surname,
+          rol,
+          cuit,
+          username,
+          email
+        }
+      else
+        body = {
+          name,
+          surname,
+          rol,
+          cuit,
+          username,
+          password,
+          email
+        } 
+      switch(rol){
+        case AllowedRol.manager: {
+          const manager: AxiosResponse = await Axios.put(`/managers/${id}`,body)
+          dispatch(editSpecialUserSuccess(manager.data))
+          break
+        }
+        case AllowedRol.auditor: {
+          const auditor: AxiosResponse = await Axios.put(`/auditors/${id}`,body);
+          dispatch(editSpecialUserSuccess(auditor.data))
+          break
+        }
+        case AllowedRol.security: {
+          const security: AxiosResponse = await Axios.put(`/securities/${id}`,body);
+          dispatch(editSpecialUserSuccess(security.data))
+          break
+        }
+      }
+    }
+    catch(error: any){
+       dispatch(editSpecialUserFailure(error.response.data));
+    }
+ };

@@ -103,7 +103,7 @@ const EditDriverModal = ( {driver, changePassword, editDriver, setOpenEditDriver
 
 
       const _handleOnClick = () => {
-        if(!!name && !!surname && !!cuit && !!birthdate){
+        if(!!name && !!surname && !!cuit && !!birthdate && !!username){
             if(cuit.length === 11){
                 if (changePassword){
                     if (password === repeatPassword){

@@ -201,7 +201,7 @@ export const getContractors = (): AppThunk => async (dispatch) => {
       const Contractors = _.mapKeys(response.data, 'id') 
       dispatch(getContractorsSuccess(Contractors));
    }
-   catch(error){
+   catch(error: any){
       dispatch(getContractorsFailure(error.response.data));
    }
 };
@@ -233,7 +233,7 @@ export const createContractor = (
       });
       dispatch(createContractorSuccess(response.data.userData));
    }
-   catch(error){
+   catch(error: any){
       dispatch(createContractorFailure(error.response.data));
    }
 }
@@ -244,7 +244,7 @@ export const getInvalidDrivers = (contractorId: number): AppThunk => async (disp
       const response: AxiosResponse = await Axios.get(`/contractors/${contractorId}/documents/drivers?states=2,3&missing=true`);
       dispatch(getInvalidDriversSuccess(response.data));
    }
-   catch(error){
+   catch(error: any){
       dispatch(getInvalidDriversFailure(error.response.data));
    }
 }
@@ -255,7 +255,7 @@ export const getPendingDrivers = (contractorId: number): AppThunk => async (disp
       const response: AxiosResponse = await Axios.get(`/contractors/${contractorId}/documents/drivers?states=0`);
       dispatch(getPendingDriversSuccess(response.data));
    }
-   catch(error){
+   catch(error: any){
       dispatch(getPendingDriversFailure(error.response.data));
    }
 }
@@ -266,7 +266,7 @@ export const getInvalidVehicles = (contractorId: number): AppThunk => async (dis
       const response: AxiosResponse = await Axios.get(`/contractors/${contractorId}/documents/vehicles?states=2,3&missing=true`);
       dispatch(getInvalidVehiclesSuccess(response.data));
    }
-   catch(error){
+   catch(error: any){
       dispatch(getInvalidVehiclesFailure(error.response.data));
    }
 }
@@ -277,7 +277,7 @@ export const getPendingVehicles = (contractorId: number): AppThunk => async (dis
       const response: AxiosResponse = await Axios.get(`/contractors/${contractorId}/documents/vehicles?states=0`);
       dispatch(getPendingVehiclesSuccess(response.data));
    }
-   catch(error){
+   catch(error: any){
       dispatch(getPendingVehiclesFailure(error.response.data));
    }
 }
@@ -333,7 +333,7 @@ export const editContractor = (
       
       dispatch(editContractorSuccess(editedContractor));
    }
-   catch(error){
+   catch(error: any){
       dispatch(editContractorFailure(error.response.data)); 
    }
 }

@@ -55,3 +55,8 @@ export const getRolNumero = (rolName: string): number => {
         default: return -1
     }
 }
+
+export const capitalize = (s: string) => {
+    if (typeof s !== 'string') return ''
+    return s.charAt(0).toUpperCase() + s.slice(1)
+  }

@@ -143,7 +143,7 @@ export const getPendingExceptions = (): AppThunk => async (dispatch) => {
       
       dispatch(getPendingExceptionsSuccess(exceptions));
    }
-   catch(error){
+   catch(error: any){
       dispatch(getPendingExceptionsFailure(error.response.data));
    }
 };
@@ -159,7 +159,7 @@ export const putUpdateExceptions = (exceptionId: string, comment: string, manage
       });
       dispatch(putUpdateExceptionsSuccess());
    }
-   catch(error){
+   catch(error: any){
       dispatch(putUpdateExceptionsFailure(error.response.data));
    }
 };
@@ -171,7 +171,7 @@ export const getInvalidDocuments = (driverId: number, vehicleId: number): AppThu
       
       dispatch(getInvalidDocumentsSuccess(response.data));
    }
-   catch(error){
+   catch(error: any){
       console.log(error);
       
       dispatch(getInvalidDocumentsFailure(error));

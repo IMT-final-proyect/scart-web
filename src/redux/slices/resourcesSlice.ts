@@ -308,7 +308,7 @@ export const getAllDrivers = (contractorId?: number): AppThunk => async (dispatc
       const drivers = _.mapKeys(response.data, 'id') 
       dispatch(getAllDriversSuccess(drivers));
    }
-   catch(error){
+   catch(error: any){
       dispatch(getAllDriversFailure(error.response.data));
    }
 };
@@ -319,7 +319,7 @@ export const getDriverById = (id: number): AppThunk => async (dispatch) => {
       const response: AxiosResponse = await Axios.get(`/drivers/${id}?relations=address`);      
       dispatch(getDriverByIdSuccess(response.data));
    }
-   catch(error){
+   catch(error: any){
       dispatch(getDriverByIdFailure(error.response.data));
    }
 }
@@ -332,7 +332,7 @@ export const getAllVehicles = (contractorId?: number): AppThunk => async (dispat
       const vehicle = _.mapKeys(response.data, 'id') 
       dispatch(getAllVehiclesSuccess(vehicle));
    }
-   catch(error){
+   catch(error: any){
       dispatch(getAllVehiclesFailure(error.response));
    }
 }; 
@@ -343,7 +343,7 @@ export const getVehicleById = (id: number): AppThunk => async (dispatch) => {
       const response: AxiosResponse = await Axios.get(`/vehicles/${id}?relations=contractor`);      
       dispatch(getVehicleByIdSuccess(response.data));
    }
-   catch(error){
+   catch(error: any){
       dispatch(getVehicleByIdFailure(error.response?.data));
    }
 }
@@ -354,7 +354,7 @@ export const getSecurityById = (id: number): AppThunk => async (dispatch) => {
       const response: AxiosResponse = await Axios.get(`/securities/${id}`);      
       dispatch(getSecurityByIdSuccess(response.data));
    }
-   catch(error){
+   catch(error: any){
       dispatch(getSecurityByIdFailure(error.response?.data));
    }
 }
@@ -396,7 +396,7 @@ export const createDriver = (
       });
       dispatch(createDriverSuccess(response.data.userData));
    }
-   catch(error){
+   catch(error: any){
       dispatch(createDriverFailure(error.response.data));
    }
 }
@@ -418,7 +418,7 @@ export const createVehicle = (
       });
       dispatch(createVehicleSuccess(response.data));
    }
-   catch(error){
+   catch(error: any){
       dispatch(createVehicleFailure(error.response.data));
    }
 }
@@ -433,7 +433,7 @@ export const deleteDriver = (id: number, contractorId?: number): AppThunk => asy
       dispatch(deleteDriverSuccess());
       dispatch(getAllDrivers(contractorId))
    }
-   catch(error){
+   catch(error: any){
       dispatch(deleteDriverFailure(error.response.data));
    }
 }
@@ -448,7 +448,7 @@ export const deleteVehicle = (id: number, contractorId?: number): AppThunk => as
       dispatch(deleteVehicleSuccess());
       dispatch(getAllVehicles(contractorId))
    }
-   catch(error){
+   catch(error: any){
       dispatch(deleteVehicleFailure(error.response.data)); 
    }
 }
@@ -510,7 +510,7 @@ export const editDriver = (
       
       dispatch(editDriverSuccess(editedDriver));
    }
-   catch(error){
+   catch(error: any){
       dispatch(editDriverFailure(error.response.data)); 
    }
 }
@@ -530,7 +530,7 @@ export const editVehicle = (vehicle: IVehicle, plate: string, brand: string, mod
 
       dispatch(editVehicleSuccess(editedVehicle));
    }
-   catch(error){
+   catch(error: any){
       dispatch(editVehicleFailure(error.response.data)); 
    }
 }
