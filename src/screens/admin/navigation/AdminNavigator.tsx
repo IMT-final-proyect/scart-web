@@ -20,13 +20,10 @@ import DriverDetails from '../drivers/components/driverDetails';
 import VehicleDetails from '../vehicles/components/vehicleDetails';
 import AuditionDetails from '../audition/components/auditionDetails'
 import users from '../users'
-import { RootState } from '../../../redux/rootReducer';
-import { useSelector } from 'react-redux';
 import UserDetails from '../users/components/UserDetails';
 const AdminNavigator = () => {
     const classes = useStyles();
     const [title, setTitle] = useState('Administrador');
-    const user = useSelector((state: RootState) => state.user.userData?.name)
 
     const ButtonList = (
         <>
@@ -91,7 +88,7 @@ const AdminNavigator = () => {
     return(
         <BrowserRouter>
             <TemplateBar
-                user={user}
+                user='Admin'
                 title={title}
                 ButtonList = {ButtonList}
             />

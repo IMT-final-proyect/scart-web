@@ -17,6 +17,7 @@ import { Alert } from '@mui/material';
 import CustomInput from '../../../components/customInput'
 import DeleteModal from '../../../components/DeleteModal';
 import CustomSnackbar from '../../../components/customSnackbar';
+import TomisBar from '../../../components/TomisBar';
 
 
 const Resources = () => {
@@ -221,7 +222,7 @@ const Resources = () => {
                     <Grid container justifyContent='space-between' alignItems='center'>
                         <Grid item xs={11}>
                             <Grid container direction='row'>
-                                <div className={classes.box}/>
+                                <TomisBar />
                                 <text className={classes.textTitle}>
                                     Conductores asociados
                                 </text>
@@ -304,7 +305,7 @@ const Resources = () => {
                     <Grid container justifyContent='space-between' alignItems='center'>
                         <Grid item xs={11}>
                             <Grid container direction='row' >
-                                <div className={classes.box}/>
+                                <TomisBar/>
                                 <text className={classes.textTitle}>
                                     Vehículos asociados
                                 </text>

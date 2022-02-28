@@ -136,7 +136,7 @@ const EditDriverModal = ( {driver, changePassword, editDriver, setOpenEditDriver
                 <Grid container>
                     <text className={classes.title}>Editar conductor</text>
                 </Grid>
-                <Grid container>
+                <Grid container className={classes.inputsContainer}>
                     <Grid item xs={4}>
                         <TextField
                             id="driver-name"
@@ -160,7 +160,7 @@ const EditDriverModal = ( {driver, changePassword, editDriver, setOpenEditDriver
                         />
                     </Grid>
                 </Grid>
-                <Grid container>
+                <Grid container className={classes.inputsContainer}>
                     <Grid item xs={4}>
                         <TextField
                             id="driver-username"
@@ -202,7 +202,7 @@ const EditDriverModal = ( {driver, changePassword, editDriver, setOpenEditDriver
                         </MuiPickersUtilsProvider>
                     </Grid>
                 </Grid>
-                <Grid container>
+                <Grid container className={classes.inputsContainer}>
                     <Grid item xs={4}>
                         <TextField
                             id="driver-street"
@@ -226,8 +226,19 @@ const EditDriverModal = ( {driver, changePassword, editDriver, setOpenEditDriver
                             onChange={_onChangeNumber}
                         />
                     </Grid>
+                    <Grid item xs={4}>
+                        <TextField
+                            id="driver-phone"
+                            variant="standard"
+                            className= {classes.lastTextInput}
+                            size="medium"
+                            label="Telefono"
+                            value={phone}
+                            onChange={_onChangePhone}
+                        />
+                    </Grid>
                 </Grid>
-                <Grid container>
+                <Grid container className={classes.inputsContainer}>
                     <Grid item xs={4}>
                         <TextField
                             id="driver-city"
@@ -261,22 +272,11 @@ const EditDriverModal = ( {driver, changePassword, editDriver, setOpenEditDriver
                             onChange={_onChangeZipCode}
                         />
                     </Grid>
-                    <Grid item xs={4}>
-                        <TextField
-                            id="driver-phone"
-                            variant="standard"
-                            className= {classes.lastTextInput}
-                            size="medium"
-                            label="Telefono"
-                            value={phone}
-                            onChange={_onChangePhone}
-                        />
-                    </Grid>
                 </Grid>
                 <Grid container className={classes.checkbox}>
-                    <FormControlLabel control={<Checkbox  defaultChecked checked={changePassword} onChange={() => {setChangePassword(!changePassword)}} />} label="Cambiar contraseña" />
+                    <FormControlLabel control={<Checkbox defaultChecked color='primary' checked={changePassword} onChange={() => {setChangePassword(!changePassword)}} />} label="Cambiar contraseña" />
                 </Grid>
-                    <Grid item xs={4} className={classes.passwords}>
+                    <Grid item xs={6} className={classes.passwords}>
                         <TextField
                             id="driver-password"
                             variant="standard"
@@ -289,7 +289,7 @@ const EditDriverModal = ( {driver, changePassword, editDriver, setOpenEditDriver
                             disabled={!changePassword}
                         />
                     </Grid>
-                    <Grid item xs={4} className={classes.passwords}>
+                    <Grid item xs={6} className={classes.passwords}>
                         <TextField
                             id="driver-repeatpassword"
                             variant="standard"

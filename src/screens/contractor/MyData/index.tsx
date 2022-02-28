@@ -9,6 +9,7 @@ import { IUser } from "../../../redux/slices/userSlice"
 import { IContractor } from "../../../utils/interfaces"
 import useStyles from "./styles"
 import { editContractor } from "../../../redux/slices/contractorsSlice";
+import TomisBar from "../../../components/TomisBar";
 
 const MyData = () => {
     const classes = useStyles()

@@ -118,11 +118,6 @@ const useStyles = makeStyles((theme: Theme) => ({
         [theme.breakpoints.down('sm')]: {
             marginTop: '5%'
         },
-    },
-    box:{
-        backgroundColor: globalColors.darkBlue,
-        width: "1%",
-        height: "auto"
     }
 }));
 

@@ -1,20 +1,20 @@
 
 import { makeStyles, Theme } from '@material-ui/core';
+import { headerSize } from '../../../utils/constants';
 
 import globalColors from '../../../utils/styles/globalColors';
 
 const useStyles = makeStyles((theme: Theme) => ({
     container:{
         flexGrow: 1,
-    },
-    cardContainer:{
+        paddingTop: headerSize+30,
     },
     titleCard:{
-        marginTop: '5%',
         marginLeft: '2.5%',
-        paddingRight: '2.5%',
+        paddingTop: '1%',
+        paddingBottom: '2%',
         paddingLeft: '2.5%',
-        paddingBottom: '2.5%',
+        paddingRight: '2.5%,',
         [theme.breakpoints.up('xs')]: {
             width: '130%',
             marginLeft: '2.5%',
@@ -28,6 +28,8 @@ const useStyles = makeStyles((theme: Theme) => ({
         [theme.breakpoints.down('sm')]: {
             marginTop: '17%'
         },
+    },
+    cardContainer:{
     },
     contentCard:{
         marginTop: '2.5%',
@@ -50,14 +52,12 @@ const useStyles = makeStyles((theme: Theme) => ({
             marginTop: '17%'
         },
     },
-    titleContainer:{
-        
-    },
     textTitle:{
         fontSize:20,
-        marginTop: '3%',
-        marginBottom: '3%',
-        marginLeft: '3%',
+        marginTop: '1%',
+        marginBottom: '1%',
+        fontWeight: 'bold',
+        color: globalColors.lightBlue,
         [theme.breakpoints.down('sm')]: {
             fontSize: 15,
         },

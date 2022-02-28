@@ -120,10 +120,10 @@ const EditContractorModal = ( {contractor, changePassword, editContractor, setOp
     return (
             <Grid container className={classes.modal} direction='column' justify='space-between' alignItems='center'>
                 <Grid container>
-                    <text className={classes.title}>Editar mis datos</text>
+                    <text className={classes.title}>Editar Contratista</text>
                 </Grid>
-                <Grid container className={classes.textInput}>
-                    <Grid item xs={4}>
+                <Grid container className={classes.inputsContainer}>
+                    <Grid item xs={6}>
                         <TextField
                             id="contractor-name"
                             variant="standard"
@@ -134,7 +134,7 @@ const EditContractorModal = ( {contractor, changePassword, editContractor, setOp
                             onChange={_onChangeName}
                         />
                     </Grid>
-                    <Grid item xs={4}>
+                    <Grid item xs={6}>
                         <TextField
                             id="contractor-username"
                             variant="standard"
@@ -146,48 +146,56 @@ const EditContractorModal = ( {contractor, changePassword, editContractor, setOp
                         />
                     </Grid>
                 </Grid>
-                <Grid container>
-                    <TextField
-                        id="contractor-cuit"
-                        variant="standard"
-                        className= {classes.textInput}
-                        size="medium"
-                        label="CUIT"
-                        value={cuit}
-                        onChange={_onChangeCuit}
-                    />
-                    <TextField
-                        id="contractor-email"
-                        variant="standard"
-                        className= {classes.textInput}
-                        size="medium"
-                        label="Email"
-                        value={email}
-                        onChange={_onChangeEmail}
-                    />
+                <Grid container className={classes.inputsContainer}>
+                    <Grid item xs={6}>
+                        <TextField
+                            id="contractor-cuit"
+                            variant="standard"
+                            className= {classes.textInput}
+                            size="medium"
+                            label="CUIT"
+                            value={cuit}
+                            onChange={_onChangeCuit}
+                        />
+                    </Grid>
+                    <Grid item xs={6}>
+                        <TextField
+                            id="contractor-email"
+                            variant="standard"
+                            className= {classes.textInput}
+                            size="medium"
+                            label="Email"
+                            value={email}
+                            onChange={_onChangeEmail}
+                        />
+                    </Grid>
                 </Grid>
-                <Grid container>
-                    <TextField
-                        id="contractor-street"
-                        variant="standard"
-                        className= {classes.textInput}
-                        size="medium"
-                        label="Calle"
-                        value={street}
-                        onChange={_onChangeStreet}
-                    />
-                     <TextField
-                        id="contractor-number"
-                        variant="standard"
-                        className= {classes.textInput}
-                        size="medium"
-                        type='number'
-                        label="Numero"
-                        value={number}
-                        onChange={_onChangeNumber}
-                    />
+                <Grid container className={classes.inputsContainer}>
+                    <Grid item xs={6}>
+                        <TextField
+                            id="contractor-street"
+                            variant="standard"
+                            className= {classes.textInput}
+                            size="medium"
+                            label="Calle"
+                            value={street}
+                            onChange={_onChangeStreet}
+                        />
+                    </Grid>
+                    <Grid item xs={6}>
+                        <TextField
+                            id="contractor-number"
+                            variant="standard"
+                            className= {classes.textInput}
+                            size="medium"
+                            type='number'
+                            label="Numero"
+                            value={number}
+                            onChange={_onChangeNumber}
+                        />
+                    </Grid>
                 </Grid>
-                <Grid container>
+                <Grid container className={classes.inputsContainer}>
                     <Grid item xs={4}>
                         <TextField
                             id="contractor-city"
@@ -223,31 +231,35 @@ const EditContractorModal = ( {contractor, changePassword, editContractor, setOp
                     </Grid>
                 </Grid>
                 <Grid container className={classes.checkbox}>
-                    <FormControlLabel control={<Checkbox  defaultChecked checked={changePassword} onChange={() => {setChangePassword(!changePassword)}} />} label="Cambiar contraseña" />
+                    <FormControlLabel control={<Checkbox defaultChecked color='primary' checked={changePassword} onChange={() => {setChangePassword(!changePassword)}} />} label="Cambiar contraseña" />
                 </Grid>
-                <Grid item className={classes.passwords}>
-                    <TextField
-                        id="contractor-password"
-                        variant="standard"
-                        type='password'
-                        className= {classes.textInput}
-                        size="medium"
-                        label="Contraseña"
-                        value={password}
-                        onChange={_onChangePassword}
-                        disabled={!changePassword}
-                    />
-                    <TextField
-                        id="contractor-repeatpassword"
-                        variant="standard"
-                        type='password'
-                        className= {classes.textInput}
-                        size="medium"
-                        label="Repetir contraseña"
-                        value={repeatPassword}
-                        onChange={_onChangeRepeatPassword}
-                        disabled={!changePassword}
-                    />
+                <Grid container className={classes.passwords}>
+                    <Grid item xs={6}>
+                        <TextField
+                            id="contractor-password"
+                            variant="standard"
+                            type='password'
+                            className= {classes.textInput}
+                            size="medium"
+                            label="Contraseña"
+                            value={password}
+                            onChange={_onChangePassword}
+                            disabled={!changePassword}
+                        />
+                    </Grid>
+                    <Grid item xs={6}>
+                        <TextField
+                            id="contractor-repeatpassword"
+                            variant="standard"
+                            type='password'
+                            className= {classes.textInput}
+                            size="medium"
+                            label="Repetir contraseña"
+                            value={repeatPassword}
+                            onChange={_onChangeRepeatPassword}
+                            disabled={!changePassword}
+                        />
+                    </Grid>
                 </Grid>
                 <CustomSnackbar open={error} message={message} type='error' onClose={() => setError(false)} />
                 <Grid container direction='row' justifyContent='space-between'>

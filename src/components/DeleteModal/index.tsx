@@ -4,14 +4,16 @@ import useStyles from './styles';
 interface Props { 
     entity: string
     id: number
-    handleDelete: (id: number, contratorId?: number) => void
+    handleDelete: (id: number, contratorId?: number, rolName?: number) => void
     setOpenModal: React.Dispatch<React.SetStateAction<boolean>>
+    rol?: number
 }
-const DeleteModal = ({ entity, id, handleDelete, setOpenModal }: Props) => {
+const DeleteModal = ({ entity, id, handleDelete, setOpenModal, rol }: Props) => {
     const classes = useStyles();
-
+    
     const _handleOnClick = () => {
-        handleDelete(id)
+        if(!!rol) handleDelete(id, 1, rol)
+        else handleDelete(id)
         setOpenModal(false)
     }
 

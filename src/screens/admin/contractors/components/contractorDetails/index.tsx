@@ -238,7 +238,7 @@ const ContractorDetails = () => {
                 </Grid>
             </Grid>
             <CustomSnackbar open={openEditContractorSuccess && !!messageSnackbar} message={messageSnackbar} type='success' onClose={() =>  setOpenEditContractorSuccess(false)} />
-            <CustomSnackbar open={openEditContractorError && !!messageSnackbar} message={messageSnackbar} type='error' onClose={() =>  setOpenEditContractorSuccess(false)} />
+            <CustomSnackbar open={openEditContractorError && !!messageSnackbar} message={messageSnackbar} type='error' onClose={() =>  setOpenEditContractorError(false)} />
             <CustomSnackbar open={openSuccess} message='Documento creado con éxito' type='success' onClose={() => setOpenSuccess(false)} />
             <CustomSnackbar open={openFailure} message='Error creando documento' type='error' onClose={() => setOpenFailure(false)} />
         </>

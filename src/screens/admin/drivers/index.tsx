@@ -16,6 +16,7 @@ import { IDriver } from '../../../utils/interfaces';
 import DeleteModal from '../../../components/DeleteModal';
 import { Alert } from '@mui/material';
 import CustomSnackbar from '../../../components/customSnackbar';
+import TomisBar from '../../../components/TomisBar';
 
 const Drivers = () => {
     const classes = useStyles();
@@ -164,12 +165,19 @@ const Drivers = () => {
             <Grid container className={classes.container} direction='row' justifyContent='space-between' >
                 <Card className={classes.card}>
                     <Grid container justifyContent='space-between'>
-                        <text className={classes.textTitle}>
-                            Conductores
-                        </text>
-                        <Button onClick={() => setOpenDriverModal(true)}>
-                            <AddCircleIcon className={classes.circleIcon}/>
-                        </Button>
+                        <Grid item xs={11}>
+                            <Grid container>
+                                <TomisBar/>
+                                <text className={classes.textTitle}>
+                                    Conductores
+                                </text>
+                            </Grid>
+                        </Grid>
+                        <Grid item xs={1}>
+                            <Button onClick={() => setOpenDriverModal(true)}>
+                                <AddCircleIcon className={classes.circleIcon}/>
+                            </Button>
+                        </Grid>
                     </Grid>
                     <QuadSearchBar 
                         placeholders={[{name: 'Nombre'}, {name: 'Apellido'}, {name: 'Documento'}, {name: 'Contratista'} ]}

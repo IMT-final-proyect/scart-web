@@ -107,11 +107,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     spinner: {
         marginTop: '10%',
         color: globalColors.lightBlue
-    },
-    box:{
-        backgroundColor: globalColors.darkBlue,
-        width: "0.5%",
-        height: "auto"
     }
 }));
 

@@ -15,13 +15,12 @@ const useStyles = makeStyles((theme: Theme) => ({
         },
     },
     lastTextInput: {
-        marginBottom: '10%',
-        marginTop: '2.5%',
         width: '90%',
         color: globalColors.lightBlue,
-        [theme.breakpoints.down('xs')]: {
-            maxWidth: '50%'
-        },
+    },
+    inputsContainer: {
+        marginBottom: '0.5%',
+        marginTop: '2.5%',
     },
     modal: {
         position: 'absolute', 

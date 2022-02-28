@@ -15,6 +15,7 @@ import { IVehicle } from '../../../utils/interfaces';
 import DeleteModal from '../../../components/DeleteModal';
 import { Alert } from '@mui/material';
 import CustomSnackbar from '../../../components/customSnackbar';
+import TomisBar from '../../../components/TomisBar';
 
 const Contractors = () => {
     const classes = useStyles();
@@ -130,12 +131,19 @@ const Contractors = () => {
         <Grid container className={classes.container} direction='row' justifyContent='space-between'>
             <Card className={classes.card}>
                 <Grid container justifyContent='space-between'>
-                    <text className={classes.textTitle}>
-                        Vehiculos
-                    </text>
-                    <Button onClick={() => setOpenVehicleModal(true)}>
-                        <AddCircleIcon className={classes.circleIcon}/>
-                    </Button>
+                    <Grid item xs={11}>
+                        <Grid container>
+                            <TomisBar/>
+                            <text className={classes.textTitle}>
+                                Vehiculos
+                            </text>
+                        </Grid>
+                    </Grid>
+                    <Grid item xs={1}>
+                        <Button onClick={() => setOpenVehicleModal(true)}>
+                            <AddCircleIcon className={classes.circleIcon}/>
+                        </Button>
+                    </Grid>
                 </Grid>
                 <Typography className={classes.searchTitle}> Filtrar por </Typography>
                 <Grid className={classes.inputContainer} container  direction='row' justifyContent='space-between' >

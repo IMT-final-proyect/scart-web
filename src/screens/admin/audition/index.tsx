@@ -12,6 +12,7 @@ import { RootState } from '../../../redux/rootReducer';
 import CustomSnackbar from '../../../components/customSnackbar';
 import { IDocument } from '../../../utils/interfaces';
 import CustomInput from '../../../components/customInput';
+import TomisBar from '../../../components/TomisBar';
 
 const Documentation = () => {
     const classes = useStyles();
@@ -65,7 +66,8 @@ const Documentation = () => {
         <>
             <Grid container className={classes.container} direction='row' justifyContent='space-between'>
                 <Card className={classes.titleCard}>
-                    <Grid container className={classes.titleContainer} justifyContent='space-between'>
+                    <Grid container justifyContent='flex-start'>
+                        <TomisBar />
                         <text className={classes.textTitle}>
                             Documentación
                         </text>

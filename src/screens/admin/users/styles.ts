@@ -10,12 +10,23 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     card:{
         minWidth: '100%',
-        padding: '2.5%',
-        marginTop: '1%',
-        marginBottom: '1%'
+        paddingTop: '1%',
+        paddingBottom: '2%',
+        paddingLeft: '2.5%',
+        paddingRight: '2.5%,',
+        marginBottom: '2%',
+        justifyContent: 'space-between',
+        alignItems: 'center'
     },
     textTitle:{ 
-        fontSize: 22
+        fontSize:20,
+        marginTop: '1%',
+        marginBottom: '1%',
+        fontWeight: 'bold',
+        color: globalColors.lightBlue,
+        [theme.breakpoints.down('sm')]: {
+            fontSize: 15,
+        },
     },
     headerText:{
         marginBottom: '2%',
@@ -44,6 +55,9 @@ const useStyles = makeStyles((theme: Theme) => ({
         marginTop: '3%',
         marginBottom: '3%',
         marginRight: '3%',
+    },
+    spinner: {
+        color: globalColors.lightBlue,
     },
 }));
 

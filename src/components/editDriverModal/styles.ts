@@ -78,6 +78,10 @@ const useStyles = makeStyles((theme: Theme) => ({
         justifyContent: 'start',
         marginTop: '5%',
         marginBottom: '2%'
+    },
+    inputsContainer: {
+        marginBottom: '0.5%',
+        marginTop: '2.5%',
     }
 }));
 

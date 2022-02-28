@@ -6,12 +6,7 @@ const { innerWidth, innerHeight } = window;
 
 const useStyles = makeStyles((theme: Theme) => ({
     textInput: {
-        color: globalColors.lightBlue,
-        marginTop: '2.5%',
-        marginBottom: '2.5%',
-        [theme.breakpoints.down('xs')]: {
-            maxWidth: '50%'
-        },
+        color: globalColors.lightBlue
     },
     lastTextInput: {
         marginBottom: '10%',
@@ -72,6 +67,10 @@ const useStyles = makeStyles((theme: Theme) => ({
         justifyContent: 'start',
         marginTop: '5%',
         marginBottom: '2%'
+    },
+    inputsContainer: {
+        marginBottom: '0.5%',
+        marginTop: '2.5%',
     }
 }));
 

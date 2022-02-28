@@ -15,6 +15,7 @@ import CustomSelect from '../../../components/customSelect';
 import { EXPIRED, PENDING, REJECTED, VALID } from '../../../utils/constants';
 import DocumentRow from './components/documentRow/DocumentRow';
 import CustomSnackbar from '../../../components/customSnackbar';
+import TomisBar from '../../../components/TomisBar';
 
 const Documentacion = () => {
     const classes = useStyles();
@@ -109,7 +110,7 @@ const Documentacion = () => {
                     <Grid container justifyContent='space-between' alignItems='center'>
                         <Grid item xs={11}>
                             <Grid container direction='row'>
-                                <div className={classes.box}/>
+                                <TomisBar/>
                                 <text className={classes.textTitle}>
                                     Documentación
                                 </text>

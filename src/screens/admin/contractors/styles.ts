@@ -72,8 +72,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     button:{
         height: '35px',
         textTransform: 'none',
-        paddingTop: '2%',
-        paddingBottom: '2%',
+        paddingTop: '1.5%',
+        paddingBottom: '1.5%',
         alignItems: 'center',
     },
     inputContainer: {

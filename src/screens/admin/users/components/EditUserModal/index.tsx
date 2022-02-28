@@ -3,6 +3,7 @@ import { TextField } from "@mui/material"
 import { useCallback, useState } from "react";
 import CustomSnackbar from "../../../../../components/customSnackbar";
 import { ISpecialUser } from "../../../../../redux/slices/specialUsersSlice";
+import CheckIcon from '@mui/icons-material/Check';
 import useStyles from './styles';
 
 interface Props{
@@ -97,8 +98,8 @@ const EditUserModal = ( {user, changePassword, editUser, setOpenEditUserModal, s
                 <Grid container>
                     <text className={classes.title}>Editar usuario</text>
                 </Grid>
-                <Grid container>
-                    <Grid item xs={4}>
+                <Grid container className={classes.inputsContainer}>
+                    <Grid item xs={6}>
                         <TextField
                             id="user-name"
                             variant="standard"
@@ -109,7 +110,7 @@ const EditUserModal = ( {user, changePassword, editUser, setOpenEditUserModal, s
                             onChange={_onChangeName}
                         />
                         </Grid>
-                        <Grid item xs={4}>
+                        <Grid item xs={6}>
                         <TextField
                             id="user-surname"
                             variant="standard"
@@ -121,8 +122,8 @@ const EditUserModal = ( {user, changePassword, editUser, setOpenEditUserModal, s
                         />
                     </Grid>
                 </Grid>
-                <Grid container>
-                    <Grid item xs={4}>
+                <Grid container className={classes.inputsContainer}>
+                    <Grid item xs={6}>
                         <TextField
                             id="user-username"
                             variant="standard"
@@ -133,7 +134,7 @@ const EditUserModal = ( {user, changePassword, editUser, setOpenEditUserModal, s
                             onChange={_onChangeUsername}
                         />
                     </Grid>
-                    <Grid item xs={4}>
+                    <Grid item xs={6}>
                         <TextField
                             id="user-cuit"
                             variant="standard"
@@ -145,23 +146,23 @@ const EditUserModal = ( {user, changePassword, editUser, setOpenEditUserModal, s
                         />
                     </Grid>
                 </Grid>
-                <Grid>
-                    <Grid item xs={4}>
+                <Grid container className={classes.inputsContainer}>
+                    <Grid item xs={6}>
                         <TextField
                             id="user-email"
                             variant="standard"
                             className= {classes.lastTextInput}
                             size="medium"
-                            label="Telefono"
+                            label="Email"
                             value={email}
                             onChange={_onChangeEmail}
                         />
                     </Grid>
                 </Grid>
                 <Grid container className={classes.checkbox}>
-                    <FormControlLabel control={<Checkbox  defaultChecked checked={changePassword} onChange={() => {setChangePassword(!changePassword)}} />} label="Cambiar contraseña" />
+                    <FormControlLabel control={<Checkbox defaultChecked color='primary' checked={changePassword} onChange={() => {setChangePassword(!changePassword)}} />} label="Cambiar contraseña" />
                 </Grid>
-                    <Grid item xs={4} className={classes.passwords}>
+                    <Grid item xs={6} className={classes.passwords}>
                         <TextField
                             id="user-password"
                             variant="standard"
@@ -174,7 +175,7 @@ const EditUserModal = ( {user, changePassword, editUser, setOpenEditUserModal, s
                             disabled={!changePassword}
                         />
                     </Grid>
-                    <Grid item xs={4} className={classes.passwords}>
+                    <Grid item xs={6} className={classes.passwords}>
                         <TextField
                             id="user-repeatpassword"
                             variant="standard"
