@@ -10,22 +10,24 @@ import { RootState } from '../../../redux/rootReducer';
 import { getDriverData } from '../../../redux/slices/userSlice';
 import { useHistory } from 'react-router-dom';
 import { ROUTES } from '../navigation/routes'
+import { isDriverUpToDate } from '../../../redux/slices/resourcesSlice';
 
 const Home = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const history = useHistory();
-    const enabled = false
     const id = useSelector((state: RootState) => state.user.accountData?.entityId)
+    const isValid = useSelector((state: RootState) => state.resources.drivers.driverUpToDate)
 
     useEffect(() => {
         dispatch(getDriverData(id))
+        dispatch(isDriverUpToDate(id))
     }, [dispatch, id])
 
     return (
         <Grid container className={classes.container} justifyContent='space-evenly' alignItems='center'>
             <Grid container className={classes.status} >
-                {enabled ? 
+                {isValid ? 
                 <Grid container className={classes.enabled}>
                     <Typography className={classes.statusText}>Usted está habilitado para acceder a la planta</Typography>
                 </Grid>

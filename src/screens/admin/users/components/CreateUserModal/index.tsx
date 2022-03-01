@@ -88,83 +88,83 @@ const CreateUserModal = ({ addUser, setOpenUserModal }: Props) => {
 
     return (
         <Grid className={classes.modal} container direction='column' justify='center' alignItems='center'>
-                <text className={classes.title}>Crear Usuario</text>
-                <text className={classes.subtitle}>Registrar un nuevo usuario</text>
-                <Grid item>
-                    <CustomSelect value={entityType} placeholder='Tipo de usuario' setValue={setEntityType} data={specialEntities}/>
-                    <TextField
-                        id="driver-username"
-                        className= {classes.textInput}
-                        size="medium"
-                        label="Nombre de usuario"
-                        value={username}
-                        onChange={_onChangeUsername}
-                    />
-                </Grid>
-                <Grid item>
-                    <TextField
-                        id="driver-password"
-                        type='password'
-                        className= {classes.textInput}
-                        size="medium"
-                        label="Contraseña"
-                        value={password}
-                        onChange={_onChangePassword}
-                    />
-                    <TextField
-                        id="driver-repeatpassword"
-                        type='password'
-                        className= {classes.textInput}
-                        size="medium"
-                        label="Repetir contraseña"
-                        value={repeatPassword}
-                        onChange={_onChangeRepeatPassword}
-                    />
-                </Grid>
-                <Grid item>
-                    <TextField
-                        id="driver-name"
-                        className= {classes.textInput}
-                        size="medium"
-                        label="Nombre"
-                        value={name}
-                        onChange={_onChangeName}
-                    />
-                    <TextField
-                        id="driver-surname"
-                        className= {classes.textInput}
-                        size="medium"
-                        label="Apellido"
-                        value={surname}
-                        onChange={_onChangeSurname}
-                    />
-                </Grid>
-                <Grid item>
-                    <TextField
-                        id="driver-email"
-                        className= {classes.lastTextInput}
-                        size="medium"
-                        label="Email"
-                        value={email}
-                        onChange={_onChangeEmail}
-                    />
-                    <TextField
-                        id="driver-cuit"
-                        className= {classes.lastTextInput}
-                        size="medium"
-                        label="CUIT"
-                        value={cuit}
-                        onChange={_onChangeCuit}
-                    />
-                </Grid>
-                <CustomSnackbar open={emptyField} message='Falta completar algún campo' type='error' onClose={() => setEmptyField(false)} />
-                <CustomSnackbar open={error} message={message} type='error' onClose={() => setError(false)} />
-                <CustomSnackbar open={passwordNotRepeated} message={'Las contraseñas no coinciden'} type='error' onClose={() =>  setPasswordNotRepeated(false)} />
-                <Grid container direction='row' justifyContent='space-between'>
-                    <Button variant="contained" className={classes.cancel} onClick={ () => setOpenUserModal(false)}>Cancelar</Button>
-                    <Button variant="contained" color='primary' onClick={_handleOnClick}>Crear</Button>
-                </Grid>
+            <text className={classes.title}>Crear Usuario</text>
+            <text className={classes.subtitle}>Registrar un nuevo usuario</text>
+            <Grid item>
+                <CustomSelect value={entityType} placeholder='Tipo de usuario' setValue={setEntityType} data={specialEntities}/>
+                <TextField
+                    id="driver-username"
+                    className= {classes.textInput}
+                    size="medium"
+                    label="Nombre de usuario"
+                    value={username}
+                    onChange={_onChangeUsername}
+                />
             </Grid>
+            <Grid item>
+                <TextField
+                    id="driver-password"
+                    type='password'
+                    className= {classes.textInput}
+                    size="medium"
+                    label="Contraseña"
+                    value={password}
+                    onChange={_onChangePassword}
+                />
+                <TextField
+                    id="driver-repeatpassword"
+                    type='password'
+                    className= {classes.textInput}
+                    size="medium"
+                    label="Repetir contraseña"
+                    value={repeatPassword}
+                    onChange={_onChangeRepeatPassword}
+                />
+            </Grid>
+            <Grid item>
+                <TextField
+                    id="driver-name"
+                    className= {classes.textInput}
+                    size="medium"
+                    label="Nombre"
+                    value={name}
+                    onChange={_onChangeName}
+                />
+                <TextField
+                    id="driver-surname"
+                    className= {classes.textInput}
+                    size="medium"
+                    label="Apellido"
+                    value={surname}
+                    onChange={_onChangeSurname}
+                />
+            </Grid>
+            <Grid item>
+                <TextField
+                    id="driver-email"
+                    className= {classes.lastTextInput}
+                    size="medium"
+                    label="Email"
+                    value={email}
+                    onChange={_onChangeEmail}
+                />
+                <TextField
+                    id="driver-cuit"
+                    className= {classes.lastTextInput}
+                    size="medium"
+                    label="CUIT"
+                    value={cuit}
+                    onChange={_onChangeCuit}
+                />
+            </Grid>
+            <CustomSnackbar open={emptyField} message='Falta completar algún campo' type='error' onClose={() => setEmptyField(false)} />
+            <CustomSnackbar open={error} message={message} type='error' onClose={() => setError(false)} />
+            <CustomSnackbar open={passwordNotRepeated} message={'Las contraseñas no coinciden'} type='error' onClose={() =>  setPasswordNotRepeated(false)} />
+            <Grid container direction='row' justifyContent='space-between'>
+                <Button variant="contained" className={classes.cancel} onClick={ () => setOpenUserModal(false)}>Cancelar</Button>
+                <Button variant="contained" color='primary' onClick={_handleOnClick}>Crear</Button>
+            </Grid>
+        </Grid>
     )
 }
 

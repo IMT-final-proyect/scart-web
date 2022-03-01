@@ -16,6 +16,7 @@ interface IDriverData {
    loading: boolean
    success: boolean
    error: IError|null
+   driverUpToDate: boolean
 }
 
 interface IVehicleData {
@@ -44,7 +45,8 @@ const initialState: UserState = {
       data:[],
       loading: false,
       success: false,
-      error: null
+      error: null,
+      driverUpToDate: false
     },
     vehicles: {
       data:[],
@@ -257,6 +259,26 @@ const resourcesSlice = createSlice({
          state.vehicles.error = payload;
          state.vehicles.success = initialState.vehicles.success;
       },
+      isDriverUpToDateRequest(state) {
+         state.drivers.loading = true;
+         state.drivers.driverUpToDate = initialState.drivers.driverUpToDate;
+         state.drivers.error = initialState.drivers.error;
+         state.drivers.success = initialState.drivers.success;
+      },
+      isDriverUpToDateSuccess(state, action: any) {
+         const { payload } = action
+         state.drivers.driverUpToDate = payload
+         state.drivers.loading = false;
+         state.drivers.success = true;
+         state.drivers.error = initialState.drivers.error
+      },
+      isDriverUpToDateFailure(state, action: any) {
+         const { payload } = action
+         state.drivers.loading = false;
+         state.drivers.driverUpToDate = initialState.drivers.driverUpToDate;
+         state.drivers.error = payload;
+         state.drivers.success = initialState.drivers.success;
+      },
    },
 });
 
@@ -293,7 +315,10 @@ const {
     editDriverFailure,
     editVehicleRequest,
     editVehicleSuccess,
-    editVehicleFailure
+    editVehicleFailure,
+    isDriverUpToDateRequest,
+    isDriverUpToDateSuccess,
+    isDriverUpToDateFailure
 } = resourcesSlice.actions;
 
 
@@ -532,5 +557,22 @@ export const editVehicle = (vehicle: IVehicle, plate: string, brand: string, mod
    }
    catch(error: any){
       dispatch(editVehicleFailure(error.response.data)); 
+   }
+}
+
+export const isDriverUpToDate = (driverId?: number): AppThunk => async (dispatch) => {
+   dispatch(isDriverUpToDateRequest());
+   try{
+      if(!!driverId){
+         const response = await Axios.get(`documents/visit/validate?driverId=${driverId}`)
+         const driver = response.data.driver
+         let isValid = true
+         if (!!driver.invalidDocuments && !!driver.missingDocuments) isValid = false  
+         dispatch(isDriverUpToDateSuccess(isValid))
+      }
+      else dispatch(isDriverUpToDateFailure({ code: 400, message: "Conductor no encontrado"})); 
+   }
+   catch(error: any){
+      dispatch(isDriverUpToDateFailure(error.response.data)); 
    }
 }
