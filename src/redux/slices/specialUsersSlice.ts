@@ -348,7 +348,7 @@ export const createSpecialUser = (
       const body = {
         name,
         surname,
-        rol,
+        rol: rol.toString(),
         cuit,
         username,
         email
