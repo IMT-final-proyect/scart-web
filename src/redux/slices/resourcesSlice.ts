@@ -490,30 +490,11 @@ export const editDriver = (
    number: number,
    city: string,
    province: string,
-   zip_code: string,
-   password?: string): AppThunk => async (dispatch) => {
+   zip_code: string): AppThunk => async (dispatch) => {
    dispatch(editDriverRequest());
    try{
-      let body
-      if (!!password) 
-         body = {
-            name,
-            surname,
-            username,
-            phone,
-            cuit,
-            birth_date,
-            address: {
-               street,
-               number,
-               city,
-               province,
-               zip_code
-            },
-            password
-         }
-      else
-         body = {
+      const response: AxiosResponse = await Axios.put(`/drivers/${driver.id}`,
+         {
             name,
             surname,
             username,
@@ -527,12 +508,9 @@ export const editDriver = (
                province,
                zip_code
             }
-         } 
-      const response: AxiosResponse = await Axios.put(`/drivers/${driver.id}`,body);
-      
-      const editedDriver = {...driver, ...response.data}
-      
-      
+         }
+      );
+      const editedDriver = {...driver, ...response.data} 
       dispatch(editDriverSuccess(editedDriver));
    }
    catch(error: any){

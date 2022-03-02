@@ -342,30 +342,17 @@ export const createSpecialUser = (
   rol: number,
   cuit: string,
   username: string,
-  email: string,
-  password?: string): AppThunk => async (dispatch) => {
+  email: string): AppThunk => async (dispatch) => {
     dispatch(editSpecialUserRequest());
     try{
-      let body
-      if (!!password) 
-        body = {
-          name,
-          surname,
-          rol,
-          cuit,
-          username,
-          email
-        }
-      else
-        body = {
-          name,
-          surname,
-          rol,
-          cuit,
-          username,
-          password,
-          email
-        } 
+      const body = {
+        name,
+        surname,
+        rol,
+        cuit,
+        username,
+        email
+      }
       switch(rol){
         case AllowedRol.manager: {
           const manager: AxiosResponse = await Axios.put(`/managers/${id}`,body)

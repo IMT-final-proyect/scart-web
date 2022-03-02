@@ -5,11 +5,11 @@ import EditIcon from '@mui/icons-material/Edit';
 import CustomSnackbar from "../../../components/customSnackbar"
 import EditContractorModal from "../../../components/editContractorModal"
 import { RootState } from "../../../redux/rootReducer"
-import { IUser } from "../../../redux/slices/userSlice"
+import { IUser, putChangePassword } from "../../../redux/slices/userSlice"
 import { IContractor } from "../../../utils/interfaces"
 import useStyles from "./styles"
 import { editContractor } from "../../../redux/slices/contractorsSlice";
-import TomisBar from "../../../components/TomisBar";
+import { AllowedRol } from "../../../utils/constants";
 
 const MyData = () => {
     const classes = useStyles()
@@ -44,10 +44,8 @@ const MyData = () => {
         province: string,
         zipCode: string,
         password?: string) => {
-        if (changePassword)
-            dispatch(editContractor(contractor, name, username, email, cuit, street, number, city, province, zipCode, password))
-        else
-            dispatch(editContractor(contractor, name, username, email, cuit, street, number, city, province, zipCode))
+        dispatch(editContractor(contractor, name, username, email, cuit, street, number, city, province, zipCode))
+        if (changePassword && !!password) dispatch(putChangePassword(password, AllowedRol.contractor, contractor.id))
         setMessageSnackbar('Conductor modificado con exito')
     }
 

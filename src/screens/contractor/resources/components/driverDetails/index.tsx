@@ -15,7 +15,8 @@ import EditIcon from '@mui/icons-material/Edit';
 import { editDriver, getDriverById } from '../../../../../redux/slices/resourcesSlice';
 import DocumentRow from '../documentRow/DocumentRow';
 import CustomSnackbar from '../../../../../components/customSnackbar';
-import { IUser } from '../../../../../redux/slices/userSlice';
+import { IUser, putChangePassword } from '../../../../../redux/slices/userSlice';
+import { AllowedRol } from '../../../../../utils/constants';
 
 
 const autos: string[] = []
@@ -86,10 +87,8 @@ const DriverDetails = () => {
         province: string,
         zipCode: string,
         password?: string) => {
-        if (changePassword)
-            dispatch(editDriver(driver, name, surname, username, cuit, phone, birthdate, street, number, city, province, zipCode, password))
-        else
-            dispatch(editDriver(driver, name, surname, username, cuit, phone, birthdate, street, number, city, province, zipCode))
+        dispatch(editDriver(driver, name, surname, username, cuit, phone, birthdate, street, number, city, province, zipCode))
+        if (changePassword && !!password) dispatch(putChangePassword(password, AllowedRol.driver, driver.id)) 
         setSuccessMessageSnackbar('Conductor modificado con exito')
     }
 

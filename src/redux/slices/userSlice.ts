@@ -90,6 +90,18 @@ const userSlice = createSlice({
          state.loading = false;
          state.error = payload;
       },
+      changePasswordRequest(state){
+         state.loading = true;
+      },
+      changePasswordSuccess(state){
+         state.error = initialState.error
+         state.loading = false;
+      },
+      changePasswordFailure(state, action: any){
+         const { payload } = action
+         state.loading = false;
+         state.error = payload;
+      },
       clearLoginError(state){
          state.error =  initialState.error
       }
@@ -103,6 +115,9 @@ const {
    getUserDataRequest,
    getUserDataSuccess,
    getUserDataFailure,
+   changePasswordRequest,
+   changePasswordSuccess,
+   changePasswordFailure,
    clearLoginError
 } = userSlice.actions;
 
@@ -143,6 +158,22 @@ export const getDriverData = (id: number | undefined): AppThunk => async (dispat
    }
    catch(error: any){
       dispatch(getUserDataFailure(error.response.data))
+   }
+}
+
+export const putChangePassword = (newPassword: string, rol: number, id: number): AppThunk => async (dispatch) => {
+   dispatch(changePasswordRequest())
+   try{
+      await Axios.put(`/users/password`,
+      {
+         new_password: newPassword,
+         rol,
+         entityId: id
+      });
+      dispatch(changePasswordSuccess());
+   }
+   catch(error: any){
+      dispatch(changePasswordFailure(error.response.data))
    }
 }
 

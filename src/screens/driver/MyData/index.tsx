@@ -7,9 +7,10 @@ import CustomSnackbar from "../../../components/customSnackbar"
 import EditDriverModal from "../../../components/editDriverModal"
 import { RootState } from "../../../redux/rootReducer"
 import { editDriver } from "../../../redux/slices/resourcesSlice"
-import { IUser } from "../../../redux/slices/userSlice"
+import { IUser, putChangePassword } from "../../../redux/slices/userSlice"
 import { IDriver } from "../../../utils/interfaces"
 import useStyles from "./styles"
+import { AllowedRol } from "../../../utils/constants";
 
 const MyData = () => {
     const classes = useStyles()
@@ -46,10 +47,8 @@ const MyData = () => {
         province: string,
         zipCode: string,
         password?: string) => {
-        if (changePassword)
-            dispatch(editDriver(driver, name, surname, username, cuit, phone, birthdate, street, number, city, province, zipCode, password))
-        else
-            dispatch(editDriver(driver, name, surname, username, cuit, phone, birthdate, street, number, city, province, zipCode))
+        dispatch(editDriver(driver, name, surname, username, cuit, phone, birthdate, street, number, city, province, zipCode))
+        if (changePassword && !!password) dispatch(putChangePassword(password, AllowedRol.driver, driver.id)) 
         setMessageSnackbar('Conductor modificado con exito')
     }
 

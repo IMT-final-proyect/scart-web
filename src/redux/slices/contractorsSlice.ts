@@ -226,10 +226,12 @@ export const createContractor = (
          name,
          cuit,
          phone,
-         street_address,
-         number_address,
-         city_address,
-         province_address
+         address: {
+            street_address,
+            number_address,
+            city_address,
+            province_address
+         }
       });
       dispatch(createContractorSuccess(response.data.userData));
    }
@@ -292,41 +294,23 @@ export const editContractor = (
    number: number,
    city: string,
    province: string,
-   zip_code: string,
-   password?: string): AppThunk => async (dispatch) => {
+   zip_code: string): AppThunk => async (dispatch) => {
    dispatch(editContractorRequest());
    try{
-      let body
-      if (!!password) 
-         body = {
-            name,
-            username,
-            email,
-            cuit,
-            address: {
-               street,
-               number,
-               city,
-               province,
-               zip_code
-            },
-            password
+      const response: AxiosResponse = await Axios.put(`/contractors/${contractor.id}`, 
+      {
+         name,
+         username,
+         email,
+         cuit,
+         address: {
+            street,
+            number,
+            city,
+            province,
+            zip_code
          }
-      else
-         body = {
-            name,
-            username,
-            email,
-            cuit,
-            address: {
-               street,
-               number,
-               city,
-               province,
-               zip_code
-            }
-         } 
-      const response: AxiosResponse = await Axios.put(`/contractors/${contractor.id}`, body);
+      } );
       
       const editedContractor = {...contractor, ...response.data}
       

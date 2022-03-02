@@ -14,7 +14,9 @@ import { ROUTES } from '../../../navigation/routes';
 import DocumentRow from './components/documentRow/DocumentRow';
 import CustomSnackbar from '../../../../../components/customSnackbar';
 import { editContractor } from '../../../../../redux/slices/contractorsSlice';
+import { putChangePassword } from '../../../../../redux/slices/userSlice';
 import EditContractorModal from '../../../../../components/editContractorModal';
+import { AllowedRol } from '../../../../../utils/constants';
 
 
 const ContractorDetails = () => {
@@ -78,10 +80,8 @@ const ContractorDetails = () => {
         province: string,
         zipCode: string,
         password?: string) => {
-        if (changePassword)
-            dispatch(editContractor(contractor, name, username, email, cuit, street, number, city, province, zipCode, password))
-        else
-            dispatch(editContractor(contractor, name, username, email, cuit, street, number, city, province, zipCode))
+        dispatch(editContractor(contractor, name, username, email, cuit, street, number, city, province, zipCode))
+        if (changePassword && !!password) dispatch(putChangePassword(password, AllowedRol.contractor, contractor.id))
         setMessageSnackbar('Contratista modificado con exito')
     }
 
