@@ -82,7 +82,7 @@ const DriverDetails = () => {
         province: string,
         zipCode: string,
         password?: string) => {
-        dispatch(editDriver(driver, name, surname, username, phone, cuit, birthdate, street, number, city, province, zipCode))
+        dispatch(editDriver(driver, name, surname, username, cuit, phone, birthdate, street, number, city, province, zipCode))
         if (changePassword && !!password) dispatch(putChangePassword(password, AllowedRol.driver, driver.id))
         setMessageSnackbar('Conductor modificado con exito')
     }
