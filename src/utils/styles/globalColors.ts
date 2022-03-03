@@ -1,14 +1,18 @@
 const globalColors = {
     backgroundColor: '#2196F3',
-    black: '#00000',
+    lightBlueBackground: '#DFDFDF',
+    black: '#000000',
     grey: '#BDBDBD',
     darkGrey: 'rgba(0, 0, 0, 0.56)',
     white: '#FFFFFF',
-    lightBlue: '#2196F3',
+    lightBlue: '#1874D0',
     green: '#67D134',
     lightGreen: '#D1FFC6',
-    red: '#F04E4E',
-    yellow: '#EDD555',
+    red: '#D82830',
+    yellow: '#CE9400',
+    darkBlue: '#042163',
+    darkRed: '#780A2C',
+    darkYellow: '#F99B02'
 };
 
 export default globalColors;

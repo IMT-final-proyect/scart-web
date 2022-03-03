@@ -10,22 +10,37 @@ export enum AllowedRol{
     vehicle
 }
 
-export const contractor = 'contractor'
-export const auditor = 'auditor'
-export const manager = 'manager'
-export const driver = 'driver'
-export const vehicle = 'vehicle'
-export const security = 'security'
-export const admin = 'admin'
+export const contractor = 'Contratista'
+export const auditor = 'Auditor'
+export const manager = 'Encargado'
+export const driver = 'Conductor'
+export const vehicle = 'Vehiculo'
+export const security = 'Seguridad'
+export const admin = 'Administrador'
 
 export const PENDING = 'Pendiente'
 export const VALID = 'Vigente'
 export const REJECTED = 'Rechazado'
 export const EXPIRED = 'Vencido'
 
+export const HIGH = 'Alta'
+export const MEDIUM = 'Media'
+export const LOW = 'Baja'
+
 export enum States {
     PENDING,
     VALID,
     REJECTED,
     EXPIRED,
+}
+
+export enum Severities {
+    HIGH,
+    MEDIUM,
+    LOW,
+  }
+  
+export enum ExceptionResults {
+    APPROVED,
+    REJECTED
 }

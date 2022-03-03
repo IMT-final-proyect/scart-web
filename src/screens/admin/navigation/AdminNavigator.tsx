@@ -1,45 +1,40 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 import { Button } from '@material-ui/core';
-import HomeIcon from '@material-ui/icons/Home';
-import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
-import StarIcon from '@material-ui/icons/Star';
-import { BrowserRouter, Route, Switch, Link, useLocation } from 'react-router-dom';
-
-import TemplateBar from '../../../components/TemplateBar';
+import FindInPageIcon from '@mui/icons-material/FindInPage';
+import BusinessIcon from '@mui/icons-material/Business';
+import DirectionsCarFilledIcon from '@mui/icons-material/DirectionsCarFilled';
+import AirlineSeatReclineExtraIcon from '@mui/icons-material/AirlineSeatReclineExtra';
+import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
+import GroupIcon from '@mui/icons-material/Group';
+import TemplateBar from '../../../components/templateBar';
 import { ROUTES } from './routes';
 import useStyles from './styles';
-import Home from '../home';
 import contractors from '../contractors';
 import drivers from '../drivers';
 import vehicles from '../vehicles';
-import auditar from '../auditar'
-import DocumentDetails from '../documentDetails';
+import audition from '../audition'
+import DocumentDetails from '../documentDetails'
+import contractorDetails from '../contractors/components/contractorDetails';
+import DriverDetails from '../drivers/components/driverDetails';
+import VehicleDetails from '../vehicles/components/vehicleDetails';
+import AuditionDetails from '../audition/components/auditionDetails'
+import users from '../users'
+import UserDetails from '../users/components/UserDetails';
 const AdminNavigator = () => {
     const classes = useStyles();
-    const [title, setTitle] = useState('Admin');
+    const [title, setTitle] = useState('Administrador');
 
     const ButtonList = (
         <>
-            {/* <Button 
-                className = {classes.button}
-                component={Link}
-                to={ROUTES.root}
-                onClick={() => setTitle("Home")}
-            >
-                <div className={classes.icon}>
-                    <InsertDriveFileIcon/>
-                </div>
-                Home
-            </Button> */}
             <Button 
                 className = {classes.button}
                 component={Link}
                 to={ROUTES.root+ROUTES.contractors}
-                onClick={() => setTitle("Contratista")}
+                onClick={() => setTitle("Contratistas")}
             >
                 <div className={classes.icon}>
-                    <InsertDriveFileIcon/>
+                    <BusinessIcon/>
                 </div>
                 Contratistas
             </Button>
@@ -50,7 +45,7 @@ const AdminNavigator = () => {
                 onClick={() => setTitle("Conductores")}
             >
                 <div className={classes.icon}>
-                    <InsertDriveFileIcon/>
+                    <AirlineSeatReclineExtraIcon/>
                 </div>
                 Conductores
             </Button>
@@ -61,7 +56,7 @@ const AdminNavigator = () => {
                 onClick={() => setTitle("Vehiculos")}
             >
                 <div className={classes.icon}>
-                    <InsertDriveFileIcon/>
+                    <DirectionsCarFilledIcon/>
                 </div>
                 Vehiculos
             </Button>
@@ -72,9 +67,20 @@ const AdminNavigator = () => {
                 onClick={() => setTitle("Auditar")}
             >
                 <div className={classes.icon}>
-                    <InsertDriveFileIcon/>
+                    <FindInPageIcon/>
                 </div>
                 Auditar
+            </Button>
+            <Button 
+                className = {classes.button}
+                component={Link}
+                to={ROUTES.root+ROUTES.users}
+                onClick={() => setTitle("Usuarios")}
+            >
+                <div className={classes.icon}>
+                    <GroupIcon/>
+                </div>
+                Usuarios
             </Button>
         </>
     )
@@ -82,15 +88,25 @@ const AdminNavigator = () => {
     return(
         <BrowserRouter>
             <TemplateBar
+                user='Admin'
                 title={title}
                 ButtonList = {ButtonList}
             />
             <Switch>
                 <Route exact path={ROUTES.root+ROUTES.contractors} component={contractors} />
+                <Route exact path={ROUTES.root+ROUTES.contractors+'/:id'} component={contractorDetails} />
                 <Route exact path={ROUTES.root+ROUTES.drivers} component={drivers} />
+                <Route exact path={ROUTES.root+ROUTES.drivers+'/:id'} component={DriverDetails} />
                 <Route exact path={ROUTES.root+ROUTES.vehicles} component={vehicles} />
-                <Route exact path={ROUTES.root+ROUTES.audition} component={auditar} />
-                <Route exact path={ROUTES.root+ROUTES.audition+'/:id'} component={DocumentDetails} />
+                <Route exact path={ROUTES.root+ROUTES.vehicles+'/:id'} component={VehicleDetails} />
+                <Route exact path={ROUTES.root+ROUTES.audition} component={audition} />
+                <Route exact path={ROUTES.root+ROUTES.audition+'/:id'} component={AuditionDetails} />
+                <Route exact path={ROUTES.root+ROUTES.documentDetails+'/:id'} component={DocumentDetails} />
+                <Route exact path={ROUTES.root+ROUTES.manager+'/:id'} component={UserDetails} />
+                <Route exact path={ROUTES.root+ROUTES.auditor+'/:id'} component={UserDetails} />
+                <Route exact path={ROUTES.root+ROUTES.security+'/:id'} component={UserDetails} />
+                <Route exact path={ROUTES.root+ROUTES.users} component={users} />
+                
                 <Route path={ROUTES.root} component={contractors} />
             </Switch>
         </BrowserRouter>

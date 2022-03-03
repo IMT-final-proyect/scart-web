@@ -1,9 +1,7 @@
-import React, { Component } from 'react';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 
 import NotFound from '../screens/not found';
 import { ROUTES } from './routes';
-// import { setUserData, setSession, } from '../redux/actions/userActions';
 
 import Login from '../screens/login';
 import ContractorNavigator from '../screens/contractor/navigation/ContractorNavigator'
@@ -12,51 +10,33 @@ import AuditorNavigator from '../screens/auditor/navigation/AuditorNavigator'
 import AdminNavigator from '../screens/admin/navigation/AdminNavigator'
 import { RootState } from '../redux/rootReducer';
 import { useSelector } from 'react-redux';
-import { getRolNumber, getRolName } from '../utils/functions/roles';
+import { admin, auditor, contractor, driver, manager, security } from '../utils/constants';
+import { isRolAuthored, isTokenValid } from '../utils/functions/validations';
+import SecurityNavigator from '../screens/security/navigation/SecurityNavigator';
+import DriverNavigation from '../screens/driver/navigation/DriverNavigator';
 
 const App = () => {
     const accountData = useSelector((state: RootState) => state.user.accountData)
 
-    const isLoggedIn = () => {
-        if (!!(accountData?.access_token)) {
-            return true
-        }
-        else {
-            return false
-        }
-    }
-
-    const isRolAuthored = (rolName: string) => {
-        if (accountData?.rol === getRolNumber(rolName))
-            return true
-        else return false
-    }
-    
-    // const PrivateRoute = ({ component: Component, ...rest }) => (
-    //     <Route {...rest} render={(props) => (
-    //         isLoggedIn(user)
-    //             ? <Component {...props} />
-    //             : <Redirect to='/login' />
-    //     )} />
-    // )
-
-    // const LoginRoute = ({ component: Component, ...rest }) => (
-    //     <Route {...rest} render={(props) => (
-    //         isLoggedIn()
-    //             ? <Redirect to='/home' />
-    //             : <Component {...props} />
-    //     )} />
-    // )
+    const PrivateRoute = ({ rol, component: Component, ...rest }: any) => (
+        <Route {...rest} render={(props) => (
+            (isRolAuthored(rol, accountData?.rol) && isTokenValid(localStorage.getItem(('access_token'))))
+                ? <Component {...props} />
+                : <Redirect to={ROUTES.login} />
+        )} />
+    )
 
     return (
         <BrowserRouter>
             <Switch>
                 <Route exact path={ROUTES.login} component={Login} />
                 <Route exact path='/' component={Login} />
-                <Route path={ROUTES.contractor} component={ContractorNavigator} />
-                <Route path={ROUTES.manager} component={ManagerNavigator} />
-                <Route path={ROUTES.auditor} component={AuditorNavigator} />
-                <Route path={ROUTES.admin} component={AdminNavigator} />
+                <PrivateRoute path={ROUTES.contractor} rol={contractor} component={ContractorNavigator} />
+                <PrivateRoute path={ROUTES.manager} rol={manager} component={ManagerNavigator} />
+                <PrivateRoute path={ROUTES.auditor} rol={auditor} component={AuditorNavigator} />
+                <PrivateRoute path={ROUTES.admin} rol={admin} component={AdminNavigator} />
+                <PrivateRoute path={ROUTES.security} rol={security} component={SecurityNavigator} />
+                <PrivateRoute path={ROUTES.driver} rol={driver} component={DriverNavigation} />
                 <Route component={NotFound} />
             </Switch>
         </BrowserRouter>
@@ -64,7 +44,3 @@ const App = () => {
 }
 
 export default App;
-function getRoleName(rol: number | undefined) {
-    throw new Error('Function not implemented.');
-}
-

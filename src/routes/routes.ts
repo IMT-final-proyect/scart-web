@@ -1,7 +1,9 @@
 export enum ROUTES {
-    login = '/login',
+    login = '/log-in',
     contractor = '/contratista',
     manager = '/encargado',
     auditor= '/auditor',
-    admin = '/admin'
+    admin = '/admin',
+    security = '/seguridad',
+    driver= '/conductor'
 }

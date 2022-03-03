@@ -16,13 +16,16 @@ import { getDocumentTypesByEntity } from '../../../../../../../redux/slices/docu
 import { RootState } from '../../../../../../../redux/rootReducer';
 import globalColors from '../../../../../../../utils/styles/globalColors';
 import { Alert } from '@mui/material';
+import { AllowedRol } from '../../../../../../../utils/constants';
+import CustomSnackbar from '../../../../../../../components/customSnackbar';
 
 interface Props{
+    driverId: number
     addDocument: (expirationDate: moment.Moment, type: number, entityType: number, entityId: number, images: string[]) => void
     setOpenDocumentModal: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const CreateDriverDocumentModal = ({ addDocument, setOpenDocumentModal }: Props) => {
+const CreateDriverDocumentModal = ({ driverId, addDocument, setOpenDocumentModal }: Props) => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const [emptyField, setEmptyField] = useState(false)
@@ -39,7 +42,7 @@ const CreateDriverDocumentModal = ({ addDocument, setOpenDocumentModal }: Props)
     });
     
     useEffect(() => {
-        dispatch(getDocumentTypesByEntity(1))
+        dispatch(getDocumentTypesByEntity(AllowedRol.driver))
     }, [])
 
     const handleExpirationChange = (date: moment.Moment | null) => {
@@ -47,7 +50,7 @@ const CreateDriverDocumentModal = ({ addDocument, setOpenDocumentModal }: Props)
         };
 
     const _handleOnClick = () => {
-        if(!!expirationDate && (!!documentType)){
+        if(!!expirationDate && (!!documentType) && (filesContent.length > 0)){
             let typeId
             (Object.keys(documentTypes).map((key: string) => {
                 if (documentTypes[parseInt(key)].name === documentType) typeId = documentTypes[parseInt(key)].id
@@ -57,7 +60,7 @@ const CreateDriverDocumentModal = ({ addDocument, setOpenDocumentModal }: Props)
                 images.push(file.content)
             }))
             if(!!typeId && !!contractorId){
-                addDocument(moment(expirationDate), typeId, 1, contractorId, images)
+                addDocument(moment(expirationDate), typeId, AllowedRol.driver, driverId, images)
                 setOpenDocumentModal(false)
             }
         }
@@ -99,16 +102,8 @@ const CreateDriverDocumentModal = ({ addDocument, setOpenDocumentModal }: Props)
                 }
             </Button>
             <text className={classes.filesUploaded}>Archivos cargados: {filesContent.length}</text>
-            <Snackbar className={classes.snackbar} open={emptyField} autoHideDuration={6000} onClose={() => setEmptyField(false)} >
-                <Alert onClose={() => setEmptyField(false)} severity="error" sx={{ width: '100%' }}>
-                    Falta completar algún campo
-                </Alert>
-            </Snackbar>
-            <Snackbar className={classes.snackbar} open={!!error} autoHideDuration={6000} onClose={() => setEmptyField(false)} >
-                <Alert onClose={() => setEmptyField(false)} severity="error" sx={{ width: '100%' }}>
-                    {error?.message}
-                </Alert>
-            </Snackbar>
+            <CustomSnackbar open={emptyField} message='Falta completar algún campo o adjuntar alguna imagen' type='error' onClose={() => setEmptyField(false)} />
+            <CustomSnackbar open={!!error} message={error?.message || ''} type='error' onClose={() => setEmptyField(false)} />
             <Grid container direction='row' justifyContent='space-between'>
                 <Button variant="contained" className={classes.cancel} onClick={ () => setOpenDocumentModal(false)}>Cancelar</Button>
                 <Button variant="contained" color='primary' onClick={_handleOnClick}>Crear</Button>

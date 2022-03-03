@@ -4,26 +4,28 @@ import useStyles from './styles';
 import moment from 'moment';
 import { IDocumentType } from '../../../../../utils/interfaces';
 import { getStateColor, getStateName } from '../../../../../utils/functions/states';
+import { getSeverityName } from '../../../../../utils/functions/severities';
+import { getRolName } from '../../../../../utils/functions/roles'
 
 interface Props{
-    contractor: string | undefined
+    ownerType: number
     type: IDocumentType,
     state: number,
-    expiration: moment.Moment,
-    images: string[]
+    expiration: moment.Moment
 }
-const Document = ({ type, expiration, state, contractor, images }: Props) => {
+const Document = ({ ownerType, type, expiration, state }: Props) => {
     const stateName = getStateName(state)
     const color = getStateColor(stateName)
-    const classes = useStyles({color});    
+    const classes = useStyles({color});  
+    const rolName = getRolName(ownerType)
     
     return(
         <Grid container direction="row" justifyContent='space-between'>
-            <Grid item xs={5} className={classes.text}>
-                <text> {type.name.substring(0, 60)}... </text>
+            <Grid item xs={3} className={classes.text}>
+                <text> {type.name.length > 60 ? type.name.substring(0, 60)+'...' : type.name} </text>
             </Grid>
             <Grid item xs={3} className={classes.text}>
-                <text> {contractor} </text>
+                <text> {rolName} </text>
             </Grid>
             <Grid item xs={2} className={classes.text}>
                 <text> {moment(expiration).format('DD/MM/YY')} </text>
@@ -33,7 +35,10 @@ const Document = ({ type, expiration, state, contractor, images }: Props) => {
                     <text className={classes.stateColor}> {stateName} </text>
                 </div>
             </Grid>
-    </Grid>
+            <Grid item xs={2} className={classes.text}>
+                <text> {getSeverityName(type.severity)} </text>
+            </Grid>
+        </Grid>
     )
 }
 

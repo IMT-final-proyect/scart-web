@@ -5,6 +5,8 @@ import documentsSlice from './slices/documentsSlice';
 import resourcesSlice from './slices/resourcesSlice';
 import documentTypesSlice from './slices/documentTypesSlice';
 import userReducer, { postLogout } from './slices/userSlice';
+import exceptionsSlice from './slices/exceptionsSlice';
+import specialUsersSlice from './slices/specialUsersSlice';
 
 export const initialState = {}
 
@@ -13,13 +15,16 @@ const appReducer = combineReducers({
     resources: resourcesSlice,
     documents: documentsSlice,
     documentTypes: documentTypesSlice,
-    contractors: contractorsSlice
+    contractors: contractorsSlice,
+    exceptions: exceptionsSlice,
+    specialUsers: specialUsersSlice
 });
 
 const rootReducer = (state: any, action: any) => {
     
     if (action.type === postLogout) {
         storage.removeItem(`persist:root`);
+        localStorage.removeItem('access_token')
         state = initialState;
     }
     return appReducer(state, action);

@@ -5,21 +5,21 @@ import useStyles from './styles'
 
 interface Props {
     value: string
-    placeholder: string
+    placeholder?: string
     data: any[]
     setValue: React.Dispatch<React.SetStateAction<string>>
 }
 
 const CustomSelect = ({ value, placeholder, data, setValue }: Props) => {
     const classes = useStyles();
-
+    
     const handleSelect = (event: React.ChangeEvent<{ value: unknown }>) => {
         setValue(event.target.value as string);
-      };
-
+    };
+    
     return(
     <FormControl className={classes.formControl}>
-        <InputLabel id="select">{placeholder}</InputLabel>
+        {placeholder && <InputLabel id="select">{placeholder}</InputLabel>}
             <Select
                 labelId="select"
                 id="select"

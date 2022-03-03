@@ -61,7 +61,7 @@ export const getDocumentTypesByEntity = (entityType: number): AppThunk => async 
       const documentTypes = _.mapKeys(response.data, 'id') 
       dispatch(getDocumentTypesByEntitySuccess(documentTypes));
    }
-   catch(error){
+   catch(error: any){
       dispatch(getDocumentTypesByEntityFailure(error.response.data));
    }
 };

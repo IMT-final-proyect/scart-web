@@ -1,5 +1,6 @@
 import { createAction, createSlice } from '@reduxjs/toolkit';
 import Axios from 'axios';
+import { IAddress, IContractor } from '../../utils/interfaces';
 import { AppThunk } from '../store';
 
 export interface IAccount {
@@ -7,6 +8,7 @@ export interface IAccount {
    entityId: number;
    name: string;
    surname: string;
+   username: string;
    email: string;
    active: false;
    rol: number;
@@ -17,13 +19,17 @@ export interface IAccount {
 export interface IUser {
    id: number;
    name: string;
+   surname?: string;
+   username: string;
+   phone: string;
+   email: string
    cuit: string;
    street: string;
-   number: number;
-   city: string;
-   province: string;
+   address: IAddress
+   birth_date: string
    drivers?: []
    vehicles?: []
+   contractor?: IContractor
 }
 
 
@@ -62,6 +68,7 @@ const userSlice = createSlice({
          const { payload } = action
          state.accountData = payload.accountData
          state.error = initialState.error
+         state.loading = false
       },
       postLoginFailure(state, action: any) {
          const { payload } = action
@@ -76,7 +83,7 @@ const userSlice = createSlice({
          const { payload } = action
          state.userData = payload
          state.error = initialState.error
-         state.loading = true;
+         state.loading = false;
       },
       getUserDataFailure(state, action: any){
          const { payload } = action
@@ -84,6 +91,21 @@ const userSlice = createSlice({
          state.loading = false;
          state.error = payload;
       },
+      changePasswordRequest(state){
+         state.loading = true;
+      },
+      changePasswordSuccess(state){
+         state.error = initialState.error
+         state.loading = false;
+      },
+      changePasswordFailure(state, action: any){
+         const { payload } = action
+         state.loading = false;
+         state.error = payload;
+      },
+      clearLoginError(state){
+         state.error =  initialState.error
+      }
    },
 });
 
@@ -94,6 +116,10 @@ const {
    getUserDataRequest,
    getUserDataSuccess,
    getUserDataFailure,
+   changePasswordRequest,
+   changePasswordSuccess,
+   changePasswordFailure,
+   clearLoginError
 } = userSlice.actions;
 
 
@@ -109,7 +135,7 @@ export const postLogin = (username: string, password: string): AppThunk => async
       localStorage.setItem('access_token', response.data.accountData.access_token);
       dispatch(postLoginSuccess(response.data));
    }
-   catch(error){
+   catch(error: any){
       dispatch(postLoginFailure(error.response.data));
    }
 };
@@ -117,10 +143,43 @@ export const postLogin = (username: string, password: string): AppThunk => async
 export const getContractorData = (id: number | undefined): AppThunk => async (dispatch) => {
    dispatch(getUserDataRequest())
    try{
-      const response = await Axios.get(`/contractors/${id}`);
+      const response = await Axios.get(`/contractors/${id}?relations=address`);
       dispatch(getUserDataSuccess(response.data));
    }
-   catch(error){
+   catch(error: any){
       dispatch(getUserDataFailure(error.response.data))
    }
+}
+
+export const getDriverData = (id: number | undefined): AppThunk => async (dispatch) => {
+   dispatch(getUserDataRequest())
+   try{
+      const response = await Axios.get(`/drivers/${id}?relations=address,contractor`);
+      dispatch(getUserDataSuccess(response.data));
+   }
+   catch(error: any){
+      dispatch(getUserDataFailure(error.response.data))
+   }
+}
+
+export const putChangePassword = (newPassword: string, rol: number, id: number): AppThunk => async (dispatch) => {
+   dispatch(changePasswordRequest())
+   console.log('aber');
+   
+   try{
+      await Axios.put(`/users/password`,
+      {
+         new_password: newPassword,
+         rol: rol.toString(),
+         entityId: id
+      });
+      dispatch(changePasswordSuccess());
+   }
+   catch(error: any){
+      dispatch(changePasswordFailure(error.response.data))
+   }
+}
+
+export const clearError = (): AppThunk => async (dispatch) => {
+   dispatch(clearLoginError())
 }

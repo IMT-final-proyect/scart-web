@@ -1,15 +1,36 @@
+export interface IAddress {
+   id: number;
+   number: number;
+   street: string;
+   city: string;
+   province: string;
+   zip_code: string
+}
+
 export interface IContractor {
    id: number;
    name: string;
    cuit: string;
+   address: IAddress;
+   username: string;
+   email: string;
 }
 
 export interface IDriver {
    id: number;
    name: string;
    surname: string;
+   username: string;
    cuit: string;
+   email: string;
+   phone: string;
    birth_date: moment.Moment;
+   contractor: {
+      id: number;
+      name: string;
+      cuit: string;
+   };
+   address: IAddress
 }
 
 export interface IVehicle {
@@ -18,6 +39,18 @@ export interface IVehicle {
    brand: string;
    model: string;
    year: number;
+   contractor: {
+      id: number;
+      name: string;
+      cuit: string;
+   };
+}
+
+export interface ISecurity {
+   id: number;
+   name: string;
+   surname: string;
+   document: string;
 }
 
 export interface IDocument {
@@ -28,11 +61,29 @@ export interface IDocument {
    state: number;
    expirationDate: moment.Moment;
    photos: string[];
+   contractor?: IContractor;
 }
 
 export interface IDocumentType {
    id: number;
    name: string;
    appliesTo: number;
-   severity: string;
+   severity: number;
+}
+
+export interface IException {
+   id: number,
+   driverId: number
+   driver: string
+   vehicleId: number
+   vehicle: string
+   securityId: number
+   contractor: string
+   state: number
+}
+
+export interface IMissingDocument {
+   id: number,
+   name: string,
+   severity: number
 }

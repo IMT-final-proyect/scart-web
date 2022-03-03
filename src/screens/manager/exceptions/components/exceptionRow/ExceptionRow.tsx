@@ -1,35 +1,38 @@
 import React from 'react';
 import { Button, Grid, } from '@material-ui/core';
 import useStyles from './styles';
+import { Link } from 'react-router-dom';
 
 interface Props{
-    name: string,
+    driver: string,
+    vehicle: string,
     contractor: string,
-    state: string,
-    resource: string
+    route: string
 }
-const Exception = ({ name, contractor, state, resource }: Props) => {
+const ExceptionRow = ({ driver, contractor, vehicle, route }: Props) => {
     const classes = useStyles();
     return(
         <Grid container direction="row" justifyContent='space-between' alignItems='center'>
-            <Grid item xs={4} className={classes.text}>
-                <text> {name} </text>
+            <Grid item xs={3} className={classes.text}>
+                <text> {driver} </text>
             </Grid>
-            <Grid item xs={2} className={classes.text}>
-                <text> {resource} </text>
+            <Grid item xs={3} className={classes.text}>
+                <text> {vehicle} </text>
             </Grid>
-            <Grid item xs={2} className={classes.text}>
+            <Grid item xs={3} className={classes.text}>
                 <text> {contractor} </text>
             </Grid>
-            <Grid item xs={2} className={classes.text}>
-                <text> {state} </text>
-            </Grid>
             <Grid item xs={2} className={classes.container}>
-                <Button color="primary" className={classes.text}>Aceptar</Button>
-                <Button className={classes.rechazar}>Rechazar</Button>
+                <Button
+                        className={classes.button}
+                        component={Link}
+                        to={route}
+                > 
+                    <Button color="primary" className={classes.text}>Evaluar</Button>
+                </Button>
             </Grid>
     </Grid>
     )
 }
 
-export default Exception;
+export default ExceptionRow;

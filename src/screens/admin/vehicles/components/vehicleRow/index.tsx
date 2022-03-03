@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, } from '@material-ui/core';
+import { Button, Grid, } from '@material-ui/core';
 import CreateIcon from '@material-ui/icons/Create';
 import DeleteIcon from '@material-ui/icons/Delete';
 import useStyles from './styles';
@@ -7,13 +7,21 @@ import useStyles from './styles';
 interface Props{
     brand: string,
     model: string,
-    plate: string
+    plate: string,
+    contractor: string,
+    id: number,
+    handleDeleteVehicle: (id: number) => void
 }
-const VehicleRow = ({ brand, model, plate }: Props) => {
+const VehicleRow = ({ brand, model, plate, contractor, id, handleDeleteVehicle }: Props) => {
     const classes = useStyles();    
     
+    const handleClick = (e: any) => {
+        e.preventDefault()
+        handleDeleteVehicle(id)
+    }
+
     return(
-        <Grid container direction="row" justifyContent='space-between'>
+        <Grid container direction="row" justifyContent='space-between' alignItems={'center'}>
             <Grid item xs={3} className={classes.text}>
                 <text> {brand} </text>
             </Grid>
@@ -21,14 +29,18 @@ const VehicleRow = ({ brand, model, plate }: Props) => {
                 <text> {model} </text>
             </Grid>
             <Grid item xs={3} className={classes.text}>
-                <text> Contratista1 </text>
+                <text> {contractor} </text>
             </Grid>
             <Grid item xs={2} className={classes.text}>
                 <text> {plate} </text>
             </Grid>
             <Grid item xs={1} className={classes.iconContainer}>
-                <CreateIcon />
-                <DeleteIcon />
+                <Button onClick={handleClick} >
+                    <DeleteIcon />
+                    <text className={classes.text}>
+                        Deshabilitar
+                    </text>
+                </Button>
             </Grid>
     </Grid>
     )

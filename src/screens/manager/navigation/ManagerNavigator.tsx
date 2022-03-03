@@ -5,17 +5,20 @@ import HomeIcon from '@material-ui/icons/Home';
 import StarIcon from '@material-ui/icons/Star';
 import { BrowserRouter, Route, Switch, Link, useLocation } from 'react-router-dom';
 
-import TemplateBar from '../../../components/TemplateBar';
+import TemplateBar from '../../../components/templateBar';
 import { ROUTES } from './routes';
 import Exceptions from '../exceptions';
 import Reports from '../reports';
-import ReportDetails from '../reportDetails';
 import useStyles from './styles';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../redux/rootReducer';
+import ExceptionDetails from '../exceptionDetails';
 
 const ManagerNavigator = () => {
     const classes = useStyles();
     const [title, setTitle] = useState('Excepciones');
     const location = useLocation()
+    const user = useSelector((state: RootState) => state.user.accountData?.username)
 
     useEffect(() => {
         if(location.pathname.includes('excepciones'))
@@ -23,7 +26,7 @@ const ManagerNavigator = () => {
         else if(location.pathname.includes('reportes'))
             setTitle('Reportes')
         
-    }, [])
+    }, [location.pathname])
     const ButtonList = (
         <>
             <Button 
@@ -54,13 +57,14 @@ const ManagerNavigator = () => {
     return(
     <BrowserRouter>
         <TemplateBar
+            user={user}
             title={title}
             ButtonList = {ButtonList}
         />
         <Switch>
             <Route exact path={ROUTES.root+ROUTES.exceptions} component={Exceptions} />
+            <Route exact path={ROUTES.root+ROUTES.exceptions+'/:id/:driverId/:vehicleId/:securityId'} component={ExceptionDetails} />
             <Route exact path={ROUTES.root+ROUTES.reports} component={Reports} />
-            <Route exact path={ROUTES.root+ROUTES.reportDetails} component={ReportDetails} />
             <Route path={ROUTES.root} component= {Exceptions} />
         </Switch>
     </BrowserRouter>

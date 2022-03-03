@@ -1,12 +1,15 @@
 import { makeStyles, Theme } from '@material-ui/core';
+import { headerSize } from '../../../utils/constants';
+import globalColors from '../../../utils/styles/globalColors';
 import colors from '../../../utils/styles/globalColors';
 
 const useStyles = makeStyles((theme: Theme) => ({
     container:{
+        paddingTop: headerSize
     },
     cardContainer:{
         display: 'flex',
-        flex: 1,
+        flex: 1
     },
     card:{
         flex: 1,
@@ -47,16 +50,76 @@ const useStyles = makeStyles((theme: Theme) => ({
         paddingTop: '10%',
         paddingBottom: '10%',
     },
-    row:{
+    leftCard:{
+      marginTop: '5%',
+      marginLeft: '2.5%',
+      paddingRight: '2.5%',
+      paddingLeft: '2.5%',
+      paddingBottom: '2.5%',
+      [theme.breakpoints.up('xs')]: {
+          width: '130%',
+          marginLeft: '2.5%',
+      },
+      [theme.breakpoints.up('sm')]: {
+          width: '730px',
+      },
+      [theme.breakpoints.up('md')]: {
+          width: '95%',
+      },
+      [theme.breakpoints.down('sm')]: {
+          marginTop: '17%'
+      },
     },
-    done:{
-        color: colors.green,
+    textTitle:{
+        fontSize:20,
+        fontWeight: 'bold',
+        color: globalColors.lightBlue,
+        [theme.breakpoints.down('sm')]: {
+            fontSize: 15,
+        },
+        paddingLeft: '1%'
     },
-    wrong:{
-        color: colors.red,
+    circleIcon:{
+        marginTop: '3%',
+        marginBottom: '3%',
+        marginRight: '3%',
     },
-    wait: {
-        color: colors.yellow,
+    headerText:{
+        marginTop: '1%',
+        marginBottom: '1%',
+        color: globalColors.darkGrey,
+        fontSize: 12,
+        [theme.breakpoints.down('md')]: {
+            fontSize: 9,
+        },
+    },
+    button:{
+        height: '35px',
+        textTransform: 'none',
+        paddingTop: '1%',
+        paddingBottom: '1%',
+        alignItems: 'center'
+    },
+    textCenter: {
+        textAlign: 'center'
+    },
+    textInput: {
+        color: globalColors.lightBlue,
+        marginTop: 0,
+        marginBottom: '5%'
+    },
+    documentHeaderContainer: {
+        paddingTop: '1%',
+        paddingBottom: '1%'
+    },
+    box:{
+        backgroundColor: globalColors.darkBlue,
+        width: "0.5%",
+        height: "auto"
+    },
+    icon: {
+        color: globalColors.lightBlue,
+        paddingTop: "0.1%"
     },
 }));
 

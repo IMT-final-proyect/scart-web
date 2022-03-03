@@ -17,7 +17,7 @@ export type AppThunk<ReturnType = void> = ThunkAction<
 
 const persistConfig = {
     key: 'root',
-    storage,
+    storage
 }
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)

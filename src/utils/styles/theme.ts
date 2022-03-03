@@ -21,6 +21,9 @@ export default createTheme({
       },
     },
     palette: {
+      background: {
+        default: globalColors.lightBlueBackground
+      },
       primary: {
         main: globalColors.lightBlue,
       },
