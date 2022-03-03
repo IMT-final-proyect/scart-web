@@ -6,7 +6,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import CustomSnackbar from "../../../components/customSnackbar"
 import EditDriverModal from "../../../components/editDriverModal"
 import { RootState } from "../../../redux/rootReducer"
-import { editDriver } from "../../../redux/slices/resourcesSlice"
+import { editDriver, getDriverById } from "../../../redux/slices/resourcesSlice"
 import { IUser, putChangePassword } from "../../../redux/slices/userSlice"
 import { IDriver } from "../../../utils/interfaces"
 import useStyles from "./styles"
@@ -23,11 +23,13 @@ const MyData = () => {
     const loading: boolean = useSelector((state: RootState) => state.resources.drivers.loading)
     const success: boolean = useSelector((state: RootState) => state.resources.drivers.success)
     const error = useSelector((state: RootState) => state.resources.drivers.error)
-    const data: IUser | null = useSelector((state: RootState) => state.user.userData)
+    const driverId: number | undefined = useSelector((state: RootState) => state.user.userData?.id)
+    const data: IDriver = useSelector((state: RootState) => state.resources.drivers.data[driverId as number])
     
     useEffect(() => {
         setOpenEditDriverSuccess(success)
-    }, [success])
+        dispatch(getDriverById(driverId as number))
+    }, [success, driverId])
 
     useEffect(() => {
         setOpenEditDriverError(!!error)
@@ -52,7 +54,7 @@ const MyData = () => {
         <>
             <Modal open={openEditDriverModal} onClose={() => setOpenEditDriverModal(false)}>
                 <EditDriverModal 
-                    driver={data as IUser} 
+                    driver={data} 
                     changePassword={changePassword}
                     editDriver={_editDriver} 
                     setOpenEditDriverModal={setOpenEditDriverModal} 
@@ -102,6 +104,10 @@ const MyData = () => {
                         <Grid container direction='row' justifyContent="center" alignItems="center">
                             <Typography className={classes.field}>Fecha de Nacimiento:</Typography>
                             <Typography className={classes.data}>{moment(data?.birth_date).format('DD/MM/YYYY') || '-'}</Typography>
+                        </Grid>
+                        <Grid container direction='row' justifyContent="center" alignItems="center">
+                            <Typography className={classes.field}>Telefono:</Typography>
+                            <Typography className={classes.data}>{data?.phone || '-'}</Typography>
                         </Grid>
                     </Card>
                 </Grid>

@@ -386,7 +386,9 @@ export const createDocument = (
       contractorId: number
    ): AppThunk => async (dispatch) => {
    dispatch(createDocumentRequest());
+   console.log(contractorId);
    try{      
+      
       await Axios.post('/documents',{
          expirationDate,
          state: 0,

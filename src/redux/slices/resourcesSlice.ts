@@ -341,7 +341,7 @@ export const getAllDrivers = (contractorId?: number): AppThunk => async (dispatc
 export const getDriverById = (id: number): AppThunk => async (dispatch) => {
    dispatch(getDriverByIdRequest());
    try{
-      const response: AxiosResponse = await Axios.get(`/drivers/${id}?relations=address`);      
+      const response: AxiosResponse = await Axios.get(`/drivers/${id}?relations=address,contractor`);      
       dispatch(getDriverByIdSuccess(response.data));
    }
    catch(error: any){

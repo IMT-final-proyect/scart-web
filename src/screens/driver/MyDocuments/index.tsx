@@ -101,7 +101,7 @@ const MyDocuments = () => {
 
     const addDocument = (expirationDate: moment.Moment, type: number, entityType: number, entityId: number, images: string[]) => {
         if (!!driverId)
-            dispatch(createDocument(expirationDate, type, entityType, entityId, images, driverId))
+            dispatch(createDocument(expirationDate, type, entityType, entityId, images, contractorId))
         setOpenModal(false)
     }
 

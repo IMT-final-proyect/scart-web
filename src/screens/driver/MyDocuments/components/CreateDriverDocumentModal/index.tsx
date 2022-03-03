@@ -34,7 +34,7 @@ const CreateDriverDocumentModal = ({ addDocument, setOpenDriverDocumentModal, dr
     const [documentType, setDocumentType] = useState('')
     const documentTypes = useSelector((state: RootState) => state.documentTypes.data)
     const error = useSelector((state: RootState) => state.documents.drivers.error)
-
+    
     const [openFileSelector, { filesContent, loading, errors, plainFiles, clear }] = useFilePicker({
         multiple: true,
         readAs: 'DataURL',
