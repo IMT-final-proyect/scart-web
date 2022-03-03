@@ -443,7 +443,7 @@ export const postDocumentEvaluation = (id: number, isApprovation: boolean, comme
          else nextState = 2
          await Axios.post(`/documents/${id}`,
          { 
-            state: nextState, 
+            state: nextState.toString(), 
             comment, 
             auditorUuid: uuid,
          });

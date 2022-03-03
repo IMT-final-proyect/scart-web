@@ -41,13 +41,9 @@ const MyData = () => {
         cuit: string, 
         phone: string,
         birthdate: moment.Moment, 
-        street: string,
-        number: number,
-        city: string,
-        province: string,
-        zipCode: string,
+        email: string,
         password?: string) => {
-        dispatch(editDriver(driver, name, surname, username, cuit, phone, birthdate, street, number, city, province, zipCode))
+        dispatch(editDriver(driver, name, surname, username, cuit, phone, birthdate, email))
         if (changePassword && !!password) dispatch(putChangePassword(password, AllowedRol.driver, driver.id)) 
         setMessageSnackbar('Conductor modificado con exito')
     }
@@ -106,22 +102,6 @@ const MyData = () => {
                         <Grid container direction='row' justifyContent="center" alignItems="center">
                             <Typography className={classes.field}>Fecha de Nacimiento:</Typography>
                             <Typography className={classes.data}>{moment(data?.birth_date).format('DD/MM/YYYY') || '-'}</Typography>
-                        </Grid>
-                        <Grid container direction='row' justifyContent="center" alignItems="center">
-                            <Typography className={classes.field}>Dirección:</Typography>
-                            <Typography className={classes.data}>{(data?.address?.street || '-')+' '+(data?.address?.number || '')}</Typography>
-                        </Grid>
-                        <Grid container direction='row' justifyContent="center" alignItems="center">
-                            <Typography className={classes.field}>Ciudad:</Typography>
-                            <Typography className={classes.data}>{data?.address?.city || '-'}</Typography>
-                        </Grid>
-                        <Grid container direction='row' justifyContent="center" alignItems="center">
-                            <Typography className={classes.field}>Provincia:</Typography>
-                            <Typography className={classes.data}>{data?.address?.province || '-'}</Typography>
-                        </Grid>
-                        <Grid container direction='row' justifyContent="center" alignItems="center">
-                            <Typography className={classes.field}>Codigo Postal:</Typography>
-                            <Typography className={classes.data}>{data?.address?.zip_code || '-'}</Typography>
                         </Grid>
                     </Card>
                 </Grid>

@@ -69,7 +69,7 @@ const CreateUserModal = ({ addUser, setOpenUserModal }: Props) => {
         if(!!username && !!password && !!repeatPassword && !!name && !!surname && !!cuit && !!email){
             if(cuit.length === 11){
                 if (password === repeatPassword){
-                    addUser(name, surname, getRolNumber(entityType), username, cuit, email, password);
+                    addUser(name, surname, getRolNumber(entityType), username, cuit, password, email);
                     setOpenUserModal(false);
                 }
                 else {

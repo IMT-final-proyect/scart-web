@@ -486,11 +486,7 @@ export const editDriver = (
    cuit: string, 
    phone: string,
    birth_date: moment.Moment, 
-   street: string,
-   number: number,
-   city: string,
-   province: string,
-   zip_code: string): AppThunk => async (dispatch) => {
+   email: string): AppThunk => async (dispatch) => {
    dispatch(editDriverRequest());
    try{
       const response: AxiosResponse = await Axios.put(`/drivers/${driver.id}`,
@@ -498,16 +494,10 @@ export const editDriver = (
             name,
             surname,
             username,
-            phone,
             cuit,
-            birth_date,
-            address: {
-               street,
-               number,
-               city,
-               province,
-               zip_code
-            }
+            phone,
+            email,
+            birth_date
          }
       );
       const editedDriver = {...driver, ...response.data} 
@@ -526,7 +516,7 @@ export const editVehicle = (vehicle: IVehicle, plate: string, brand: string, mod
          plate,
          brand,
          model,
-         year
+         "year": year.toString()
       })
 
       const editedVehicle = {...vehicle, ...response.data}

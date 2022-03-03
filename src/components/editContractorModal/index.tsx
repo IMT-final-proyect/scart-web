@@ -17,7 +17,7 @@ interface Props{
         email: string,
         cuit: string,
         street: string,
-        number: number,
+        number: string,
         city: string,
         province: string,
         zipCode: string,
@@ -37,7 +37,7 @@ const EditContractorModal = ( {contractor, changePassword, editContractor, setOp
     const [message, setMessage] = useState('')
     const [repeatPassword, setRepeatPassword] = useState('')
     const [street, setStreet] = useState(contractor?.address?.street)
-    const [number, setNumber] = useState(0)
+    const [number, setNumber] = useState(contractor?.address?.number?.toString())
     const [city, setCity] = useState(contractor?.address?.city)
     const [province, setProvince] = useState(contractor?.address?.province)
     const [zipCode, setZipCode] = useState(contractor?.address?.zip_code)
@@ -196,7 +196,7 @@ const EditContractorModal = ( {contractor, changePassword, editContractor, setOp
                     </Grid>
                 </Grid>
                 <Grid container className={classes.inputsContainer}>
-                    <Grid item xs={4}>
+                    <Grid item xs={6}>
                         <TextField
                             id="contractor-city"
                             variant="standard"
@@ -207,7 +207,7 @@ const EditContractorModal = ( {contractor, changePassword, editContractor, setOp
                             onChange={_onChangeCity}
                         />
                     </Grid>
-                    <Grid item xs={4}>
+                    <Grid item xs={6}>
                         <TextField
                             id="contractor-province"
                             variant="standard"
@@ -216,17 +216,6 @@ const EditContractorModal = ( {contractor, changePassword, editContractor, setOp
                             label="Provincia"
                             value={province}
                             onChange={_onChangeProvince}
-                        />
-                    </Grid>
-                    <Grid item xs={4}>
-                        <TextField
-                            id="contractor-zipCode"
-                            variant="standard"
-                            className= {classes.lastTextInput}
-                            size="medium"
-                            label="Codigo Postal"
-                            value={zipCode}
-                            onChange={_onChangeZipCode}
                         />
                     </Grid>
                 </Grid>

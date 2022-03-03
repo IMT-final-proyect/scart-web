@@ -142,7 +142,7 @@ export const postLogin = (username: string, password: string): AppThunk => async
 export const getContractorData = (id: number | undefined): AppThunk => async (dispatch) => {
    dispatch(getUserDataRequest())
    try{
-      const response = await Axios.get(`/contractors/${id}`);
+      const response = await Axios.get(`/contractors/${id}?relations=address`);
       dispatch(getUserDataSuccess(response.data));
    }
    catch(error: any){
@@ -163,11 +163,13 @@ export const getDriverData = (id: number | undefined): AppThunk => async (dispat
 
 export const putChangePassword = (newPassword: string, rol: number, id: number): AppThunk => async (dispatch) => {
    dispatch(changePasswordRequest())
+   console.log('aber');
+   
    try{
       await Axios.put(`/users/password`,
       {
          new_password: newPassword,
-         rol,
+         rol: rol.toString(),
          entityId: id
       });
       dispatch(changePasswordSuccess());

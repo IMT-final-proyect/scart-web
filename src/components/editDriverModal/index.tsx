@@ -18,13 +18,9 @@ interface Props{
         surname: string, 
         username: string,
         phone: string,
-        cuit: string, 
-        birthdate: moment.Moment, 
-        street: string,
-        number: number,
-        city: string,
-        province: string,
-        zipCode: string,
+        cuit: string,
+        birthdate: moment.Moment,
+        email: string,
         password?: string) => void
     setOpenEditDriverModal: React.Dispatch<React.SetStateAction<boolean>>
     setChangePassword: React.Dispatch<React.SetStateAction<boolean>>
@@ -36,16 +32,12 @@ const EditDriverModal = ( {driver, changePassword, editDriver, setOpenEditDriver
     const [name, setName] = useState(driver?.name)
     const [surname, setSurname] = useState(driver?.surname)
     const [username, setUsername] = useState(driver?.username)
+    const [email, setEmail] = useState(driver?.email)
     const [phone, setPhone] = useState(driver?.phone)
     const [cuit, setCuit] = useState(driver?.cuit)
     const [password, setPassword] = useState('')
-    const [message, setMessage] = useState('')
     const [repeatPassword, setRepeatPassword] = useState('')
-    const [street, setStreet] = useState('')
-    const [number, setNumber] = useState(0)
-    const [city, setCity] = useState('')
-    const [province, setProvince] = useState('')
-    const [zipCode, setZipCode] = useState('')
+    const [message, setMessage] = useState('')
     const [birthdate, setBirthdate] = useState<moment.Moment | null>(moment(driver?.birth_date));
     
     const _onChangePassword = useCallback((event) => {
@@ -55,6 +47,10 @@ const EditDriverModal = ( {driver, changePassword, editDriver, setOpenEditDriver
     const _onChangeRepeatPassword = useCallback((event) => {
         setRepeatPassword(event.target.value);
     }, [setRepeatPassword]);
+
+    const _onChangeEmail = useCallback((event) => {
+        setEmail(event.target.value);
+    }, [setEmail]);
 
     const _onChangeName = useCallback((event) => {
         setName(event.target.value);
@@ -81,33 +77,12 @@ const EditDriverModal = ( {driver, changePassword, editDriver, setOpenEditDriver
         setBirthdate(date);
     };
 
-      const _onChangeStreet = useCallback((event) => {
-        setStreet(event.target.value);
-    }, [setStreet]);
-
-    const _onChangeNumber = useCallback((event) => {
-        setNumber(event.target.value);
-    }, [setNumber]);
-
-    const _onChangeCity = useCallback((event) => {
-        setCity(event.target.value);
-    }, [setCity]);
-
-    const _onChangeProvince = useCallback((event) => {
-        setProvince(event.target.value);
-    }, [setProvince]);
-
-    const _onChangeZipCode = useCallback((event) => {
-        setZipCode(event.target.value);
-    }, [setZipCode]);
-
-
-      const _handleOnClick = () => {
+    const _handleOnClick = () => {
         if(!!name && !!surname && !!cuit && !!birthdate && !!username){
             if(cuit.length === 11){
                 if (changePassword){
                     if (password === repeatPassword){
-                        editDriver(driver, name, surname, username, cuit, phone, moment(birthdate), street, number, city, province, zipCode, password);
+                        editDriver(driver, name, surname, username, cuit, phone, moment(birthdate), email, password);
                         setOpenEditDriverModal(false);
                     }
                     else {
@@ -116,7 +91,7 @@ const EditDriverModal = ( {driver, changePassword, editDriver, setOpenEditDriver
                     }
                 }
                 else {
-                    editDriver(driver, name, surname, username, cuit, phone, moment(birthdate), street, number, city, province, zipCode);
+                    editDriver(driver, name, surname, username, cuit, phone, moment(birthdate), email);
                     setOpenEditDriverModal(false);
                 };
             }
@@ -137,7 +112,7 @@ const EditDriverModal = ( {driver, changePassword, editDriver, setOpenEditDriver
                     <text className={classes.title}>Editar conductor</text>
                 </Grid>
                 <Grid container className={classes.inputsContainer}>
-                    <Grid item xs={4}>
+                    <Grid item xs={6}>
                         <TextField
                             id="driver-name"
                             variant="standard"
@@ -147,8 +122,8 @@ const EditDriverModal = ( {driver, changePassword, editDriver, setOpenEditDriver
                             value={name}
                             onChange={_onChangeName}
                         />
-                        </Grid>
-                        <Grid item xs={4}>
+                    </Grid>
+                    <Grid item xs={6}>
                         <TextField
                             id="driver-surname"
                             variant="standard"
@@ -161,7 +136,7 @@ const EditDriverModal = ( {driver, changePassword, editDriver, setOpenEditDriver
                     </Grid>
                 </Grid>
                 <Grid container className={classes.inputsContainer}>
-                    <Grid item xs={4}>
+                    <Grid item xs={6}>
                         <TextField
                             id="driver-username"
                             variant="standard"
@@ -172,7 +147,7 @@ const EditDriverModal = ( {driver, changePassword, editDriver, setOpenEditDriver
                             onChange={_onChangeUsername}
                         />
                     </Grid>
-                    <Grid item xs={4}>
+                    <Grid item xs={6}>
                         <TextField
                             id="driver-cuit"
                             variant="standard"
@@ -183,7 +158,33 @@ const EditDriverModal = ( {driver, changePassword, editDriver, setOpenEditDriver
                             onChange={_onChangeCuit}
                         />
                     </Grid>
-                    <Grid item xs={4}>
+                </Grid>
+                <Grid container className={classes.inputsContainer}>
+                    <Grid item xs={6}>
+                        <TextField
+                            id="driver-email"
+                            variant="standard"
+                            className= {classes.textInput}
+                            size="medium"
+                            label="Email"
+                            value={email}
+                            onChange={_onChangeEmail}
+                        />
+                    </Grid>
+                    <Grid item xs={6}>
+                        <TextField
+                            id="driver-phone"
+                            variant="standard"
+                            className= {classes.lastTextInput}
+                            size="medium"
+                            label="Telefono"
+                            value={phone}
+                            onChange={_onChangePhone}
+                        />
+                    </Grid>
+                </Grid>
+                <Grid container className={classes.inputsContainer}>
+                    <Grid item xs={6}>
                         <MuiPickersUtilsProvider utils={MomentUtils}>
                             <KeyboardDatePicker
                                 className={classes.textInput}
@@ -200,77 +201,6 @@ const EditDriverModal = ( {driver, changePassword, editDriver, setOpenEditDriver
                                 }}
                             />
                         </MuiPickersUtilsProvider>
-                    </Grid>
-                </Grid>
-                <Grid container className={classes.inputsContainer}>
-                    <Grid item xs={4}>
-                        <TextField
-                            id="driver-street"
-                            variant="standard"
-                            className= {classes.textInput}
-                            size="medium"
-                            label="Calle"
-                            value={street}
-                            onChange={_onChangeStreet}
-                        />
-                    </Grid>
-                    <Grid item xs={4}>
-                        <TextField
-                            id="driver-number"
-                            variant="standard"
-                            className= {classes.textInput}
-                            size="medium"
-                            type='number'
-                            label="Numero"
-                            value={number}
-                            onChange={_onChangeNumber}
-                        />
-                    </Grid>
-                    <Grid item xs={4}>
-                        <TextField
-                            id="driver-phone"
-                            variant="standard"
-                            className= {classes.lastTextInput}
-                            size="medium"
-                            label="Telefono"
-                            value={phone}
-                            onChange={_onChangePhone}
-                        />
-                    </Grid>
-                </Grid>
-                <Grid container className={classes.inputsContainer}>
-                    <Grid item xs={4}>
-                        <TextField
-                            id="driver-city"
-                            variant="standard"
-                            className= {classes.lastTextInput}
-                            size="medium"
-                            label="Ciudad"
-                            value={city}
-                            onChange={_onChangeCity}
-                        />
-                    </Grid>
-                    <Grid item xs={4}>
-                        <TextField
-                            id="driver-province"
-                            variant="standard"
-                            className= {classes.lastTextInput}
-                            size="medium"
-                            label="Provincia"
-                            value={province}
-                            onChange={_onChangeProvince}
-                        />
-                    </Grid>
-                    <Grid item xs={4}>
-                        <TextField
-                            id="driver-zipCode"
-                            variant="standard"
-                            className= {classes.lastTextInput}
-                            size="medium"
-                            label="Codigo Postal"
-                            value={zipCode}
-                            onChange={_onChangeZipCode}
-                        />
                     </Grid>
                 </Grid>
                 <Grid container className={classes.checkbox}>

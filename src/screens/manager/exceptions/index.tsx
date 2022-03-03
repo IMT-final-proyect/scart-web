@@ -11,6 +11,7 @@ import CustomInput from '../../../components/customInput';
 import CustomSnackbar from '../../../components/customSnackbar';
 import ExceptionRow from './components/exceptionRow/ExceptionRow';
 import { ROUTES } from '../navigation/routes';
+import TomisBar from '../../../components/TomisBar';
 
 const Exceptions = () => {
     const classes = useStyles();
@@ -64,10 +65,15 @@ const Exceptions = () => {
         <>
             <Grid container className={classes.container} direction='row' justifyContent='space-between'>
                 <Card className={classes.titleCard}>
-                    <Grid container className={classes.titleContainer} justifyContent='space-between'>
-                        <text className={classes.textTitle}>
-                            Excepciones
-                        </text>
+                    <Grid container justifyContent='space-between'>
+                        <Grid item xs={11}>
+                            <Grid container>
+                                <TomisBar/>
+                                <text className={classes.textTitle}>
+                                    Excepciones
+                                </text>
+                            </Grid>
+                        </Grid>
                     </Grid>
                     <Typography className={classes.searchTitle}> Filtrar por </Typography>
                     <Grid className={classes.inputContainer} container  direction='row' justifyContent='space-between' >

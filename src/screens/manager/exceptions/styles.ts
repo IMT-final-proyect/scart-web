@@ -12,6 +12,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     titleCard:{
         marginTop: '5%',
         marginLeft: '2.5%',
+        paddingTop: '1%',
         paddingRight: '2.5%',
         paddingLeft: '2.5%',
         paddingBottom: '2.5%',
@@ -55,9 +56,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     textTitle:{
         fontSize:20,
-        marginTop: '3%',
+        marginTop: '1.5%',
         marginBottom: '1.5%',
-        marginLeft: '3%',
+        marginLeft: '1%',
         [theme.breakpoints.down('sm')]: {
             fontSize: 15,
         },

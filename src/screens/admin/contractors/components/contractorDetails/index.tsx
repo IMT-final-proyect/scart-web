@@ -75,7 +75,7 @@ const ContractorDetails = () => {
         email: string,
         cuit: string, 
         street: string,
-        number: number,
+        number: string,
         city: string,
         province: string,
         zipCode: string,
@@ -159,19 +159,11 @@ const ContractorDetails = () => {
                             </div>
                         </Grid>
                         <Grid item xs={4}>
-                                <div className={classes.dataContainer}>
-                                    <text className={classes.dataField}> Codigo Postal: </text>
-                                    <text className={classes.data}> {contractor.address?.zip_code || '-'} </text>
-                                </div>
-                        </Grid>
-                        <Grid item xs={4}>
                             <div className={classes.dataContainer}>
                                 <text className={classes.dataField}> Email: </text>
                                 <text className={classes.data}> {contractor?.email || '-'} </text>
                             </div>
                         </Grid>
-                    </Grid>
-                    <Grid container justifyContent='flex-start' direction='row' alignItems={'center'}>
                         <Grid item xs={4}>
                             <div className={classes.dataContainer}>
                                 <text className={classes.dataField}> Usuario: </text>

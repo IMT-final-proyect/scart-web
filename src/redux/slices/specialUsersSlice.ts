@@ -222,11 +222,14 @@ export const createSpecialUser = (
   name: string,
   surname: string,
   rol: number,
-  cuit: string,
   username: string,
+  cuit: string,
   password: string,
   email: string): AppThunk => async (dispatch) => {
     dispatch(createSpecialUserRequest());
+    console.log('recieved: user: ', username, 'cuit:', cuit, 'email: ', email, 'password: ', password)
+    
+    
     try{
       switch(rol){
         case AllowedRol.manager: {
@@ -235,8 +238,8 @@ export const createSpecialUser = (
             name,
             surname,
             rol,
-            cuit,
             username,
+            cuit,
             password,
             email
           })
@@ -249,8 +252,8 @@ export const createSpecialUser = (
             name,
             surname,
             rol,
-            cuit,
             username,
+            cuit,
             password,
             email
           });
@@ -263,8 +266,8 @@ export const createSpecialUser = (
             name,
             surname,
             rol,
-            cuit,
             username,
+            cuit,
             password,
             email
           });
@@ -284,19 +287,19 @@ export const createSpecialUser = (
       switch(rol){
         case AllowedRol.manager: {
           await Axios.put(`/managers/${id}`,{
-            active: 0
+            active: false
          });
           break
         }
         case AllowedRol.auditor: {
           await Axios.put(`/auditors/${id}`,{
-            active: 0
+            active: false
           });
           break
         }
         case AllowedRol.security: {
           await Axios.put(`/securities/${id}`,{
-            active: 0
+            active: false
           });
           break
         }
@@ -348,11 +351,12 @@ export const createSpecialUser = (
       const body = {
         name,
         surname,
-        rol: rol.toString(),
+        rol,
         cuit,
         username,
         email
       }
+      console.log('body:', body);
       switch(rol){
         case AllowedRol.manager: {
           const manager: AxiosResponse = await Axios.put(`/managers/${id}`,body)

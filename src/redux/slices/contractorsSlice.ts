@@ -291,7 +291,7 @@ export const editContractor = (
    email: string,
    cuit: string, 
    street: string,
-   number: number,
+   number: string,
    city: string,
    province: string,
    zip_code: string): AppThunk => async (dispatch) => {
@@ -305,7 +305,7 @@ export const editContractor = (
          cuit,
          address: {
             street,
-            number,
+            "number": parseInt(number),
             city,
             province,
             zip_code

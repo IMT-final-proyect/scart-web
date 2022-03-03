@@ -39,7 +39,7 @@ const MyData = () => {
         email: string,
         cuit: string, 
         street: string,
-        number: number,
+        number: string,
         city: string,
         province: string,
         zipCode: string,
@@ -107,10 +107,6 @@ const MyData = () => {
                         <Grid container direction='row' justifyContent="center" alignItems="center">
                             <Typography className={classes.field}>Provincia:</Typography>
                             <Typography className={classes.data}>{data?.address?.province || '-'}</Typography>
-                        </Grid>
-                        <Grid container direction='row' justifyContent="center" alignItems="center">
-                            <Typography className={classes.field}>Codigo Postal:</Typography>
-                            <Typography className={classes.data}>{data?.address?.zip_code || '-'}</Typography>
                         </Grid>
                     </Card>
                 </Grid>
