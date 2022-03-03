@@ -16,7 +16,7 @@ import { getSeverityName } from '../../utils/functions/severities';
 
 const DocumentDetails = () => {
     const { activeDocument, loading, error } = useSelector((state: RootState) => state.documents)
-    const stateName = getStateName(activeDocument.state)
+    const stateName = getStateName(parseInt(activeDocument.state.toString()))
     const color = getStateColor(stateName)
     const classes = useStyles({color});    
     const dispatch = useDispatch()
