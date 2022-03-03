@@ -3,10 +3,20 @@ import Axios, {AxiosResponse} from 'axios';
 import moment from 'moment';
 import { AllowedRol, contractor, driver, vehicle } from '../../utils/constants';
 import { getRolName } from '../../utils/functions/roles';
-import { IContractor, IDocument, IDriver, IVehicle, IMissingDocument } from '../../utils/interfaces';
+import { IContractor, IDocument, IDriver, IVehicle, IMissingDocument, IDocumentType } from '../../utils/interfaces';
 import { AppThunk } from '../store';
 var _ = require('lodash');
 
+export interface IDocumentResponse {
+   id: number;
+   entityId: number;
+   entityType: number
+   type: IDocumentType;
+   state: any;
+   expirationDate: moment.Moment;
+   photos: string[];
+   contractor?: IContractor;
+}
 
 interface IContractorDocuments {
     data: IDocument[]
@@ -289,9 +299,13 @@ export const getContractorDocuments = (contractorId: number|undefined): AppThunk
    dispatch(getContractorDocumentsRequest());
    try{
       const response: AxiosResponse = await Axios.get(`/documents?entityId=${contractorId}&entityType=2`);
-      const documents = _.mapKeys(response.data, 'id')
-      
-      dispatch(getContractorDocumentsSuccess(documents));
+      const documents: IDocumentResponse[] = response.data
+      let data = Object.keys(documents).map((index: any) => {
+         documents[index].state = parseInt(documents[index].state)
+         return documents[index]
+      })
+      data = _.mapKeys(data, 'id')
+      dispatch(getContractorDocumentsSuccess(data));
    }
    catch(error: any){
       dispatch(getContractorDocumentsFailure(error.response.data));
@@ -302,9 +316,13 @@ export const getDriverDocuments = (driverId: number|undefined): AppThunk => asyn
    dispatch(getDriverDocumentsRequest());
    try{
       const response: AxiosResponse = await Axios.get(`/documents?entityId=${driverId}&entityType=1`);
-      const documents = _.mapKeys(response.data, 'id')
-      
-      dispatch(getDriverDocumentsSuccess(documents));
+      const documents: IDocumentResponse[] = response.data
+      let data = Object.keys(documents).map((index: any) => {
+         documents[index].state = parseInt(documents[index].state)
+         return documents[index]
+      })
+      data = _.mapKeys(data, 'id')
+      dispatch(getDriverDocumentsSuccess(data));
    }
    catch(error: any){
       dispatch(getDriverDocumentsFailure(error.response.data));
@@ -318,9 +336,14 @@ export const getContractorExpiringDocuments = (contractorId: number|undefined, d
     if(!!date) before = date
     else before = moment().add(7, 'days');
     const response: AxiosResponse = await Axios.get(`/documents?entityId=${contractorId}&entityType=2&before=${before.format()}`)
-    const documents = _.mapKeys(response.data, 'id')
+    const documents: IDocumentResponse[] = response.data
+      let data = Object.keys(documents).map((index: any) => {
+         documents[index].state = parseInt(documents[index].state)
+         return documents[index]
+      })
+      data = _.mapKeys(data, 'id')
 
-    dispatch(getContractorExpiringDocumentsSuccess(documents));
+    dispatch(getContractorExpiringDocumentsSuccess(data));
   } catch (error) {
     dispatch(getContractorExpiringDocumentsFailure(error.response.data));
   }
@@ -330,16 +353,18 @@ export const getVehicleDocuments = (vehicleId: number|undefined): AppThunk => as
    dispatch(getVehicleDocumentsRequest());
    try{
       const response: AxiosResponse = await Axios.get(`/documents?entityId=${vehicleId}&entityType=6`);
-      const documents = _.mapKeys(response.data, 'id')
-      
-      dispatch(getVehicleDocumentsSuccess(documents));
+      const documents: IDocumentResponse[] = response.data
+      let data = Object.keys(documents).map((index: any) => {
+         documents[index].state = parseInt(documents[index].state)
+         return documents[index]
+      })
+      data = _.mapKeys(data, 'id')
+      dispatch(getVehicleDocumentsSuccess(data));
    }
    catch(error: any){
       dispatch(getVehicleDocumentsFailure(error.response.data));
    }
 };
-
-
 
 export const getDocumentById = (documentId: number): AppThunk => async (dispatch) => {
    dispatch(getDocumentByIdRequest());
@@ -398,7 +423,13 @@ export const getDocumentByState = (state: number): AppThunk => async (dispatch) 
    dispatch(getDocumentByStateRequest());
    try{
       const response: AxiosResponse = await Axios.get(`/documents?state=${state}&expand[]=contractor`);
-      dispatch(getDocumentByStateSuccess(response.data));
+      const documents: IDocumentResponse[] = response.data
+      let data = Object.keys(documents).map((index: any) => {
+         documents[index].state = parseInt(documents[index].state)
+         return documents[index]
+      })
+      console.log(data);
+      dispatch(getDocumentByStateSuccess(data));
    }
    catch(error: any){
       dispatch(getDocumentByStateFailure(error?.response?.data));

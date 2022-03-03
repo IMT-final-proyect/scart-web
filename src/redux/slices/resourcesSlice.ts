@@ -452,7 +452,7 @@ export const deleteDriver = (id: number, contractorId?: number): AppThunk => asy
    dispatch(deleteDriverRequest());
    try{
       await Axios.put(`/drivers/${id}`,{
-         active: 0
+         active: false
       });
       
       dispatch(deleteDriverSuccess());
@@ -467,7 +467,7 @@ export const deleteVehicle = (id: number, contractorId?: number): AppThunk => as
    dispatch(deleteVehicleRequest());
    try{
       await Axios.put(`/vehicles/${id}`,{
-         active: 0
+         active: false
       });
       
       dispatch(deleteVehicleSuccess());
