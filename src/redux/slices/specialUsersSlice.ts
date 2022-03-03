@@ -1,7 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import Axios, {AxiosResponse} from 'axios';
 import { AllowedRol } from '../../utils/constants';
-import { IDocument, IException, IMissingDocument } from '../../utils/interfaces';
 import { AppThunk } from '../store';
 var _ = require('lodash');
 
@@ -18,6 +17,7 @@ export interface ISpecialUser {
     cuit: string;
     username: string;
     email: string;
+    phone: string;
  }
 
  interface ISpecialUserState {
@@ -45,7 +45,8 @@ const initialState: ISpecialUserState = {
       rol: -1,
       cuit: '',
       username: '',
-      email: ''
+      email: '',
+      phone: ''
     },
     loading: false,
     error: null,
@@ -345,7 +346,8 @@ export const createSpecialUser = (
   rol: number,
   cuit: string,
   username: string,
-  email: string): AppThunk => async (dispatch) => {
+  email: string,
+  phone: string): AppThunk => async (dispatch) => {
     dispatch(editSpecialUserRequest());
     try{
       const body = {
@@ -354,7 +356,8 @@ export const createSpecialUser = (
         rol,
         cuit,
         username,
-        email
+        email,
+        phone
       }
       console.log('body:', body);
       switch(rol){

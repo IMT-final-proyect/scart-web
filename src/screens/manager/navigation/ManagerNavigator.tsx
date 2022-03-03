@@ -18,7 +18,7 @@ const ManagerNavigator = () => {
     const classes = useStyles();
     const [title, setTitle] = useState('Excepciones');
     const location = useLocation()
-    const user = useSelector((state: RootState) => state.user.userData?.name)
+    const user = useSelector((state: RootState) => state.user.accountData?.username)
 
     useEffect(() => {
         if(location.pathname.includes('excepciones'))
@@ -26,7 +26,7 @@ const ManagerNavigator = () => {
         else if(location.pathname.includes('reportes'))
             setTitle('Reportes')
         
-    }, [])
+    }, [location.pathname])
     const ButtonList = (
         <>
             <Button 

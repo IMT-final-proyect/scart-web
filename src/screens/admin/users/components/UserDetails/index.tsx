@@ -51,8 +51,9 @@ const _editUser = (
 	username: string,
 	cuit: string, 
 	email: string,
+	phone: string,
 	password?: string) => {
-		dispatch(editSpecialUser(user.id, name, surname,rolNumber, cuit, username, email))
+		dispatch(editSpecialUser(user.id, name, surname,rolNumber, cuit, username, email, phone))
 		if (changePassword && !!password) dispatch(putChangePassword(password, user.rol, user.id))
 		setMessageSnackbar('Conductor modificado con exito')
 }
@@ -107,6 +108,10 @@ const _editUser = (
 									<Grid container direction='row' justifyContent="center" alignItems="center">
 											<Typography className={classes.field}>Email:</Typography>
 											<Typography className={classes.data}>{user?.email || '-'}</Typography>
+									</Grid>
+									<Grid container direction='row' justifyContent="center" alignItems="center">
+											<Typography className={classes.field}>Telefono:</Typography>
+											<Typography className={classes.data}>{user?.phone || '-'}</Typography>
 									</Grid>
 							</Card>
 					</Grid>

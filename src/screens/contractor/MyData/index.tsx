@@ -5,7 +5,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import CustomSnackbar from "../../../components/customSnackbar"
 import EditContractorModal from "../../../components/editContractorModal"
 import { RootState } from "../../../redux/rootReducer"
-import { IUser, putChangePassword } from "../../../redux/slices/userSlice"
+import { getContractorData, IUser, putChangePassword } from "../../../redux/slices/userSlice"
 import { IContractor } from "../../../utils/interfaces"
 import useStyles from "./styles"
 import { editContractor } from "../../../redux/slices/contractorsSlice";
@@ -26,7 +26,8 @@ const MyData = () => {
     
     useEffect(() => {
         setOpenEditContractorSuccess(success)
-    }, [success])
+        dispatch(getContractorData(data?.id))
+    }, [success, data, dispatch])
 
     useEffect(() => {
         setOpenEditContractorError(!!error)
@@ -107,6 +108,10 @@ const MyData = () => {
                         <Grid container direction='row' justifyContent="center" alignItems="center">
                             <Typography className={classes.field}>Provincia:</Typography>
                             <Typography className={classes.data}>{data?.address?.province || '-'}</Typography>
+                        </Grid>
+                        <Grid container direction='row' justifyContent="center" alignItems="center">
+                            <Typography className={classes.field}>Telefono:</Typography>
+                            <Typography className={classes.data}>{data?.phone|| '-'}</Typography>
                         </Grid>
                     </Card>
                 </Grid>

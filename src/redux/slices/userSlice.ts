@@ -8,6 +8,7 @@ export interface IAccount {
    entityId: number;
    name: string;
    surname: string;
+   username: string;
    email: string;
    active: false;
    rol: number;

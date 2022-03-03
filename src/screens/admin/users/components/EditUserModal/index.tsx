@@ -16,6 +16,7 @@ interface Props{
         username: string,
         cuit: string, 
         email: string,
+        phone: string,
         password?: string) => void
     setOpenEditUserModal: React.Dispatch<React.SetStateAction<boolean>>
     setChangePassword: React.Dispatch<React.SetStateAction<boolean>>
@@ -29,6 +30,7 @@ const EditUserModal = ( {user, changePassword, editUser, setOpenEditUserModal, s
     const [username, setUsername] = useState(user?.username)
     const [cuit, setCuit] = useState(user?.cuit)
     const [email, setEmail] = useState(user?.email)
+    const [phone, setPhone] = useState(user?.phone)
     const [password, setPassword] = useState('')
     const [message, setMessage] = useState('')
     const [repeatPassword, setRepeatPassword] = useState('')
@@ -40,6 +42,11 @@ const EditUserModal = ( {user, changePassword, editUser, setOpenEditUserModal, s
     const _onChangeRepeatPassword = useCallback((event) => {
         setRepeatPassword(event.target.value);
     }, [setRepeatPassword]);
+
+    const _onChangePhone = useCallback((event) => {
+        setPhone(event.target.value);
+    }, [setPhone]);
+
 
     const _onChangeName = useCallback((event) => {
         setName(event.target.value);
@@ -78,9 +85,9 @@ const EditUserModal = ( {user, changePassword, editUser, setOpenEditUserModal, s
                     }
                 }
                 else {
-                    editUser(user, name, surname, username, cuit, email);
+                    editUser(user, name, surname, username, cuit, email, phone);
                     setOpenEditUserModal(false);
-                };
+                }
             }
             else{
                 setError(true)
@@ -156,6 +163,17 @@ const EditUserModal = ( {user, changePassword, editUser, setOpenEditUserModal, s
                             label="Email"
                             value={email}
                             onChange={_onChangeEmail}
+                        />
+                    </Grid>
+                    <Grid item xs={6}>
+                        <TextField
+                            id="user-phone"
+                            variant="standard"
+                            className= {classes.lastTextInput}
+                            size="medium"
+                            label="Telefono"
+                            value={phone}
+                            onChange={_onChangePhone}
                         />
                     </Grid>
                 </Grid>

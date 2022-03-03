@@ -17,7 +17,7 @@ import { RootState } from '../../../redux/rootReducer';
 const AuditorNavigation = () => {
     const classes = useStyles();
     const [title, setTitle] = useState('Auditor');
-    const user = useSelector((state: RootState) => state.user.userData?.name)
+    const user = useSelector((state: RootState) => state.user?.accountData?.username)
 
     const ButtonList = (
         <>
