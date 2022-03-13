@@ -71,8 +71,6 @@ const EditUserModal = ( {user, changePassword, editUser, setOpenEditUserModal, s
 
       const _handleOnClick = () => {
         if(!!name && !!surname && !!cuit && !!username){
-            console.log(cuit);
-            
             if(cuit.length === 11){
                 if (changePassword){
                     if (password === repeatPassword){

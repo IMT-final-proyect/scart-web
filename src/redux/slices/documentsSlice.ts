@@ -386,7 +386,6 @@ export const createDocument = (
       contractorId: number
    ): AppThunk => async (dispatch) => {
    dispatch(createDocumentRequest());
-   console.log(contractorId);
    try{      
       
       await Axios.post('/documents',{
@@ -430,7 +429,6 @@ export const getDocumentByState = (state: number): AppThunk => async (dispatch) 
          documents[index].state = parseInt(documents[index].state)
          return documents[index]
       })
-      console.log(data);
       dispatch(getDocumentByStateSuccess(data));
    }
    catch(error: any){

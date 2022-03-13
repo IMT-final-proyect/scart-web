@@ -68,8 +68,6 @@ const Users = () => {
         cuit: string,
         password: string,
         email: string) => {
-            console.log('sent: user: ', username, 'cuit:', cuit, 'email: ', email, 'password: ', password)
-            
             dispatch(createSpecialUser(name, surname, rol, username, cuit, password, email))
             setMessageSnackbar('Conductor creado con exito')
         }

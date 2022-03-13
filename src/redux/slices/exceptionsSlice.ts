@@ -172,8 +172,6 @@ export const getInvalidDocuments = (driverId: number, vehicleId: number): AppThu
       dispatch(getInvalidDocumentsSuccess(response.data));
    }
    catch(error: any){
-      console.log(error);
-      
       dispatch(getInvalidDocumentsFailure(error));
    }
 };

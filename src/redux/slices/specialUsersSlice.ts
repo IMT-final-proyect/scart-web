@@ -228,8 +228,6 @@ export const createSpecialUser = (
   password: string,
   email: string): AppThunk => async (dispatch) => {
     dispatch(createSpecialUserRequest());
-    console.log('recieved: user: ', username, 'cuit:', cuit, 'email: ', email, 'password: ', password)
-    
     
     try{
       switch(rol){
@@ -359,7 +357,6 @@ export const createSpecialUser = (
         email,
         phone
       }
-      console.log('body:', body);
       switch(rol){
         case AllowedRol.manager: {
           const manager: AxiosResponse = await Axios.put(`/managers/${id}`,body)
