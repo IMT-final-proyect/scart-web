@@ -3,7 +3,6 @@ import { TextField } from "@mui/material"
 import { useCallback, useState } from "react";
 import CustomSnackbar from "../../../../../components/customSnackbar";
 import { ISpecialUser } from "../../../../../redux/slices/specialUsersSlice";
-import CheckIcon from '@mui/icons-material/Check';
 import useStyles from './styles';
 
 interface Props{
