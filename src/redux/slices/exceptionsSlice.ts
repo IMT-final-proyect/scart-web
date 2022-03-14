@@ -155,7 +155,7 @@ export const putUpdateExceptions = (exceptionId: string, comment: string, manage
       {
          comment,
          managerId,
-         result
+         result: result.toString()
       });
       dispatch(putUpdateExceptionsSuccess());
    }
