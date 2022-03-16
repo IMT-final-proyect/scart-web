@@ -164,8 +164,6 @@ export const getDriverData = (id: number | undefined): AppThunk => async (dispat
 
 export const putChangePassword = (newPassword: string, rol: number, id: number): AppThunk => async (dispatch) => {
    dispatch(changePasswordRequest())
-   console.log('aber');
-   
    try{
       await Axios.put(`/users/password`,
       {

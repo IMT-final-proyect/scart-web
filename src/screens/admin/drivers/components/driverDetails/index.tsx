@@ -78,8 +78,6 @@ const DriverDetails = () => {
         birthdate: moment.Moment, 
         email: string,
         password?: string) => {
-        console.log('recieved: phone', phone, "cuit:", cuit);
-        
         dispatch(editDriver(driver, name, surname, username, cuit, phone, birthdate, email))
         if (changePassword && !!password) dispatch(putChangePassword(password, AllowedRol.driver, driver.id))
         setMessageSnackbar('Conductor modificado con exito')

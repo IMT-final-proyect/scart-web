@@ -535,12 +535,12 @@ export const isDriverUpToDate = (driverId?: number): AppThunk => async (dispatch
          const response = await Axios.get(`documents/visit/validate?driverId=${driverId}`)
          const driver = response.data.driver
          let isValid = true
-         if (!!driver.invalidDocuments && !!driver.missingDocuments) isValid = false  
+         if (!!driver && !!driver.invalidDocuments && !!driver.missingDocuments) isValid = false  
          dispatch(isDriverUpToDateSuccess(isValid))
       }
       else dispatch(isDriverUpToDateFailure({ code: 400, message: "Conductor no encontrado"})); 
    }
    catch(error: any){
-      dispatch(isDriverUpToDateFailure(error.response.data)); 
+      dispatch(isDriverUpToDateFailure(error?.response?.data)); 
    }
 }
