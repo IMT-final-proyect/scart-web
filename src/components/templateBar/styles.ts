@@ -24,7 +24,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     drawer: {
         marginTop: '2.5%',
-        width: 250,
+        width: 250
+    },
+    textContainer: {
+        textAlign: 'center'
     },
     salir: {
         textTransform: "none",
@@ -36,5 +39,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     image: {
         width: '100%'
     },
+    text: {
+        textAlign: 'center'
+    }
 }));
 export default useStyles
