@@ -24,10 +24,13 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     drawer: {
         marginTop: '2.5%',
-        width: 250
+        width: 250,
+        height: '100%',
+        justifyContent: 'space-between'
     },
     textContainer: {
-        textAlign: 'center'
+        textAlign: 'center',
+        padding: '10px',
     },
     salir: {
         textTransform: "none",
@@ -40,7 +43,8 @@ const useStyles = makeStyles((theme: Theme) => ({
         width: '100%'
     },
     text: {
-        textAlign: 'center'
+        textAlign: 'center',
+        color: 'rgb(172 156 156)'
     }
 }));
 export default useStyles
