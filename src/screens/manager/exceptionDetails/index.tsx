@@ -3,20 +3,18 @@ import React, { useEffect, useState } from 'react';
 import { Button, Card, CircularProgress, Grid, Modal, TextField} from '@material-ui/core';
 
 import AttachFileIcon from '@mui/icons-material/AttachFile';
-import Base64Downloader from 'react-base64-downloader';
 import DownloadIcon from '@mui/icons-material/Download';
 import PreviewIcon from '@mui/icons-material/Preview';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import CloseIcon from '@mui/icons-material/Close';
+import FilePreview from "react-file-preview-latest";    
 import { RootState } from '../../../redux/rootReducer';
-import globalColors from '../../../utils/styles/globalColors';
 import { ROUTES } from '../navigation/routes';
 import CustomSnackbar from '../../../components/customSnackbar';
 import { getDriverById, getSecurityById, getVehicleById } from '../../../redux/slices/resourcesSlice';
 import useStyles from './styles';
 import { getStateColor, getStateName } from '../../../utils/functions/states';
-import { States } from '../../../utils/constants';
 import { putUpdateExceptions, _cleanSnackbar, getInvalidDocuments } from '../../../redux/slices/exceptionsSlice';
 
 const ExceptionDetails = () => {
@@ -97,7 +95,11 @@ const ExceptionDetails = () => {
     <>
         <Modal open={modalImage} onClose={() => closeImagePicker} onBackdropClick={closeImagePicker}>
             <div className={classes.imageCard}>
-                <img src={image} alt='document' className={classes.image}/>
+                <FilePreview
+                    type={"url"}
+                    url={image}
+                    onError={() => {}}
+                />            
             </div>
         </Modal>
         {loadingDriver || loadingVehicle || loadingSecurity || evaluationLoading ?
@@ -204,16 +206,9 @@ const ExceptionDetails = () => {
                                                                                         <text style={{fontSize: 15}}>Archivo {index+1}</text>
                                                                                     </Grid>
                                                                                     <Grid item xs={2}>
-                                                                                        <Base64Downloader 
-                                                                                            base64={value}
-                                                                                            downloadName={`archivo${index+1}`}
-                                                                                            Tag="a"
-                                                                                            extraAttributes={{ href: '#' }}
-                                                                                            className="my-class-name"
-                                                                                            style={{ color: globalColors.lightBlue }}
-                                                                                        >
-                                                                                                <DownloadIcon style={{fontSize: 30}}/>
-                                                                                        </Base64Downloader>
+                                                                                        <a href={value} download={`archivo${index+1}`}>
+                                                                                            <DownloadIcon style={{fontSize: 30}}/>
+                                                                                        </a>
                                                                                     </Grid>
                                                                                     <Grid item xs={2}>
                                                                                         <Button 
@@ -318,16 +313,9 @@ const ExceptionDetails = () => {
                                                                                     <text style={{fontSize: 15}}>Archivo {index+1}</text>
                                                                                 </Grid>
                                                                                 <Grid item xs={2}>
-                                                                                    <Base64Downloader 
-                                                                                        base64={value}
-                                                                                        downloadName={`archivo${index+1}`}
-                                                                                        Tag="a"
-                                                                                        extraAttributes={{ href: '#' }}
-                                                                                        className="my-class-name"
-                                                                                        style={{ color: globalColors.lightBlue }}
-                                                                                    >
-                                                                                            <DownloadIcon style={{fontSize: 30}}/>
-                                                                                    </Base64Downloader>
+                                                                                <a href={value} download={`archivo${index+1}`}>
+                                                                                    <DownloadIcon style={{fontSize: 30}}/>
+                                                                                </a>
                                                                                 </Grid>
                                                                                 <Grid item xs={2}>
                                                                                     <Button 
