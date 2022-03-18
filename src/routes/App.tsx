@@ -35,7 +35,7 @@ const App = () => {
                 <PrivateRoute path={ROUTES.manager} rol={manager} component={ManagerNavigator} />
                 <PrivateRoute path={ROUTES.auditor} rol={auditor} component={AuditorNavigator} />
                 <PrivateRoute path={ROUTES.admin} rol={admin} component={AdminNavigator} />
-                {/* <PrivateRoute path={ROUTES.security} rol={security} component={SecurityNavigator} /> */}
+                <PrivateRoute path={ROUTES.security} rol={security} component={SecurityNavigator} />
                 <PrivateRoute path={ROUTES.driver} rol={driver} component={DriverNavigation} />
                 <Route component={NotFound} />
             </Switch>
