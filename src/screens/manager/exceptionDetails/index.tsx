@@ -117,7 +117,7 @@ const ExceptionDetails = () => {
                     </Grid>
                     <Grid container className={classes.dataFieldContainer} justifyContent='flex-start'>
                         <text className={classes.field}>
-                            Documento:
+                            - Documento:
                         </text>
                         <text className={classes.dataField}>
                             {driver?.cuit}
@@ -156,8 +156,8 @@ const ExceptionDetails = () => {
                                     Archivos inválidos o faltantes
                                 </text>
                             </Grid>
-                            <Grid container className={classes.titleContainer} justifyContent='space-between'>
-                                <text className={classes.entityName}>
+                            <Grid container className={classes.entityTitle} justifyContent='space-between'>
+                                <text className={classes.entityTitle}>
                                     Conductor
                                 </text>
                             </Grid>
@@ -271,7 +271,7 @@ const ExceptionDetails = () => {
                                 </>
                             }
                             <Grid container className={classes.titleContainer} justifyContent='space-between'>
-                                <text className={classes.entityName}>
+                                <text className={classes.entityTitle}>
                                     Vehiculos
                                 </text>
                             </Grid>

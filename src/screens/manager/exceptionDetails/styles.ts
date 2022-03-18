@@ -58,10 +58,17 @@ const useStyles = makeStyles<Theme>((theme: Theme) => ({
         },
     },
     textTitle:{
-        fontSize:20,
+        fontSize: 20,
         marginBottom: '1%',
         [theme.breakpoints.down('sm')]: {
-            fontSize: 15,
+            fontSize: 22,
+        },
+    },
+    entityTitle: {
+        fontSize: 22,
+        textDecoration: 'underline',
+        [theme.breakpoints.down('sm')]: {
+            fontSize: 18,
         },
     },
     textTitleField:{
@@ -200,7 +207,7 @@ const useStyles = makeStyles<Theme>((theme: Theme) => ({
         marginBottom: '2.5%'
     },
     fieldFile:{
-        fontSize:22,
+        fontSize:25,
         marginTop: '2.5%',
         marginBottom: '2.5%',
         [theme.breakpoints.down('sm')]: {
@@ -225,7 +232,7 @@ const useStyles = makeStyles<Theme>((theme: Theme) => ({
     areValidText:{
         color: globalColors.darkGrey,
         fontSize: 15,
-    }
+    },
 }));
 
 export default useStyles
