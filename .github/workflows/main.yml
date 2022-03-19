@@ -15,18 +15,31 @@ on:
 
 jobs:
     build:
-      name: Build
-      
       runs-on: ubuntu-latest
-      
       steps:
-        - name: Checkout
-          uses: actions/checkout@master
+        - name: Clone repository
+          uses: actions/checkout@v2
 
-        - uses: borales/actions-yarn@v2.0.0
+        - name: Use Node.js 16.x
+          uses: actions/setup-node@v1
           with:
-            cmd: install
+            node-version: 16.x
 
-        - uses: borales/actions-yarn@v2.0.0
+        - name: Remove yarn.lock
+          run: rm -rf yarn.lock
+
+        - name: Clean Cache
+          run: yarn cache clean
+
+        - name: Install dependencies
+          run: yarn install 
+
+        - name: Generate build
+          run: yarn run build
+
+        # Share artifact inside workflow
+        - name: Share artifact inside workflow
+          uses: actions/upload-artifact@v2
           with:
-            cmd: build
+            name: scart_web_${{ github.sha }}
+            path: build
