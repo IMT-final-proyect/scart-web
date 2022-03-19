@@ -32,7 +32,7 @@ jobs:
           run: yarn cache clean
 
         - name: Install dependencies
-          run: yarn install 
+          run: yarn install --frozen-lockfile 
 
         - name: Generate build
           run: yarn run build
