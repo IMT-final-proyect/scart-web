@@ -59,6 +59,7 @@ jobs:
               # Go to app directory
               cd /var/opt/www
 
+              ls build
               # Remove old files
               rm -rf ./* 
               
