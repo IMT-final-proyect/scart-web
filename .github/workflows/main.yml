@@ -48,6 +48,11 @@ jobs:
       needs: build
 
       steps:
+        - name: Share artifact inside workflow
+          uses: actions/download-artifact@v2
+          with:
+            name: scart_web_${{ github.sha }}
+
         - name: Deploy to Digital Ocean droplet via SSH action
           uses: appleboy/ssh-action@v0.1.3
           with:
