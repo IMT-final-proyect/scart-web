@@ -35,7 +35,7 @@ jobs:
           run: yarn install --frozen-lockfile 
 
         - name: Generate build
-          run: yarn run build
+          run: CI=false yarn run build
 
         # Share artifact inside workflow
         - name: Share artifact inside workflow
