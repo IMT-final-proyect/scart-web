@@ -64,4 +64,4 @@ jobs:
               rm -rf ./* 
               
               # Copy build to directory
-              mv -r build/* ./
+              mv build/* ./
