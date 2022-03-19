@@ -64,13 +64,6 @@ const useStyles = makeStyles<Theme>((theme: Theme) => ({
             fontSize: 22,
         },
     },
-    entityTitle: {
-        fontSize: 22,
-        textDecoration: 'underline',
-        [theme.breakpoints.down('sm')]: {
-            fontSize: 18,
-        },
-    },
     textTitleField:{
         fontSize:20,
         marginBottom: '1%',
@@ -79,11 +72,6 @@ const useStyles = makeStyles<Theme>((theme: Theme) => ({
         [theme.breakpoints.down('sm')]: {
             fontSize: 15,
         },
-    },
-    circleIcon:{
-        marginTop: '3%',
-        marginBottom: '3%',
-        marginRight: '3%',
     },
     field:{
         marginLeft: '1%',
@@ -104,18 +92,6 @@ const useStyles = makeStyles<Theme>((theme: Theme) => ({
         [theme.breakpoints.down('md')]: {
             fontSize: 10,
         }
-    },
-    footer:{
-        alignItems: 'center'
-    },
-    footerText:{
-        marginLeft: '5%',
-    },
-    arrowsContainer:{
-        marginRight: '3%',
-    },
-    button:{
-        height: '35px',
     },
     textField: {
         marginTop: '1%',
@@ -140,21 +116,6 @@ const useStyles = makeStyles<Theme>((theme: Theme) => ({
         fontWeight: 'bold',
         [theme.breakpoints.down('md')]: {
             fontSize: 10,
-        },
-    },
-    documentDataRow:{
-        marginBottom: '1%',
-        paddingRight: '1%'
-    },
-    noImageSelected: {
-        marginLeft: '2%',
-        marginRight: '3.5%',
-        padding: '5%',
-        textAlign: 'center',
-        [theme.breakpoints.down('sm')]: {
-            marginLeft: '2.5%',
-            marginRight: '2.5%',
-            marginTop: '5%'
         },
     },
     imageCard: {
