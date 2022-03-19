@@ -344,7 +344,7 @@ export const getContractorExpiringDocuments = (contractorId: number|undefined, d
       data = _.mapKeys(data, 'id')
 
     dispatch(getContractorExpiringDocumentsSuccess(data));
-  } catch (error) {
+  } catch (error: any) {
     dispatch(getContractorExpiringDocumentsFailure(error.response.data));
   }
 }
