@@ -42,7 +42,7 @@ jobs:
           uses: actions/upload-artifact@v2
           with:
             name: scart_web_${{ github.sha }}
-            path: build/
+            path: build
     deploy:
       runs-on: ubuntu-latest
       needs: build
@@ -53,12 +53,13 @@ jobs:
           with:
             name: scart_web_${{ github.sha }}
             
-        - name: copy file via ssh key
+        - name: Copy file via ssh key
           uses: appleboy/scp-action@master
+          env:
+            HOST: ${{ secrets.SSH_HOST }}
+            USERNAME: ${{ secrets.SSH_USERNAME }}
+            KEY: ${{ secrets.SSH_KEY }}
           with:
-            host: ${{ secrets.SSH_HOST }}
-            username: ${{ secrets.SSH_USERNAME }}
-            key: ${{ secrets.SSH_KEY }}
             source: "build"
             target: "/var/opt/www/"
 
