@@ -51,6 +51,9 @@ jobs:
       needs: build
 
       steps:
+        - name: Create Build director
+          run: mkdir ~/build
+
         - name: Download artifact inside workflow
           uses: actions/download-artifact@v2
           with:
@@ -58,7 +61,7 @@ jobs:
             path: ~/build
             
         - name: Copy file via ssh key
-          uses: appleboy/scp-action@master
+          uses: appleboy/scp-action@master  
           env:
             HOST: ${{ secrets.SSH_HOST }}
             USERNAME: ${{ secrets.SSH_USERNAME }}
