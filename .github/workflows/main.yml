@@ -67,15 +67,16 @@ jobs:
           run: ls ~/
             
         - name: Copy file via ssh key
-          uses: appleboy/scp-action@master  
-          env:
-            HOST: ${{ secrets.SSH_HOST }}
-            USERNAME: ${{ secrets.SSH_USERNAME }}
-            KEY: ${{ secrets.SSH_KEY }}
-          with:
-            source: "/home/runner/build"
-            target: "/var/opt/www"
-            strip_components: 1
+          run: scp -i ${{ secrets.SSH_KEY }} -r build/* ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }}:/var/opt/www/
+          # uses: appleboy/scp-action@master  
+          # env:
+          #   HOST: ${{ secrets.SSH_HOST }}
+          #   USERNAME: ${{ secrets.SSH_USERNAME }}
+          #   KEY: ${{ secrets.SSH_KEY }}
+          # with:
+          #   source: "/home/runner/build"
+          #   target: "/var/opt/www"
+          #   strip_components: 1
 
         - name: Deploy to Digital Ocean droplet via SSH action
           uses: appleboy/ssh-action@v0.1.3
