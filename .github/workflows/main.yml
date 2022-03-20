@@ -81,9 +81,9 @@ jobs:
           with:
             local: '/home/runner/build'
             remote: '/var/opt/www/'
-            host: ${{secrets.HOST}}
-            user: ${{secrets.USER}}
-            password: ${{secrets.PASSWORD}}
+            host: ${{secrets.SSH_HOST}}
+            user: ${{secrets.SSH_USERNAME}}
+            key: ${{secrets.SSH_KEY}}
 
         - name: Deploy to Digital Ocean droplet via SSH action
           uses: appleboy/ssh-action@v0.1.3
