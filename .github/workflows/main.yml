@@ -48,7 +48,7 @@ jobs:
             KEY: ${{ secrets.SSH_KEY }}
           with:
             source: "./build/*"
-            target: "/var/opt/www"
+            target: "~/"
             strip_components: 1
 
         # Share artifact inside workflow
@@ -100,8 +100,8 @@ jobs:
               # Go to app directory
               cd /var/opt/www
               
-              # Copy build to directory
-              mv build/* ./
-
               # Remove old files
               rm -rf build 
+              
+              # Copy build to directory
+              mv ~/build/* ./
