@@ -79,7 +79,7 @@ jobs:
         
           uses: mdallasanta/ssh-scp-deploy@v1.1.0
           with:
-            local: '/home/runner/build'
+            local: '~/build'
             remote: '/var/opt/www/'
             host: ${{secrets.SSH_HOST}}
             user: ${{secrets.SSH_USERNAME}}
