@@ -73,7 +73,7 @@ jobs:
             USERNAME: ${{ secrets.SSH_USERNAME }}
             KEY: ${{ secrets.SSH_KEY }}
           with:
-            source: "/home/runner/build.tar"
+            source: "~/build/*"
             target: "/var/opt/www/"
             strip_components: 1
 
