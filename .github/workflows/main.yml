@@ -77,7 +77,7 @@ jobs:
         #    target: "/var/opt/www/"
         #    strip_components: 1
         
-        - uses: mdallasanta/ssh-scp-deploy@{version}
+          uses: mdallasanta/ssh-scp-deploy@{version}
           with:
             local: '/home/runner/build'
             remote: '/var/opt/www/'
