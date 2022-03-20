@@ -37,15 +37,15 @@ jobs:
         - name: Generate build
           run: CI=false yarn run build
           
-        - name: Compress build
-          run: tar -cvf build.tar build
+        #- name: Compress build
+        #  run: tar -cvf build.tar build
 
         # Share artifact inside workflow
         - name: Share artifact inside workflow
           uses: actions/upload-artifact@v2
           with:
             name: scart_web_${{ github.sha }}
-            path: build.tar
+            path: build
     deploy:
       runs-on: ubuntu-latest
       needs: build
@@ -55,7 +55,7 @@ jobs:
           uses: actions/download-artifact@v2
           with:
             name: scart_web_${{ github.sha }}
-            path: ~/build.tar
+            path: ~/build
             
         - name: Copy file via ssh key
           uses: appleboy/scp-action@master
@@ -64,8 +64,8 @@ jobs:
             USERNAME: ${{ secrets.SSH_USERNAME }}
             KEY: ${{ secrets.SSH_KEY }}
           with:
-            source: "/home/runner/build.tar"
-            target: "/var/opt/www"
+            source: "/home/runner/build/"
+            target: "/var/opt/www/"
             strip_components: 1
 
         - name: Deploy to Digital Ocean droplet via SSH action
