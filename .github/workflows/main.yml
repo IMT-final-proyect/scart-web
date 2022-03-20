@@ -38,7 +38,7 @@ jobs:
           run: CI=false yarn run build
           
         - name: Compress build
-          run: tar -cvf build.tar build/
+          run: tar -cvf build.tar build
 
         # Share artifact inside workflow
         - name: Share artifact inside workflow
@@ -66,7 +66,7 @@ jobs:
           with:
             source: "/home/runner/build.tar"
             target: "/var/opt/www/"
-
+            strip_components: 1
 
         - name: Deploy to Digital Ocean droplet via SSH action
           uses: appleboy/ssh-action@v0.1.3
