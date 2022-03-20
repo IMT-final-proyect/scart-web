@@ -36,9 +36,6 @@ jobs:
 
         - name: Generate build
           run: CI=false yarn run build
-          
-        # - name: Check Build folder
-        #   run: ls ./build
 
         - name: Copy file via ssh key
           uses: appleboy/scp-action@master  
@@ -47,47 +44,15 @@ jobs:
             USERNAME: ${{ secrets.SSH_USERNAME }}
             KEY: ${{ secrets.SSH_KEY }}
           with:
-            source: "./build/*"
+            source: "./build"
             target: "/home/${{ secrets.SSH_USERNAME }}/build"
             strip_components: 1
 
-        # Share artifact inside workflow
-        # - name: Share artifact inside workflow
-        #   uses: actions/upload-artifact@v2
-        #   with:
-        #     name: scart_web_${{ github.sha }}
-        #     path: ./build
     deploy:
       runs-on: ubuntu-latest
       needs: build
 
       steps:
-        # - name: Create Build director
-        #   run: mkdir ~/build
-
-        # - name: Download artifact inside workflow
-        #   uses: actions/download-artifact@v2
-        #   with:
-        #     name: scart_web_${{ github.sha }}
-        #     path: ~/build
-          
-        # - name: Compress build
-        #   run: tar -cvf ~/build.tar ~/build
-          
-        # - name: Check Build folder
-        #   run: ls ~/
-            
-        # - name: Copy file via ssh key
-        #   run: scp -i ${{ secrets.SSH_KEY }} -r /home/runner/build ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }}:/var/opt/www/
-        #   # uses: appleboy/scp-action@master  
-        #   # env:
-        #   #   HOST: ${{ secrets.SSH_HOST }}
-        #   #   USERNAME: ${{ secrets.SSH_USERNAME }}
-        #   #   KEY: ${{ secrets.SSH_KEY }}
-        #   # with:
-        #   #   source: "/home/runner/build"
-        #   #   target: "/var/opt/www"
-        #   #   strip_components: 1
 
         - name: Deploy to Digital Ocean droplet via SSH action
           uses: appleboy/ssh-action@v0.1.3
@@ -104,7 +69,7 @@ jobs:
               rm -rf ./build 
               
               # Copy build to directory
-              mv /home/${{ secrets.SSH_USERNAME }}/build/* ./
+              cp -r /home/${{ secrets.SSH_USERNAME }}/build/* ./
 
               # Delete temporary build folder
               rm -rf /home/${{ secrets.SSH_USERNAME }}/build
