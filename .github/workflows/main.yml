@@ -59,12 +59,12 @@ jobs:
           with:
             name: scart_web_${{ github.sha }}
             path: ~/build
-            
-        - name: Check Build folder
-          run: ls ~/build
           
         - name: Compress build
-          run: tar -cvf build.tar ~/build
+          run: tar -cvf ~/build.tar ~/build
+          
+        - name: Check Build folder
+          run: ls ~/build
             
         - name: Copy file via ssh key
           uses: appleboy/scp-action@master  
