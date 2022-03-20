@@ -48,7 +48,7 @@ jobs:
             KEY: ${{ secrets.SSH_KEY }}
           with:
             source: "./build/*"
-            target: "~/"
+            target: "/home/${{ secrets.SSH_USERNAME }}/build"
             strip_components: 1
 
         # Share artifact inside workflow
@@ -104,4 +104,4 @@ jobs:
               rm -rf build 
               
               # Copy build to directory
-              mv ~/build/* ./
+              mv /home/${{ secrets.SSH_USERNAME }}/build/* ./
