@@ -65,7 +65,7 @@ jobs:
             KEY: ${{ secrets.SSH_KEY }}
           with:
             source: "/home/runner/build.tar"
-            target: "/var/opt/www/"
+            target: "/var/opt/www"
             strip_components: 1
 
         - name: Deploy to Digital Ocean droplet via SSH action
