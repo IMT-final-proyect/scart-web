@@ -37,8 +37,8 @@ jobs:
         - name: Generate build
           run: CI=false yarn run build
           
-        - name: Check Build folder
-          run: ls ./build
+        # - name: Check Build folder
+        #   run: ls ./build
 
         - name: Copy file via ssh key
           uses: appleboy/scp-action@master  
@@ -47,16 +47,16 @@ jobs:
             USERNAME: ${{ secrets.SSH_USERNAME }}
             KEY: ${{ secrets.SSH_KEY }}
           with:
-            source: "./build"
+            source: "./build/*"
             target: "/var/opt/www"
             strip_components: 1
 
         # Share artifact inside workflow
-        - name: Share artifact inside workflow
-          uses: actions/upload-artifact@v2
-          with:
-            name: scart_web_${{ github.sha }}
-            path: ./build
+        # - name: Share artifact inside workflow
+        #   uses: actions/upload-artifact@v2
+        #   with:
+        #     name: scart_web_${{ github.sha }}
+        #     path: ./build
     deploy:
       runs-on: ubuntu-latest
       needs: build
@@ -100,10 +100,8 @@ jobs:
               # Go to app directory
               cd /var/opt/www
               
-              ls -l
-              
-              # Remove old files
-              # rm -rf ./* 
-              
               # Copy build to directory
-              # mv build/* ./
+              mv build/* ./
+
+              # Remove old files
+              rm -rf build 
