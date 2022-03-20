@@ -96,8 +96,10 @@ jobs:
               # Go to app directory
               cd /var/opt/www
               
+              ls -l
+              
               # Remove old files
-              rm -rf ./* 
+              # rm -rf ./* 
               
               # Copy build to directory
-              mv build/* ./
+              # mv build/* ./
