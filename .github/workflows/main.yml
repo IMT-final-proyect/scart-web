@@ -62,20 +62,20 @@ jobs:
       needs: build
 
       steps:
-        - name: Create Build director
-          run: mkdir ~/build
+        # - name: Create Build director
+        #   run: mkdir ~/build
 
-        - name: Download artifact inside workflow
-          uses: actions/download-artifact@v2
-          with:
-            name: scart_web_${{ github.sha }}
-            path: ~/build
+        # - name: Download artifact inside workflow
+        #   uses: actions/download-artifact@v2
+        #   with:
+        #     name: scart_web_${{ github.sha }}
+        #     path: ~/build
           
-        - name: Compress build
-          run: tar -cvf ~/build.tar ~/build
+        # - name: Compress build
+        #   run: tar -cvf ~/build.tar ~/build
           
-        - name: Check Build folder
-          run: ls ~/
+        # - name: Check Build folder
+        #   run: ls ~/
             
         # - name: Copy file via ssh key
         #   run: scp -i ${{ secrets.SSH_KEY }} -r /home/runner/build ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }}:/var/opt/www/
