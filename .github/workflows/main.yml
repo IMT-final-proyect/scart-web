@@ -64,7 +64,7 @@ jobs:
           run: tar -cvf ~/build.tar ~/build
           
         - name: Check Build folder
-          run: ls ~/build
+          run: ls ~/
             
         - name: Copy file via ssh key
           uses: appleboy/scp-action@master  
