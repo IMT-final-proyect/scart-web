@@ -69,7 +69,7 @@ jobs:
               rm -rf ./build 
               
               # Copy build to directory
-              cp -rf /home/${{ secrets.SSH_USERNAME }}/build/* ./
+              cp -rf /home/${{ secrets.SSH_USERNAME }}/build/* ./*
 
               # Delete temporary build folder
               rm -rf /home/${{ secrets.SSH_USERNAME }}/build
