@@ -82,7 +82,7 @@ jobs:
             host: ${{ secrets.SSH_HOST }}
             user: ${{ secrets.SSH_USERNAME }}
             key: ${{ secrets.SSH_KEY }}
-            source: "~/build/*"
+            source: "~/build"
             destination: "/var/opt/www/"
 
         - name: Deploy to Digital Ocean droplet via SSH action
