@@ -11,6 +11,10 @@ import { getDriverData } from '../../../redux/slices/userSlice';
 import { useHistory } from 'react-router-dom';
 import { ROUTES } from '../navigation/routes'
 import { isDriverUpToDate } from '../../../redux/slices/resourcesSlice';
+import vehicleIcon from '../../../assets/icons/truck.png';
+import qrIcon from '../../../assets/icons/qr-code.png';
+import documentsIcon from '../../../assets/icons/file.png';
+import userIcon from '../../../assets/icons/resume.png';
 
 const Home = () => {
     const classes = useStyles();
@@ -37,30 +41,32 @@ const Home = () => {
                 </Grid>
                 }
             </Grid>
-            <Grid container className={classes.cardContainer} justifyContent='space-evenly'>
-                <Grid item >
-                    <Card className={classes.cardLeft}  onClick={() => history.push(ROUTES.root+ROUTES.QR)}>
-                        <QrCodeScannerIcon sx={{ fontSize: 150 }}/>
-                        <Typography>Scan QR</Typography>
+            <Grid container className={classes.cardContainer} justifyContent='space-evenly' spacing={2} >
+                <Grid item xs={6} md={3}>
+                    <Card className={classes.card}  onClick={() => history.push(ROUTES.root+ROUTES.QR)}>
+                        {/* <QrCodeScannerIcon sx={{ fontSize: 150 }}/> */}
+                        <img src={qrIcon} alt="Mostrar QR" className={classes.img} />
+                        <Typography>Mostrar QR</Typography>
                     </Card>
                 </Grid>
-                <Grid item >
-                    <Card className={classes.cardRight} onClick={() => history.push(ROUTES.root+ROUTES.myData)}>
-                        <AssignmentIndIcon sx={{ fontSize: 150 }}/>
-                        <Typography>Mis datos</Typography>
+                <Grid item xs={6} md={3}>
+                    <Card className={classes.card} onClick={() => history.push(ROUTES.root+ROUTES.myData)}>
+                        {/* <AssignmentIndIcon sx={{ fontSize: 150 }}/> */}
+                        <img src={userIcon} alt="Mis Datos" className={classes.img}/>
+                        <Typography>Mis Datos</Typography>
                     </Card>
                 </Grid>
-            </Grid>
-            <Grid container justifyContent='space-evenly'>
-                <Grid item >
-                    <Card className={classes.cardLeft} onClick={() => history.push(ROUTES.root+ROUTES.myDocuments)}>
-                        <ArticleIcon sx={{ fontSize: 150 }}/>
+                <Grid item xs={6} md={3}>
+                    <Card className={classes.card} onClick={() => history.push(ROUTES.root+ROUTES.myDocuments)}>
+                        {/* <ArticleIcon sx={{ fontSize: 150 }}/> */}
+                        <img src={documentsIcon} alt="Mi Documentacion" className={classes.img}/>
                         <Typography>Mi Documentación</Typography>
                     </Card>
                 </Grid>
-                <Grid item >
-                    <Card className={classes.cardRight} onClick={() => history.push(ROUTES.root+ROUTES.myVehicles)}>
-                        <DirectionsCarIcon sx={{ fontSize: 150 }}/>
+                <Grid item xs={6} md={3}>
+                    <Card className={classes.card} onClick={() => history.push(ROUTES.root+ROUTES.myVehicles)}>
+                        {/* <DirectionsCarIcon sx={{ fontSize: 150 }}/> */}
+                        <img src={vehicleIcon} alt="Vehiculos" className={classes.img} />
                         <Typography>Vehiculos</Typography>
                     </Card>
                 </Grid>
