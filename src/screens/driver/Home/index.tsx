@@ -46,28 +46,28 @@ const Home = () => {
                     <Card className={classes.card}  onClick={() => history.push(ROUTES.root+ROUTES.QR)}>
                         {/* <QrCodeScannerIcon sx={{ fontSize: 150 }}/> */}
                         <img src={qrIcon} alt="Mostrar QR" className={classes.img} />
-                        <Typography>Mostrar QR</Typography>
+                        <p className={classes.text}>Mostrar QR</p>
                     </Card>
                 </Grid>
                 <Grid item xs={6} md={3}>
                     <Card className={classes.card} onClick={() => history.push(ROUTES.root+ROUTES.myData)}>
                         {/* <AssignmentIndIcon sx={{ fontSize: 150 }}/> */}
                         <img src={userIcon} alt="Mis Datos" className={classes.img}/>
-                        <Typography>Mis Datos</Typography>
+                        <p className={classes.text}>Mis Datos</p>
                     </Card>
                 </Grid>
                 <Grid item xs={6} md={3}>
                     <Card className={classes.card} onClick={() => history.push(ROUTES.root+ROUTES.myDocuments)}>
                         {/* <ArticleIcon sx={{ fontSize: 150 }}/> */}
                         <img src={documentsIcon} alt="Mi Documentacion" className={classes.img}/>
-                        <Typography>Mi Documentación</Typography>
+                        <p className={classes.text}>Mi Documentación</p>
                     </Card>
                 </Grid>
                 <Grid item xs={6} md={3}>
                     <Card className={classes.card} onClick={() => history.push(ROUTES.root+ROUTES.myVehicles)}>
                         {/* <DirectionsCarIcon sx={{ fontSize: 150 }}/> */}
                         <img src={vehicleIcon} alt="Vehiculos" className={classes.img} />
-                        <Typography>Vehiculos</Typography>
+                        <p className={classes.text}>Vehiculos</p>
                     </Card>
                 </Grid>
             </Grid>

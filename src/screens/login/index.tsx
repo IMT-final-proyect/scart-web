@@ -135,9 +135,7 @@ const Login = () => {
                             <CircularProgress />
                         :
                             <Button variant="contained" className={classes.button} onClick={_onLogIn} >
-                                <text className={classes.button}>
-                                    Iniciar Sesion
-                                </text>
+                                Iniciar Sesion
                             </Button>
                         }
                         </Grid>
@@ -147,7 +145,7 @@ const Login = () => {
                             alignItems="center"
                         >
                         <Button variant='contained' className={classes.forgotPassword}>
-                            <text> Olvidé mi contraseña </text>
+                            Olvidé mi contraseña
                         </Button>
                         </Grid>
                     </CardContent>

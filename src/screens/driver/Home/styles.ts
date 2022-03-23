@@ -11,15 +11,6 @@ const useStyles = makeStyles((theme: Theme) => ({
             paddingTop: headerSize + 20
         },
     },
-    cardLeft: {
-        minWidth: 'auto',
-        textAlign: 'center',
-        cursor:'pointer'
-    },
-    cardRight: {
-        textAlign: 'center',
-        cursor:'pointer'
-    },
     cardContainer: {
         marginBottom: '5%',
         paddingLeft: '5%',
@@ -75,6 +66,10 @@ const useStyles = makeStyles((theme: Theme) => ({
         borderRadius: '30px',
         textAlign: 'center',
         padding: '5px'
+    },
+    text: {
+        fontSize: '15px',
+        fontWeight: 'bold',
     }
 }));
 

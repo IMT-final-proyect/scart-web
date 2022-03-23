@@ -41,9 +41,11 @@ const useStyles = makeStyles((theme: Theme) => ({
         color: globalColors.white,
         fontSize: 15,
         margin: 'auto',
-        textTransform: 'none'
+        textTransform: 'none',
+        width: '100%'
     },
     forgotPassword: {
+        width: '100%',
         marginTop: '10%',
         justify: 'center',
         alignItems: 'center',

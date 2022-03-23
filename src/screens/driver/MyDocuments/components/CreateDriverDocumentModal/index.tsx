@@ -72,26 +72,35 @@ const CreateDriverDocumentModal = ({ addDocument, setOpenDriverDocumentModal, dr
 
     return (
         <Grid className={classes.modal} container direction='column' justify='center' alignItems='center'>
-            <text className={classes.title}>Cargar documentación</text>
-            <text className={classes.subtitle}>Conductor</text>
-            {documentTypes &&
-                <CustomSelectObject value={documentType} placeholder='Documento' setValue={setDocumentType} data={documentTypes}/>
+            <Grid item>
+                <text className={classes.title}>Cargar documentación</text>
+            </Grid>
+            <Grid>
+                <text className={classes.subtitle}>Conductor</text>
+            </Grid>           
+            {
+                documentTypes &&
+                <Grid item xs={12}>
+                    <CustomSelectObject value={documentType} placeholder='Documento' setValue={setDocumentType} data={documentTypes}/>
+                </Grid>
             }
-            <MuiPickersUtilsProvider utils={MomentUtils}>
-                <KeyboardDatePicker
-                    className={classes.datePicker}
-                    autoOk
-                    variant="inline"
-                    format="DD/MM/yyyy"
-                    id="expiration"
-                    label="Fecha de vencimiento"
-                    value={expirationDate}
-                    onChange={handleExpirationChange}
-                    KeyboardButtonProps={{
-                        'aria-label': 'change date',
-                    }}
-                />
-            </MuiPickersUtilsProvider>
+            <Grid item> 
+                <MuiPickersUtilsProvider utils={MomentUtils}>
+                    <KeyboardDatePicker
+                        className={classes.datePicker}
+                        autoOk
+                        variant="inline"
+                        format="DD/MM/yyyy"
+                        id="expiration"
+                        label="Fecha de vencimiento"
+                        value={expirationDate}
+                        onChange={handleExpirationChange}
+                        KeyboardButtonProps={{
+                            'aria-label': 'change date',
+                        }}
+                    />
+                </MuiPickersUtilsProvider>
+            </Grid>
             <Button onClick={() => openFileSelector()} variant="contained" className={classes.upload}>
                 {loading ?
                     <CircularProgress style={{color: globalColors.white}}/>
