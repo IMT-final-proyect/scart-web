@@ -11,16 +11,16 @@ import TemplateBar from '../../../components/templateBar';
 import { ROUTES } from './routes';
 import useStyles from './styles';
 import contractors from '../contractors';
-import drivers from '../drivers';
-import vehicles from '../vehicles';
 import audition from '../audition'
 import DocumentDetails from '../documentDetails'
 import contractorDetails from '../contractors/components/contractorDetails';
-import DriverDetails from '../drivers/components/driverDetails';
-import VehicleDetails from '../vehicles/components/vehicleDetails';
+import DriverDetails from '../../../components/driversScreen/components/driverDetails';
+import VehicleDetails from '../../../components/vehiclesScreen/components/vehicleDetails';
 import AuditionDetails from '../audition/components/auditionDetails'
 import users from '../users'
 import UserDetails from '../users/components/UserDetails';
+import driversScreen from '../../../components/driversScreen';
+import vehiclesScreen from '../../../components/vehiclesScreen';
 const AdminNavigator = () => {
     const classes = useStyles();
     const [title, setTitle] = useState('Administrador');
@@ -95,9 +95,9 @@ const AdminNavigator = () => {
             <Switch>
                 <Route exact path={ROUTES.root+ROUTES.contractors} component={contractors} />
                 <Route exact path={ROUTES.root+ROUTES.contractors+'/:id'} component={contractorDetails} />
-                <Route exact path={ROUTES.root+ROUTES.drivers} component={drivers} />
+                <Route exact path={ROUTES.root+ROUTES.drivers} component={driversScreen} />
                 <Route exact path={ROUTES.root+ROUTES.drivers+'/:id'} component={DriverDetails} />
-                <Route exact path={ROUTES.root+ROUTES.vehicles} component={vehicles} />
+                <Route exact path={ROUTES.root+ROUTES.vehicles} component={vehiclesScreen} />
                 <Route exact path={ROUTES.root+ROUTES.vehicles+'/:id'} component={VehicleDetails} />
                 <Route exact path={ROUTES.root+ROUTES.audition} component={audition} />
                 <Route exact path={ROUTES.root+ROUTES.audition+'/:id'} component={AuditionDetails} />

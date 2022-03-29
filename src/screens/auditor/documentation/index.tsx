@@ -118,7 +118,7 @@ const Documentation = () => {
                                     contractor={documentsFiltered[parseInt(key)].contractor}
                                     type={documentsFiltered[parseInt(key)].type}
                                     owner={documentsFiltered[parseInt(key)].entityId}
-                                    route={ROUTES.root+'/'+documentsFiltered[parseInt(key)].id}
+                                    route={ROUTES.root+ROUTES.home+'/'+documentsFiltered[parseInt(key)].id}
                                 />
                             )}
                         </Grid>
