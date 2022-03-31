@@ -1,9 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 import Axios, {AxiosResponse} from 'axios';
 import moment from 'moment';
-import { AllowedRol, contractor, driver, vehicle } from '../../utils/constants';
-import { getRolName } from '../../utils/functions/roles';
-import { IContractor, IDocument, IDriver, IVehicle, IMissingDocument, IDocumentType } from '../../utils/interfaces';
+import { AllowedRol } from '../../utils/constants';
+import { IContractor, IDocument, IDocumentType } from '../../utils/interfaces';
 import { AppThunk } from '../store';
 var _ = require('lodash');
 

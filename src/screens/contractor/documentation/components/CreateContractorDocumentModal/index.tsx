@@ -1,8 +1,9 @@
+/* eslint-disable array-callback-return */
 
 
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import MomentUtils from '@date-io/moment';
-import { Button, Grid, Snackbar, } from '@material-ui/core';
+import { Button, Grid, } from '@material-ui/core';
 import useStyles from './styles';
 import { useEffect, useState } from 'react';
 import moment from 'moment';
@@ -32,7 +33,7 @@ const CreateContractorDocumentModal = ({ addDocument, setOpenDriverModal }: Prop
     const contractorId = useSelector((state: RootState) => state.user.userData?.id)
     const error = useSelector((state: RootState) => state.documents.contractor.error)
 
-    const [openFileSelector, { filesContent, loading, errors, plainFiles, clear }] = useFilePicker({
+    const [openFileSelector, { filesContent, loading }] = useFilePicker({
         multiple: true,
         readAs: 'DataURL',
         accept: ['.png', '.pdf', '.jpeg', '.jpg'],

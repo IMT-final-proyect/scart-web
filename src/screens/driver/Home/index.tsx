@@ -1,8 +1,4 @@
 import { Card, Grid, Typography } from '@material-ui/core';
-import QrCodeScannerIcon from '@mui/icons-material/QrCodeScanner';
-import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
-import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
-import ArticleIcon from '@mui/icons-material/Article';
 import useStyles from './styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';

@@ -2,8 +2,6 @@ import { makeStyles, Theme } from '@material-ui/core';
 import { headerSize } from '../../../utils/constants';
 import globalColors from '../../../utils/styles/globalColors';
 
-const { innerWidth } = window;
-
 const useStyles = makeStyles((theme: Theme) => ({
     container:{
         paddingTop: headerSize + 50,

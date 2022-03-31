@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import MomentUtils from '@date-io/moment';
 import { Button, Grid, TextField, } from '@material-ui/core';

@@ -1,10 +1,11 @@
+/* eslint-disable array-callback-return */
 import React, { useEffect, useState } from 'react';
 
 import { Card, CircularProgress, Grid, Typography, } from '@material-ui/core';
 
 import useStyles from './styles';
 import { useDispatch, useSelector } from 'react-redux';
-import { getPendingExceptions, _cleanSnackbar } from '../../redux/slices/exceptionsSlice';
+import { getPendingExceptions } from '../../redux/slices/exceptionsSlice';
 import { RootState } from '../../redux/rootReducer';
 import { IException } from '../../utils/interfaces';
 import CustomInput from '../customInput';

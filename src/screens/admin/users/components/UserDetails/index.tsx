@@ -10,7 +10,6 @@ import { capitalize, getRolNumber } from '../../../../../utils/functions/roles';
 import useStyles from './styles'
 import EditUserModal from '../EditUserModal';
 import { putChangePassword } from '../../../../../redux/slices/userSlice';
-import { AllowedRol } from '../../../../../utils/constants';
 
 const UserDetails = () => {
 	const history = useHistory();

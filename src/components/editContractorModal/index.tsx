@@ -1,8 +1,6 @@
 import { Checkbox, FormControlLabel, Grid, Button } from "@material-ui/core";
 import { TextField } from "@mui/material"
-import moment from "moment";
 import { useCallback, useState } from "react";
-import { IUser } from "../../redux/slices/userSlice";
 import { IContractor } from "../../utils/interfaces";
 import CustomSnackbar from "../customSnackbar";
 import useStyles from './styles';
@@ -83,6 +81,7 @@ const EditContractorModal = ( {contractor, changePassword, editContractor, setOp
         setProvince(event.target.value);
     }, [setProvince]);
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const _onChangeZipCode = useCallback((event) => {
         setZipCode(event.target.value);
     }, [setZipCode]);

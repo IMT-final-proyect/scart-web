@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { Grid, Card, Button, TextField, InputAdornment, IconButton, Hidden, Snackbar } from '@material-ui/core';
+import { Grid, Card, Button, TextField, InputAdornment, IconButton, Hidden } from '@material-ui/core';
 import CardContent from '@material-ui/core/CardContent';
 import ClearIcon from '@material-ui/icons/Clear';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -13,7 +13,6 @@ import { useHistory } from "react-router-dom";
 import { getRolPath } from '../../utils/functions/roles';
 import LogoNutreco from '../../assets/images/logoNutreco.png'
 import { isTokenValid } from '../../utils/functions/validations';
-import { Alert } from '@mui/material';
 import CustomSnackbar from '../../components/customSnackbar';
 
 

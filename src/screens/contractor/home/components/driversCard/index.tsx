@@ -2,7 +2,6 @@ import { Button, Card, Divider, Grid, Typography } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { ROUTES } from '../../../navigation/routes';
 
-import DriveEtaOutlinedIcon from '@mui/icons-material/DriveEtaOutlined';
 import useStyles from './styles';
 
 interface props {

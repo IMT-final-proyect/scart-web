@@ -2,7 +2,7 @@
 import { makeStyles, Theme } from '@material-ui/core';
 import globalColors from '../../utils/styles/globalColors';
 
-const { innerWidth, innerHeight } = window;
+const { innerHeight } = window;
 
 const useStyles = makeStyles((theme: Theme) => ({
     textInput: {

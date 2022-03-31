@@ -1,3 +1,5 @@
+/* eslint-disable array-callback-return */
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useCallback, useEffect, useState } from 'react';
 import { Button, Card, CircularProgress, Grid, Modal } from '@material-ui/core';
 import AddCircleIcon from '@material-ui/icons/AddCircle';

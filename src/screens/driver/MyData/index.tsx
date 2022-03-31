@@ -29,7 +29,7 @@ const MyData = () => {
     useEffect(() => {
         setOpenEditDriverSuccess(success)
         dispatch(getDriverById(driverId as number))
-    }, [success, driverId])
+    }, [success, driverId, dispatch])
 
     useEffect(() => {
         setOpenEditDriverError(!!error)

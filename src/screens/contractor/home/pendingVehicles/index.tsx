@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 import { Button, Card, CircularProgress, Grid, Typography } from "@material-ui/core"
 import useStyles from './styles';
 import CustomInput from '../../../../components/customInput'
@@ -8,7 +9,6 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../redux/rootReducer";
 import { getPendingVehicles } from "../../../../redux/slices/contractorsSlice";
-import Driver from "../components/driverRow";
 import globalColors from "../../../../utils/styles/globalColors";
 import Vehicle from "../components/vehicleRow";
 

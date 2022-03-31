@@ -1,9 +1,10 @@
+/* eslint-disable array-callback-return */
 import { useEffect, useState } from 'react';
-import { Button, Card, CircularProgress, Grid, Modal, Snackbar, Typography, } from '@material-ui/core';
+import { Button, Card, CircularProgress, Grid, Modal, Typography, } from '@material-ui/core';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import Driver from './components/driverRow';
 import Vehicle from './components/vehicleRow';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { ROUTES } from '../navigation/routes';
 import useStyles from './styles';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,7 +14,6 @@ import moment from 'moment';
 import CreateDriverModal from './components/createDriverModal';
 import CreateVehicleModal from './components/createVehicleModal';
 import { IDriver, IVehicle } from '../../../utils/interfaces';
-import { Alert } from '@mui/material';
 import CustomInput from '../../../components/customInput'
 import DeleteModal from '../../../components/DeleteModal';
 import CustomSnackbar from '../../../components/customSnackbar';

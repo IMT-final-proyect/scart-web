@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 import React, { useEffect, useState } from 'react';
 import { Button, Card, CircularProgress, Grid, Modal, Typography, } from '@material-ui/core';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
@@ -5,7 +6,7 @@ import useStyles from './styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../redux/rootReducer';
 import { createDocument, getDriverDocuments } from '../../../redux/slices/documentsSlice';
-import { IDocument, IDriver } from '../../../utils/interfaces';
+import { IDocument } from '../../../utils/interfaces';
 import { ROUTES } from '../navigation/routes';
 import { Link } from 'react-router-dom';
 import { getStateName } from '../../../utils/functions/states';

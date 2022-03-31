@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 import React, { useEffect, useState } from 'react';
 import { Button, Card, Grid, Modal, Typography, } from '@material-ui/core';
 import AddCircleIcon from '@material-ui/icons/AddCircle';

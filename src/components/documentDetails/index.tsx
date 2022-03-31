@@ -13,7 +13,7 @@ import FilePreview from "react-file-preview-latest";import { getStateColor, getS
 import { getSeverityName } from '../../utils/functions/severities';
 
 const DocumentDetails = () => {
-    const { activeDocument, loading, error } = useSelector((state: RootState) => state.documents)
+    const { activeDocument, loading } = useSelector((state: RootState) => state.documents)
     const stateName = getStateName(parseInt(activeDocument.state.toString()))
     const color = getStateColor(stateName)
     const classes = useStyles({color});    
