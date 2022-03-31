@@ -79,6 +79,7 @@ const CreateContractorDocumentModal = ({ addDocument, setOpenDriverModal }: Prop
                 <KeyboardDatePicker
                     className={classes.datePicker}
                     autoOk
+                    disablePast
                     variant="inline"
                     format="DD/MM/yyyy"
                     id="expiration"

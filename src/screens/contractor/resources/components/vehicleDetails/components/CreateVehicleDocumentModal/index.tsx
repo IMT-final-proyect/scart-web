@@ -80,6 +80,7 @@ const CreateVehicleDocumentModal = ({ vehicleId, addDocument, setOpenDocumentMod
                 <KeyboardDatePicker
                     className={classes.datePicker}
                     autoOk
+                    disablePast
                     variant="inline"
                     format="DD/MM/yyyy"
                     id="expiration"
