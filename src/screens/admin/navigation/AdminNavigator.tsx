@@ -5,6 +5,7 @@ import FindInPageIcon from '@mui/icons-material/FindInPage';
 import BusinessIcon from '@mui/icons-material/Business';
 import DirectionsCarFilledIcon from '@mui/icons-material/DirectionsCarFilled';
 import AirlineSeatReclineExtraIcon from '@mui/icons-material/AirlineSeatReclineExtra';
+import BusAlertIcon from '@mui/icons-material/BusAlert';
 import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
 import GroupIcon from '@mui/icons-material/Group';
 import TemplateBar from '../../../components/templateBar';
@@ -21,6 +22,8 @@ import users from '../users'
 import UserDetails from '../users/components/UserDetails';
 import driversScreen from '../../../components/driversScreen';
 import vehiclesScreen from '../../../components/vehiclesScreen';
+import Exceptions from '../../../components/exceptionsScreen';
+import ExceptionDetails from '../../../components/exceptionDetails';
 const AdminNavigator = () => {
     const classes = useStyles();
     const [title, setTitle] = useState('Administrador');
@@ -74,6 +77,17 @@ const AdminNavigator = () => {
             <Button 
                 className = {classes.button}
                 component={Link}
+                to={ROUTES.root+ROUTES.exceptions}
+                onClick={() => setTitle("Excepciones")}
+            >
+                <div className={classes.icon}>
+                    <BusAlertIcon/>
+                </div>
+                Excepciones
+            </Button>
+            <Button 
+                className = {classes.button}
+                component={Link}
                 to={ROUTES.root+ROUTES.users}
                 onClick={() => setTitle("Usuarios")}
             >
@@ -105,6 +119,8 @@ const AdminNavigator = () => {
                 <Route exact path={ROUTES.root+ROUTES.manager+'/:id'} component={UserDetails} />
                 <Route exact path={ROUTES.root+ROUTES.auditor+'/:id'} component={UserDetails} />
                 <Route exact path={ROUTES.root+ROUTES.security+'/:id'} component={UserDetails} />
+                <Route exact path={ROUTES.root+ROUTES.exceptions} component={Exceptions} />
+                <Route exact path={ROUTES.root+ROUTES.exceptions+'/:id/:driverId/:vehicleId/:securityId'} component={ExceptionDetails} />
                 <Route exact path={ROUTES.root+ROUTES.users} component={users} />
                 
                 <Route path={ROUTES.root} component={contractors} />

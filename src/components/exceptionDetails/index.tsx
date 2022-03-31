@@ -9,17 +9,20 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import CloseIcon from '@mui/icons-material/Close';
 import FilePreview from "react-file-preview-latest";    
-import { RootState } from '../../../redux/rootReducer';
-import { ROUTES } from '../navigation/routes';
-import CustomSnackbar from '../../../components/customSnackbar';
-import { getDriverById, getSecurityById, getVehicleById } from '../../../redux/slices/resourcesSlice';
 import useStyles from './styles';
-import { getStateColor, getStateName } from '../../../utils/functions/states';
-import { putUpdateExceptions, _cleanSnackbar, getInvalidDocuments } from '../../../redux/slices/exceptionsSlice';
+import { RootState } from '../../redux/rootReducer';
+import { getDriverById, getSecurityById, getVehicleById } from '../../redux/slices/resourcesSlice';
+import { getInvalidDocuments, putUpdateExceptions, _cleanSnackbar } from '../../redux/slices/exceptionsSlice';
+import { getStateColor, getStateName } from '../../utils/functions/states';
+import CustomSnackbar from '../customSnackbar';
+import { ROUTES } from '../../screens/manager/navigation/routes';
 
 const ExceptionDetails = () => {
     const dispatch = useDispatch()
     const params: any = useParams();
+    const { location } = useHistory()
+    const root = location.pathname.split('/')[1]
+    
     const { id, driverId, vehicleId, securityId } = params
     const history = useHistory();
     const [comment, setComment] = useState('')
@@ -59,26 +62,17 @@ const ExceptionDetails = () => {
 
     useEffect(() => {
         if(evaluationSuccess){
-            history.push(ROUTES.root)
+            history.push('/'+root+ROUTES.exceptions)
         }
         else{
             if(!!error?.message) setErrorSnackbar(true)
         }
-    }, [error?.message, evaluationSuccess, history])
+    }, [error?.message, evaluationSuccess, history, root])
 
     const closeImagePicker = (value: any) => {
         setModalImage(false)
         setImage('')
     }
-
-    useEffect(() => {
-        if(evaluationSuccess){
-            history.push(ROUTES.root)
-        }
-        else{
-            if(!!error?.message) setErrorSnackbar(true)
-        }
-    }, [error?.message, evaluationSuccess, history])
 
     const handleRejected = () => {
         dispatch(putUpdateExceptions(id, comment, userId as number, 1))

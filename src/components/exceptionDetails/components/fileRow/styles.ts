@@ -1,5 +1,5 @@
 import { makeStyles, Theme } from '@material-ui/core';
-import globalColors from '../../../../../utils/styles/globalColors';
+import globalColors from '../../../../utils/styles/globalColors';
 
 const useStyles = makeStyles((theme: Theme) => ({
     container:{
@@ -20,11 +20,7 @@ const useStyles = makeStyles((theme: Theme) => ({
             fontSize: 10,
         },
         color: globalColors.red
-    },
-    button:{
-        height: '35px',
-        color: globalColors.lightBlue
-    },
+    }
 }));
 
 export default useStyles

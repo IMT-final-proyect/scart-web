@@ -4,18 +4,21 @@ import { Card, CircularProgress, Grid, Typography, } from '@material-ui/core';
 
 import useStyles from './styles';
 import { useDispatch, useSelector } from 'react-redux';
-import { getPendingExceptions, _cleanSnackbar } from '../../../redux/slices/exceptionsSlice';
-import { RootState } from '../../../redux/rootReducer';
-import { IException } from '../../../utils/interfaces';
-import CustomInput from '../../../components/customInput';
-import CustomSnackbar from '../../../components/customSnackbar';
+import { getPendingExceptions, _cleanSnackbar } from '../../redux/slices/exceptionsSlice';
+import { RootState } from '../../redux/rootReducer';
+import { IException } from '../../utils/interfaces';
+import CustomInput from '../customInput';
+import CustomSnackbar from '../customSnackbar';
 import ExceptionRow from './components/exceptionRow/ExceptionRow';
-import { ROUTES } from '../navigation/routes';
-import TomisBar from '../../../components/TomisBar';
+import { ROUTES } from '../../screens/manager/navigation/routes';
+import TomisBar from '../TomisBar';
+import { useHistory } from 'react-router-dom';
 
 const Exceptions = () => {
     const classes = useStyles();
     const dispatch = useDispatch()
+    const { location } = useHistory()
+    const root = location.pathname.split('/')[1]
     const [openSuccess, setOpenSuccess] = useState(false)
     const [searchContractor, setSearchContractor] = useState('')
     const exceptions = useSelector((state: RootState) => state.exceptions.data)
@@ -119,7 +122,7 @@ const Exceptions = () => {
                                             driver={exceptionsFiltered[parseInt(key)].driver}
                                             vehicle={exceptionsFiltered[parseInt(key)].vehicle}
                                             contractor={exceptionsFiltered[parseInt(key)].contractor}
-                                            route={ROUTES.root+ROUTES.exceptions+'/'+exceptionsFiltered[parseInt(key)].id+'/'+exceptionsFiltered[parseInt(key)].driverId+'/'+exceptionsFiltered[parseInt(key)].vehicleId+'/'+exceptionsFiltered[parseInt(key)].securityId}
+                                            route={'/'+root+ROUTES.exceptions+'/'+exceptionsFiltered[parseInt(key)].id+'/'+exceptionsFiltered[parseInt(key)].driverId+'/'+exceptionsFiltered[parseInt(key)].vehicleId+'/'+exceptionsFiltered[parseInt(key)].securityId}
                                         />
                                     )}
                                 </Grid>

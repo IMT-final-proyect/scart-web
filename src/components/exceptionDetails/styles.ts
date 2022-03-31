@@ -1,8 +1,7 @@
 
 import { makeStyles, Theme } from '@material-ui/core';
-import { headerSize } from '../../../utils/constants';
-
-import globalColors from '../../../utils/styles/globalColors';
+import { headerSize } from '../../utils/constants';
+import globalColors from '../../utils/styles/globalColors';
 
 
 

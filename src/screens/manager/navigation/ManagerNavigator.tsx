@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import { Button } from '@material-ui/core';
 import { useSelector } from 'react-redux';
-import HomeIcon from '@material-ui/icons/Home';
+import BusAlertIcon from '@mui/icons-material/BusAlert';
 import StarIcon from '@material-ui/icons/Star';
 import { BrowserRouter, Route, Switch, Link, useLocation } from 'react-router-dom';
 import DirectionsCarFilledIcon from '@mui/icons-material/DirectionsCarFilled';
@@ -11,11 +11,11 @@ import BusinessIcon from '@mui/icons-material/Business';
 
 import TemplateBar from '../../../components/templateBar';
 import { ROUTES } from './routes';
-import Exceptions from '../exceptions';
+import Exceptions from '../../../components/exceptionsScreen';
 import Reports from '../reports';
 import useStyles from './styles';
 import { RootState } from '../../../redux/rootReducer';
-import ExceptionDetails from '../exceptionDetails';
+import ExceptionDetails from '../../../components/exceptionDetails';
 import driversScreen from '../../../components/driversScreen';
 import DriverDetails from '../../../components/driversScreen/components/driverDetails';
 import vehiclesScreen from '../../../components/vehiclesScreen';
@@ -46,7 +46,7 @@ const ManagerNavigator = () => {
                 onClick={() => setTitle("Excepciones")}
             >
                 <div className={classes.icon}>
-                    <HomeIcon/>
+                    <BusAlertIcon/>
                 </div>
                 Excepciones
             </Button>
