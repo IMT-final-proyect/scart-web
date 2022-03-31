@@ -4,16 +4,16 @@ import AddCircleIcon from '@material-ui/icons/AddCircle';
 import useStyles from './styles';
 import { useDispatch, useSelector } from 'react-redux';
 import CircularProgress from '@mui/material/CircularProgress';
-import { RootState } from '../../../redux/rootReducer';
+import { RootState } from '../../redux/rootReducer';
 import CreateContractorModal from './components/CreateContractorModal';
-import { ROUTES } from '../navigation/routes';
+import { ROUTES } from '../../screens/admin/navigation/routes';
 import { Link } from 'react-router-dom';
-import { createContractor, getContractors } from '../../../redux/slices/contractorsSlice';
+import { createContractor, getContractors } from '../../redux/slices/contractorsSlice';
 import ContractorRow from './components/contratorRow';
-import CustomInput from '../../../components/customInput';
-import { IContractor } from '../../../utils/interfaces';
-import CustomSnackbar from '../../../components/customSnackbar';
-import TomisBar from '../../../components/TomisBar';
+import CustomInput from '../customInput';
+import { IContractor } from '../../utils/interfaces';
+import CustomSnackbar from '../customSnackbar';
+import TomisBar from '../TomisBar';
 
 const Contractors = () => {
     const classes = useStyles();

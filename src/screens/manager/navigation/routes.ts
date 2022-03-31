@@ -3,4 +3,8 @@ export enum ROUTES {
     exceptions = '/excepciones',
     reports = '/reportes',
     reportDetails = '/reportes/:id',
+    document = '/documento',
+    drivers = '/conductores',
+    vehicles = '/vehiculos',
+    contractors= '/contratistas'
 }

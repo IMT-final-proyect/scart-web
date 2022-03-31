@@ -3,5 +3,6 @@ export enum ROUTES {
     home = '/home',
     document = '/documento',
     drivers = '/conductores',
-    vehicles = '/vehiculos'
+    vehicles = '/vehiculos',
+    contractors= '/contratistas',
 }

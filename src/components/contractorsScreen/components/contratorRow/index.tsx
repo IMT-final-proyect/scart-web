@@ -1,7 +1,7 @@
 import React from 'react';
 import { Grid, } from '@material-ui/core';
 import useStyles from './styles';
-import { IContractor } from '../../../../../utils/interfaces';
+import { IContractor } from '../../../../utils/interfaces';
 
 interface Props{
     contractor: IContractor

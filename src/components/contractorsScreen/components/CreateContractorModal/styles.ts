@@ -1,18 +1,19 @@
 
 import { makeStyles, Theme } from '@material-ui/core';
-import globalColors from '../../../../../../../utils/styles/globalColors';
+import globalColors from '../../../../utils/styles/globalColors';
 
 const { innerWidth } = window;
 
 const useStyles = makeStyles((theme: Theme) => ({
     textInput: {
         color: globalColors.lightBlue,
-        marginTop: '2.5%',
-        marginBottom: '2.5%'
+        marginTop: 0,
+        marginBottom: '5%'
     },
-    datePicker: {
-        marginBottom: '15%',
-        marginTop: '5%'
+    lastTextInput: {
+        color: globalColors.lightBlue,
+        marginTop: 0,
+        marginBottom: '10%'
     },
     modal: {
         position: 'absolute', 
@@ -31,30 +32,27 @@ const useStyles = makeStyles((theme: Theme) => ({
         [theme.breakpoints.down('xs')]: {
             minWidth: innerWidth * 0.8
         },
+        [theme.breakpoints.down('lg')]: {
+            paddingLeft: '2%',
+            paddingRight: '2%',
+            paddingTop: 0,
+            paddingBottom: '1%',
+        }
     },
     title: {
         marginTop: '3%',
         fontSize: 25,
         fontWeight: 'bold',
+        marginBottom: '2.5%'
     },
-    subtitle: {
-        marginTop: '3%',
-        fontSize: 20,
-        marginBottom: '5%'
+    subtitle:{
+        fontSize: 15,
+        marginBottom: '2.5%'
     },
     cancel: {
         padding: '2.5%',
         background: globalColors.red,
         color: globalColors.white
-    },
-    upload: {
-        padding: '2.5%',
-        background: globalColors.green,
-        color: globalColors.white,
-        marginBottom: '2.5%'
-    },
-    filesUploaded: {
-        marginBottom: '15%'
     },
     emptyMessage: {
         backgroundColor: globalColors.red,

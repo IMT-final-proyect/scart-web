@@ -3,20 +3,20 @@ import { Button, Card, Grid, Modal, } from '@material-ui/core'
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import useStyles from './styles' 
 import { Link, useParams } from 'react-router-dom';
-import { RootState } from '../../../../../redux/rootReducer';
+import { RootState } from '../../../../redux/rootReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
-import { IContractor, IDocument } from '../../../../../utils/interfaces';
+import { IContractor, IDocument } from '../../../../utils/interfaces';
 import EditIcon from '@mui/icons-material/Edit';
 import CreateContractorDocumentModal from './components/CreateContractorDocumentModal';
-import { createDocument, getContractorDocuments } from '../../../../../redux/slices/documentsSlice';
-import { ROUTES } from '../../../navigation/routes';
+import { createDocument, getContractorDocuments } from '../../../../redux/slices/documentsSlice';
+import { ROUTES } from '../../../../screens/admin/navigation/routes';
 import DocumentRow from './components/documentRow/DocumentRow';
-import CustomSnackbar from '../../../../../components/customSnackbar';
-import { editContractor } from '../../../../../redux/slices/contractorsSlice';
-import { putChangePassword } from '../../../../../redux/slices/userSlice';
-import EditContractorModal from '../../../../../components/editContractorModal';
-import { AllowedRol } from '../../../../../utils/constants';
+import CustomSnackbar from '../../../customSnackbar';
+import { editContractor } from '../../../../redux/slices/contractorsSlice';
+import { putChangePassword } from '../../../../redux/slices/userSlice';
+import EditContractorModal from '../../../editContractorModal';
+import { AllowedRol } from '../../../../utils/constants';
 
 
 const ContractorDetails = () => {

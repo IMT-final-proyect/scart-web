@@ -2,7 +2,7 @@ import { Button, Grid, Snackbar, TextField, } from '@material-ui/core';
 import useStyles from './styles';
 import { useCallback, useState } from 'react';
 import { Alert } from '@mui/material';
-import CustomSnackbar from '../../../../../components/customSnackbar';
+import CustomSnackbar from '../../../customSnackbar';
 
 interface Props{
     addContractor: (username: string, password: string, email: string, name: string, cuit: string, phone: string, street: string, number: string, city: string, province: string) => void

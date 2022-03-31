@@ -10,13 +10,13 @@ import AttachFileIcon from '@mui/icons-material/AttachFile';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useFilePicker } from 'use-file-picker';
 
-import CustomSelectObject from '../../../../../../../components/customSelectObject'; 
+import CustomSelectObject from '../../../../../customSelectObject'; 
 import { useDispatch, useSelector } from 'react-redux';
 import { Alert } from '@mui/material';
-import { RootState } from '../../../../../../../redux/rootReducer';
-import { getDocumentTypesByEntity } from '../../../../../../../redux/slices/documentTypesSlice';
-import globalColors from '../../../../../../../utils/styles/globalColors';
-import CustomSnackbar from '../../../../../../../components/customSnackbar';
+import { RootState } from '../../../../../../redux/rootReducer';
+import { getDocumentTypesByEntity } from '../../../../../../redux/slices/documentTypesSlice';
+import globalColors from '../../../../../../utils/styles/globalColors';
+import CustomSnackbar from '../../../../../customSnackbar';
 
 interface Props{
     addDocument: (expirationDate: moment.Moment, type: number, entityType: number, entityId: number, images: string[]) => void

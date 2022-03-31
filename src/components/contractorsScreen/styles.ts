@@ -1,8 +1,8 @@
 
 import { makeStyles, Theme } from '@material-ui/core';
-import { headerSize } from '../../../utils/constants';
+import { headerSize } from '../../utils/constants';
 
-import globalColors from '../../../utils/styles/globalColors';
+import globalColors from '../../utils/styles/globalColors';
 
 const useStyles = makeStyles((theme: Theme) => ({
     container:{

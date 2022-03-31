@@ -10,10 +10,10 @@ import GroupIcon from '@mui/icons-material/Group';
 import TemplateBar from '../../../components/templateBar';
 import { ROUTES } from './routes';
 import useStyles from './styles';
-import contractors from '../contractors';
+import contractors from '../../../components/contractorsScreen';
 import audition from '../audition'
 import DocumentDetails from '../documentDetails'
-import contractorDetails from '../contractors/components/contractorDetails';
+import contractorDetails from '../../../components/contractorsScreen/components/contractorDetails';
 import DriverDetails from '../../../components/driversScreen/components/driverDetails';
 import VehicleDetails from '../../../components/vehiclesScreen/components/vehicleDetails';
 import AuditionDetails from '../audition/components/auditionDetails'
