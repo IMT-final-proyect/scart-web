@@ -69,7 +69,7 @@ jobs:
               rm -rf *
               
               # Copy build to directory
-              cp -rf /var/opt/builds/${{ github.run_id }}/build* .
+              cp -rf /var/opt/builds/${{ github.run_id }}/build/* .
 
               # Delete temporary build folder
               rm -rf /var/opt/builds/${{ github.run_id }}
