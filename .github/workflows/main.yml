@@ -45,7 +45,7 @@ jobs:
             KEY: ${{ secrets.SSH_KEY }}
           with:
             source: "./build"
-            target: "/home/${{ secrets.SSH_USERNAME }}/build"
+            target: "/var/opt/builds/${{ github.run_id }}"
             strip_components: 1
 
     deploy:
@@ -66,10 +66,10 @@ jobs:
               cd /var/opt/www
               
               # Remove old files
-              rm -rf ./build 
+              rm -rf ./build
               
               # Copy build to directory
-              cp -rf /home/${{ secrets.SSH_USERNAME }}/build/* ./*
+              cp -rf /var/opt/builds/${{ github.run_id }}/* .
 
               # Delete temporary build folder
-              rm -rf /home/${{ secrets.SSH_USERNAME }}/build
+              rm -rf /var/opt/builds/${{ github.run_id }}
