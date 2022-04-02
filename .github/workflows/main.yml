@@ -66,10 +66,10 @@ jobs:
               cd /var/opt/www
               
               # Remove old files
-              rm -rf ./build
+              rm -rf *
               
               # Copy build to directory
-              cp -rf /var/opt/builds/${{ github.run_id }}/* .
+              cp -rf /var/opt/builds/${{ github.run_id }}/build* .
 
               # Delete temporary build folder
               rm -rf /var/opt/builds/${{ github.run_id }}
