@@ -1,27 +1,25 @@
 import React, { useEffect, useState } from 'react';
 
-import { Button, Card, CircularProgress, Grid, Modal, TextField} from '@material-ui/core';
+import { Button, Card, CardContent, CardHeader, CircularProgress, Grid, Modal, TextField} from '@material-ui/core';
 
-import AttachFileIcon from '@mui/icons-material/AttachFile';
-import DownloadIcon from '@mui/icons-material/Download';
-import PreviewIcon from '@mui/icons-material/Preview';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
-import CloseIcon from '@mui/icons-material/Close';
 import FilePreview from "react-file-preview-latest";    
 import useStyles from './styles';
 import { RootState } from '../../redux/rootReducer';
 import { getDriverById, getSecurityById, getVehicleById } from '../../redux/slices/resourcesSlice';
 import { getInvalidDocuments, putUpdateExceptions, _cleanSnackbar } from '../../redux/slices/exceptionsSlice';
-import { getStateColor, getStateName } from '../../utils/functions/states';
 import CustomSnackbar from '../customSnackbar';
 import { ROUTES } from '../../screens/manager/navigation/routes';
+import { error } from 'console';
+import ResourcesTabs from './components/resourcesTabs';
 
 const ExceptionDetails = () => {
     const dispatch = useDispatch()
     const params: any = useParams();
     const { location } = useHistory()
-    const root = location.pathname.split('/')[1]
+    const root = location.pathname.split('/')[1];
+    
     
     const { id, driverId, vehicleId, securityId } = params
     const history = useHistory();
@@ -39,10 +37,6 @@ const ExceptionDetails = () => {
     const driver = useSelector((state: RootState) => state.resources.drivers?.data[driverId])
     const vehicle = useSelector((state: RootState) => state.resources.vehicles?.data[vehicleId])
     const security = useSelector((state: RootState) => state.resources.securities?.data[securityId])
-    const driverInvalidDocuments = useSelector((state: RootState) => state.exceptions.exceptionDocuments.driver.invalidDocuments)
-    const driverMissingDocuments = useSelector((state: RootState) => state.exceptions.exceptionDocuments.driver.missingDocuments)
-    const vehicleInvalidDocuments = useSelector((state: RootState) => state.exceptions.exceptionDocuments.vehicle.invalidDocuments)
-    const vehicleMissingDocuments = useSelector((state: RootState) => state.exceptions.exceptionDocuments.vehicle.missingDocuments)
     const classes = useStyles();
 
     useEffect(() => {
@@ -144,247 +138,36 @@ const ExceptionDetails = () => {
                         </text>
                     </Grid>
                 </Card>
-                <Grid container className={classes.bottomContainer} direction='row' justifyContent='space-between'>
-                    <Grid item md={6}>
-                        <Card className={classes.filesCard}>
-                            <Grid container className={classes.titleContainer} justifyContent='space-between'>
-                                <text className={classes.fieldFile}>
-                                    Archivos inválidos o faltantes
-                                </text>
-                            </Grid>
-                            <Grid container className={classes.entityTitle} justifyContent='space-between'>
-                                <text className={classes.entityTitle}>
-                                    Conductor
-                                </text>
-                            </Grid>
-                            {driverInvalidDocuments.length === 0 && driverMissingDocuments.length === 0 &&
-                                <div className={classes.areValidDiv}>
-                                    <text className={classes.areValidText}>
-                                        Todos los documentos estan en regla
-                                    </text>
-                                </div>
-                            }
-                            {driverInvalidDocuments.length > 0 &&
-                                <>
-                                    <Grid container className={classes.titleContainer} justifyContent='space-between'>
-                                        <text className={classes.entityName}>
-                                            Inválidos
-                                        </text>
-                                    </Grid>
-                                    <Grid container justifyContent='space-between'>
-                                        {Object.keys(driverInvalidDocuments).map((key: string) => {                       
-                                                return(
-                                                    <>
-                                                        <Grid item xs={9}>
-                                                            <text className={classes.fileTitle}>
-                                                                {driverInvalidDocuments[parseInt(key)].type.name}
-                                                            </text>
-                                                        </Grid>
-                                                        <Grid item xs={3}>
-                                                            <Grid className={classes.stateColor} style={{backgroundColor: getStateColor(getStateName(driverInvalidDocuments[parseInt(key)].state))}}>
-                                                                <text className={classes.stateText} >
-                                                                    {getStateName(driverInvalidDocuments[parseInt(key)].state)}
-                                                                </text>
-                                                            </Grid>
-                                                        </Grid>
-                                                        {driverInvalidDocuments[parseInt(key)].photos.length > 0 ? 
-                                                            <Grid container direction='column' justifyContent='space-between'>
-                                                                <Grid container justifyContent='space-between'>
-                                                                    {driverInvalidDocuments[parseInt(key)].photos.map((value: string, index: number) => {
-                                                                            return(
-                                                                                <Grid key={index} className={classes.filesCard} container direction='row'>
-                                                                                    <Grid item xs={1}>
-                                                                                        <AttachFileIcon/>
-                                                                                    </Grid>
-                                                                                    <Grid item xs={7}>
-                                                                                        <text style={{fontSize: 15}}>Archivo {index+1}</text>
-                                                                                    </Grid>
-                                                                                    <Grid item xs={2}>
-                                                                                        <a href={value} download={`archivo${index+1}`}>
-                                                                                            <DownloadIcon style={{fontSize: 30}}/>
-                                                                                        </a>
-                                                                                    </Grid>
-                                                                                    <Grid item xs={2}>
-                                                                                        <Button 
-                                                                                            size="small" 
-                                                                                            style={{padding: 0}} 
-                                                                                            onClick={() => 
-                                                                                                setImage(value)
-                                                                                            }
-                                                                                        >
-                                                                                            <PreviewIcon style={{fontSize: 30}} />
-                                                                                        </Button>
-                                                                                    </Grid>
-                                                                                </Grid>
-                                                                            )
-                                                                        })
-                                                                    }
-                                                                </Grid>
-                                                            </Grid>
-                                                            :
-                                                            <text className={classes.textCenter}> No hay archivos cargados</text>
-                                                        }
-                                                    </>
-                                                )
-                                            })
-                                        }
-                                    </Grid>
-                                </>
-                            }
-                            {driverMissingDocuments.length > 0 &&
-                                <>
-                                    <Grid container className={classes.titleContainer} justifyContent='space-between'>
-                                        <text className={classes.entityName}>
-                                        Faltantes
-                                        </text>
-                                    </Grid>
-                                    <Grid container justifyContent='space-between' alignItems='center'>
-                                        {Object.keys(driverMissingDocuments).map((key: string) => {
-                                                return(
-                                                    <>
-                                                        <Grid item xs={11}>
-                                                            <div className={classes.invalidText}>
-                                                                <text className={classes.fileTitle}>
-                                                                    {driverMissingDocuments[parseInt(key)].name}
-                                                                </text>
-                                                            </div>
-                                                        </Grid>
-                                                        <Grid item xs={1}>
-                                                            <CloseIcon color='error' />
-                                                        </Grid>
-                                                    </>
-                                                )
-                                            })
-                                        }
-                                    </Grid>
-                                </>
-                            }
-                            <Grid container className={classes.titleContainer} justifyContent='space-between'>
-                                <text className={classes.entityTitle}>
-                                    Vehiculos
-                                </text>
-                            </Grid>
-                            {vehicleInvalidDocuments.length === 0 && vehicleMissingDocuments.length === 0 &&
-                                <div className={classes.areValidDiv}>
-                                    <text className={classes.areValidText}>
-                                        Todos los documentos estan en regla
-                                    </text>
-                                </div>
-                            }
-                            {vehicleInvalidDocuments.length > 0 &&
-                                <>
-                                    <Grid container className={classes.titleContainer} justifyContent='space-between'>
-                                        <text className={classes.entityName}>
-                                            Inválidos
-                                        </text>
-                                    </Grid>
-                                    <Grid container justifyContent='space-between'>
-                                        {Object.keys(vehicleInvalidDocuments).map((key: string) => {                        
-                                            return(
-                                                <>
-                                                    <Grid item xs={9}>
-                                                        <text className={classes.fileTitle}>
-                                                            {vehicleInvalidDocuments[parseInt(key)].type.name}
-                                                        </text>
-                                                    </Grid>
-                                                    <Grid item xs={3}>
-                                                        <Grid className={classes.stateColor} style={{backgroundColor: getStateColor(getStateName(vehicleInvalidDocuments[parseInt(key)].state))}}>
-                                                            <text className={classes.stateText} >
-                                                                {getStateName(vehicleInvalidDocuments[parseInt(key)].state)}
-                                                            </text>
-                                                        </Grid>
-                                                    </Grid>
-                                                    {vehicleInvalidDocuments[parseInt(key)].photos.length > 0 ? 
-                                                        <Grid container direction='column' justifyContent='space-between'>
-                                                            <Grid container justifyContent='space-between'>
-                                                                {vehicleInvalidDocuments[parseInt(key)].photos.map((value: string, index: number) => {
-                                                                        return(
-                                                                            <Grid key={index} className={classes.filesCard} container direction='row'>
-                                                                                <Grid item xs={1}>
-                                                                                    <AttachFileIcon/>
-                                                                                </Grid>
-                                                                                <Grid item xs={7}>
-                                                                                    <text style={{fontSize: 15}}>Archivo {index+1}</text>
-                                                                                </Grid>
-                                                                                <Grid item xs={2}>
-                                                                                <a href={value} download={`archivo${index+1}`}>
-                                                                                    <DownloadIcon style={{fontSize: 30}}/>
-                                                                                </a>
-                                                                                </Grid>
-                                                                                <Grid item xs={2}>
-                                                                                    <Button 
-                                                                                        size="small" 
-                                                                                        style={{padding: 0}} 
-                                                                                        onClick={() => 
-                                                                                            setImage(value)
-                                                                                        }
-                                                                                    >
-                                                                                        <PreviewIcon style={{fontSize: 30}} />
-                                                                                    </Button>
-                                                                                </Grid>
-                                                                            </Grid>
-                                                                        )
-                                                                    })
-                                                                }
-                                                            </Grid>
-                                                        </Grid>
-                                                        :
-                                                        <text className={classes.textCenter}> No hay archivos cargados</text>
-                                                    }
-                                                </>
-                                            )
-                                            })
-                                        }
-                                    </Grid>
-                                </>
-                            }
-                            {vehicleMissingDocuments.length > 0 &&
-                                <>
-                                    <Grid container className={classes.titleContainer} justifyContent='space-between'>
-                                        <text className={classes.entityName}>
-                                        Faltantes
-                                        </text>
-                                    </Grid>
-                                    <Grid container justifyContent='space-between' alignItems='center'>
-                                        {Object.keys(vehicleMissingDocuments).map((key: string) => {
-                                                return(
-                                                    <>
-                                                        <Grid item xs={11}>
-                                                            <div className={classes.invalidText}>
-                                                                <text className={classes.fileTitle}>
-                                                                    {vehicleMissingDocuments[parseInt(key)].name}
-                                                                </text>
-                                                            </div>
-                                                        </Grid>
-                                                        <Grid item xs={1}>
-                                                            <CloseIcon color='error' />
-                                                        </Grid>
-                                                    </>
-                                                )
-                                            })
-                                        }
-                                    </Grid>
-                                </>
-                            }
-                        </Card>
-                    </Grid>
-                    <Grid item md={6}>
-                        <Card className={classes.commentCard}>
-                            <TextField
-                                className={classes.textField}
-                                id="Comentario"
-                                label="Observación"
-                                multiline
-                                value={comment}
-                                onChange={handleChange}
-                                variant="outlined"
-                                rows={4}
-                            />
-                            <Grid container justifyContent='flex-end'>
-                                <Button variant="contained" color="inherit" className={classes.rechazar} onClick={handleRejected}>Rechazar</Button>
-                                <Button variant="contained" color="primary" className={classes.text} onClick={handleApprove}>Aceptar</Button>
-                            </Grid>
-                        </Card>
+                <Grid item className={classes.documentsContainer}>
+                    <Grid container>
+                        <Grid item md={6}>
+                            <Card>
+                                <CardHeader
+                                    title="Archivos inválidos o faltantes"
+                                />
+                                <CardContent>
+                                    <ResourcesTabs setImage={setImage} />
+                                </CardContent>
+                            </Card>
+                        </Grid>
+                        <Grid item md={6}>
+                            <Card className={classes.commentCard}>
+                                <TextField
+                                    className={classes.textField}
+                                    id="Comentario"
+                                    label="Observación"
+                                    multiline
+                                    value={comment}
+                                    onChange={handleChange}
+                                    variant="outlined"
+                                    rows={4}
+                                />
+                                <Grid container justifyContent='flex-end'>
+                                    <Button variant="contained" color="inherit" className={classes.rechazar} onClick={handleRejected}>Rechazar</Button>
+                                    <Button variant="contained" color="primary" className={classes.text} onClick={handleApprove}>Aceptar</Button>
+                                </Grid>
+                            </Card>
+                        </Grid>
                     </Grid>
                 </Grid>
             </Grid>
