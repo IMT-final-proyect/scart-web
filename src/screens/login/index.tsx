@@ -16,6 +16,7 @@ import { isTokenValid } from '../../utils/functions/validations';
 import CustomSnackbar from '../../components/customSnackbar';
 import NutrecoImage from '../../assets/images/planta_inicio.jpeg'
 import LoadingSpinner from '../../assets/images/loading_spinner.gif'
+import ScartLogo from '../../assets/images/logo_transparent.png'
 
 
 const Login = () => {
@@ -87,8 +88,9 @@ const Login = () => {
             >
                 {firstLoading &&
                     (   
-                        <Grid className={classes.loadingSpinner} container justify="center" alignItems="center">
-                            <img src={LoadingSpinner} />
+                        <Grid className={classes.spinnerBackground} container alignItems="center" justify="center" direction="column">
+                            <img className={classes.spinnerLogo} src={LoadingSpinner} />
+                            <img className={classes.scartLogo} src={ScartLogo} />
                         </Grid>
                     )
                 }

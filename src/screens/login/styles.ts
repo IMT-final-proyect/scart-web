@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         height: '100vh',
         zIndex: 0,
         position: 'absolute',
-        blur: '8px'
+        filter: 'blur(3px)'
     },
     card:{
         zIndex: 1,
@@ -70,13 +70,21 @@ const useStyles = makeStyles((theme: Theme) => ({
             marginBottom:'3%'
         },
     },
-    loadingSpinner: {
+    spinnerBackground: {
         zIndex: 2,
         width: '100vw',
         height: '100vh',
         backgroundColor: globalColors.black,
-        alignItems: 'center',
-        justifyItems: 'center'
+        position: 'absolute',
+    },
+    scartLogo: {
+        width: '200px',
+        height: '200px',
+        marginTop: '-27.5vh',
+        marginLeft: '0.4vw'
+    },
+    spinnerLogo: {
+        width: '465px',
     }
 }));
 
