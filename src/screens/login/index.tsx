@@ -113,6 +113,7 @@ const Login = () => {
                                     <InputAdornment position="end">
                                         <IconButton
                                             aria-label="Clear username"
+                                            tabIndex={-1}
                                             onClick={_onClearUsername}
                                         >
                                             <ClearIcon/>
@@ -136,6 +137,7 @@ const Login = () => {
                                 <InputAdornment position="end">
                                     <IconButton
                                         aria-label="Show password"
+                                        tabIndex={-1}
                                         onClick={_onShowPassword}
                                     >
                                         {showPassword ? <VisibilityOff /> : <Visibility />}

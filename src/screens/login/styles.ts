@@ -1,6 +1,5 @@
 import { makeStyles, Theme } from "@material-ui/core";
 import globalColors from "../../utils/styles/globalColors";
-import NutrecoImage from '../../assets/images/planta_inicio.jpeg'
 
 const useStyles = makeStyles((theme: Theme) => ({
     container:{
@@ -85,6 +84,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     spinnerLogo: {
         width: '465px',
+    },
+    order1: {
+        order: 1
     }
 }));
 
