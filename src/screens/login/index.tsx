@@ -14,6 +14,8 @@ import { getRolPath } from '../../utils/functions/roles';
 import LogoNutreco from '../../assets/images/logoNutreco.png'
 import { isTokenValid } from '../../utils/functions/validations';
 import CustomSnackbar from '../../components/customSnackbar';
+import NutrecoImage from '../../assets/images/planta_inicio.jpeg'
+import LoadingSpinner from '../../assets/images/loading_spinner.gif'
 
 
 const Login = () => {
@@ -22,6 +24,7 @@ const Login = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false)
+    const [firstLoading, setFirstLoading] = useState(true)
     const dispatch = useDispatch<AppThunkDispatch>();
     const accountData = useSelector((state: RootState) => state.user.accountData)
     const loading = useSelector((state: RootState) => state.user.loading)
@@ -66,6 +69,14 @@ const Login = () => {
         dispatch(clearError())
     }
 
+    const handleLoadingFinish = () => {
+        setFirstLoading(false)
+    }
+
+    useEffect(() => {
+        console.log(firstLoading)
+    }, [firstLoading])
+
     return(
             <Grid
                 className={classes.container}
@@ -74,6 +85,14 @@ const Login = () => {
                 justify="center"
                 alignItems="center"
             >
+                {firstLoading &&
+                    (   
+                        <Grid className={classes.loadingSpinner} container justify="center" alignItems="center">
+                            <img src={LoadingSpinner} />
+                        </Grid>
+                    )
+                }
+                <img className={classes.backgroundImage} alt='planta background' src={NutrecoImage} onLoad={handleLoadingFinish}/>
                 <Hidden only={["xs","sm"]}>
                     <img className={classes.logoNutreco} alt='logo nutreco' src={LogoNutreco}/>
                 </Hidden>

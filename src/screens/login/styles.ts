@@ -8,11 +8,16 @@ const useStyles = makeStyles((theme: Theme) => ({
         height: '100vh',
         margin: 0,
         padding: 0,
-        backgroundImage: `url(${NutrecoImage})`,
-        backgroundSize: '100% 100%',
-        backgroundRepeat: 'no-repeat'
+    },
+    backgroundImage:{
+        width: '100vw',
+        height: '100vh',
+        zIndex: 0,
+        position: 'absolute',
+        blur: '8px'
     },
     card:{
+        zIndex: 1,
         padding: '2.5%',
         backgroundColor: 'rgba(255,255,255,.8)',
         [theme.breakpoints.down('md')]: {
@@ -25,6 +30,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         marginBottom: '5%',
     },
     title: {
+        zIndex: 1,
         textAlign: 'center',
         fontSize: 17,
         fontWeight: 'bold',
@@ -53,6 +59,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         backgroundColor: globalColors.white
     },
     logoNutreco: {
+        zIndex: 1,
         marginBottom: '2%',
         [theme.breakpoints.down('lg')]: {
             width: '30%',
@@ -63,6 +70,14 @@ const useStyles = makeStyles((theme: Theme) => ({
             marginBottom:'3%'
         },
     },
+    loadingSpinner: {
+        zIndex: 2,
+        width: '100vw',
+        height: '100vh',
+        backgroundColor: globalColors.black,
+        alignItems: 'center',
+        justifyItems: 'center'
+    }
 }));
 
 export default useStyles
