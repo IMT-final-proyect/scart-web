@@ -18,6 +18,7 @@ import DeleteModal from '../DeleteModal';
 import CustomSnackbar from '../customSnackbar';
 import TomisBar from '../TomisBar';
 import { useRol } from '../../customHooks';
+import { AllowedRol } from '../../utils/constants';
 
 const Drivers = () => {
     const classes = useStyles()
@@ -177,7 +178,7 @@ const Drivers = () => {
                             </Grid>
                         </Grid>
                         <Grid item xs={1}>
-                            {rol !== 'Auditor' && rol !== 'Encargado' && <Button onClick={() => setOpenDriverModal(true)}>
+                            {rol !== AllowedRol.auditor && rol !== AllowedRol.manager && rol !== AllowedRol.security && <Button onClick={() => setOpenDriverModal(true)}>
                                 <AddCircleIcon className={classes.circleIcon}/>
                             </Button>
                             }

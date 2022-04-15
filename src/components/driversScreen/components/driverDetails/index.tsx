@@ -26,7 +26,6 @@ const DriverDetails = () => {
     const rol = useRol()
     const { location } = useHistory()
     const path =  location.pathname.split('/')
-    console.log(path[1]);
     
     const [openDriverDocumentModal, setOpenDriverDocumentModal] = useState(false)
     const [openEditDriverModal, setOpenEditDriverModal] = useState(false)
@@ -129,7 +128,7 @@ const DriverDetails = () => {
                             </div>
                         </Grid>
                         <Grid item xs={1}>
-                            {rol !== 'Auditor' && rol !== 'Encargado' && 
+                            {rol !== AllowedRol.auditor && rol !== AllowedRol.manager && rol !== AllowedRol.security &&
                                 <Button onClick={() => {setOpenEditDriverModal(true)}}>
                                     <EditIcon />
                                 </Button>
@@ -179,9 +178,11 @@ const DriverDetails = () => {
                             <text className={classes.textTitle}>
                                 Documentación asociada
                             </text>
-                            <Button onClick={() => setOpenDriverDocumentModal(true)}>
-                                <AddCircleIcon className={classes.circleIcon} />
-                            </Button>
+                            {rol !== AllowedRol.security && 
+                                <Button onClick={() => setOpenDriverDocumentModal(true)}>
+                                    <AddCircleIcon className={classes.circleIcon} />
+                                </Button>
+                            }
                         </Grid>
                         <Grid container justifyContent='space-between'>
                             <Grid item xs={5} className={classes.headerText}>

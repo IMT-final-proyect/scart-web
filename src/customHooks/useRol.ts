@@ -4,5 +4,5 @@ import { getRolName } from '../utils/functions/roles';
 
 export const useRol = () => {
   const rol = useSelector((state: RootState) => state.user.accountData?.rol)
-  return(getRolName(rol || 99))
+  return(rol)
 }

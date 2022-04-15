@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Button, Card, Grid, Modal, } from '@material-ui/core'
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import useStyles from './styles' 
-import { Link, useParams } from 'react-router-dom';
+import { Link, useHistory, useParams } from 'react-router-dom';
 import { RootState } from '../../../../redux/rootReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
@@ -17,12 +17,17 @@ import { editContractor } from '../../../../redux/slices/contractorsSlice';
 import { putChangePassword } from '../../../../redux/slices/userSlice';
 import EditContractorModal from '../../../editContractorModal';
 import { AllowedRol } from '../../../../utils/constants';
+import { useRol } from '../../../../customHooks';
 
 
 const ContractorDetails = () => {
     const classes = useStyles();
+    const rol = useRol()
     const params: any = useParams();
     const dispatch = useDispatch();
+    const { location } = useHistory()
+    const path =  location.pathname.split('/')
+    
     const [openContractorDocumentModal, setOpenContractorDocumentModal] = useState(false)
     const [openEditContractorModal, setOpenEditContractorModal] = useState(false)
     const [openEditContractorSuccess, setOpenEditContractorSuccess] = useState(false)
@@ -178,9 +183,11 @@ const ContractorDetails = () => {
                             <text className={classes.textTitle}>
                                 Documentación asociada
                             </text>
-                            <Button onClick={() => setOpenContractorDocumentModal(true)}>
-                                <AddCircleIcon className={classes.circleIcon} />
-                            </Button>
+                            {rol !== AllowedRol.security && 
+                                <Button onClick={() => setOpenContractorDocumentModal(true)}>
+                                    <AddCircleIcon className={classes.circleIcon} />
+                                </Button>
+                            }
                         </Grid>
                         <Grid container justifyContent='space-between'>
                             <Grid item xs={5} className={classes.headerText}>
@@ -207,23 +214,23 @@ const ContractorDetails = () => {
                         <Grid container direction='column' justifyContent='space-between' >
                             {Object.keys(documents).length === 0 ?
                                 <text className={classes.textCenter}> No hay documentacion asociada </text>
-                                :
-                            <Grid container direction='column' justifyContent='space-between' >
-                                {Object.keys(documents).map((key: string, i: any) =>
-                                    <Button
-                                        className={classes.button}
-                                        component={Link}
-                                        to={ROUTES.root+ROUTES.documentDetails+'/'+documents[parseInt(key)].id}
-                                    >  
-                                        <DocumentRow 
-                                            key={documents[parseInt(key)].id}
-                                            type={documents[parseInt(key)].type}
-                                            expiration={documents[parseInt(key)].expirationDate}
-                                            state={documents[parseInt(key)].state}
-                                        />
-                                    </Button>
-                                )}
-                            </Grid>
+                            :
+                                <Grid container direction='column' justifyContent='space-between' >
+                                    {Object.keys(documents).map((key: string, i: any) =>
+                                        <Button
+                                            className={classes.button}
+                                            component={Link}
+                                            to={'/'+path[1]+ROUTES.documentDetails+'/'+documents[parseInt(key)].id}
+                                        >  
+                                            <DocumentRow 
+                                                key={documents[parseInt(key)].id}
+                                                type={documents[parseInt(key)].type}
+                                                expiration={documents[parseInt(key)].expirationDate}
+                                                state={documents[parseInt(key)].state}
+                                            />
+                                        </Button>
+                                    )}
+                                </Grid>
                             }
                         </Grid>
                     </Card>

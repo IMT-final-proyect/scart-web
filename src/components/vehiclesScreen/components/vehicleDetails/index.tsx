@@ -3,7 +3,7 @@ import { Button, Card, CircularProgress, Grid, Modal } from '@material-ui/core'
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import useStyles from './styles' 
 import EditIcon from '@mui/icons-material/Edit';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useHistory, useParams } from 'react-router-dom';
 import { RootState } from '../../../../redux/rootReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
@@ -16,12 +16,16 @@ import EditVehicleModal from '../../../editVehicleModal';
 import { editVehicle, getVehicleById } from '../../../../redux/slices/resourcesSlice';
 import CustomSnackbar from '../../../customSnackbar';
 import { useRol } from '../../../../customHooks';
+import { AllowedRol } from '../../../../utils/constants';
 
 const VehicleDetails = () => {
     const classes = useStyles();
     const rol = useRol()
     const params: any = useParams();
     const dispatch = useDispatch();
+    const { location } = useHistory()
+    const path =  location.pathname.split('/')
+    
     const [openVehicleDocumentModal, setOpenVehicleDocumentModal] = useState(false)
     const [openEditVehicleModal, setOpenEditVehicleModal] = useState(false)
     const [openEditVehicleSuccess, setOpenEditVehicleSuccess] = useState(false)
@@ -112,7 +116,7 @@ const VehicleDetails = () => {
                                 <text className={classes.dataField}> Año: </text>
                                 <text className={classes.data}> {vehicle?.year} </text>
                             </div>
-                            {rol !== 'Auditor' && rol !== 'Encargado' && 
+                            {rol !== AllowedRol.auditor && rol !== AllowedRol.manager && rol !== AllowedRol.security && 
                                 <Button onClick={() => {setOpenEditVehicleModal(true)}}>
                                     <EditIcon />
                                 </Button>
@@ -125,9 +129,11 @@ const VehicleDetails = () => {
                             <text className={classes.textTitle}>
                                 Documentación asociada
                             </text>
-                            <Button onClick={() => setOpenVehicleDocumentModal(true)}>
-                                <AddCircleIcon className={classes.circleIcon} />
-                            </Button>
+                            {rol !== AllowedRol.security &&
+                                <Button onClick={() => setOpenVehicleDocumentModal(true)}>
+                                    <AddCircleIcon className={classes.circleIcon} />
+                                </Button>
+                            }
                         </Grid>
                         <Grid container justifyContent='space-between'>
                             <Grid item xs={5} className={classes.headerText}>
@@ -154,13 +160,13 @@ const VehicleDetails = () => {
                         <Grid container direction='column' justifyContent='space-between' >
                             {Object.keys(documents).length === 0 ?
                                 <text className={classes.textCenter}> No hay documentacion asociada </text>
-                                :
+                            :
                                 <Grid container direction='column' justifyContent='space-between' >
                                     {Object.keys(documents).map((key: string, i: any) =>
                                         <Button
                                             className={classes.button}
                                             component={Link}
-                                            to={ROUTES.root+ROUTES.documentDetails+'/'+documents[parseInt(key)].id}
+                                            to={'/'+path[1]+ROUTES.documentDetails+'/'+documents[parseInt(key)].id}
                                         >  
                                             <DocumentRow 
                                                 key={documents[parseInt(key)].id}

@@ -11,7 +11,6 @@ import { getDriverById, getSecurityById, getVehicleById } from '../../redux/slic
 import { getInvalidDocuments, putUpdateExceptions, _cleanSnackbar } from '../../redux/slices/exceptionsSlice';
 import CustomSnackbar from '../customSnackbar';
 import { ROUTES } from '../../screens/manager/navigation/routes';
-import { error } from 'console';
 import ResourcesTabs from './components/resourcesTabs';
 
 const ExceptionDetails = () => {
@@ -19,7 +18,6 @@ const ExceptionDetails = () => {
     const params: any = useParams();
     const { location } = useHistory()
     const root = location.pathname.split('/')[1];
-    
     
     const { id, driverId, vehicleId, securityId } = params
     const history = useHistory();

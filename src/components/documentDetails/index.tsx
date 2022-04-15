@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Card, CircularProgress, Grid, } from '@material-ui/core'
+import { Button, Card, CircularProgress, Grid } from '@material-ui/core'
 import useStyles from './styles' 
 import { useParams } from 'react-router-dom';
 import { RootState } from '../../redux/rootReducer';
@@ -9,7 +9,8 @@ import PreviewIcon from '@mui/icons-material/Preview';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
 import DownloadIcon from '@mui/icons-material/Download';
 import { getDocumentById } from '../../redux/slices/documentsSlice';
-import FilePreview from "react-file-preview-latest";import { getStateColor, getStateName } from '../../utils/functions/states';
+import FilePreview from "react-file-preview-latest";
+import { getStateColor, getStateName } from '../../utils/functions/states';
 import { getSeverityName } from '../../utils/functions/severities';
 
 const DocumentDetails = () => {

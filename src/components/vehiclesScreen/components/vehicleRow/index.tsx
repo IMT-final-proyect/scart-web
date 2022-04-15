@@ -3,6 +3,7 @@ import { Button, Grid, } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import useStyles from './styles';
 import { useRol } from '../../../../customHooks';
+import { AllowedRol } from '../../../../utils/constants';
 
 interface Props{
     brand: string,
@@ -35,7 +36,7 @@ const VehicleRow = ({ brand, model, plate, contractor, id, handleDeleteVehicle }
                 <text> {plate} </text>
             </Grid>
             <Grid item xs={1} className={classes.iconContainer}>
-                {(rol !== 'Auditor' && rol !== 'Encargado') ?
+                {(rol !== AllowedRol.auditor && rol !== AllowedRol.manager && rol !== AllowedRol.security) ?
                     <Button onClick={handleClick} >
                         <DeleteIcon />
                         <text className={classes.text}>

@@ -16,6 +16,7 @@ import DeleteModal from '../DeleteModal';
 import CustomSnackbar from '../customSnackbar';
 import TomisBar from '../TomisBar';
 import { useRol } from '../../customHooks';
+import { AllowedRol } from '../../utils/constants';
 
 const Contractors = () => {
     const classes = useStyles();
@@ -142,7 +143,7 @@ const Contractors = () => {
                         </Grid>
                     </Grid>
                     <Grid item xs={1}>
-                        {rol !== 'Auditor' && rol !== 'Encargado' && 
+                        {rol !== AllowedRol.auditor && rol !== AllowedRol.manager && rol !== AllowedRol.security && 
                             <Button onClick={() => setOpenVehicleModal(true)}>
                                 <AddCircleIcon className={classes.circleIcon}/>
                             </Button>
