@@ -13,7 +13,6 @@ import { ROUTES } from './routes';
 import useStyles from './styles';
 import contractors from '../../../components/contractorsScreen';
 import audition from '../audition'
-import DocumentDetails from '../documentDetails'
 import contractorDetails from '../../../components/contractorsScreen/components/contractorDetails';
 import DriverDetails from '../../../components/driversScreen/components/driverDetails';
 import VehicleDetails from '../../../components/vehiclesScreen/components/vehicleDetails';
@@ -24,6 +23,7 @@ import driversScreen from '../../../components/driversScreen';
 import vehiclesScreen from '../../../components/vehiclesScreen';
 import Exceptions from '../../../components/exceptionsScreen';
 import ExceptionDetails from '../../../components/exceptionDetails';
+import DocumentDetails from '../../../components/documentDetails';
 const AdminNavigator = () => {
     const classes = useStyles();
     const [title, setTitle] = useState('Administrador');

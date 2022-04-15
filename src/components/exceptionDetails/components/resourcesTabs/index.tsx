@@ -2,12 +2,10 @@ import React, { useState } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../redux/rootReducer';
 import { EntityDocuments } from '../entityDocuments';
-import useStyles from './styles';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -47,7 +45,6 @@ function a11yProps(index: any) {
 }
 
 export default function ResourcesTabs({ setImage }: Props) {
-  const classes = useStyles();
   const [value, setValue] = useState(0);
   const driverInvalidDocuments = useSelector((state: RootState) => state.exceptions.exceptionDocuments.driver.invalidDocuments);
   const driverMissingDocuments = useSelector((state: RootState) => state.exceptions.exceptionDocuments.driver.missingDocuments);

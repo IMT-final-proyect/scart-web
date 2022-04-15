@@ -89,8 +89,8 @@ const Login = () => {
                 {firstLoading &&
                     (   
                         <Grid className={classes.spinnerBackground} container alignItems="center" justify="center" direction="column">
-                            <img className={classes.spinnerLogo} src={LoadingSpinner} />
-                            <img className={classes.scartLogo} src={ScartLogo} />
+                            <img className={classes.spinnerLogo} alt='spinner' src={LoadingSpinner} />
+                            <img className={classes.scartLogo} alt='scartLogo' src={ScartLogo} />
                         </Grid>
                     )
                 }
