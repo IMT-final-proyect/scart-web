@@ -1,3 +1,5 @@
+import moment from "moment";
+
 export interface IAddress {
    id: number;
    number: number;
@@ -86,4 +88,22 @@ export interface IMissingDocument {
    id: number,
    name: string,
    severity: number
+}
+
+export interface IDriverInside {
+   id: number;
+   checkIn: moment.Moment
+   driver: {
+      id: number;
+      name: string;
+      surname: string;
+   }
+   vehicle: {
+      id: number;
+      plate: string;
+   }
+   contractor: {
+      id: number;
+      name: string
+   }
 }

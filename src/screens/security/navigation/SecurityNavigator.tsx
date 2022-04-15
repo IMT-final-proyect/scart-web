@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import { Button } from '@material-ui/core';
-import HomeIcon from '@material-ui/icons/Home';
+import AirlineSeatReclineExtraIcon from '@mui/icons-material/AirlineSeatReclineExtra';
 import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
 
 import TemplateBar from '../../../components/templateBar';
@@ -9,14 +9,14 @@ import { ROUTES } from './routes';
 import useStyles from './styles'
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../redux/rootReducer';
-import Home from '../Home';
 import EntityDetails from '../EntityDetails';
 import Scanner from '../Scanner';
+import DriversInside from '../../../components/DriversInside';
 
 const SecurityNavigation = () => {
     const classes = useStyles();
-    const [title, setTitle] = useState('Inicio');
-    const user = useSelector((state: RootState) => state.user.userData?.name)
+    const [title, setTitle] = useState('Conductores en planta');
+    const user = useSelector((state: RootState) => state.user.accountData?.username)
 
     const ButtonList = (
         <>
@@ -24,12 +24,12 @@ const SecurityNavigation = () => {
                 className = {classes.button}
                 component={Link}
                 to={ROUTES.root}
-                onClick={() => setTitle("Inicio")}
+                onClick={() => setTitle("Conductores en planta")}
             >
                 <div className={classes.icon}>
-                    <HomeIcon/>
+                    <AirlineSeatReclineExtraIcon/>
                 </div>
-                Inicio
+                Conductores en planta
             </Button>
         </>
     )
@@ -44,7 +44,7 @@ const SecurityNavigation = () => {
         <Switch>
             <Route exact path={ROUTES.root+ROUTES.details} component={EntityDetails} />
             <Route exact path={ROUTES.root+ROUTES.scanner} component={Scanner} />
-            <Route path={ROUTES.root} component={Home} />
+            <Route path={ROUTES.root} component={DriversInside} />
         </Switch>
     </BrowserRouter>
     )

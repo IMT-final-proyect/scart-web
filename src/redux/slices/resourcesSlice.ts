@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import Axios, {AxiosResponse} from 'axios';
 import moment from 'moment';
-import { IDriver, ISecurity, IVehicle } from '../../utils/interfaces';
+import { IDriver, IDriverInside, ISecurity, IVehicle } from '../../utils/interfaces';
 import { AppThunk } from '../store';
 import { IUser } from './userSlice';
 var _ = require('lodash');
@@ -13,6 +13,12 @@ interface IError {
 
 interface IDriverData {
    data: IDriver[]
+   driversInside: {
+      data: IDriverInside[]
+      loading: boolean
+      success: boolean
+      error: IError|null
+   }
    loading: boolean
    success: boolean
    error: IError|null
@@ -43,6 +49,12 @@ export interface UserState {
 const initialState: UserState = {
     drivers: {
       data:[],
+      driversInside: {
+         data: [],
+         loading: false,
+         success: false,
+         error: null,
+      },
       loading: false,
       success: false,
       error: null,
@@ -279,6 +291,36 @@ const resourcesSlice = createSlice({
          state.drivers.error = payload;
          state.drivers.success = initialState.drivers.success;
       },
+      DriversInsideRequest(state) {
+         state.drivers.driversInside.loading = true;
+         state.drivers.driversInside.data = initialState.drivers.driversInside.data;
+         state.drivers.driversInside.error = initialState.drivers.driversInside.error;
+         state.drivers.driversInside.success = initialState.drivers.driversInside.success;
+      },
+      DriversInsideSuccess(state, action: any) {
+         const { payload } = action
+         state.drivers.driversInside.data = payload
+         state.drivers.driversInside.loading = false;
+      },
+      DriversInsideFailure(state, action: any) {
+         const { payload } = action
+         state.drivers.driversInside.loading = false;
+         state.drivers.driversInside.data = initialState.drivers.driversInside.data;
+         state.drivers.driversInside.error = payload;
+      },
+      CheckOutRequest(state) {
+         state.drivers.driversInside.error = initialState.drivers.error;
+         state.drivers.success = initialState.drivers.success;
+      },
+      CheckOutSuccess(state) {
+         state.drivers.driversInside.success = true;
+         state.drivers.driversInside.error = initialState.drivers.error
+      },
+      CheckOutFailure(state, action: any) {
+         const { payload } = action
+         state.drivers.driversInside.error = payload;
+         state.drivers.driversInside.success = initialState.drivers.success;
+      },
    },
 });
 
@@ -318,7 +360,13 @@ const {
     editVehicleFailure,
     isDriverUpToDateRequest,
     isDriverUpToDateSuccess,
-    isDriverUpToDateFailure
+    isDriverUpToDateFailure,
+    DriversInsideRequest,
+    DriversInsideSuccess,
+    DriversInsideFailure,
+    CheckOutRequest,
+    CheckOutSuccess,
+    CheckOutFailure
 } = resourcesSlice.actions;
 
 
@@ -542,5 +590,28 @@ export const isDriverUpToDate = (driverId?: number): AppThunk => async (dispatch
    }
    catch(error: any){
       dispatch(isDriverUpToDateFailure(error?.response?.data)); 
+   }
+}
+
+export const getDriversInsidePlant = (): AppThunk => async (dispatch) => {
+   dispatch(DriversInsideRequest());
+   try{
+      const response = await Axios.get(`/visits/entities`)
+      dispatch(DriversInsideSuccess(response.data))
+   }
+   catch(error: any){
+      dispatch(DriversInsideFailure(error?.response?.data)); 
+   }
+}
+
+export const putCheckOut = (driverId: number, vehicleId: number): AppThunk => async (dispatch) => {
+   dispatch(CheckOutRequest());
+   try{
+      await Axios.put(`/visits/checkout`, {vehicleId, driverId})
+      dispatch(CheckOutSuccess())
+      dispatch(getDriversInsidePlant())
+   }
+   catch(error: any){
+      dispatch(CheckOutFailure(error?.response?.data)); 
    }
 }

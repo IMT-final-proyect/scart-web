@@ -53,7 +53,7 @@ const Evaluation = () => {
 
     useEffect(() => {
         if(evaluationSuccess){
-            history.push(ROUTES.root)
+            history.push(ROUTES.root+ROUTES.home)
         }
         else{
             if(!!error?.message) setErrorSnackbar(true)
