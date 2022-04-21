@@ -10,10 +10,11 @@ import AuditorNavigator from '../screens/auditor/navigation/AuditorNavigator'
 import AdminNavigator from '../screens/admin/navigation/AdminNavigator'
 import { RootState } from '../redux/rootReducer';
 import { useSelector } from 'react-redux';
-import { admin, auditor, contractor, driver, manager, security } from '../utils/constants';
+import { admin, auditor, contractor, driver, expedition, manager, security } from '../utils/constants';
 import { isRolAuthored, isTokenValid } from '../utils/functions/validations';
 import SecurityNavigator from '../screens/security/navigation/SecurityNavigator';
 import DriverNavigation from '../screens/driver/navigation/DriverNavigator';
+import ExpeditionNavigator from '../screens/expedition/navigation/ExpeditionNavigator';
 
 const App = () => {
     const accountData = useSelector((state: RootState) => state.user.accountData)
@@ -37,6 +38,8 @@ const App = () => {
                 <PrivateRoute path={ROUTES.admin} rol={admin} component={AdminNavigator} />
                 <PrivateRoute path={ROUTES.security} rol={security} component={SecurityNavigator} />
                 <PrivateRoute path={ROUTES.driver} rol={driver} component={DriverNavigation} />
+                {/* <PrivateRoute path={ROUTES.expedition} rol={expedition} component={ExpeditionNavigator} /> */}
+                <Route path={ROUTES.expedition} component={ExpeditionNavigator} />
                 <Route component={NotFound} />
             </Switch>
         </BrowserRouter>

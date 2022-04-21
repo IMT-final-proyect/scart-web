@@ -1,14 +1,5 @@
 export const headerSize = 40;
 
-export enum AllowedRol{
-    admin,
-    driver,
-    contractor,
-    auditor,
-    manager,
-    security,
-    vehicle
-}
 
 export const contractor = 'Contratista'
 export const auditor = 'Auditor'
@@ -17,6 +8,7 @@ export const driver = 'Conductor'
 export const vehicle = 'Vehiculo'
 export const security = 'Seguridad'
 export const admin = 'Administrador'
+export const expedition = 'Expedicion'
 
 export const PENDING = 'Pendiente'
 export const VALID = 'Vigente'
@@ -26,6 +18,17 @@ export const EXPIRED = 'Vencido'
 export const HIGH = 'Alta'
 export const MEDIUM = 'Media'
 export const LOW = 'Baja'
+
+export enum AllowedRol{
+    admin,
+    driver,
+    contractor,
+    auditor,
+    manager,
+    security,
+    vehicle,
+    expedition
+}
 
 export enum States {
     PENDING,
