@@ -80,50 +80,56 @@ const Documentation = () => {
                     </Grid>
                 </Card>
                 {loading || loadingFilter ?
-                    <Grid container alignContent='center' justifyContent='center' >
+                    <Grid container alignItems='center' justifyContent='center' >
                         <CircularProgress className={classes.spinner} />
                     </Grid>
                     :
-                    <Card className={classes.contentCard}>
-                        <Grid container justifyContent='space-between'>
-                            <Grid item xs={4} className={classes.headerText}>
-                                <text className={classes.headerText}>
-                                    Documento
-                                </text>
-                            </Grid>
-                            <Grid item xs={2} className={classes.headerText}>
-                                <text className={classes.headerText}>
-                                    Contratista
-                                </text>
-                            </Grid>
-                            <Grid item xs={2} className={classes.headerText}>
-                                <text className={classes.headerText}>
-                                    Tipo
-                                </text>
-                            </Grid>
-                            <Grid item xs={2} className={classes.headerText}>
-                                <text className={classes.headerText}>
-                                    Importancia
-                                </text>
-                            </Grid>
-                            <Grid item xs={2} className={classes.headerText}>
-                                <text className={classes.headerText}>
-                                    Acciones
-                                </text>
-                            </Grid>
-                        </Grid>
-                        <Grid container direction='column' justifyContent='space-between' >
-                            {Object.keys(documentsFiltered).map((key: string, i: any) =>
-                                <DocumentRow 
-                                    key={documentsFiltered[parseInt(key)].id}
-                                    contractor={documentsFiltered[parseInt(key)].contractor}
-                                    type={documentsFiltered[parseInt(key)].type}
-                                    owner={documentsFiltered[parseInt(key)].entityId}
-                                    route={ROUTES.root+ROUTES.home+'/'+documentsFiltered[parseInt(key)].id}
-                                />
-                            )}
-                        </Grid>
-                    </Card>
+                            <Card className={classes.contentCard}>
+                                {documentsFiltered.length === 0 ? 
+                                    <Typography className={classes.textCenter}>No hay documentación para evaluar</Typography>
+                                :
+                                    <>
+                                        <Grid container justifyContent='space-between'>
+                                            <Grid item xs={4} className={classes.headerText}>
+                                                <text className={classes.headerText}>
+                                                    Documento
+                                                </text>
+                                            </Grid>
+                                            <Grid item xs={2} className={classes.headerText}>
+                                                <text className={classes.headerText}>
+                                                    Contratista
+                                                </text>
+                                            </Grid>
+                                            <Grid item xs={2} className={classes.headerText}>
+                                                <text className={classes.headerText}>
+                                                    Tipo
+                                                </text>
+                                            </Grid>
+                                            <Grid item xs={2} className={classes.headerText}>
+                                                <text className={classes.headerText}>
+                                                    Importancia
+                                                </text>
+                                            </Grid>
+                                            <Grid item xs={2} className={classes.headerText}>
+                                                <text className={classes.headerText}>
+                                                    Acciones
+                                                </text>
+                                            </Grid>
+                                        </Grid>
+                                        <Grid container direction='column' justifyContent='space-between' >
+                                            {Object.keys(documentsFiltered).map((key: string, i: any) =>
+                                                <DocumentRow 
+                                                    key={documentsFiltered[parseInt(key)].id}
+                                                    contractor={documentsFiltered[parseInt(key)].contractor}
+                                                    type={documentsFiltered[parseInt(key)].type}
+                                                    owner={documentsFiltered[parseInt(key)].entityId}
+                                                    route={ROUTES.root+ROUTES.home+'/'+documentsFiltered[parseInt(key)].id}
+                                                />
+                                            )}
+                                        </Grid>
+                                    </>
+                                }
+                            </Card>
                 }
             </Grid>
             <CustomSnackbar open={openSuccess} message='Documento evaluado con éxito' type='success' onClose={() => setOpenSuccess(false)} />

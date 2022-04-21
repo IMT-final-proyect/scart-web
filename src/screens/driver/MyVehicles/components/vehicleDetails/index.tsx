@@ -149,7 +149,7 @@ const VehicleDetails = () => {
                             </Grid>
                             <Grid item xs={2} className={classes.headerText}>
                                 <text className={classes.headerText}>
-                                    Severidad
+                                    Importancia
                                 </text>
                             </Grid>
                         </Grid>

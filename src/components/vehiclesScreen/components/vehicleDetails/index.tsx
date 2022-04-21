@@ -129,7 +129,7 @@ const VehicleDetails = () => {
                             <text className={classes.textTitle}>
                                 Documentación asociada
                             </text>
-                            {rol !== AllowedRol.security &&
+                            {rol !== AllowedRol.security && rol !== AllowedRol.auditor && 
                                 <Button onClick={() => setOpenVehicleDocumentModal(true)}>
                                     <AddCircleIcon className={classes.circleIcon} />
                                 </Button>
@@ -153,7 +153,7 @@ const VehicleDetails = () => {
                             </Grid>
                             <Grid item xs={2} className={classes.headerText}>
                                 <text className={classes.headerText}>
-                                    Severidad
+                                    Importancia
                                 </text>
                             </Grid>
                         </Grid>

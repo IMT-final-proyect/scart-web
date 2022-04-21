@@ -34,7 +34,7 @@ const Document = ({ type, expiration, state }: Props) => {
             </Grid>
             <Grid item xs={2} className={classes.text}>
             <div className={classes.severity}>
-                    <text className={classes.stateColor}> {severity} </text>
+                    <text className={classes.severityColor}> {severity} </text>
                 </div>
             </Grid>
     </Grid>

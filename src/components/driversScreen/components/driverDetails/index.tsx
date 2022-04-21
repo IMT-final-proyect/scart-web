@@ -178,7 +178,7 @@ const DriverDetails = () => {
                             <text className={classes.textTitle}>
                                 Documentación asociada
                             </text>
-                            {rol !== AllowedRol.security && 
+                            {rol !== AllowedRol.security && rol !== AllowedRol.auditor && 
                                 <Button onClick={() => setOpenDriverDocumentModal(true)}>
                                     <AddCircleIcon className={classes.circleIcon} />
                                 </Button>
@@ -192,17 +192,17 @@ const DriverDetails = () => {
                             </Grid>
                             <Grid item xs={3} className={classes.headerText}>
                                 <text className={classes.headerText}>
-                                    Contratista
-                                </text>
-                            </Grid>
-                            <Grid item xs={2} className={classes.headerText}>
-                                <text className={classes.headerText}>
                                     Fecha de vencimiento
                                 </text>
                             </Grid>
                             <Grid item xs={2} className={classes.headerText}>
                                 <text className={classes.headerText}>
                                     Estado
+                                </text>
+                            </Grid>
+                            <Grid item xs={2} className={classes.headerText}>
+                                <text className={classes.headerText}>
+                                    Importancia
                                 </text>
                             </Grid>
                         </Grid>

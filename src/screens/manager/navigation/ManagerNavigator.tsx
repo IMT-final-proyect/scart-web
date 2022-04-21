@@ -53,7 +53,7 @@ const ManagerNavigator = () => {
             <Button 
                 className = {classes.button}
                 component={Link}
-                to={ROUTES.root+ROUTES.drivers}
+                to={ROUTES.root+ROUTES.contractors}
                 onClick={() => setTitle("Contratistas")}
             >
                 <div className={classes.icon}>

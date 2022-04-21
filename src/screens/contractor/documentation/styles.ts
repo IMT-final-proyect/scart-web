@@ -81,8 +81,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     button:{
         height: '35px',
         textTransform: 'none',
-        paddingTop: '2%',
-        paddingBottom: '2%',
+        paddingTop: '1%',
+        paddingBottom: '1%',
         alignItems: 'center',
     },
     searchTitle:{

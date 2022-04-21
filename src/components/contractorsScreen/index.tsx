@@ -8,17 +8,23 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { RootState } from '../../redux/rootReducer';
 import CreateContractorModal from './components/CreateContractorModal';
 import { ROUTES } from '../../screens/admin/navigation/routes';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { createContractor, getContractors } from '../../redux/slices/contractorsSlice';
 import ContractorRow from './components/contratorRow';
 import CustomInput from '../customInput';
 import { IContractor } from '../../utils/interfaces';
 import CustomSnackbar from '../customSnackbar';
 import TomisBar from '../TomisBar';
+import { useRol } from '../../customHooks';
+import { AllowedRol } from '../../utils/constants';
 
 const Contractors = () => {
     const classes = useStyles();
     const dispatch = useDispatch()
+    const rol = useRol()
+    const { location } = useHistory()
+    const path =  location.pathname.split('/')
+
     const [openModal, setOpenModal] = useState(false)
     const [searchName, setSearchName] = useState('')
     const [searchCuit, setSearchCuit] = useState('')
@@ -114,9 +120,11 @@ const Contractors = () => {
                         </Grid>
                     </Grid>
                     <Grid item xs={1}>
+                    {rol !== AllowedRol.auditor && 
                         <Button onClick={() => setOpenModal(true)}>
                             <AddCircleIcon className={classes.circleIcon}/>
                         </Button>
+                    }
                     </Grid>
                 </Grid>
                 <Typography className={classes.searchTitle}> Filtrar por </Typography>
@@ -161,7 +169,7 @@ const Contractors = () => {
                                 <Button
                                     className={classes.button}
                                     component={Link}
-                                    to={ROUTES.root+ROUTES.contractors+'/'+contractor.id}
+                                    to={'/'+path[1]+ROUTES.contractors+'/'+contractor.id}
                                 >  
                                     <ContractorRow 
                                         contractor={contractor}
