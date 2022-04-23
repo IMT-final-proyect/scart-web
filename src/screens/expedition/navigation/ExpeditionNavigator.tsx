@@ -10,6 +10,7 @@ import useStyles from './styles'
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../redux/rootReducer';
 import Home from '../Home';
+import ArrivalDetails from '../ArrivalDetails';
 
 const ExpeditionNavigator = () => {
     const classes = useStyles();
@@ -40,7 +41,8 @@ const ExpeditionNavigator = () => {
             ButtonList = {ButtonList}
         />
         <Switch>
-            <Route exact path={ROUTES.root} component={Home} />
+            <Route exact path={ROUTES.root+'/:id'} component={ArrivalDetails} />
+            <Route path={ROUTES.root} component={Home} />
         </Switch>
     </BrowserRouter>
     )

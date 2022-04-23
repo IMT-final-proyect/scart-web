@@ -67,8 +67,6 @@ const DocumentDetails = () => {
                                 <Grid container direction='column' justifyContent='space-between'>
                                     <Grid container justifyContent='space-between'>
                                         {activeDocument.photos.map((value: string, index: number) => {
-                                            console.log(value);
-                                            
                                                 return(
                                                     <Grid key={index} className={classes.leftCard} container direction='row'>
                                                         <Grid item xs={1}>

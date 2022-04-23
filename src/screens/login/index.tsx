@@ -74,10 +74,6 @@ const Login = () => {
         setFirstLoading(false)
     }
 
-    useEffect(() => {
-        console.log(firstLoading)
-    }, [firstLoading])
-
     return(
             <Grid
                 className={classes.container}

@@ -19,7 +19,7 @@ const appReducer = combineReducers({
     contractors: contractorsSlice,
     exceptions: exceptionsSlice,
     specialUsers: specialUsersSlice,
-    expeditionsSlice: expeditionsSlice
+    expeditions: expeditionsSlice
 });
 
 const rootReducer = (state: any, action: any) => {

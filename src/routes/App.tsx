@@ -38,8 +38,7 @@ const App = () => {
                 <PrivateRoute path={ROUTES.admin} rol={admin} component={AdminNavigator} />
                 <PrivateRoute path={ROUTES.security} rol={security} component={SecurityNavigator} />
                 <PrivateRoute path={ROUTES.driver} rol={driver} component={DriverNavigation} />
-                {/* <PrivateRoute path={ROUTES.expedition} rol={expedition} component={ExpeditionNavigator} /> */}
-                <Route path={ROUTES.expedition} component={ExpeditionNavigator} />
+                <PrivateRoute path={ROUTES.expedition} rol={expedition} component={ExpeditionNavigator} />
                 <Route component={NotFound} />
             </Switch>
         </BrowserRouter>

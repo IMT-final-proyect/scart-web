@@ -107,3 +107,22 @@ export interface IDriverInside {
       name: string
    }
 }
+
+export interface IArrival {
+   id: number;
+   arrivalTime: moment.Moment;
+   driverId: number;
+   driver: string;
+   driverPhone: string;
+   vehicleId: number;
+   vehicle: string;
+   vehicleType: string;
+   securityId: number;
+   contractor: string;
+   palletsIn: string;
+   pallestOut: string;
+   result?: boolean;
+   exception?: boolean;
+   exceptionId?: number;
+   destination?: string;
+}
