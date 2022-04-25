@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 import { createSlice } from '@reduxjs/toolkit';
 import Axios, {AxiosResponse} from 'axios';
 import { IArrival } from '../../utils/interfaces';
@@ -10,7 +11,10 @@ interface IError {
  }
 
  interface IExpeditionState {
-     data: IArrival[],
+     data: {
+         evaluated: IArrival[],
+         nonEvaluated: IArrival[]
+     },
      loading: boolean,
      error: IError | null,
      success: boolean,
@@ -22,7 +26,10 @@ interface IError {
  }
 
 const initialState: IExpeditionState = {
-    data: [],
+    data: {
+        evaluated:[],
+        nonEvaluated:[]
+    },
     loading: false,
     error: null,
     success: false,
@@ -44,7 +51,8 @@ const expeditionsSlice = createSlice({
     },
     getArrivalsSuccess(state, action: any) {
         const { payload } = action
-        state.data = payload
+        state.data.evaluated = payload.evaluated
+        state.data.nonEvaluated = payload.nonEvaluated
         state.loading = false;
         state.error = initialState.error
     },
@@ -92,9 +100,20 @@ export default expeditionsSlice.reducer;
 export const getArrivals = (): AppThunk => async (dispatch) => {
     dispatch(getArrivalsRequest());
     try{
-       const response: AxiosResponse = await Axios.get(`/notifications/arrivals`);
-       const arrivals = _.mapKeys(response.data, 'id')
-       dispatch(getArrivalsSuccess(arrivals));
+        const response: AxiosResponse = await Axios.get(`/notifications/arrivals?state=0`);
+        const arrivals: IArrival[] = _.mapKeys(response.data, 'id')
+        let evaluated: IArrival[] = []
+        let nonEvaluated: IArrival[] = []
+       
+        Object.keys(arrivals).map((index: any) => {
+            if(!!arrivals[parseInt(index)].result){
+                evaluated.push(arrivals[parseInt(index)])
+            }
+            else {
+                nonEvaluated.push(arrivals[parseInt(index)])
+            }
+        })
+       dispatch(getArrivalsSuccess({evaluated, nonEvaluated}));
     }
     catch(error: any){
         dispatch(getArrivalsFailure(error.response.data));

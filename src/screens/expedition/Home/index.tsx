@@ -9,7 +9,7 @@ import { ROUTES } from '../navigation/routes';
 import useStyles from './styles';
 import CustomInput from '../../../components/customInput';
 import { IArrival } from '../../../utils/interfaces';
-import ArrivalRow from './components/documentRow';
+import ArrivalRow from './components/arrivalRow';
 
 const Home = () => {
   const dispatch = useDispatch()
@@ -18,7 +18,7 @@ const Home = () => {
   const [searchContractor, setSearchContractor] = useState('')
   const [loadingFilter, setLoadingFilter] = useState(false)
   const [arrivalsFiltered, setArrivalsFiltered] = useState<IArrival[]>([])
-  const arrivals = useSelector((state: RootState) => state.expeditions.data)
+  const arrivals = useSelector((state: RootState) => state.expeditions.data.nonEvaluated)
   const loading = useSelector((state: RootState) => state.expeditions.loading)
   const success = useSelector((state: RootState) => state.expeditions.success)
   

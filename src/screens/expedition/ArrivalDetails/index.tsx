@@ -21,7 +21,7 @@ const ArrivalDetails = () => {
     const [errorSnackbar, setErrorSnackbar] = useState(false)
     const [palletsOut, setPalletsOut] = useState<number>()
     const [destination, setDestination] = useState<string>('')
-    const arrival = useSelector((state: RootState) => state.expeditions.data[arrivalId])
+    const arrival = useSelector((state: RootState) => state.expeditions.data.nonEvaluated[arrivalId])
     const userId = useSelector((state: RootState) => state.user.accountData?.entityId)
     const authorizationSuccess = useSelector((state: RootState) => state.expeditions.authorization.success)
     const authorizationLoading = useSelector((state: RootState) => state.expeditions.authorization.error)

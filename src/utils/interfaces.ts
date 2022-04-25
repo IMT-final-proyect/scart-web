@@ -121,7 +121,7 @@ export interface IArrival {
    contractor: string;
    palletsIn: string;
    pallestOut: string;
-   result?: boolean;
+   result: boolean | null;
    exception?: boolean;
    exceptionId?: number;
    destination?: string;
