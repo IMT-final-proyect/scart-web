@@ -23,12 +23,12 @@ const ExpeditionNavigator = () => {
                 className = {classes.button}
                 component={Link}
                 to={ROUTES.root}
-                onClick={() => setTitle('Camiones en espera')}
+                onClick={() => setTitle('Vehiculos en espera')}
             >
                 <div className={classes.icon}>
                     <HomeIcon/>
                 </div>
-                Camiones en espera
+                Vehiculos en espera
             </Button>
         </>
     )
