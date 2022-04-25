@@ -80,50 +80,50 @@ const Home = () => {
                   <CircularProgress className={classes.spinner} />
               </Grid>
               :
-                      <Card className={classes.contentCard}>
-                          {arrivalsFiltered.length === 0 ? 
-                              <Typography className={classes.textCenter}>No se ha anunciado ningun conductor</Typography>
-                          :
-                              <>
-                                  <Grid container justifyContent='space-between'>
-                                      <Grid item xs={3} className={classes.headerText}>
-                                          <text className={classes.headerText}>
-                                              Conductor
-                                          </text>
-                                      </Grid>
-                                      <Grid item xs={3} className={classes.headerText}>
-                                          <text className={classes.headerText}>
-                                              Vehiculo
-                                          </text>
-                                      </Grid>
-                                      <Grid item xs={2} className={classes.headerText}>
-                                          <text className={classes.headerText}>
-                                              Contratista
-                                          </text>
-                                      </Grid>
-                                      <Grid item xs={2} className={classes.headerText}>
-                                          <text className={classes.headerText}>
-                                              Horario
-                                          </text>
-                                      </Grid>
-                                      <Grid item xs={2} className={classes.headerText}>
-                                          <text className={classes.headerText}>
-                                              Acciones
-                                          </text>
-                                      </Grid>
-                                  </Grid>
-                                  <Grid container direction='column' justifyContent='space-between' >
-                                      {Object.keys(arrivalsFiltered).map((key: string, i: any) =>
-                                          <ArrivalRow 
-                                              key={arrivalsFiltered[parseInt(key)].id}
-                                              arrival={arrivalsFiltered[parseInt(key)]}
-                                              route={ROUTES.root+'/'+arrivalsFiltered[parseInt(key)].id}
-                                          />
-                                      )}
-                                  </Grid>
-                              </>
-                          }
-                      </Card>
+              <Card className={classes.contentCard}>
+                  {arrivalsFiltered.length === 0 ? 
+                      <Typography className={classes.textCenter}>No se ha anunciado ningun conductor</Typography>
+                  :
+                      <>
+                          <Grid container justifyContent='space-between'>
+                              <Grid item xs={3} className={classes.headerText}>
+                                  <text className={classes.headerText}>
+                                      Conductor
+                                  </text>
+                              </Grid>
+                              <Grid item xs={3} className={classes.headerText}>
+                                  <text className={classes.headerText}>
+                                      Vehiculo
+                                  </text>
+                              </Grid>
+                              <Grid item xs={2} className={classes.headerText}>
+                                  <text className={classes.headerText}>
+                                      Contratista
+                                  </text>
+                              </Grid>
+                              <Grid item xs={2} className={classes.headerText}>
+                                  <text className={classes.headerText}>
+                                      Horario
+                                  </text>
+                              </Grid>
+                              <Grid item xs={2} className={classes.headerText}>
+                                  <text className={classes.headerText}>
+                                      Acciones
+                                  </text>
+                              </Grid>
+                          </Grid>
+                          <Grid container direction='column' justifyContent='space-between' >
+                              {Object.keys(arrivalsFiltered).map((key: string, i: any) =>
+                                  <ArrivalRow 
+                                      key={arrivalsFiltered[parseInt(key)].id}
+                                      arrival={arrivalsFiltered[parseInt(key)]}
+                                      route={ROUTES.root+'/'+arrivalsFiltered[parseInt(key)].id}
+                                  />
+                              )}
+                          </Grid>
+                      </>
+                  }
+              </Card>
           }
       </Grid>
       <CustomSnackbar open={openSuccess} message='Arrivalo evaluado con éxito' type='success' onClose={() => setOpenSuccess(false)} />

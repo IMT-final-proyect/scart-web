@@ -3,7 +3,7 @@ import { makeStyles, Theme } from '@material-ui/core';
 import { headerSize } from '../../../utils/constants';
 
 import globalColors from '../../../utils/styles/globalColors';
-const { innerWidth: width, innerHeight: height } = window
+const { innerWidth: width } = window
 
 
 const useStyles = makeStyles<Theme>((theme: Theme) => ({
@@ -19,11 +19,17 @@ const useStyles = makeStyles<Theme>((theme: Theme) => ({
         paddingRight: '2.5%'
     },
     card:{
-        marginLeft: '2.5%',
         paddingRight: '2.5%',
         paddingLeft: '2.5%',
         paddingBottom: '2.5%',
         paddingTop: '3%',
+        width: width*0.95,
+        [theme.breakpoints.down('sm')]: {
+            marginTop: '17%'
+        },
+    },
+    palletsCard: {
+        padding: '2.5%',
         width: width*0.95,
         [theme.breakpoints.down('sm')]: {
             marginTop: '17%'
@@ -108,16 +114,12 @@ const useStyles = makeStyles<Theme>((theme: Theme) => ({
         fontSize: 15,
         marginRight: '2%'
     },
-    palletsCard: {
-        padding: '2.5%',
-        width: width*0.95,
-        [theme.breakpoints.down('sm')]: {
-            marginTop: '17%'
-        },
-    },
     spinner: {
         marginTop: '20%',
         color: globalColors.lightBlue
+    },
+    spinnerButton: {
+        backgroundColor:'black'
     }
 }));
 

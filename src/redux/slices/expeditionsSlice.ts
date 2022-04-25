@@ -40,7 +40,7 @@ const expeditionsSlice = createSlice({
     getArrivalsRequest(state) {
         state.loading = true;
         state.error = initialState.error
-        state.success = initialState.success
+        state.authorization = initialState.authorization
     },
     getArrivalsSuccess(state, action: any) {
         const { payload } = action
@@ -54,18 +54,20 @@ const expeditionsSlice = createSlice({
         state.error = payload;
     },
     evaluateAccessRequest(state) {
-        state.loading = true;
-        state.error = initialState.error
-        state.success = initialState.success
+        state.authorization.loading = true;
+        state.authorization.success = initialState.authorization.success
+        state.authorization.error = initialState.authorization.error
     },
     evaluateAccessSuccess(state) {
         state.loading = false;
-        state.error = initialState.error
+        state.success = true
+        state.authorization.success = true
+        state.authorization.error = initialState.error
     },
     evaluateAccessFailure(state, action: any) {
         const { payload } = action
         state.loading = false;
-        state.error = payload;
+        state.authorization.error = payload;
     },
     cleanSnackbar(state) {
         state.error = initialState.error
@@ -99,12 +101,12 @@ export const getArrivals = (): AppThunk => async (dispatch) => {
     }
  };
 
- export const putEvaluateAccess = (id: number, result: number, expeditorId?: number, ): AppThunk => async (dispatch) => {
+ export const putEvaluateAccess = (id: number, result: string, expeditorId?: number, ): AppThunk => async (dispatch) => {
     dispatch(evaluateAccessRequest());
     try{
         await Axios.put(`/notifications/arrivals/${id}`, {result, expeditorId});
         dispatch(evaluateAccessSuccess());
-        dispatch(getArrivals());
+        dispatch(_cleanSnackbar())
     }
     catch(error: any){
         dispatch(evaluateAccessFailure(error.response.data));
