@@ -11,14 +11,14 @@ import CustomInput from '../../../components/customInput';
 import { IArrival } from '../../../utils/interfaces';
 import ArrivalRow from './components/arrivalRow';
 
-const Home = () => {
+const Today = () => {
   const dispatch = useDispatch()
   const classes = useStyles();
   const [openSuccess, setOpenSuccess] = useState(false)
   const [searchContractor, setSearchContractor] = useState('')
   const [loadingFilter, setLoadingFilter] = useState(false)
   const [arrivalsFiltered, setArrivalsFiltered] = useState<IArrival[]>([])
-  const arrivals = useSelector((state: RootState) => state.expeditions.data.nonEvaluated)
+  const arrivals = useSelector((state: RootState) => state.expeditions.data.evaluated)
   const loading = useSelector((state: RootState) => state.expeditions.loading)
   const success = useSelector((state: RootState) => state.expeditions.success)
   
@@ -65,7 +65,7 @@ const Home = () => {
           <Card className={classes.titleCard}>
               <Grid container className={classes.titleContainer} justifyContent='space-between'>
                   <text className={classes.textTitle}>
-                      Anuncios
+                      Anuncios de hoy
                   </text>
               </Grid>
               <Typography className={classes.searchTitle}> Filtrar por </Typography>
@@ -131,4 +131,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default Today

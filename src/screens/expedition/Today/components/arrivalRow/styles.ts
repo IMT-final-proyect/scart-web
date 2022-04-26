@@ -5,6 +5,7 @@ const useStyles = makeStyles<Theme>((theme: Theme) => ({
     container:{
         textAlign: 'start',
         alignItems: 'center',
+        height: '35px'
     },
     text:{
         maxWidth: 'auto',
@@ -20,6 +21,9 @@ const useStyles = makeStyles<Theme>((theme: Theme) => ({
         height: '35px',
         color: globalColors.lightBlue
     },
+    actions:{
+        color: globalColors.grey
+    }
 }));
 
 export default useStyles

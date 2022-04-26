@@ -1,3 +1,5 @@
 export enum ROUTES {
-    root = '/expedicion'
+    root = '/expedicion',
+    anounces = '/anuncios',
+    today = '/hoy'
 }

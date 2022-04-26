@@ -106,7 +106,7 @@ export const getArrivals = (): AppThunk => async (dispatch) => {
         let nonEvaluated: IArrival[] = []
        
         Object.keys(arrivals).map((index: any) => {
-            if(!!arrivals[parseInt(index)].result){
+            if(arrivals[parseInt(index)].result !== null){
                 evaluated.push(arrivals[parseInt(index)])
             }
             else {
@@ -114,6 +114,7 @@ export const getArrivals = (): AppThunk => async (dispatch) => {
             }
         })
        dispatch(getArrivalsSuccess({evaluated, nonEvaluated}));
+       dispatch(_cleanSnackbar())
     }
     catch(error: any){
         dispatch(getArrivalsFailure(error.response.data));
