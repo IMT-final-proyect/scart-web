@@ -116,6 +116,10 @@ const VehicleDetails = () => {
                                 <text className={classes.dataField}> Año: </text>
                                 <text className={classes.data}> {vehicle?.year} </text>
                             </div>
+                            <div className={classes.dataContainer}>
+                                <text className={classes.dataField}> Contratista: </text>
+                                <text className={classes.data}> {vehicle?.contractor.name} </text>
+                            </div>
                             {rol !== AllowedRol.auditor && rol !== AllowedRol.manager && rol !== AllowedRol.security && 
                                 <Button onClick={() => {setOpenEditVehicleModal(true)}}>
                                     <EditIcon />

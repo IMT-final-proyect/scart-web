@@ -101,7 +101,7 @@ export const getArrivals = (): AppThunk => async (dispatch) => {
     dispatch(getArrivalsRequest());
     try{
         const response: AxiosResponse = await Axios.get(`/notifications/arrivals?state=0`);
-        const arrivals: IArrival[] = _.mapKeys(response.data, 'id')
+        const arrivals: IArrival[] = response.data
         let evaluated: IArrival[] = []
         let nonEvaluated: IArrival[] = []
        
@@ -113,8 +113,11 @@ export const getArrivals = (): AppThunk => async (dispatch) => {
                 nonEvaluated.push(arrivals[parseInt(index)])
             }
         })
-       dispatch(getArrivalsSuccess({evaluated, nonEvaluated}));
-       dispatch(_cleanSnackbar())
+
+        evaluated = _.mapKeys(evaluated, 'id')
+        nonEvaluated= _.mapKeys(nonEvaluated, 'id')
+        dispatch(getArrivalsSuccess({evaluated, nonEvaluated}));
+        dispatch(_cleanSnackbar())
     }
     catch(error: any){
         dispatch(getArrivalsFailure(error.response.data));

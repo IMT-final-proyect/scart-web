@@ -170,6 +170,12 @@ const DriverDetails = () => {
                                 <text className={classes.data}> {driver?.username ||'-'} </text>
                             </div>
                         </Grid>
+                        <Grid item xs={6}>
+                            <div className={classes.dataContainer}>
+                                <text className={classes.dataField}> Contratista: </text>
+                                <text className={classes.data}> {driver?.contractor.name ||'-'} </text>
+                            </div>
+                        </Grid>
                     </Grid>
                 </Card>
                 <Grid item xs={12}>

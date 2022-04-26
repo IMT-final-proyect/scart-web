@@ -75,13 +75,19 @@ export interface IDocumentType {
 
 export interface IException {
    id: number,
-   driverId: number
-   driver: string
-   vehicleId: number
-   vehicle: string
-   securityId: number
-   contractor: string
-   state: number
+   comment: string | null,
+   managerId: number | null,
+   result: number | null,
+   state: number,
+   arrival: {
+      driverId: number
+      driver: string
+      vehicleId: number
+      vehicle: string
+      securityId: number
+      contractor: string
+      state: number
+   }
 }
 
 export interface IMissingDocument {
@@ -122,7 +128,13 @@ export interface IArrival {
    palletsIn: string;
    pallestOut: string;
    result: boolean | null;
-   exception?: boolean;
+   exception?:{
+      id: number;
+      state: number;
+      managerId: number;
+      comment: string;
+      result: number;
+   };
    exceptionId?: number;
    destination?: string;
 }

@@ -27,23 +27,27 @@ const ArrivalRow = ({ arrival, route }: Props) => {
                 <text className={classes.stateColor}> {moment(arrival.arrivalTime).format('DD/MM/yy - HH:mm')} hs</text>
             </Grid>
             <Grid item xs={2} className={classes.container}>
-                {arrival.exception ? 
-                <Button
-                    className={classes.button}
-                    component={Link}
-                    to={route}
-                    disabled
-                > 
-                    <text>Esperando excepción</text>    
-                </Button>
-                :
+                {!!arrival.exception && arrival.exception.result === null ? 
                     <Button
                         className={classes.button}
                         component={Link}
                         to={route}
+                        disabled
                     > 
-                        Evaluar ingreso
+                        <text>Esperando excepción</text>    
                     </Button>
+                :
+                <>
+                    {(!arrival.exception || arrival.exception?.result === 0) &&
+                        <Button
+                            className={classes.button}
+                            component={Link}
+                            to={route}
+                        > 
+                            Evaluar ingreso
+                        </Button>
+                    }
+                </>
                 }
             </Grid>
         </Grid>
