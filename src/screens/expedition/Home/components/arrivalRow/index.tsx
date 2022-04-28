@@ -8,10 +8,11 @@ import moment from 'moment';
 interface Props{
     arrival: IArrival
     route: string
+    markAsRead: (id: number) => void
 }
-const ArrivalRow = ({ arrival, route }: Props) => {
+const ArrivalRow = ({ arrival, route, markAsRead }: Props) => {
     const classes = useStyles();
-    
+
     return(
         <Grid container className={classes.container} direction="row" justifyContent='space-between'>
             <Grid item xs={3} className={classes.text}>
@@ -27,7 +28,7 @@ const ArrivalRow = ({ arrival, route }: Props) => {
                 <text className={classes.stateColor}> {moment(arrival.arrivalTime).format('DD/MM/yy - HH:mm')} hs</text>
             </Grid>
             <Grid item xs={2} className={classes.container}>
-                {!!arrival.exception && arrival.exception.result === null ? 
+                {!!arrival.exception && arrival.exception.result === null &&
                     <Button
                         className={classes.button}
                         component={Link}
@@ -36,9 +37,9 @@ const ArrivalRow = ({ arrival, route }: Props) => {
                     > 
                         <text>Esperando excepción</text>    
                     </Button>
-                :
-                <>
-                    {(!arrival.exception || arrival.exception?.result === 0) &&
+                }
+                {(!arrival.exception || arrival.exception?.result === 0) &&
+                    <>
                         <Button
                             className={classes.button}
                             component={Link}
@@ -46,8 +47,14 @@ const ArrivalRow = ({ arrival, route }: Props) => {
                         > 
                             Evaluar ingreso
                         </Button>
-                    }
-                </>
+                    </>
+                }
+                {(!arrival.exception || arrival.exception?.result === 1) &&
+                    <>
+                        <Button className={classes.button} onClick={() => markAsRead(arrival.id)} > 
+                            Confirmar Excepción Rechazada
+                        </Button>
+                    </>
                 }
             </Grid>
         </Grid>

@@ -77,6 +77,22 @@ const expeditionsSlice = createSlice({
         state.authorization.loading = false;
         state.authorization.error = payload;
     },
+    markAsReadRequest(state) {
+        state.authorization.loading = true;
+        state.authorization.success = initialState.authorization.success
+        state.authorization.error = initialState.authorization.error
+    },
+    markAsReadSuccess(state) {
+        state.authorization.loading = false;
+        state.success = true
+        state.authorization.success = true
+        state.authorization.error = initialState.error
+    },
+    markAsReadFailure(state, action: any) {
+        const { payload } = action
+        state.authorization.loading = false;
+        state.authorization.error = payload;
+    },
     cleanSnackbar(state) {
         state.error = initialState.error
         state.success = initialState.success
@@ -91,6 +107,9 @@ const {
   evaluateAccessRequest,
   evaluateAccessSuccess,
   evaluateAccessFailure,
+  markAsReadRequest,
+  markAsReadSuccess,
+  markAsReadFailure,
   cleanSnackbar
 } = expeditionsSlice.actions;
 
@@ -133,6 +152,18 @@ export const getArrivals = (): AppThunk => async (dispatch) => {
     }
     catch(error: any){
         dispatch(evaluateAccessFailure(error.response.data));
+    }
+ };
+
+ export const putMarkAsRead = (id: number): AppThunk => async (dispatch) => {
+    dispatch(markAsReadRequest());
+    try{
+        await Axios.put(`/notifications/arrivals/${id}`, { state: '1' });
+        dispatch(markAsReadSuccess());
+        dispatch(getArrivals())
+    }
+    catch(error: any){
+        dispatch(markAsReadFailure(error.response.data));
     }
  };
 
