@@ -67,14 +67,14 @@ const expeditionsSlice = createSlice({
         state.authorization.error = initialState.authorization.error
     },
     evaluateAccessSuccess(state) {
-        state.loading = false;
+        state.authorization.loading = false;
         state.success = true
         state.authorization.success = true
         state.authorization.error = initialState.error
     },
     evaluateAccessFailure(state, action: any) {
         const { payload } = action
-        state.loading = false;
+        state.authorization.loading = false;
         state.authorization.error = payload;
     },
     cleanSnackbar(state) {
