@@ -24,7 +24,6 @@ const ArrivalDetails = () => {
     const arrival = useSelector((state: RootState) => state.expeditions.data.nonEvaluated[arrivalId])
     const userId = useSelector((state: RootState) => state.user.accountData?.entityId)
     const authorizationSuccess = useSelector((state: RootState) => state.expeditions.authorization.success)
-    const authorizationLoading = useSelector((state: RootState) => state.expeditions.authorization.error)
     const authorizationError = useSelector((state: RootState) => state.expeditions.authorization.error)
     const loading = useSelector((state: RootState) => state.expeditions.authorization.loading)
 
@@ -53,127 +52,121 @@ const ArrivalDetails = () => {
     <>
         {!!arrival && 
             <>
-                {authorizationLoading ?
-                    <Grid container alignContent='center' justifyContent='center' >
-                        <CircularProgress className={classes.spinner} />
-                    </Grid>
-                    :
-                    <Grid container className={classes.container} direction='row' justifyContent='space-between'>
-                        <Grid container className={classes.bottomContainer} direction='row' justifyContent='space-between'>
-                            <Card className={classes.card}>
-                                <Grid container>
-                                    <text className={classes.textTitle}>
-                                        Anuncio 
+                <Grid container className={classes.container} direction='row' justifyContent='space-between'>
+                    <Grid container className={classes.bottomContainer} direction='row' justifyContent='space-between'>
+                        <Card className={classes.card}>
+                            <Grid container>
+                                <text className={classes.textTitle}>
+                                    Anuncio 
+                                </text>
+                            </Grid>
+                            <Grid container className={classes.arrivalDataRow} justifyContent='space-between' direction='row'>
+                                <Grid item xs={4}>
+                                    <text className={classes.field}>
+                                        Nombre del conductor: 
+                                    </text>
+                                    <text className={classes.dataField}>
+                                        {arrival.driver}
                                     </text>
                                 </Grid>
-                                <Grid container className={classes.arrivalDataRow} justifyContent='space-between' direction='row'>
-                                    <Grid item xs={4}>
-                                        <text className={classes.field}>
-                                            Nombre del conductor: 
-                                        </text>
-                                        <text className={classes.dataField}>
-                                            {arrival.driver}
-                                        </text>
-                                    </Grid>
-                                    <Grid item xs={4}>
-                                        <text className={classes.field}>
-                                            Telefono del conductor: 
-                                        </text>
-                                        <text className={classes.dataField}>
-                                            {arrival.driverPhone ? arrival.driverPhone : '-'}
-                                        </text>
-                                    </Grid>
-                                    <Grid item xs={4} />
-                                </Grid>
-                                <Grid container className={classes.arrivalDataRow} justifyContent='space-between' direction='row'>
-                                    <Grid item xs={4}>
-                                        <Grid container direction='row'>
-                                            <text className={classes.field}>
-                                                Vehiculo: 
-                                            </text>
-                                            <div className={classes.dataField}>
-                                                <text> {arrival.vehicle} </text>
-                                            </div>
-                                        </Grid>
-                                    </Grid>
-                                    <Grid item xs={4}>
-                                        <Grid container direction='row'>
-                                            <text className={classes.field}>
-                                                Tipo de vehiculo: 
-                                            </text>
-                                            <div className={classes.dataField}>
-                                                <text> {arrival.vehicleType ? arrival.vehicleType : '-'} </text>
-                                            </div>
-                                        </Grid>
-                                    </Grid>
-                                    <Grid item xs={4} />
-                                </Grid>
-                                <Grid container className={classes.arrivalDataRow} justifyContent='space-between' direction='row'>
-                                    <Grid item xs={4}>
-                                        <Grid container direction='row'>
-                                            <text className={classes.field}>
-                                                Contratista: 
-                                            </text>
-                                            <div className={classes.dataField}>
-                                                <text> {arrival.contractor} </text>
-                                            </div>
-                                        </Grid>
-                                    </Grid>
-                                    <Grid item xs={4}>
-                                        <text className={classes.field}>
-                                            Horario de anuncio: 
-                                        </text>
-                                        <text className={classes.dataField}>
-                                            {moment(arrival.arrivalTime).format('DD/MM/YYYY')}
-                                        </text>
-                                    </Grid>
-                                    <Grid item xs={4}>
-                                        <text className={classes.field}>
-                                            Pallets de entrada: 
-                                        </text>
-                                        <text className={classes.dataField}>
-                                            {arrival.palletsIn ? arrival.palletsIn : '-'}
-                                        </text>
-                                    </Grid>
-                                </Grid>
-                            </Card>
-                        </Grid>
-                        <Grid container className={classes.bottomContainer} direction='row' justifyContent='space-between'>
-                            <Card className={classes.palletsCard}>
-                                <Grid container justifyContent='space-between'>
-                                    <text className={classes.textTitle}>
-                                        Evaluar anuncio 
+                                <Grid item xs={4}>
+                                    <text className={classes.field}>
+                                        Telefono del conductor: 
+                                    </text>
+                                    <text className={classes.dataField}>
+                                        {arrival.driverPhone ? arrival.driverPhone : '-'}
                                     </text>
                                 </Grid>
-                                <Grid container justifyContent='space-between' alignItems='flex-end'>
-                                    <Grid item xs={4}>
-                                        <text className={classes.palletsText}>Pallets de salida</text>
-                                        <NumericInput value={palletsOut} onChange={(valueAsNumber) => setPalletsOut(valueAsNumber as number)}/>
-                                    </Grid>
-                                    <Grid item xs={4}>
-                                        <CustomInput value={destination} setValue={setDestination} placeholder='Destino' />
-                                    </Grid>
-                                    <Grid item xs={4}>
-                                        {loading ?
-                                            <Grid container justifyContent='center' alignItems='center'>
-                                                <CircularProgress  size={30} />
-                                            </Grid>
-                                        :
-                                            <Grid container justifyContent='center' alignItems='center'>
-                                                <Button variant="contained" color="inherit" className={classes.rechazar} onClick={handleRejected}>
-                                                    Rechazar
-                                                </Button>
-                                                <Button variant="contained" color="primary" className={classes.text} onClick={handleApprove}>
-                                                    Aceptar
-                                                </Button>
-                                            </Grid>
-                                        }
+                                <Grid item xs={4} />
+                            </Grid>
+                            <Grid container className={classes.arrivalDataRow} justifyContent='space-between' direction='row'>
+                                <Grid item xs={4}>
+                                    <Grid container direction='row'>
+                                        <text className={classes.field}>
+                                            Vehiculo: 
+                                        </text>
+                                        <div className={classes.dataField}>
+                                            <text> {arrival.vehicle} </text>
+                                        </div>
                                     </Grid>
                                 </Grid>
-                            </Card>
-                        </Grid>
+                                <Grid item xs={4}>
+                                    <Grid container direction='row'>
+                                        <text className={classes.field}>
+                                            Tipo de vehiculo: 
+                                        </text>
+                                        <div className={classes.dataField}>
+                                            <text> {arrival.vehicleType ? arrival.vehicleType : '-'} </text>
+                                        </div>
+                                    </Grid>
+                                </Grid>
+                                <Grid item xs={4} />
+                            </Grid>
+                            <Grid container className={classes.arrivalDataRow} justifyContent='space-between' direction='row'>
+                                <Grid item xs={4}>
+                                    <Grid container direction='row'>
+                                        <text className={classes.field}>
+                                            Contratista: 
+                                        </text>
+                                        <div className={classes.dataField}>
+                                            <text> {arrival.contractor} </text>
+                                        </div>
+                                    </Grid>
+                                </Grid>
+                                <Grid item xs={4}>
+                                    <text className={classes.field}>
+                                        Horario de anuncio: 
+                                    </text>
+                                    <text className={classes.dataField}>
+                                        {moment(arrival.arrivalTime).format('DD/MM/YYYY')}
+                                    </text>
+                                </Grid>
+                                <Grid item xs={4}>
+                                    <text className={classes.field}>
+                                        Pallets de entrada: 
+                                    </text>
+                                    <text className={classes.dataField}>
+                                        {arrival.palletsIn ? arrival.palletsIn : '-'}
+                                    </text>
+                                </Grid>
+                            </Grid>
+                        </Card>
                     </Grid>
-                }
+                    <Grid container className={classes.bottomContainer} direction='row' justifyContent='space-between'>
+                        <Card className={classes.palletsCard}>
+                            <Grid container justifyContent='space-between'>
+                                <text className={classes.textTitle}>
+                                    Evaluar anuncio 
+                                </text>
+                            </Grid>
+                            <Grid container justifyContent='space-between' alignItems='flex-end'>
+                                <Grid item xs={4}>
+                                    <text className={classes.palletsText}>Pallets de salida</text>
+                                    <NumericInput value={palletsOut} onChange={(valueAsNumber) => setPalletsOut(valueAsNumber as number)}/>
+                                </Grid>
+                                <Grid item xs={4}>
+                                    <CustomInput value={destination} setValue={setDestination} placeholder='Destino' />
+                                </Grid>
+                                <Grid item xs={4}>
+                                    {loading ?
+                                        <Grid container justifyContent='center' alignItems='center'>
+                                            <CircularProgress  size={30} />
+                                        </Grid>
+                                    :
+                                        <Grid container justifyContent='center' alignItems='center'>
+                                            <Button variant="contained" color="inherit" className={classes.rechazar} onClick={handleRejected}>
+                                                Rechazar
+                                            </Button>
+                                            <Button variant="contained" color="primary" className={classes.text} onClick={handleApprove}>
+                                                Aceptar
+                                            </Button>
+                                        </Grid>
+                                    }
+                                </Grid>
+                            </Grid>
+                        </Card>
+                    </Grid>
+                </Grid>
                 <CustomSnackbar open={errorSnackbar} message={authorizationError?.message || 'Hubo un error evaluando el arribo'} type='error' onClose={() => setErrorSnackbar(false)} />
             </>
         }
