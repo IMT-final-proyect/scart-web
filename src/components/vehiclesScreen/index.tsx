@@ -9,7 +9,7 @@ import { RootState } from '../../redux/rootReducer';
 import CreateVehicleModal from './components/createVehicleModal';
 import { Link, useHistory } from 'react-router-dom';
 import CustomInput from '../customInput';
-import { createVehicle, deleteVehicle, getAllVehicles } from '../../redux/slices/resourcesSlice';
+import { createVehicle, deleteVehicle, getAllVehicles, getVehicleTypes } from '../../redux/slices/resourcesSlice';
 import { getContractors } from '../../redux/slices/contractorsSlice';
 import { IVehicle } from '../../utils/interfaces';
 import DeleteModal from '../DeleteModal';
@@ -42,6 +42,7 @@ const Contractors = () => {
         dispatch(getAllVehicles())
         dispatch(getContractors())
     }, [dispatch])
+
 
     useEffect(() => {
         if (!!error)
@@ -100,9 +101,9 @@ const Contractors = () => {
         setLoadingFilter(false)
     }, [searchPlate, searchContractor, vehicles])
 
-    const addVehicle = (brand: string, model: string, year: string, plate: string, contractorId: number) => {
+    const addVehicle = (brand: string, model: string, year: string, plate: string, type: number, contractorId: number) => {
         if(!!contractorId){
-            dispatch(createVehicle(plate, brand, model, year, contractorId))
+            dispatch(createVehicle(plate, brand, model, year, type, contractorId))
             setOpenVehicleModal(false)
             setMessageSnackbar('Vehiculo creado con exito')
         }

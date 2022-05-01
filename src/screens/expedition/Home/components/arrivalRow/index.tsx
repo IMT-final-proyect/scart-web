@@ -49,7 +49,7 @@ const ArrivalRow = ({ arrival, route, markAsRead }: Props) => {
                         </Button>
                     </>
                 }
-                {(!arrival.exception || arrival.exception?.result === 1) &&
+                {(!!arrival.exception && arrival.exception?.result === 1) &&
                     <>
                         <Button className={classes.button} onClick={() => markAsRead(arrival.id)} > 
                             Confirmar Excepción Rechazada

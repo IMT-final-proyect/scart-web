@@ -1,15 +1,18 @@
 /* eslint-disable array-callback-return */
 import React, { useEffect, useState } from 'react'
 import { Card, CircularProgress, Grid, Typography } from '@material-ui/core';
+import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
+import MomentUtils from '@date-io/moment';
 import { useDispatch, useSelector } from 'react-redux'
 import CustomSnackbar from '../../../components/customSnackbar';
 import { RootState } from '../../../redux/rootReducer'
-import { getArrivals } from '../../../redux/slices/expeditionsSlice'
+import { getArrivals, getTodaysArrivals } from '../../../redux/slices/expeditionsSlice'
 import { ROUTES } from '../navigation/routes';
 import useStyles from './styles';
 import CustomInput from '../../../components/customInput';
 import { IArrival } from '../../../utils/interfaces';
 import ArrivalRow from './components/arrivalRow';
+import moment from 'moment';
 
 const Today = () => {
   const dispatch = useDispatch()
@@ -18,12 +21,15 @@ const Today = () => {
   const [searchContractor, setSearchContractor] = useState('')
   const [loadingFilter, setLoadingFilter] = useState(false)
   const [arrivalsFiltered, setArrivalsFiltered] = useState<IArrival[]>([])
+  const [before, setBefore] = useState<moment.Moment | null>(null);
+  const [after, setAfter] = useState<moment.Moment | null>(null);
   const arrivals = useSelector((state: RootState) => state.expeditions.data.evaluated)
   const loading = useSelector((state: RootState) => state.expeditions.loading)
   const success = useSelector((state: RootState) => state.expeditions.success)
   
   useEffect(() => {
-    dispatch(getArrivals())
+    const after = moment().toISOString()
+    dispatch(getTodaysArrivals(after))
   },[dispatch])
 
   useEffect(() => {
@@ -69,9 +75,43 @@ const Today = () => {
                   </text>
               </Grid>
               <Typography className={classes.searchTitle}> Filtrar por </Typography>
-              <Grid className={classes.inputContainer} container  direction='row' justifyContent='space-between' >
+              <Grid className={classes.inputContainer} container  direction='row' justifyContent='space-between' alignItems='center'>
                       <Grid item xs={10} md={5}>
                           <CustomInput variant='outlined' className={classes.input} value={searchContractor} setValue={setSearchContractor} placeholder={'Nombre del contratista'} size='small' />
+                      </Grid>
+                      <Grid item xs={10} md={3}>
+                        <MuiPickersUtilsProvider utils={MomentUtils}>
+                            <KeyboardDatePicker
+                                className={classes.textInput}
+                                autoOk
+                                variant="inline"
+                                format="DD/MM/yyyy"
+                                id="before"
+                                label="Desde"
+                                value={before}
+                                onChange={(date) => setBefore(date)}
+                                KeyboardButtonProps={{
+                                    'aria-label': 'change date',
+                                }}
+                            />
+                        </MuiPickersUtilsProvider>
+                      </Grid>
+                      <Grid item xs={10} md={3}>
+                        <MuiPickersUtilsProvider utils={MomentUtils}>
+                            <KeyboardDatePicker
+                                className={classes.textInput}
+                                autoOk
+                                variant="inline"
+                                format="DD/MM/yyyy"
+                                id="after"
+                                label="Hasta"
+                                value={after}
+                                onChange={(date) => setAfter(date)}
+                                KeyboardButtonProps={{
+                                    'aria-label': 'change date',
+                                }}
+                            />
+                        </MuiPickersUtilsProvider>
                       </Grid>
               </Grid>
           </Card>

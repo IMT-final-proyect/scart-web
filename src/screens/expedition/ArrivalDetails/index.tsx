@@ -18,8 +18,9 @@ const ArrivalDetails = () => {
     const params: any = useParams();
     const history = useHistory();
     const arrivalId: number = params.id
+    const [emptyError, setEmptyError] = useState(false)
     const [errorSnackbar, setErrorSnackbar] = useState(false)
-    const [palletsOut, setPalletsOut] = useState<number>()
+    const [palletsOut, setPalletsOut] = useState<number>(0)
     const [destination, setDestination] = useState<string>('')
     const arrival = useSelector((state: RootState) => state.expeditions.data.nonEvaluated[arrivalId])
     const userId = useSelector((state: RootState) => state.user.accountData?.entityId)
@@ -41,11 +42,15 @@ const ArrivalDetails = () => {
     }, [authorizationError?.message, authorizationSuccess, history])
 
     const handleRejected = () => {
-        dispatch(putEvaluateAccess(arrival.id, "1", userId))
+        dispatch(putEvaluateAccess(arrival.id, "1", palletsOut, destination, userId))
     }
     
     const handleApprove = () => {
-        dispatch(putEvaluateAccess(arrival.id, "0", userId,))
+        if(!!palletsOut && !!destination)
+            dispatch(putEvaluateAccess(arrival.id, "0", palletsOut, destination, userId,))
+        else{
+            setEmptyError(true)
+        }
     }
 
     return (
@@ -168,6 +173,7 @@ const ArrivalDetails = () => {
                     </Grid>
                 </Grid>
                 <CustomSnackbar open={errorSnackbar} message={authorizationError?.message || 'Hubo un error evaluando el arribo'} type='error' onClose={() => setErrorSnackbar(false)} />
+                <CustomSnackbar open={emptyError} message={'Debe agregar cantidad de pallets y un destino'} type='error' onClose={() => setEmptyError(false)} />
             </>
         }
     </>

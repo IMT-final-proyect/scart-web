@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import { ROUTES } from '../navigation/routes';
 import useStyles from './styles';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllDrivers, getAllVehicles, createDriver, createVehicle, deleteDriver, deleteVehicle } from '../../../redux/slices/resourcesSlice';
+import { getAllDrivers, getAllVehicles, createDriver, createVehicle, deleteDriver, deleteVehicle, getVehicleTypes } from '../../../redux/slices/resourcesSlice';
 import { RootState } from '../../../redux/rootReducer';
 import moment from 'moment';
 import CreateDriverModal from './components/createDriverModal';
@@ -176,9 +176,9 @@ const Resources = () => {
         setDeleteDriverModal(true)
     }
 
-    const addVehicle = (brand: string, model: string, year: string, plate: string) => {
+    const addVehicle = (brand: string, model: string, year: string, plate: string, type: number) => {
         if(!!contractorId){
-            dispatch(createVehicle(plate, brand, model, year, contractorId))
+            dispatch(createVehicle(plate, brand, model, year, type, contractorId))
             setOpenVehicleModal(false)
             setMessageSnackbar('Vehiculo creado con exito')
         }

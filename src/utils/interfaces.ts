@@ -41,6 +41,10 @@ export interface IVehicle {
    brand: string;
    model: string;
    year: number;
+   type: {
+      id: number;
+      name: string;
+   }
    contractor: {
       id: number;
       name: string;
@@ -137,4 +141,9 @@ export interface IArrival {
    };
    exceptionId?: number;
    destination?: string;
+}
+
+export interface IVehicleType {
+   id: number,
+   name: string
 }

@@ -14,6 +14,7 @@ interface IError {
      data: {
          evaluated: IArrival[],
          nonEvaluated: IArrival[]
+         today: IArrival[]
      },
      loading: boolean,
      error: IError | null,
@@ -28,7 +29,8 @@ interface IError {
 const initialState: IExpeditionState = {
     data: {
         evaluated:[],
-        nonEvaluated:[]
+        nonEvaluated:[],
+        today: []
     },
     loading: false,
     error: null,
@@ -93,6 +95,22 @@ const expeditionsSlice = createSlice({
         state.authorization.loading = false;
         state.authorization.error = payload;
     },
+    getTodaysArrivalsRequest(state) {
+        state.loading = true;
+        state.error = initialState.error
+        state.authorization = initialState.authorization
+    },
+    getTodaysArrivalsSuccess(state, action: any) {
+        const { payload } = action
+        state.data.today = payload.today
+        state.loading = false;
+        state.error = initialState.error
+    },
+    getTodaysArrivalsFailure(state, action: any) {
+        const { payload } = action
+        state.loading = false;
+        state.error = payload;
+    },
     cleanSnackbar(state) {
         state.error = initialState.error
         state.success = initialState.success
@@ -110,6 +128,9 @@ const {
   markAsReadRequest,
   markAsReadSuccess,
   markAsReadFailure,
+  getTodaysArrivalsRequest,
+  getTodaysArrivalsSuccess,
+  getTodaysArrivalsFailure,
   cleanSnackbar
 } = expeditionsSlice.actions;
 
@@ -143,10 +164,30 @@ export const getArrivals = (): AppThunk => async (dispatch) => {
     }
  };
 
- export const putEvaluateAccess = (id: number, result: string, expeditorId?: number, ): AppThunk => async (dispatch) => {
+ export const getTodaysArrivals = (after?: string, before?: string): AppThunk => async (dispatch) => {
+    dispatch(getTodaysArrivalsRequest());
+    try{
+        let url = `/notifications/arrivals?`
+        if (!!after){
+            url = url + `after=${after}&`
+        }
+        if (!!before){
+            url = url + `before=${before}&`
+        }
+        const response: AxiosResponse = await Axios.get(url);
+        const today: IArrival[] = response.data
+        dispatch(getTodaysArrivalsSuccess(today));
+        dispatch(_cleanSnackbar())
+    }
+    catch(error: any){
+        dispatch(getTodaysArrivalsFailure(error.response.data));
+    }
+ };
+
+ export const putEvaluateAccess = (id: number, result: string, palletsSalida: number, destiny: string, expeditorId?: number): AppThunk => async (dispatch) => {
     dispatch(evaluateAccessRequest());
     try{
-        await Axios.put(`/notifications/arrivals/${id}`, {result, expeditorId});
+        await Axios.put(`/notifications/arrivals/${id}`, {result, expeditorId, palletsSalida, destiny});
         dispatch(evaluateAccessSuccess());
         dispatch(_cleanSnackbar())
     }

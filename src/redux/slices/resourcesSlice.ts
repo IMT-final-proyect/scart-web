@@ -399,7 +399,7 @@ export const getDriverById = (id: number): AppThunk => async (dispatch) => {
 
 export const getAllVehicles = (contractorId?: number): AppThunk => async (dispatch) => {
    dispatch(getAllVehiclesRequest());
-   const url = contractorId !== undefined ? `/vehicles?contractor=${contractorId}` : `/vehicles?relations=contractor`
+   const url = contractorId !== undefined ? `/vehicles?contractor=${contractorId}` : `/vehicles?relations=type,contractor`
    try{
       const response: AxiosResponse = await Axios.get(url);
       const vehicle = _.mapKeys(response.data, 'id') 
@@ -413,7 +413,7 @@ export const getAllVehicles = (contractorId?: number): AppThunk => async (dispat
 export const getVehicleById = (id: number): AppThunk => async (dispatch) => {
    dispatch(getVehicleByIdRequest());
    try{
-      const response: AxiosResponse = await Axios.get(`/vehicles/${id}?relations=contractor`);      
+      const response: AxiosResponse = await Axios.get(`/vehicles/${id}?relations=type,contractor`);      
       dispatch(getVehicleByIdSuccess(response.data));
    }
    catch(error: any){
@@ -479,6 +479,7 @@ export const createVehicle = (
    brand: string, 
    model: string, 
    year: string, 
+   type: number,
    contractorId: number): AppThunk => async (dispatch) => {
    dispatch(createVehicleRequest());
    try{
@@ -487,6 +488,7 @@ export const createVehicle = (
          brand,
          model,
          year,
+         type,
          contractorId
       });
       dispatch(createVehicleSuccess(response.data));
@@ -615,3 +617,6 @@ export const putCheckOut = (driverId: number, vehicleId: number): AppThunk => as
       dispatch(CheckOutFailure(error?.response?.data)); 
    }
 }
+
+
+export const getVehicleTypes = () => Axios.get('/vehicles/types');
