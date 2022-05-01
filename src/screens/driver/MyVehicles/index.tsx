@@ -10,7 +10,7 @@ import CreateVehicleModal from '../../../components/vehiclesScreen/components/cr
 import { ROUTES } from '../navigation/routes';
 import { Link } from 'react-router-dom';
 import CustomInput from '../../../components/customInput';
-import { createVehicle, getAllVehicles, getVehicleTypes } from '../../../redux/slices/resourcesSlice';
+import { createVehicle, getAllVehicles } from '../../../redux/slices/resourcesSlice';
 import { IVehicle } from '../../../utils/interfaces';
 import CustomSnackbar from '../../../components/customSnackbar';
 

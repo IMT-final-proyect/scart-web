@@ -131,7 +131,7 @@ const ArrivalDetails = () => {
                                         Pallets de entrada: 
                                     </text>
                                     <text className={classes.dataField}>
-                                        {arrival.palletsIn ? arrival.palletsIn : '-'}
+                                        {arrival.palletsEntrada}
                                     </text>
                                 </Grid>
                             </Grid>

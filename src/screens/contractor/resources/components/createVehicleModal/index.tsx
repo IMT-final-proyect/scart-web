@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 import { Button, Grid, TextField, } from '@material-ui/core';
 import useStyles from './styles';
 import { useCallback, useEffect, useState } from 'react';

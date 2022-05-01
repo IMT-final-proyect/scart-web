@@ -6,7 +6,7 @@ import MomentUtils from '@date-io/moment';
 import { useDispatch, useSelector } from 'react-redux'
 import CustomSnackbar from '../../../components/customSnackbar';
 import { RootState } from '../../../redux/rootReducer'
-import { getArrivals, getTodaysArrivals } from '../../../redux/slices/expeditionsSlice'
+import { getTodaysArrivals } from '../../../redux/slices/expeditionsSlice'
 import { ROUTES } from '../navigation/routes';
 import useStyles from './styles';
 import CustomInput from '../../../components/customInput';

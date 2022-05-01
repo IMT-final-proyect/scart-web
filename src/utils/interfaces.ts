@@ -129,8 +129,8 @@ export interface IArrival {
    vehicleType: string;
    securityId: number;
    contractor: string;
-   palletsIn: string;
-   pallestOut: string;
+   palletsEntrada: string;
+   pallestSalida: string;
    result: boolean | null;
    exception?:{
       id: number;

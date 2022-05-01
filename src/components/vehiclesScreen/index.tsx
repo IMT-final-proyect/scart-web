@@ -9,7 +9,7 @@ import { RootState } from '../../redux/rootReducer';
 import CreateVehicleModal from './components/createVehicleModal';
 import { Link, useHistory } from 'react-router-dom';
 import CustomInput from '../customInput';
-import { createVehicle, deleteVehicle, getAllVehicles, getVehicleTypes } from '../../redux/slices/resourcesSlice';
+import { createVehicle, deleteVehicle, getAllVehicles } from '../../redux/slices/resourcesSlice';
 import { getContractors } from '../../redux/slices/contractorsSlice';
 import { IVehicle } from '../../utils/interfaces';
 import DeleteModal from '../DeleteModal';
