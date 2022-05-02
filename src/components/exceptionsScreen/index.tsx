@@ -26,7 +26,7 @@ const Exceptions = () => {
     const [loadingFilter, setLoadingFilter] = useState(false)
     const [exceptionsFiltered, setExceptionsFiltered] = useState<IException[]>([])
     const loading = useSelector((state: RootState) => state.exceptions.loading)
-    const success = useSelector((state: RootState) => state.exceptions.evaluationSuccess)
+    const success = useSelector((state: RootState) => state.exceptions.success)
     
     useEffect(() => {
         dispatch(getPendingExceptions())

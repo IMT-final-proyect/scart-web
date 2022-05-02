@@ -62,7 +62,7 @@ const exceptionsSlice = createSlice({
       getPendingExceptionsRequest(state) {
          state.loading = true;
          state.error = initialState.error
-         state.success = initialState.success
+         state.evaluationSuccess = initialState.success
       },
       getPendingExceptionsSuccess(state, action: any) {
          const { payload } = action
