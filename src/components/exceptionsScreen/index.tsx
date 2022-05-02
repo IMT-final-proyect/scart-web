@@ -27,7 +27,7 @@ const Exceptions = () => {
     const [exceptionsFiltered, setExceptionsFiltered] = useState<IException[]>([])
     const loading = useSelector((state: RootState) => state.exceptions.loading)
     const success = useSelector((state: RootState) => state.exceptions.success)
-    
+
     useEffect(() => {
         dispatch(getPendingExceptions())
     }, [dispatch])
@@ -120,9 +120,7 @@ const Exceptions = () => {
                                     {Object.keys(exceptionsFiltered).map((key: string, i: any) =>
                                         <ExceptionRow 
                                             key={exceptionsFiltered[parseInt(key)].id}
-                                            driver={exceptionsFiltered[parseInt(key)].arrival.driver}
-                                            vehicle={exceptionsFiltered[parseInt(key)].arrival.vehicle}
-                                            contractor={exceptionsFiltered[parseInt(key)].arrival.contractor}
+                                            exception={exceptionsFiltered[parseInt(key)]}
                                             route={'/'+root+ROUTES.exceptions+'/'+exceptionsFiltered[parseInt(key)].id+'/'+exceptionsFiltered[parseInt(key)].arrival.driverId+'/'+exceptionsFiltered[parseInt(key)].arrival.vehicleId+'/'+exceptionsFiltered[parseInt(key)].arrival.securityId}
                                         />
                                     )}
