@@ -28,6 +28,9 @@ const ArrivalDetails = () => {
     const authorizationError = useSelector((state: RootState) => state.expeditions.authorization.error)
     const loading = useSelector((state: RootState) => state.expeditions.authorization.loading)
 
+    const driver = JSON.parse(arrival.driver)
+    const vehicle = JSON.parse(arrival.vehicle)
+
     useEffect(() => {
         if(!arrival) history.push(ROUTES.root)
     }, [arrival, history])
@@ -71,7 +74,7 @@ const ArrivalDetails = () => {
                                         Nombre del conductor: 
                                     </text>
                                     <text className={classes.dataField}>
-                                        {arrival.driver}
+                                        {driver.name}
                                     </text>
                                 </Grid>
                                 <Grid item xs={4}>
@@ -79,7 +82,7 @@ const ArrivalDetails = () => {
                                         Telefono del conductor: 
                                     </text>
                                     <text className={classes.dataField}>
-                                        {arrival.driverPhone ? arrival.driverPhone : '-'}
+                                        {driver.phone ? driver.phone : '-'}
                                     </text>
                                 </Grid>
                                 <Grid item xs={4} />
@@ -91,7 +94,7 @@ const ArrivalDetails = () => {
                                             Vehiculo: 
                                         </text>
                                         <div className={classes.dataField}>
-                                            <text> {arrival.vehicle} </text>
+                                            <text> {vehicle.plate} </text>
                                         </div>
                                     </Grid>
                                 </Grid>
@@ -101,7 +104,7 @@ const ArrivalDetails = () => {
                                             Tipo de vehiculo: 
                                         </text>
                                         <div className={classes.dataField}>
-                                            <text> {arrival.vehicleType ? arrival.vehicleType : '-'} </text>
+                                            <text> {vehicle.type ? vehicle.type : '-'} </text>
                                         </div>
                                     </Grid>
                                 </Grid>

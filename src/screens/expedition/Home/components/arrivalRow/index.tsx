@@ -12,14 +12,15 @@ interface Props{
 }
 const ArrivalRow = ({ arrival, route, markAsRead }: Props) => {
     const classes = useStyles();
-
+    const driver = JSON.parse(arrival.driver)
+    const vehicle = JSON.parse(arrival.vehicle)
     return(
         <Grid container className={classes.container} direction="row" justifyContent='space-between'>
             <Grid item xs={3} className={classes.text}>
-                <text> {arrival.driver.length > 60 ? arrival.driver.substring(0, 87)+'...' : arrival.driver} </text>
+                <text> {driver.name.length > 60 ? driver.name.substring(0, 87)+'...' : driver.name}</text>
             </Grid>
             <Grid item xs={3} className={classes.text}>
-                <text> {arrival.vehicle.length > 60 ? arrival.vehicle.substring(0, 87)+'...' : arrival.vehicle} </text>
+                <text> {vehicle.plate.length > 60 ? vehicle.plate.substring(0, 87)+'...' : vehicle.plate} </text>
             </Grid>
             <Grid item xs={2}>
                 <text> {arrival.contractor.length > 60 ? arrival.contractor.substring(0, 87)+'...' : arrival.contractor} </text>
