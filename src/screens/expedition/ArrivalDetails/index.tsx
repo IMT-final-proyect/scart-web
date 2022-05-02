@@ -49,7 +49,7 @@ const ArrivalDetails = () => {
     }
     
     const handleApprove = () => {
-        if(!!palletsOut && !!destination)
+        if(!!palletsOut && palletsOut > -1 && !!destination)
             dispatch(putEvaluateAccess(arrival.id, "0", palletsOut, destination, userId,))
         else{
             setEmptyError(true)
@@ -176,7 +176,7 @@ const ArrivalDetails = () => {
                     </Grid>
                 </Grid>
                 <CustomSnackbar open={errorSnackbar} message={authorizationError?.message || 'Hubo un error evaluando el arribo'} type='error' onClose={() => setErrorSnackbar(false)} />
-                <CustomSnackbar open={emptyError} message={'Debe agregar cantidad de pallets y un destino'} type='error' onClose={() => setEmptyError(false)} />
+                <CustomSnackbar open={emptyError} message={'Debe agregar cantidad no negativa de pallets y un destino'} type='error' onClose={() => setEmptyError(false)} />
             </>
         }
     </>
