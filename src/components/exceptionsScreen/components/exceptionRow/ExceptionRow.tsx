@@ -18,7 +18,7 @@ const ExceptionRow = ({ exception, route }: Props) => {
                 <text> {driver.name} </text>
             </Grid>
             <Grid item xs={3} className={classes.text}>
-                <text> {vehicle.name} </text>
+                <text> {vehicle.plate} </text>
             </Grid>
             <Grid item xs={3} className={classes.text}>
                 <text> {exception.arrival.contractor} </text>
