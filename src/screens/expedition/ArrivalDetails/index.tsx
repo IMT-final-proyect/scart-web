@@ -49,7 +49,7 @@ const ArrivalDetails = () => {
     }
     
     const handleApprove = () => {
-        if(!!palletsOut && palletsOut > -1 && !!destination)
+        if(palletsOut >= 0 && !!destination)
             dispatch(putEvaluateAccess(arrival.id, "0", palletsOut, destination, userId,))
         else{
             setEmptyError(true)
