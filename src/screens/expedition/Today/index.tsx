@@ -26,7 +26,7 @@ const Today = () => {
   const arrivals = useSelector((state: RootState) => state.expeditions.data.evaluated)
   const loading = useSelector((state: RootState) => state.expeditions.loading)
   const success = useSelector((state: RootState) => state.expeditions.success)
-  
+
   useEffect(() => {
     const after = moment().toISOString()
     dispatch(getTodaysArrivals(after))
@@ -126,12 +126,12 @@ const Today = () => {
                   :
                       <>
                           <Grid container justifyContent='space-between'>
-                              <Grid item xs={3} className={classes.headerText}>
+                              <Grid item xs={2} className={classes.headerText}>
                                   <text className={classes.headerText}>
                                       Conductor
                                   </text>
                               </Grid>
-                              <Grid item xs={3} className={classes.headerText}>
+                              <Grid item xs={2} className={classes.headerText}>
                                   <text className={classes.headerText}>
                                       Vehiculo
                                   </text>
@@ -139,6 +139,11 @@ const Today = () => {
                               <Grid item xs={2} className={classes.headerText}>
                                   <text className={classes.headerText}>
                                       Contratista
+                                  </text>
+                              </Grid>
+                              <Grid item xs={2} className={classes.headerText}>
+                                  <text className={classes.headerText}>
+                                      Pallets Entrada
                                   </text>
                               </Grid>
                               <Grid item xs={2} className={classes.headerText}>
@@ -157,7 +162,6 @@ const Today = () => {
                                   <ArrivalRow 
                                       key={arrivalsFiltered[parseInt(key)].id}
                                       arrival={arrivalsFiltered[parseInt(key)]}
-                                      route={ROUTES.root+'/'+arrivalsFiltered[parseInt(key)].id}
                                   />
                               )}
                           </Grid>
