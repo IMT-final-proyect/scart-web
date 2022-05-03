@@ -4,7 +4,7 @@ import { Card, CircularProgress, Grid, Typography } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux'
 import CustomSnackbar from '../../../components/customSnackbar';
 import { RootState } from '../../../redux/rootReducer'
-import { getArrivals } from '../../../redux/slices/expeditionsSlice'
+import { getArrivals, putMarkAsRead } from '../../../redux/slices/expeditionsSlice'
 import { ROUTES } from '../navigation/routes';
 import useStyles from './styles';
 import CustomInput from '../../../components/customInput';
@@ -58,7 +58,10 @@ const Home = () => {
   useEffect(() => {
       setOpenSuccess(success)
   }, [success])
-
+  
+  const markAsRead = (id: number) => {
+    dispatch(putMarkAsRead(id))
+  }
   return (
     <>
       <Grid container className={classes.container} direction='row' justifyContent='space-between'>
@@ -118,6 +121,7 @@ const Home = () => {
                                       key={arrivalsFiltered[parseInt(key)].id}
                                       arrival={arrivalsFiltered[parseInt(key)]}
                                       route={ROUTES.root+'/'+arrivalsFiltered[parseInt(key)].id}
+                                      markAsRead={markAsRead}
                                   />
                               )}
                           </Grid>

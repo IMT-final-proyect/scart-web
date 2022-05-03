@@ -62,7 +62,7 @@ const exceptionsSlice = createSlice({
       getPendingExceptionsRequest(state) {
          state.loading = true;
          state.error = initialState.error
-         state.success = initialState.success
+         state.evaluationSuccess = initialState.success
       },
       getPendingExceptionsSuccess(state, action: any) {
          const { payload } = action
@@ -138,7 +138,7 @@ export default exceptionsSlice.reducer;
 export const getPendingExceptions = (): AppThunk => async (dispatch) => {
    dispatch(getPendingExceptionsRequest());
    try{
-      const response: AxiosResponse = await Axios.get(`/notifications/exceptions?state=0`);
+      const response: AxiosResponse = await Axios.get(`/notifications/exceptions?result=null`);
       const exceptions = _.mapKeys(response.data, 'id')
       
       dispatch(getPendingExceptionsSuccess(exceptions));

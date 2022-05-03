@@ -43,6 +43,7 @@ const Contractors = () => {
         dispatch(getContractors())
     }, [dispatch])
 
+
     useEffect(() => {
         if (!!error)
             setOpenSnackbarError(true)
@@ -100,9 +101,9 @@ const Contractors = () => {
         setLoadingFilter(false)
     }, [searchPlate, searchContractor, vehicles])
 
-    const addVehicle = (brand: string, model: string, year: string, plate: string, contractorId: number) => {
+    const addVehicle = (brand: string, model: string, year: string, plate: string, type: number, contractorId: number) => {
         if(!!contractorId){
-            dispatch(createVehicle(plate, brand, model, year, contractorId))
+            dispatch(createVehicle(plate, brand, model, year, type, contractorId))
             setOpenVehicleModal(false)
             setMessageSnackbar('Vehiculo creado con exito')
         }

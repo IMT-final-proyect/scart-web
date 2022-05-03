@@ -26,8 +26,8 @@ const Exceptions = () => {
     const [loadingFilter, setLoadingFilter] = useState(false)
     const [exceptionsFiltered, setExceptionsFiltered] = useState<IException[]>([])
     const loading = useSelector((state: RootState) => state.exceptions.loading)
-    const success = useSelector((state: RootState) => state.exceptions.evaluationSuccess)
-    
+    const success = useSelector((state: RootState) => state.exceptions.success)
+
     useEffect(() => {
         dispatch(getPendingExceptions())
     }, [dispatch])
@@ -47,7 +47,7 @@ const Exceptions = () => {
         let exceptionsAux: IException[] = []
         if(searchContractor !== ''){
             Object.keys(exceptions).map((key: string, i: any) => {
-                const contractorName = exceptions[parseInt(key)].contractor?.toUpperCase()
+                const contractorName = exceptions[parseInt(key)].arrival.contractor?.toUpperCase()
                 if (contractorName?.includes(searchContractor.toUpperCase()))
                     exceptionsAux.push(exceptions[parseInt(key)])
             })
@@ -120,10 +120,8 @@ const Exceptions = () => {
                                     {Object.keys(exceptionsFiltered).map((key: string, i: any) =>
                                         <ExceptionRow 
                                             key={exceptionsFiltered[parseInt(key)].id}
-                                            driver={exceptionsFiltered[parseInt(key)].driver}
-                                            vehicle={exceptionsFiltered[parseInt(key)].vehicle}
-                                            contractor={exceptionsFiltered[parseInt(key)].contractor}
-                                            route={'/'+root+ROUTES.exceptions+'/'+exceptionsFiltered[parseInt(key)].id+'/'+exceptionsFiltered[parseInt(key)].driverId+'/'+exceptionsFiltered[parseInt(key)].vehicleId+'/'+exceptionsFiltered[parseInt(key)].securityId}
+                                            exception={exceptionsFiltered[parseInt(key)]}
+                                            route={'/'+root+ROUTES.exceptions+'/'+exceptionsFiltered[parseInt(key)].id+'/'+exceptionsFiltered[parseInt(key)].arrival.driverId+'/'+exceptionsFiltered[parseInt(key)].arrival.vehicleId+'/'+exceptionsFiltered[parseInt(key)].arrival.securityId}
                                         />
                                     )}
                                 </Grid>

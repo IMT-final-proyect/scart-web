@@ -111,7 +111,12 @@ const useStyles = makeStyles((theme: Theme) => ({
         [theme.breakpoints.down('md')]: {
             marginBottom: '3%',
         },
-    }
+    },
+    textInput: {
+        color: globalColors.lightBlue,
+        marginTop: '2.5%',
+        marginBottom: '2.5%'
+    },
 }));
 
 export default useStyles

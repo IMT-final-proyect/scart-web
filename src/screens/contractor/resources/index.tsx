@@ -176,9 +176,9 @@ const Resources = () => {
         setDeleteDriverModal(true)
     }
 
-    const addVehicle = (brand: string, model: string, year: string, plate: string) => {
+    const addVehicle = (brand: string, model: string, year: string, plate: string, type: number) => {
         if(!!contractorId){
-            dispatch(createVehicle(plate, brand, model, year, contractorId))
+            dispatch(createVehicle(plate, brand, model, year, type, contractorId))
             setOpenVehicleModal(false)
             setMessageSnackbar('Vehiculo creado con exito')
         }

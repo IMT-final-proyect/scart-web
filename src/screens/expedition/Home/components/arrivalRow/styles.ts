@@ -18,7 +18,9 @@ const useStyles = makeStyles<Theme>((theme: Theme) => ({
     },
     button:{
         height: '35px',
-        color: globalColors.lightBlue
+        color: globalColors.lightBlue,
+        textTransform: 'none',
+        fontSize: 13
     },
 }));
 
