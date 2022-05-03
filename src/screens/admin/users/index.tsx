@@ -69,12 +69,12 @@ const Users = () => {
         password: string,
         email: string) => {
             dispatch(createSpecialUser(name, surname, rol, username, cuit, password, email))
-            setMessageSnackbar('Conductor creado con exito')
+            setMessageSnackbar('Usuario creado con exito')
         }
 
     const handleDeleteSpecialUser = (id: number, contractorId?: number, rol?: number) => {
         if(!!rol) dispatch(deleteSpecialUser(id, rol))
-        setMessageSnackbar('Conductor eliminado con exito')
+        setMessageSnackbar('Usuario eliminado con exito')
     }
 
     const handleDeleteUserModal = (id: number, rol: number) => {
