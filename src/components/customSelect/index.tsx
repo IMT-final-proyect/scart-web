@@ -27,7 +27,7 @@ const CustomSelect = ({ value, placeholder, data, setValue }: Props) => {
                 onChange={handleSelect}
             >
                 {data.map((element) =>
-                        <MenuItem value={element.name}>{element.name}</MenuItem>)
+                    <MenuItem value={element.name}>{element.name}</MenuItem>)
                 }
             
             </Select>

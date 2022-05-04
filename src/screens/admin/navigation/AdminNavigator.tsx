@@ -119,6 +119,7 @@ const AdminNavigator = () => {
                 <Route exact path={ROUTES.root+ROUTES.manager+'/:id'} component={UserDetails} />
                 <Route exact path={ROUTES.root+ROUTES.auditor+'/:id'} component={UserDetails} />
                 <Route exact path={ROUTES.root+ROUTES.security+'/:id'} component={UserDetails} />
+                <Route exact path={ROUTES.root+ROUTES.expedition+'/:id'} component={UserDetails} />
                 <Route exact path={ROUTES.root+ROUTES.exceptions} component={Exceptions} />
                 <Route exact path={ROUTES.root+ROUTES.exceptions+'/:id/:driverId/:vehicleId/:securityId'} component={ExceptionDetails} />
                 <Route exact path={ROUTES.root+ROUTES.users} component={users} />

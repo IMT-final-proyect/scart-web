@@ -9,5 +9,6 @@ export enum ROUTES {
     manager='/encargado',
     auditor='/auditor',
     security='/seguridad',
-    exceptions = '/excepciones'
+    exceptions = '/excepciones',
+    expedition = '/expedicion'
 }
