@@ -217,7 +217,7 @@ export const getSpecialUsers = (): AppThunk => async (dispatch) => {
         _.assign(securitiesById[key], {rol: AllowedRol.security})
         return true
       })
-      const expeditor: AxiosResponse = await Axios.get(`http://159.203.75.242:2999/expeditors`);
+      const expeditor: AxiosResponse = await Axios.get(`/expeditors`);
       const expeditorsById = await _.mapKeys(expeditor.data, 'id')
       Object.keys(expeditorsById).map((key) => {
         _.assign(expeditorsById[key], {rol: AllowedRol.expedition})
@@ -292,7 +292,7 @@ export const createSpecialUser = (
           break
         }
         case AllowedRol.expedition: {
-          const expeditor: AxiosResponse = await Axios.post(`http://159.203.75.242:2999/register/expeditor`, 
+          const expeditor: AxiosResponse = await Axios.post(`/register/expeditor`, 
           {
             name,
             surname,
@@ -335,7 +335,7 @@ export const createSpecialUser = (
           break
         }
         case AllowedRol.expedition: {
-          await Axios.put(`http://159.203.75.242:2999/expeditors/${id}`,{
+          await Axios.put(`/expeditors/${id}`,{
             active: false
           });
           break
@@ -369,7 +369,7 @@ export const createSpecialUser = (
           break
         }
         case AllowedRol.expedition: {
-          response = await Axios.get(`http://159.203.75.242:2999/expeditors/${id}`)
+          response = await Axios.get(`/expeditors/${id}`)
           dispatch(getSpecialUserSuccess(response.data))
           break
         }
@@ -417,7 +417,7 @@ export const createSpecialUser = (
           break
         }
         case AllowedRol.expedition: {
-          const expeditor: AxiosResponse = await Axios.put(`http://159.203.75.242:2999/expeditors/${id}`,body);
+          const expeditor: AxiosResponse = await Axios.put(`/expeditors/${id}`,body);
           dispatch(editSpecialUserSuccess(expeditor.data))
           break
         }
