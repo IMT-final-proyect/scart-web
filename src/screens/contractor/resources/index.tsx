@@ -267,7 +267,7 @@ const Resources = () => {
                                 </Grid>
                                 <Grid item xs={3} className={classes.headerText}>
                                     <text className={classes.headerText}>
-                                        Fecha Nacimiento
+                                        Documentación
                                     </text>
                                 </Grid>
                                 <Grid item xs={2} className={classes.headerText}>
@@ -288,7 +288,7 @@ const Resources = () => {
                                             name={driversFiltered[parseInt(key)].name}
                                             surname={driversFiltered[parseInt(key)].surname}
                                             document={driversFiltered[parseInt(key)].cuit}
-                                            birthday={driversFiltered[parseInt(key)].birth_date}
+                                            is_valid={driversFiltered[parseInt(key)].is_valid}
                                             id={driversFiltered[parseInt(key)].id}
                                             handleDeleteDriver={handleDeleteDriverModal}
                                         />
@@ -366,8 +366,8 @@ const Resources = () => {
                                         >  
                                             <Vehicle 
                                                 brand={vehiclesFiltered[parseInt(key)].brand}
-                                                model={vehiclesFiltered[parseInt(key)].model}
                                                 plate={vehiclesFiltered[parseInt(key)].plate}
+                                                is_valid={vehiclesFiltered[parseInt(key)].is_valid}
                                                 id={vehiclesFiltered[parseInt(key)].id}
                                                 handleDeleteVehicle={handleDeleteVehicleModal}
                                             />

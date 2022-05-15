@@ -225,9 +225,14 @@ const Drivers = () => {
                                             Documento
                                         </text>
                                     </Grid>
-                                    <Grid item xs={3} className={classes.headerText}>
+                                    <Grid item xs={2} className={classes.headerText}>
                                         <text className={classes.headerText}>
                                             Contratista
+                                        </text>
+                                    </Grid>
+                                    <Grid item xs={2} className={classes.headerText}>
+                                        <text className={classes.headerText}>
+                                            Documentaciòn
                                         </text>
                                     </Grid>
                                     <Grid item xs={1} className={classes.headerText}>
@@ -250,6 +255,7 @@ const Drivers = () => {
                                             username={driversFiltered[parseInt(key)].username}
                                             document={driversFiltered[parseInt(key)].cuit}
                                             contractor={driversFiltered[parseInt(key)].contractor.name}
+                                            is_valid={driversFiltered[parseInt(key)].is_valid}
                                             id={driversFiltered[parseInt(key)].id}
                                             handleDeleteDriver={handleDeleteDriverModal}
                                         />

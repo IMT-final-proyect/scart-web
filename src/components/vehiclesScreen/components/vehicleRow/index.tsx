@@ -4,16 +4,18 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import useStyles from './styles';
 import { useRol } from '../../../../customHooks';
 import { AllowedRol } from '../../../../utils/constants';
+import globalColors from '../../../../utils/styles/globalColors';
 
 interface Props{
     brand: string,
     model: string,
     plate: string,
     contractor: string,
+    is_valid: boolean,
     id: number,
     handleDeleteVehicle: (id: number) => void
 }
-const VehicleRow = ({ brand, model, plate, contractor, id, handleDeleteVehicle }: Props) => {
+const VehicleRow = ({ brand, model, plate, contractor, id, is_valid, handleDeleteVehicle }: Props) => {
     const classes = useStyles();    
     const rol = useRol()
     const handleClick = (e: any) => {
@@ -26,14 +28,25 @@ const VehicleRow = ({ brand, model, plate, contractor, id, handleDeleteVehicle }
             <Grid item xs={3} className={classes.text}>
                 <text> {brand} </text>
             </Grid>
-            <Grid item xs={3} className={classes.text}>
-                <text> {model} </text>
+            <Grid item xs={2} className={classes.text}>
+                <text> {plate} </text>
             </Grid>
-            <Grid item xs={3} className={classes.text}>
+            <Grid item xs={2} className={classes.text}>
                 <text> {contractor} </text>
             </Grid>
             <Grid item xs={2} className={classes.text}>
-                <text> {plate} </text>
+                <text> {model} </text>
+            </Grid>
+            <Grid item xs={2} className={classes.text}>
+                {is_valid ? 
+                    <div className={classes.state}>
+                        <text className={classes.stateColor} style={{backgroundColor: globalColors.green}}>Válida</text>
+                    </div>
+                :
+                    <div className={classes.state}>
+                        <text className={classes.stateColor} style={{backgroundColor: globalColors.red}}>Inválida</text>
+                    </div>
+                }
             </Grid>
             <Grid item xs={1} className={classes.iconContainer}>
                 {(rol !== AllowedRol.auditor && rol !== AllowedRol.manager && rol !== AllowedRol.security) ?

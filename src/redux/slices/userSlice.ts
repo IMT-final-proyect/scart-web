@@ -27,6 +27,7 @@ export interface IUser {
    street: string;
    address: IAddress
    birth_date: string
+   is_valid: boolean
    drivers?: []
    vehicles?: []
    contractor?: IContractor

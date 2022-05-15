@@ -4,6 +4,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import useStyles from './styles';
 import { useRol } from '../../../../customHooks';
 import { AllowedRol } from '../../../../utils/constants';
+import globalColors from '../../../../utils/styles/globalColors';
 
 interface Props{
     name: string,
@@ -11,10 +12,11 @@ interface Props{
     document: string,
     username: string,
     contractor: string,
+    is_valid: boolean,
     id: number,
     handleDeleteDriver: (id: number) => void
 } 
-const Driver = ({ name, surname, username, document, contractor, id, handleDeleteDriver }: Props) => {
+const Driver = ({ name, surname, username, document, contractor, is_valid, id, handleDeleteDriver }: Props) => {
     const classes = useStyles()
     const rol = useRol()
     const handleClick = (e: any) => {
@@ -33,8 +35,19 @@ const Driver = ({ name, surname, username, document, contractor, id, handleDelet
             <Grid item xs={2} className={classes.text}>
                 <text> {document} </text>
             </Grid>
-            <Grid item xs={3} className={classes.text}>
+            <Grid item xs={2} className={classes.text}>
                 <text> {contractor} </text>
+            </Grid>
+            <Grid item xs={2} className={classes.text}>
+                {is_valid ? 
+                    <div className={classes.state}>
+                        <text className={classes.stateColor} style={{backgroundColor: globalColors.green}}>Válida</text>
+                    </div>
+                :
+                    <div className={classes.state}>
+                        <text className={classes.stateColor} style={{backgroundColor: globalColors.red}}>Inválida</text>
+                    </div>
+                }
             </Grid>
             <Grid item xs={1} className={classes.iconContainer}>
                 {(rol !== AllowedRol.auditor && rol !== AllowedRol.manager && rol !== AllowedRol.security) ? (<Button onClick={handleClick} >

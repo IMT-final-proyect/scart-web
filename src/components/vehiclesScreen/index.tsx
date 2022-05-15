@@ -177,19 +177,24 @@ const Contractors = () => {
                                         Marca
                                     </text>
                                 </Grid>
-                                <Grid item xs={3} className={classes.headerText}>
+                                <Grid item xs={2} className={classes.headerText}>
                                     <text className={classes.headerText}>
-                                        Modelo
+                                        Patente
                                     </text>
                                 </Grid>
-                                <Grid item xs={3} className={classes.headerText}>
+                                <Grid item xs={2} className={classes.headerText}>
                                     <text className={classes.headerText}>
                                         Contratista
                                     </text>
                                 </Grid>
                                 <Grid item xs={2} className={classes.headerText}>
                                     <text className={classes.headerText}>
-                                        Patente
+                                        Modelo
+                                    </text>
+                                </Grid>
+                                <Grid item xs={2} className={classes.headerText}>
+                                    <text className={classes.headerText}>
+                                        Documentaciòn
                                     </text>
                                 </Grid>
                                 <Grid item xs={1} className={classes.headerText}>
@@ -211,6 +216,7 @@ const Contractors = () => {
                                         model={vehiclesFiltered[parseInt(key)].model}
                                         plate={vehiclesFiltered[parseInt(key)].plate}
                                         contractor={vehiclesFiltered[parseInt(key)].contractor?.name}
+                                        is_valid={vehiclesFiltered[parseInt(key)].is_valid}
                                         id={vehiclesFiltered[parseInt(key)].id}
                                         handleDeleteVehicle={handleDeleteVehicleModal}
                                     />

@@ -16,6 +16,7 @@ export interface IContractor {
    address: IAddress;
    username: string;
    email: string;
+   is_valid: boolean;
 }
 
 export interface IDriver {
@@ -32,7 +33,8 @@ export interface IDriver {
       name: string;
       cuit: string;
    };
-   address: IAddress
+   address: IAddress;
+   is_valid: boolean;
 }
 
 export interface IVehicle {
@@ -50,6 +52,7 @@ export interface IVehicle {
       name: string;
       cuit: string;
    };
+   is_valid: boolean;
 }
 
 export interface ISecurity {

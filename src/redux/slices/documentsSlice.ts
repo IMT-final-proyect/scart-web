@@ -466,7 +466,6 @@ export const getOwner = (entityType: number, entityId: number): AppThunk => asyn
 export const postDocumentEvaluation = (id: number, isApprovation: boolean, comment: string, uuid?: string): AppThunk => async (dispatch) => {
    dispatch(postDocumentEvaluationRequest());
    try{
-      
       if(uuid){
          let nextState
          if(isApprovation) nextState = 1
