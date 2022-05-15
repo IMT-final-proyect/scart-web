@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         paddingLeft: '2.5%',
         paddingRight: '2.5%',
         paddingBottom: '2%',
-        paddingTop: '1%',
+        paddingTop: '2%',
     },
     dataContainer:{
         textAlign: 'start',
@@ -67,6 +67,9 @@ const useStyles = makeStyles((theme: Theme) => ({
         height: '35px',
         textTransform: 'none',
     },
+    qrButton:{
+        textTransform: 'none',
+    },
     textCenter: {
         textAlign: 'center',
         marginTop: '2%'
@@ -78,6 +81,12 @@ const useStyles = makeStyles((theme: Theme) => ({
     snackbar: {
         width: '75%',
     },
+    qrModal: {
+        position: 'absolute', 
+        left: '50%',
+        top: '50%',
+        transform: `translate(-50%, -50%)`,
+    }
 }));
 
 export default useStyles

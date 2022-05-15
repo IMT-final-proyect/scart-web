@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Card, CircularProgress, Grid, Modal } from '@material-ui/core'
+import QrCode2Icon from '@mui/icons-material/QrCode2';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import useStyles from './styles' 
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { RootState } from '../../../../redux/rootReducer';
 import { useDispatch, useSelector } from 'react-redux';
+import QRCode from "qrcode.react";
 import moment from 'moment';
 import { IDocument, IDriver } from '../../../../utils/interfaces';
 import CreateDriverDocumentModal from './components/CreateDriverDocumentModal';
@@ -26,7 +28,7 @@ const DriverDetails = () => {
     const rol = useRol()
     const { location } = useHistory()
     const path =  location.pathname.split('/')
-    
+    const [qrModal, setQrModal] = useState(false)
     const [openDriverDocumentModal, setOpenDriverDocumentModal] = useState(false)
     const [openEditDriverModal, setOpenEditDriverModal] = useState(false)
     const [openEditDriverSuccess, setOpenEditDriverSuccess] = useState(false)
@@ -107,6 +109,11 @@ const DriverDetails = () => {
                     setChangePassword={setChangePassword}
                 />
             </Modal>
+            <Modal open={qrModal} onClose={() => setQrModal(false)}>
+                <Grid className={classes.qrModal}>
+                    <QRCode value={driver.id?.toString()} size={350} includeMargin/>
+                </Grid>
+            </Modal>
             {loading ?
                 <Grid container alignContent='center' justifyContent='center' >
                     <CircularProgress className={classes.spinner} />
@@ -115,7 +122,7 @@ const DriverDetails = () => {
             <Grid container direction='column' justifyContent='space-between'>
                 <Card className={classes.cardContainer}>
                     <Grid container justifyContent='space-between' direction='row' alignItems={'center'}>
-                        <Grid item xs={6}>
+                        <Grid item xs={5}>
                             <div className={classes.dataContainer}>
                                 <text className={classes.dataField}> Nombre: </text>
                                 <text className={classes.data}> {driver?.name} </text>
@@ -128,6 +135,12 @@ const DriverDetails = () => {
                             </div>
                         </Grid>
                         <Grid item xs={1}>
+                            <Button className={classes.qrButton} variant='outlined' onClick={() => setQrModal(true)}>
+                                <QrCode2Icon/>
+                                <text>Ver QR</text>
+                            </Button>
+                        </Grid>
+                        <Grid item xs={1}>
                             {rol !== AllowedRol.auditor && rol !== AllowedRol.manager && rol !== AllowedRol.security &&
                                 <Button onClick={() => {setOpenEditDriverModal(true)}}>
                                     <EditIcon />
@@ -136,13 +149,13 @@ const DriverDetails = () => {
                         </Grid>
                     </Grid>
                     <Grid container justifyContent='flex-start' direction='row' alignItems={'center'}>
-                        <Grid item xs={6}>
+                        <Grid item xs={5}>
                             <div className={classes.dataContainer}>
                                 <text className={classes.dataField}> Telefono: </text>
                                 <text className={classes.data}> {driver?.phone || '-'} </text>
                             </div>
                         </Grid>
-                        <Grid item xs={6}>
+                        <Grid item xs={5}>
                             <div className={classes.dataContainer}>
                                 <text className={classes.dataField}> Email: </text>
                                 <text className={classes.data}> {driver?.email || '-'} </text>
@@ -150,13 +163,13 @@ const DriverDetails = () => {
                         </Grid>
                     </Grid>
                     <Grid container justifyContent='flex-start' direction='row' alignItems={'center'}>
-                        <Grid item xs={6}>
+                        <Grid item xs={5}>
                             <div className={classes.dataContainer}>
                                 <text className={classes.dataField}> CUIL: </text>
                                 <text className={classes.data}> {driver?.cuit || '-'} </text>
                             </div>
                         </Grid>
-                        <Grid item xs={6}>
+                        <Grid item xs={5}>
                             <div className={classes.dataContainer}>
                                 <text className={classes.dataField}> Fecha de nacimiento: </text>
                                 <text className={classes.data}> {moment(driver.birth_date).format('DD/MM/YY') || '-'} </text>
@@ -164,13 +177,13 @@ const DriverDetails = () => {
                         </Grid>
                     </Grid>
                     <Grid container justifyContent='flex-start' direction='row' alignItems={'center'}>
-                        <Grid item xs={6}>
+                        <Grid item xs={5}>
                             <div className={classes.dataContainer}>
                                 <text className={classes.dataField}> Usuario: </text>
                                 <text className={classes.data}> {driver?.username ||'-'} </text>
                             </div>
                         </Grid>
-                        <Grid item xs={6}>
+                        <Grid item xs={5}>
                             <div className={classes.dataContainer}>
                                 <text className={classes.dataField}> Contratista: </text>
                                 <text className={classes.data}> {driver?.contractor.name ||'-'} </text>
