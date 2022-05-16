@@ -20,7 +20,6 @@ const ArrivalDetails = () => {
     const arrivalId: number = params.id
     const [emptyError, setEmptyError] = useState(false)
     const [errorSnackbar, setErrorSnackbar] = useState(false)
-    const [palletsOut, setPalletsOut] = useState<number>(0)
     const [destination, setDestination] = useState<string>('')
     const arrival = useSelector((state: RootState) => state.expeditions.data.nonEvaluated[arrivalId])
     const userId = useSelector((state: RootState) => state.user.accountData?.entityId)
@@ -45,12 +44,12 @@ const ArrivalDetails = () => {
     }, [authorizationError?.message, authorizationSuccess, history])
 
     const handleRejected = () => {
-        dispatch(putEvaluateAccess(arrival.id, "1", palletsOut, destination, userId))
+        dispatch(putEvaluateAccess(arrival.id, "1", destination, userId))
     }
     
     const handleApprove = () => {
-        if(palletsOut >= 0 && !!destination)
-            dispatch(putEvaluateAccess(arrival.id, "0", palletsOut, destination, userId,))
+        if(!!destination)
+            dispatch(putEvaluateAccess(arrival.id, "0", destination, userId,))
         else{
             setEmptyError(true)
         }
@@ -126,7 +125,7 @@ const ArrivalDetails = () => {
                                         Horario de anuncio: 
                                     </text>
                                     <text className={classes.dataField}>
-                                        {moment(arrival.arrivalTime).format('DD/MM/YYYY')}
+                                        {moment(arrival.arrivalTime).format('DD/MM/YYYY - HH:mm')}
                                     </text>
                                 </Grid>
                                 <Grid item xs={4}>
@@ -148,14 +147,10 @@ const ArrivalDetails = () => {
                                 </text>
                             </Grid>
                             <Grid container justifyContent='space-between' alignItems='flex-end'>
-                                <Grid item xs={4}>
-                                    <text className={classes.palletsText}>Pallets de salida</text>
-                                    <NumericInput value={palletsOut} onChange={(valueAsNumber) => setPalletsOut(valueAsNumber as number)}/>
-                                </Grid>
-                                <Grid item xs={4}>
+                                <Grid item xs={6}>
                                     <CustomInput value={destination} setValue={setDestination} placeholder='Destino' />
                                 </Grid>
-                                <Grid item xs={4}>
+                                <Grid item xs={6}>
                                     {loading ?
                                         <Grid container justifyContent='center' alignItems='center'>
                                             <CircularProgress  size={30} />

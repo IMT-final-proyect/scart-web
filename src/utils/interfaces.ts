@@ -135,8 +135,8 @@ export interface IArrival {
    securityId: number;
    contractor: string;
    palletsEntrada: string;
-   pallestSalida: string;
-   result: boolean | null;
+   palletsSalida: string;
+   result: number | boolean | null;
    exception?:{
       id: number;
       state: number;

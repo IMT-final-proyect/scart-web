@@ -66,7 +66,7 @@ const Home = () => {
     <>
       <Grid container className={classes.container} direction='row' justifyContent='space-between'>
           <Card className={classes.titleCard}>
-              <Grid container className={classes.titleContainer} justifyContent='space-between'>
+              <Grid container justifyContent='space-between'>
                   <text className={classes.textTitle}>
                       Anuncios
                   </text>
@@ -89,24 +89,44 @@ const Home = () => {
                   :
                       <>
                           <Grid container justifyContent='space-between'>
-                              <Grid item xs={3} className={classes.headerText}>
+                              <Grid item xs={2} className={classes.headerText}>
                                   <text className={classes.headerText}>
                                       Conductor
                                   </text>
                               </Grid>
-                              <Grid item xs={3} className={classes.headerText}>
+                              <Grid item xs={1} className={classes.headerText}>
                                   <text className={classes.headerText}>
-                                      Vehiculo
+                                      Telefono
                                   </text>
                               </Grid>
-                              <Grid item xs={2} className={classes.headerText}>
+                              <Grid item xs={1} className={classes.headerText}>
+                                  <text className={classes.headerText}>
+                                      Patente
+                                  </text>
+                              </Grid>
+                              <Grid item xs={1} className={classes.headerText}>
+                                  <text className={classes.headerText}>
+                                      Tipo de vehiculo
+                                  </text>
+                              </Grid>
+                              <Grid item xs={1} className={classes.headerText}>
                                   <text className={classes.headerText}>
                                       Contratista
                                   </text>
                               </Grid>
-                              <Grid item xs={2} className={classes.headerText}>
+                              <Grid item xs={1} className={classes.headerText}>
+                                  <text className={classes.headerText}>
+                                      Pallets entrada
+                                  </text>
+                              </Grid>
+                              <Grid item xs={1} className={classes.headerText}>
                                   <text className={classes.headerText}>
                                       Horario
+                                  </text>
+                              </Grid>
+                              <Grid item xs={1} className={classes.headerText}>
+                                  <text className={classes.headerText}>
+                                      Documen..
                                   </text>
                               </Grid>
                               <Grid item xs={2} className={classes.headerText}>
@@ -118,10 +138,11 @@ const Home = () => {
                           <Grid container direction='column' justifyContent='space-between' >
                               {Object.keys(arrivalsFiltered).map((key: string, i: any) =>
                                   <ArrivalRow 
-                                      key={arrivalsFiltered[parseInt(key)].id}
-                                      arrival={arrivalsFiltered[parseInt(key)]}
-                                      route={ROUTES.root+'/'+arrivalsFiltered[parseInt(key)].id}
-                                      markAsRead={markAsRead}
+                                    key={arrivalsFiltered[parseInt(key)].id}
+                                    index={i}
+                                    arrival={arrivalsFiltered[parseInt(key)]}
+                                    route={ROUTES.root+'/'+arrivalsFiltered[parseInt(key)].id}
+                                    markAsRead={markAsRead}
                                   />
                               )}
                           </Grid>

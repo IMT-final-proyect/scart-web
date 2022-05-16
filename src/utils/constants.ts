@@ -19,6 +19,8 @@ export const HIGH = 'Alta'
 export const MEDIUM = 'Media'
 export const LOW = 'Baja'
 
+export const APPROVED = 'Aprobado'
+
 export enum AllowedRol{
     admin,
     driver,
@@ -41,6 +43,11 @@ export enum Severities {
     HIGH,
     MEDIUM,
     LOW,
+}
+
+export enum Results {
+    APPROVED,
+    REJECTED
   }
   
 export enum ExceptionResults {

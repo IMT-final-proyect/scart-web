@@ -5,6 +5,8 @@ const useStyles = makeStyles<Theme>((theme: Theme) => ({
     container:{
         textAlign: 'start',
         alignItems: 'center',
+        paddingLeft: '0.5%',
+        borderRadius: 5
     },
     text:{
         maxWidth: 'auto',
@@ -20,7 +22,16 @@ const useStyles = makeStyles<Theme>((theme: Theme) => ({
         height: '35px',
         color: globalColors.lightBlue,
         textTransform: 'none',
-        fontSize: 13
+        fontSize: 12
+    },
+    stateColor: {
+        borderRadius: 20,
+        fontWeight: 'bold',
+        marginLeft: '5%',
+        paddingLeft: '8%',
+        paddingRight: '8%',
+        paddingTop: '2%',
+        paddingBottom: '2%'
     },
 }));
 

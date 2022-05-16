@@ -1,5 +1,5 @@
 /* eslint-disable array-callback-return */
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, current } from '@reduxjs/toolkit';
 import Axios, {AxiosResponse} from 'axios';
 import { IArrival } from '../../utils/interfaces';
 import { AppThunk } from '../store';
@@ -79,6 +79,23 @@ const expeditionsSlice = createSlice({
         state.authorization.loading = false;
         state.authorization.error = payload;
     },
+    putEditArrivalRequest(state) {
+        state.loading = true;
+        state.success = initialState.success
+        state.error = initialState.error
+    },
+    putEditArrivalSuccess(state, action) {
+        const { payload } = action
+        state.loading = false;
+        state.data.today = ({...state.data.today, [payload.id]: {...payload}})
+        state.success = true
+        state.error = initialState.error
+    },
+    putEditArrivalFailure(state, action: any) {
+        const { payload } = action
+        state.authorization.loading = false;
+        state.authorization.error = payload;
+    },
     markAsReadRequest(state) {
         state.authorization.loading = true;
         state.authorization.success = initialState.authorization.success
@@ -102,7 +119,7 @@ const expeditionsSlice = createSlice({
     },
     getTodaysArrivalsSuccess(state, action: any) {
         const { payload } = action
-        state.data.today = payload.today
+        state.data.today = payload
         state.loading = false;
         state.error = initialState.error
     },
@@ -125,6 +142,9 @@ const {
   evaluateAccessRequest,
   evaluateAccessSuccess,
   evaluateAccessFailure,
+  putEditArrivalRequest,
+  putEditArrivalSuccess,
+  putEditArrivalFailure,
   markAsReadRequest,
   markAsReadSuccess,
   markAsReadFailure,
@@ -175,7 +195,7 @@ export const getArrivals = (): AppThunk => async (dispatch) => {
             url = url + `before=${before}&`
         }
         const response: AxiosResponse = await Axios.get(url);
-        const today: IArrival[] = response.data
+        const today: IArrival[] = _.mapKeys(response.data, 'id')
         dispatch(getTodaysArrivalsSuccess(today));
         dispatch(_cleanSnackbar())
     }
@@ -184,10 +204,10 @@ export const getArrivals = (): AppThunk => async (dispatch) => {
     }
  };
 
- export const putEvaluateAccess = (id: number, result: string, palletsSalida: number, destiny: string, expeditorId?: number): AppThunk => async (dispatch) => {
+ export const putEvaluateAccess = (id: number, result: string, destiny: string, expeditorId?: number): AppThunk => async (dispatch) => {
     dispatch(evaluateAccessRequest());
     try{
-        await Axios.put(`/notifications/arrivals/${id}`, {result, expeditorId, palletsSalida, destiny});
+        await Axios.put(`/notifications/arrivals/${id}`, {result, expeditorId, destiny});
         dispatch(evaluateAccessSuccess());
         dispatch(_cleanSnackbar())
     }
@@ -205,6 +225,18 @@ export const getArrivals = (): AppThunk => async (dispatch) => {
     }
     catch(error: any){
         dispatch(markAsReadFailure(error.response.data));
+    }
+ };
+
+ export const putEditArrival = (id: number, palletsSalida: number): AppThunk => async (dispatch) => {
+    dispatch(putEditArrivalRequest());
+    try{
+        const response = await Axios.put(`/notifications/arrivals/${id}`, {palletsSalida});
+        dispatch(putEditArrivalSuccess(response.data));
+        dispatch(_cleanSnackbar())
+    }
+    catch(error: any){
+        dispatch(putEditArrivalFailure(error.response.data));
     }
  };
 

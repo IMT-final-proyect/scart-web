@@ -1,18 +1,18 @@
 /* eslint-disable array-callback-return */
 import React, { useEffect, useState } from 'react'
-import { Card, CircularProgress, Grid, Typography } from '@material-ui/core';
+import { Card, CircularProgress, Grid, Modal, Typography } from '@material-ui/core';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import MomentUtils from '@date-io/moment';
 import { useDispatch, useSelector } from 'react-redux'
 import CustomSnackbar from '../../../components/customSnackbar';
 import { RootState } from '../../../redux/rootReducer'
-import { getTodaysArrivals } from '../../../redux/slices/expeditionsSlice'
-import { ROUTES } from '../navigation/routes';
+import { getTodaysArrivals, putEditArrival } from '../../../redux/slices/expeditionsSlice'
 import useStyles from './styles';
 import CustomInput from '../../../components/customInput';
 import { IArrival } from '../../../utils/interfaces';
 import ArrivalRow from './components/arrivalRow';
 import moment from 'moment';
+import EditArrivalModal from './components/EditArrivalModal';
 
 const Today = () => {
   const dispatch = useDispatch()
@@ -22,15 +22,16 @@ const Today = () => {
   const [loadingFilter, setLoadingFilter] = useState(false)
   const [arrivalsFiltered, setArrivalsFiltered] = useState<IArrival[]>([])
   const [before, setBefore] = useState<moment.Moment | null>(null);
-  const [after, setAfter] = useState<moment.Moment | null>(null);
-  const arrivals = useSelector((state: RootState) => state.expeditions.data.evaluated)
+  const [after, setAfter] = useState<moment.Moment | null>(moment().utcOffset(-3).set({hour:0,minute:0,second:0,millisecond:0}));
+  const [selectedId, setSelectedId] = useState(-1)
+  const [openModal, setOpenModal] = useState(false)
+  const arrivals = useSelector((state: RootState) => state.expeditions.data.today)
   const loading = useSelector((state: RootState) => state.expeditions.loading)
   const success = useSelector((state: RootState) => state.expeditions.success)
 
   useEffect(() => {
-    const after = moment().toISOString()
-    dispatch(getTodaysArrivals(after))
-  },[dispatch])
+      dispatch(getTodaysArrivals(!!after ? after.toISOString(true) : undefined, !!before ? before.toISOString(true) : undefined))
+  },[dispatch, after, before])
 
   useEffect(() => {
     setArrivalsFiltered(() => {
@@ -62,16 +63,29 @@ const Today = () => {
   }, [arrivals, searchContractor])
 
   useEffect(() => {
-      setOpenSuccess(success)
+    setOpenSuccess(success)
   }, [success])
+
+  const _handleOpenModal = (id: number) => {
+    setOpenModal(true)
+    setSelectedId(id)
+  }
+
+  const _handleEdit = (palletsSalida: number) => {
+    dispatch(putEditArrival(selectedId, palletsSalida))
+    setOpenModal(false)
+  }
 
   return (
     <>
+      <Modal open={openModal} onClose={() => setOpenModal(false)}>
+        <EditArrivalModal setOpenModal={setOpenModal} _handleEdit={_handleEdit} />
+      </Modal>
       <Grid container className={classes.container} direction='row' justifyContent='space-between'>
           <Card className={classes.titleCard}>
               <Grid container className={classes.titleContainer} justifyContent='space-between'>
                   <text className={classes.textTitle}>
-                      Anuncios de hoy
+                      Historial de anuncios
                   </text>
               </Grid>
               <Typography className={classes.searchTitle}> Filtrar por </Typography>
@@ -86,10 +100,10 @@ const Today = () => {
                                 autoOk
                                 variant="inline"
                                 format="DD/MM/yyyy"
-                                id="before"
+                                id="after"
                                 label="Desde"
-                                value={before}
-                                onChange={(date) => setBefore(date)}
+                                value={after}
+                                onChange={(date) => setAfter(date)}
                                 KeyboardButtonProps={{
                                     'aria-label': 'change date',
                                 }}
@@ -103,10 +117,10 @@ const Today = () => {
                                 autoOk
                                 variant="inline"
                                 format="DD/MM/yyyy"
-                                id="after"
+                                id="before"
                                 label="Hasta"
-                                value={after}
-                                onChange={(date) => setAfter(date)}
+                                value={before}
+                                onChange={(date) => setBefore(date)}
                                 KeyboardButtonProps={{
                                     'aria-label': 'change date',
                                 }}
@@ -131,9 +145,19 @@ const Today = () => {
                                       Conductor
                                   </text>
                               </Grid>
-                              <Grid item xs={2} className={classes.headerText}>
+                              <Grid item xs={1} className={classes.headerText}>
                                   <text className={classes.headerText}>
-                                      Vehiculo
+                                      Telefono
+                                  </text>
+                              </Grid>
+                              <Grid item xs={1} className={classes.headerText}>
+                                  <text className={classes.headerText}>
+                                      Patente
+                                  </text>
+                              </Grid>
+                              <Grid item xs={1} className={classes.headerText}>
+                                  <text className={classes.headerText}>
+                                      Tipo de vehiculo
                                   </text>
                               </Grid>
                               <Grid item xs={2} className={classes.headerText}>
@@ -141,17 +165,27 @@ const Today = () => {
                                       Contratista
                                   </text>
                               </Grid>
-                              <Grid item xs={2} className={classes.headerText}>
+                              <Grid item xs={1} className={classes.headerText}>
                                   <text className={classes.headerText}>
                                       Pallets Entrada
                                   </text>
                               </Grid>
-                              <Grid item xs={2} className={classes.headerText}>
+                              <Grid item xs={1} className={classes.headerText}>
+                                  <text className={classes.headerText}>
+                                      Pallets Salida
+                                  </text>
+                              </Grid>
+                              <Grid item xs={1} className={classes.headerText}>
                                   <text className={classes.headerText}>
                                       Horario
                                   </text>
                               </Grid>
-                              <Grid item xs={2} className={classes.headerText}>
+                              <Grid item xs={1} className={classes.headerText}>
+                                  <text className={classes.headerText}>
+                                      Estado
+                                  </text>
+                              </Grid>
+                              <Grid item xs={1} className={classes.headerText}>
                                   <text className={classes.headerText}>
                                       Acciones
                                   </text>
@@ -161,7 +195,9 @@ const Today = () => {
                               {Object.keys(arrivalsFiltered).map((key: string, i: any) =>
                                   <ArrivalRow 
                                       key={arrivalsFiltered[parseInt(key)].id}
+                                      index={i}
                                       arrival={arrivalsFiltered[parseInt(key)]}
+                                      _handleOpenModal={_handleOpenModal}
                                   />
                               )}
                           </Grid>
@@ -170,7 +206,7 @@ const Today = () => {
               </Card>
           }
       </Grid>
-      <CustomSnackbar open={openSuccess} message='Arrivalo evaluado con éxito' type='success' onClose={() => setOpenSuccess(false)} />
+      <CustomSnackbar open={openSuccess} message='Arrivalo modificado con éxito' type='success' onClose={() => setOpenSuccess(false)} />
     </>
   )
 }
