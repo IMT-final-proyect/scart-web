@@ -4,7 +4,7 @@ import { Card, CircularProgress, Grid, Typography } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux'
 import CustomSnackbar from '../../../components/customSnackbar';
 import { RootState } from '../../../redux/rootReducer'
-import { getArrivals, putMarkAsRead } from '../../../redux/slices/expeditionsSlice'
+import { getArrivals, putMarkAsRead, getArrivalsWithoutLoading } from '../../../redux/slices/expeditionsSlice'
 import { ROUTES } from '../navigation/routes';
 import useStyles from './styles';
 import CustomInput from '../../../components/customInput';
@@ -25,6 +25,13 @@ const Home = () => {
   useEffect(() => {
     dispatch(getArrivals())
   },[dispatch])
+
+  useEffect(() => {   
+    const interval = setInterval(()=>{       
+        dispatch(getArrivalsWithoutLoading())
+    },10000)
+    return()=>clearInterval(interval)
+  }, [])
 
   useEffect(() => {
     setArrivalsFiltered(() => {

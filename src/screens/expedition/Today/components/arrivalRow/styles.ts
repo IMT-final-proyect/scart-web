@@ -6,7 +6,8 @@ const useStyles = makeStyles<Theme>((theme: Theme) => ({
         textAlign: 'start',
         alignItems: 'center',
         height: '40px',
-        borderRadius: 5
+        borderRadius: 5,
+        paddingLeft: '0.2%'
     },
     text:{
         maxWidth: 'auto',

@@ -184,6 +184,31 @@ export const getArrivals = (): AppThunk => async (dispatch) => {
     }
  };
 
+ export const getArrivalsWithoutLoading = (): AppThunk => async (dispatch) => {
+    try{
+        const response: AxiosResponse = await Axios.get(`/notifications/arrivals?state=0`);
+        const arrivals: IArrival[] = response.data
+        let evaluated: IArrival[] = []
+        let nonEvaluated: IArrival[] = []
+       
+        Object.keys(arrivals).map((index: any) => {
+            if(arrivals[parseInt(index)].result !== null){
+                evaluated.push(arrivals[parseInt(index)])
+            }
+            else {
+                nonEvaluated.push(arrivals[parseInt(index)])
+            }
+        })
+
+        evaluated = _.mapKeys(evaluated, 'id')
+        nonEvaluated= _.mapKeys(nonEvaluated, 'id')
+        dispatch(getArrivalsSuccess({evaluated, nonEvaluated}));
+        dispatch(_cleanSnackbar())
+    }
+    catch(error: any){
+    }
+ };
+
  export const getTodaysArrivals = (after?: string, before?: string): AppThunk => async (dispatch) => {
     dispatch(getTodaysArrivalsRequest());
     try{
