@@ -9,11 +9,12 @@ import { RootState } from '../../redux/rootReducer';
 import CreateContractorModal from './components/CreateContractorModal';
 import { ROUTES } from '../../screens/admin/navigation/routes';
 import { Link, useHistory } from 'react-router-dom';
-import { createContractor, getContractors } from '../../redux/slices/contractorsSlice';
+import { createContractor, deleteContractor, getContractors } from '../../redux/slices/contractorsSlice';
 import ContractorRow from './components/contratorRow';
 import CustomInput from '../customInput';
 import { IContractor } from '../../utils/interfaces';
 import CustomSnackbar from '../customSnackbar';
+import DeleteModal from '../DeleteModal';
 import TomisBar from '../TomisBar';
 import { useRol } from '../../customHooks';
 import { AllowedRol } from '../../utils/constants';
@@ -25,13 +26,16 @@ const Contractors = () => {
     const { location } = useHistory()
     const path =  location.pathname.split('/')
 
+    const [deleteContractorModal, setDeleteContractorModal] = useState(false)
+    const [selectedContractorId, setSelectedContractorId] = useState(-1)
     const [openModal, setOpenModal] = useState(false)
     const [searchName, setSearchName] = useState('')
     const [searchCuit, setSearchCuit] = useState('')
     const [loadingFilter, setLoadingFilter] = useState(false)
     const [contractorsFiltered, setContractorsFiltered] = useState<IContractor[]>([])
-    const [openCreateSuccess, setOpenCreateSuccess] = useState(false)
-    const [openCreateFailure, setOpenCreateFailure] = useState(false)
+    const [openSuccess, setOpenSuccess] = useState(false)
+    const [openFailure, setOpenFailure] = useState(false)
+    const [messageSnackbar, setMessageSnackbar] = useState('')
     const contractors = useSelector((state: RootState) => state.contractors.data)
     const loadingContractor = useSelector((state: RootState) => state.contractors.loading)
     const success = useSelector((state: RootState) => state.contractors.success)
@@ -42,11 +46,11 @@ const Contractors = () => {
     }, [dispatch])
 
     useEffect(() => {
-        setOpenCreateSuccess(success)
+        setOpenSuccess(success)
     }, [success])
 
     useEffect(() => {
-        setOpenCreateFailure(!!error)
+        setOpenFailure(!!error)
     }, [error])
 
     useEffect(() => {
@@ -100,6 +104,16 @@ const Contractors = () => {
         setOpenModal(false)
     }
 
+    const handleDeleteContractor = (id: number) => {
+        dispatch(deleteContractor(id))
+        setMessageSnackbar('Conductor eliminado con exito')
+    }
+
+    const handleDeleteContractorModal = (id: number) => {
+        setSelectedContractorId(id)
+        setDeleteContractorModal(true)
+    }
+
     return (
         <>
         <Modal open={openModal} onClose={() => setOpenModal(false)}>
@@ -108,6 +122,9 @@ const Contractors = () => {
                 addContractor={addContractor}
             />
         </Modal>
+        <Modal open={deleteContractorModal} onClose={() => setDeleteContractorModal(false)}>
+                <DeleteModal entity={'contratista'} id={selectedContractorId} handleDelete={handleDeleteContractor} setOpenModal={setDeleteContractorModal} />
+            </Modal>
         <Grid container className={classes.container} direction='row' justifyContent='space-between'>
             <Card className={classes.card}>
                 <Grid container justifyContent='space-between' >
@@ -163,9 +180,14 @@ const Contractors = () => {
                                         Usuario
                                     </text>
                                 </Grid>
-                                <Grid item xs={3} className={classes.headerText}>
+                                <Grid item xs={2} className={classes.headerText}>
                                     <text className={classes.headerText}>
                                         Documentación
+                                    </text>
+                                </Grid>
+                                <Grid item xs={1} className={classes.headerText}>
+                                    <text className={classes.headerText}>
+                                        Deshabilitar
                                     </text>
                                 </Grid>
                             </Grid>
@@ -178,6 +200,7 @@ const Contractors = () => {
                                 >  
                                     <ContractorRow 
                                         contractor={contractor}
+                                        handleDeleteContractor={handleDeleteContractorModal}
                                     />
                                 </Button>
                                 )}
@@ -186,8 +209,8 @@ const Contractors = () => {
                     }
                 </Card>
             }
-            <CustomSnackbar open={openCreateSuccess} message='Contratista creado con éxito' type='success' onClose={() => setOpenCreateSuccess(false)} />
-            <CustomSnackbar open={openCreateFailure} message={error?.message || 'Ha ocurrido un error'} type='error' onClose={() => setOpenCreateFailure(false)} />
+            <CustomSnackbar open={openSuccess && messageSnackbar !== ''} message={messageSnackbar} type='success' onClose={() => setOpenSuccess(false)} />
+            <CustomSnackbar open={openFailure && error?.message !== ''} message={error?.message || 'Ha ocurrido un error'} type='error' onClose={() => setOpenFailure(false)} />
         </Grid>
         </>
     )

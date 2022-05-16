@@ -50,16 +50,17 @@ const Driver = ({ name, surname, username, document, contractor, is_valid, id, h
                 }
             </Grid>
             <Grid item xs={1} className={classes.iconContainer}>
-                {(rol !== AllowedRol.auditor && rol !== AllowedRol.manager && rol !== AllowedRol.security) ? (<Button onClick={handleClick} >
-                    <DeleteIcon /> 
-                    <text className={classes.text}>
-                        Deshabilitar
-                    </text>
-                </Button>)
+                {(rol !== AllowedRol.auditor && rol !== AllowedRol.manager && rol !== AllowedRol.security) ? (
+                    <Button onClick={handleClick} >
+                        <DeleteIcon /> 
+                        <text className={classes.text}>
+                            Deshabilitar
+                        </text>
+                    </Button>)
                 :
-                <text className={classes.text}>
-                    No hay acciones
-                </text>
+                    <text className={classes.text}>
+                        No hay acciones
+                    </text>
                 }
             </Grid>
         </Grid>

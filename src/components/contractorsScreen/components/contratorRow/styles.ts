@@ -31,7 +31,10 @@ const useStyles = makeStyles((theme: Theme) => ({
         paddingRight: '4%',
         paddingTop: '1%',
         paddingBottom: '1%'
-    }
+    },
+    iconContainer:{
+        maxWidth: 'auto',
+    },
 }));
 
 export default useStyles
