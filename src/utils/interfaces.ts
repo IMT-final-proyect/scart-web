@@ -37,16 +37,18 @@ export interface IDriver {
    is_valid: boolean;
 }
 
+export interface IVehicleType {
+   id: number;
+   name: string;
+}
+
 export interface IVehicle {
    id: number;
    plate: string;
    brand: string;
    model: string;
    year: number;
-   type: {
-      id: number;
-      name: string;
-   }
+   type: IVehicleType;
    contractor: {
       id: number;
       name: string;

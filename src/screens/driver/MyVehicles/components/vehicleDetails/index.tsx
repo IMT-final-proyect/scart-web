@@ -64,8 +64,8 @@ const VehicleDetails = () => {
         setOpenVehicleDocumentModal(false)
     }
 
-    const _editVehicle = (vehicle: IVehicle, plate: string, brand: string, model: string, year: number) => {
-        dispatch(editVehicle(vehicle, plate, brand, model, year))
+    const _editVehicle = (vehicle: IVehicle, plate: string, type: number, brand: string, model: string, year: number) => {
+        dispatch(editVehicle(vehicle, plate, type, brand, model, year))
         setMessageSnackbar('Vehiculo modificado con exito')
     }
 

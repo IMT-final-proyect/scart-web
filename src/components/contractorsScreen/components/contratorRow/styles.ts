@@ -35,6 +35,13 @@ const useStyles = makeStyles((theme: Theme) => ({
     iconContainer:{
         maxWidth: 'auto',
     },
+    button:{
+        height: '35px',
+        textTransform: 'none',
+        paddingTop: '1.5%',
+        paddingBottom: '1.5%',
+        alignItems: 'center',
+    },
 }));
 
 export default useStyles

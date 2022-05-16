@@ -7,13 +7,13 @@ import { Link, useHistory, useParams } from 'react-router-dom';
 import { RootState } from '../../../../redux/rootReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
-import { IDocument, IVehicle } from '../../../../utils/interfaces';
+import { IDocument, IVehicle, IVehicleType } from '../../../../utils/interfaces';
 import CreateVehicleDocumentModal from './components/CreateVehicleDocumentModal';
 import { createDocument, getVehicleDocuments } from '../../../../redux/slices/documentsSlice';
 import { ROUTES } from '../../../../screens/admin/navigation/routes';
 import DocumentRow from './components/documentRow/DocumentRow';
 import EditVehicleModal from '../../../editVehicleModal';
-import { editVehicle, getVehicleById } from '../../../../redux/slices/resourcesSlice';
+import { editVehicle, getVehicleById, getVehicleTypes } from '../../../../redux/slices/resourcesSlice';
 import CustomSnackbar from '../../../customSnackbar';
 import { useRol } from '../../../../customHooks';
 import { AllowedRol } from '../../../../utils/constants';
@@ -44,7 +44,7 @@ const VehicleDetails = () => {
     const documentSuccess = useSelector((state: RootState) => state.documents.success)
     const documentError = useSelector((state: RootState) => state.documents.error)
 
-    useEffect(() => { 
+    useEffect(() => {
         dispatch(getVehicleById(params.id))
         dispatch(getVehicleDocuments(params.id))
     }, [dispatch, params.id])
@@ -70,9 +70,10 @@ const VehicleDetails = () => {
         setOpenVehicleDocumentModal(false)
     }
 
-    const _editVehicle = (vehicle: IVehicle, plate: string, brand: string, model: string, year: number) => {
-        dispatch(editVehicle(vehicle, plate, brand, model, year))
+    const _editVehicle = (vehicle: IVehicle, plate: string, type: number, brand: string, model: string, year: number) => {
+        dispatch(editVehicle(vehicle, plate, type, brand, model, year))
         setMessageSnackbar('Vehiculo modificado con exito')
+        dispatch(getVehicleById(params.id))
     }
 
     return (
@@ -107,7 +108,7 @@ const VehicleDetails = () => {
                             </Grid>
                             <Grid item xs={3}>
                                 <text className={classes.dataField}> Tipo: </text>
-                                <text className={classes.data}> {vehicle?.type?.name} </text>
+                                <text className={classes.data}> {vehicle?.type?.name || '-'} </text>
                             </Grid>
                             <Grid item xs={5}>
                                 <text className={classes.dataField}> Año: </text>

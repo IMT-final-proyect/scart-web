@@ -43,7 +43,7 @@ const ContractorRow = ({ contractor, handleDeleteContractor }: Props) => {
                 </Grid>
                 <Grid item xs={1} className={classes.iconContainer}>
                     {(rol === AllowedRol.admin) ? (
-                        <Button onClick={handleClick} >
+                        <Button className={classes.button} onClick={handleClick} >
                             <DeleteIcon /> 
                             <text className={classes.text}>
                                 Deshabilitar

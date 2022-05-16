@@ -70,11 +70,11 @@ const VehicleDetails = () => {
         setOpenVehicleDocumentModal(false)
     }
 
-    const _editVehicle = (vehicle: IVehicle, plate: string, brand: string, model: string, year: number) => {
-            dispatch(editVehicle(vehicle, plate, brand, model, year))
-        setMessageSnackbar('Vehiculo modificado con exito')
+    const _editVehicle = (vehicle: IVehicle, plate: string, type: number, brand: string, model: string, year: number) => {
+            dispatch(editVehicle(vehicle, plate, type, brand, model, year))
+            setMessageSnackbar('Vehiculo modificado con exito')
+            dispatch(getVehicleById(params.id))
     }
-
 
     return (
         <>
@@ -88,8 +88,8 @@ const VehicleDetails = () => {
             <Modal open={openEditVehicleModal} onClose={() => setOpenEditVehicleModal(false)}>
                 <EditVehicleModal 
                     vehicle={vehicle} 
-                    editVehicle={_editVehicle} 
-                    setOpenEditVehicleModal={setOpenEditVehicleModal} 
+                    editVehicle={_editVehicle}
+                    setOpenEditVehicleModal={setOpenEditVehicleModal}
                 />
             </Modal>
             {loading ?
@@ -107,7 +107,7 @@ const VehicleDetails = () => {
                                 </Grid>
                                 <Grid item xs={3}>
                                     <text className={classes.dataField}> Tipo: </text>
-                                    <text className={classes.data}> {vehicle?.type?.name} </text>
+                                    <text className={classes.data}> {vehicle?.type?.name || '-'} </text>
                                 </Grid>
                                 <Grid item xs={5}>
                                     <text className={classes.dataField}> Año: </text>

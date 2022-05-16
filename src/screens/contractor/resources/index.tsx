@@ -342,12 +342,12 @@ const Resources = () => {
                                     </Grid>
                                     <Grid item xs={3} className={classes.headerText}>
                                         <text className={classes.headerText}>
-                                            Modelo
+                                            Patente
                                         </text>
                                     </Grid>
                                     <Grid item xs={3} className={classes.headerText}>
                                         <text className={classes.headerText}>
-                                            Patente
+                                            Documentación
                                         </text>
                                     </Grid>
                                     <Grid item xs={2} className={classes.headerText}>

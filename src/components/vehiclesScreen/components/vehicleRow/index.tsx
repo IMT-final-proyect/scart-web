@@ -50,7 +50,7 @@ const VehicleRow = ({ brand, model, plate, contractor, id, is_valid, handleDelet
             </Grid>
             <Grid item xs={1} className={classes.iconContainer}>
                 {(rol !== AllowedRol.auditor && rol !== AllowedRol.manager && rol !== AllowedRol.security) ?
-                    <Button onClick={handleClick} >
+                    <Button className={classes.button} onClick={handleClick} >
                         <DeleteIcon />
                         <text className={classes.text}>
                             Deshabilitar

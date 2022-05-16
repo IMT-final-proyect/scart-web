@@ -558,7 +558,7 @@ export const editDriver = (
    }
 }
 
-export const editVehicle = (vehicle: IVehicle, plate: string, brand: string, model: string, year: number): AppThunk => async (dispatch) => {
+export const editVehicle = (vehicle: IVehicle, plate: string, type: number, brand: string, model: string, year: number): AppThunk => async (dispatch) => {
    dispatch(editVehicleRequest());
    try{
       const response: AxiosResponse = await Axios.put(`/vehicles/${vehicle.id}`,
@@ -566,6 +566,7 @@ export const editVehicle = (vehicle: IVehicle, plate: string, brand: string, mod
          plate,
          brand,
          model,
+         type,
          "year": year.toString()
       })
 
@@ -617,6 +618,5 @@ export const putCheckOut = (driverId: number, vehicleId: number): AppThunk => as
       dispatch(CheckOutFailure(error?.response?.data)); 
    }
 }
-
 
 export const getVehicleTypes = () => Axios.get('/vehicles/types');
