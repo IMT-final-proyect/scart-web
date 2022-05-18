@@ -1,6 +1,6 @@
 {
   "name": "scart-web-new",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "private": true,
   "dependencies": {
     "@date-io/moment": "1.x",
@@ -68,5 +68,5 @@
   "devDependencies": {
     "@types/react-router-dom": "^5.1.8"
   },
-  "proxy": "http://159.203.75.242"
+  "proxy": "http://20.127.40.201:8082"
 }
