@@ -72,7 +72,7 @@ const EditUserModal = ( {user, changePassword, editUser, setOpenEditUserModal, s
         if(!!name && !!surname && !!cuit && !!username){
             if (changePassword){
                 if (password === repeatPassword){
-                    editUser(user, name, surname, username, cuit, email, password);
+                    editUser(user, name, surname, username, cuit, email, phone, password);
                     setOpenEditUserModal(false);
                 }
                 else {
