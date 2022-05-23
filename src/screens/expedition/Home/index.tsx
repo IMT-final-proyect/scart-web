@@ -113,7 +113,7 @@ const Home = () => {
                               </Grid>
                               <Grid item xs={1} className={classes.headerText}>
                                   <text className={classes.headerText}>
-                                      Tipo de vehiculo
+                                      Tipo de camión
                                   </text>
                               </Grid>
                               <Grid item xs={1} className={classes.headerText}>
@@ -128,7 +128,7 @@ const Home = () => {
                               </Grid>
                               <Grid item xs={1} className={classes.headerText}>
                                   <text className={classes.headerText}>
-                                      Horario
+                                      Horario de ingreso
                                   </text>
                               </Grid>
                               <Grid item xs={1} className={classes.headerText}>
