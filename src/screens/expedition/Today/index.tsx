@@ -140,7 +140,7 @@ const Today = () => {
                   :
                       <>
                           <Grid container justifyContent='space-between'>
-                              <Grid item xs={2} className={classes.headerText}>
+                              <Grid item xs={1} className={classes.headerText}>
                                   <text className={classes.headerText}>
                                       Conductor
                                   </text>
@@ -157,12 +157,17 @@ const Today = () => {
                               </Grid>
                               <Grid item xs={1} className={classes.headerText}>
                                   <text className={classes.headerText}>
-                                      Tipo de vehiculo
+                                      Tipo de camión
                                   </text>
                               </Grid>
                               <Grid item xs={2} className={classes.headerText}>
                                   <text className={classes.headerText}>
                                       Contratista
+                                  </text>
+                              </Grid>
+                              <Grid item xs={1} className={classes.headerText}>
+                                  <text className={classes.headerText}>
+                                      Destino
                                   </text>
                               </Grid>
                               <Grid item xs={1} className={classes.headerText}>
@@ -177,7 +182,7 @@ const Today = () => {
                               </Grid>
                               <Grid item xs={1} className={classes.headerText}>
                                   <text className={classes.headerText}>
-                                      Horario
+                                      Horario de ingreso
                                   </text>
                               </Grid>
                               <Grid item xs={1} className={classes.headerText}>

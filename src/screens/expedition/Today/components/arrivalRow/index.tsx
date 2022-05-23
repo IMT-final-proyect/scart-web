@@ -20,8 +20,8 @@ const ArrivalRow = ({ index, arrival, _handleOpenModal }: Props) => {
 
     return(
         <Grid container className={classes.container} style={{backgroundColor: (index % 2) == 0 ? globalColors.grey : globalColors.white}} direction="row" justifyContent='space-between'>
-            <Grid item xs={2} className={classes.text}>
-                <text> {driver.name.length > 60 ? driver.name.substring(0, 87)+'...' : driver.name} </text>
+            <Grid item xs={1} className={classes.text}>
+                <text> {driver.name.length > 60 ? driver.name.substring(0, 40)+'...' : driver.name} </text>
             </Grid>
             <Grid item xs={1} className={classes.text}>
                 <text> {driver.phone} </text>
@@ -30,16 +30,19 @@ const ArrivalRow = ({ index, arrival, _handleOpenModal }: Props) => {
                 <text> {vehicle.plate.length > 60 ? vehicle.plate.substring(0, 87)+'...' : vehicle.plate} </text>
             </Grid>
             <Grid item xs={1} className={classes.text}>
-                <text> {vehicle.type} </text>
+                <text> {vehicle.type || '-'} </text>
             </Grid>
             <Grid item xs={2} className={classes.text}>
                 <text> {arrival.contractor.length > 60 ? arrival.contractor.substring(0, 87)+'...' : arrival.contractor} </text>
             </Grid>
             <Grid item xs={1} className={classes.text}>
+                <text> {arrival.destiny || '-'} </text>
+            </Grid>
+            <Grid item xs={1} className={classes.text}>
                 <text> {arrival.palletsEntrada} </text>
             </Grid>
             <Grid item xs={1} className={classes.text}>
-                <text> {arrival.palletsSalida} </text>
+                <text> {parseInt(arrival.palletsSalida) > -1 ? arrival.palletsSalida : '-'} </text>
             </Grid>
             <Grid item xs={1}>
                 <text> {moment(arrival.arrivalTime).format('DD/MM/yy - HH:mm')} hs</text>

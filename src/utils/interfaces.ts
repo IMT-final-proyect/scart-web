@@ -145,7 +145,7 @@ export interface IArrival {
       result: number;
    };
    exceptionId?: number;
-   destination?: string;
+   destiny?: string;
 }
 
 export interface IVehicleType {
