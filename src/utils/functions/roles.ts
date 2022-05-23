@@ -1,10 +1,11 @@
-import { admin, AllowedRol, auditor, contractor, driver, manager, security, vehicle } from "../constants"
+import { admin, AllowedRol, auditor, contractor, driver, expedition, manager, security, vehicle } from "../constants"
 import { ROUTES as AdminRoutes } from "../../screens/admin/navigation/routes"
 import { ROUTES as ContractorRoutes } from "../../screens/contractor/navigation/routes"
 import { ROUTES as AuditorRoutes } from "../../screens/auditor/navigation/routes"
 import { ROUTES as ManagerRoutes } from "../../screens/manager/navigation/routes"
 import { ROUTES as SecurityRoutes } from "../../screens/security/navigation/routes"
 import { ROUTES as DriverRoutes } from "../../screens/driver/navigation/routes"
+import { ROUTES as ExpeditionRoutes } from "../../screens/expedition/navigation/routes"
 import { ROUTES as defaultRoutes } from "../../routes/routes"
 
 export const getRolPath = (rol?: number) => {
@@ -12,9 +13,10 @@ export const getRolPath = (rol?: number) => {
         case (AllowedRol.admin): return AdminRoutes.root
         case (AllowedRol.contractor): return ContractorRoutes.root+ContractorRoutes.home
         case (AllowedRol.manager): return ManagerRoutes.root+ManagerRoutes.exceptions
-        case (AllowedRol.auditor): return AuditorRoutes.root
+        case (AllowedRol.auditor): return AuditorRoutes.root+AuditorRoutes.home
         case (AllowedRol.security): return SecurityRoutes.root
         case (AllowedRol.driver): return DriverRoutes.root
+        case (AllowedRol.expedition): return ExpeditionRoutes.root
         default: return defaultRoutes.login
     }
 }
@@ -27,6 +29,7 @@ export const getRolNumber = (rolName: string): number => {
         case (auditor): return AllowedRol.auditor
         case (driver): return AllowedRol.driver
         case (security): return AllowedRol.security
+        case (expedition): return AllowedRol.expedition
         default: return -1
     }
 }
@@ -40,6 +43,7 @@ export const getRolName = (rolNumber: number): string => {
         case (AllowedRol.driver): return driver
         case (AllowedRol.security): return security
         case (AllowedRol.vehicle): return vehicle
+        case (AllowedRol.expedition): return expedition
         default: return ''
     }
 }
@@ -52,6 +56,7 @@ export const getRolNumero = (rolName: string): number => {
         case ('Auditor'): return AllowedRol.auditor
         case ('Conductor'): return AllowedRol.driver
         case ('Seguridad'): return AllowedRol.security
+        case ('Expedicion'): return AllowedRol.expedition
         default: return -1
     }
 }

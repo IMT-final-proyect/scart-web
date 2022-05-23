@@ -1,9 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 import Axios, {AxiosResponse} from 'axios';
 import moment from 'moment';
-import { AllowedRol, contractor, driver, vehicle } from '../../utils/constants';
-import { getRolName } from '../../utils/functions/roles';
-import { IContractor, IDocument, IDriver, IVehicle, IMissingDocument, IDocumentType } from '../../utils/interfaces';
+import { AllowedRol } from '../../utils/constants';
+import { IContractor, IDocument, IDocumentType } from '../../utils/interfaces';
 import { AppThunk } from '../store';
 var _ = require('lodash');
 
@@ -344,7 +343,7 @@ export const getContractorExpiringDocuments = (contractorId: number|undefined, d
       data = _.mapKeys(data, 'id')
 
     dispatch(getContractorExpiringDocumentsSuccess(data));
-  } catch (error) {
+  } catch (error: any) {
     dispatch(getContractorExpiringDocumentsFailure(error.response.data));
   }
 }
@@ -386,7 +385,6 @@ export const createDocument = (
       contractorId: number
    ): AppThunk => async (dispatch) => {
    dispatch(createDocumentRequest());
-   console.log(contractorId);
    try{      
       
       await Axios.post('/documents',{
@@ -430,7 +428,6 @@ export const getDocumentByState = (state: number): AppThunk => async (dispatch) 
          documents[index].state = parseInt(documents[index].state)
          return documents[index]
       })
-      console.log(data);
       dispatch(getDocumentByStateSuccess(data));
    }
    catch(error: any){
@@ -469,7 +466,6 @@ export const getOwner = (entityType: number, entityId: number): AppThunk => asyn
 export const postDocumentEvaluation = (id: number, isApprovation: boolean, comment: string, uuid?: string): AppThunk => async (dispatch) => {
    dispatch(postDocumentEvaluationRequest());
    try{
-      
       if(uuid){
          let nextState
          if(isApprovation) nextState = 1

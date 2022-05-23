@@ -29,6 +29,12 @@ const useStyles = makeStyles((theme: Theme) => ({
             marginTop: '17%'
         },
     },
+    center: {
+        alignItems: 'center'
+    },
+    textCenter: {
+        textAlign: 'center'
+    },
     contentCard:{
         marginTop: '2.5%',
         marginLeft: '2.5%',

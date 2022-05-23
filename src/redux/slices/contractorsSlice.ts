@@ -54,7 +54,6 @@ const resourcesSlice = createSlice({
       getContractorsRequest(state) {
          state.loading = true;
          state.error = initialState.error;
-         state.success = initialState.success;
       },
       getContractorsSuccess(state, action: any) {
          const { payload } = action
@@ -164,6 +163,22 @@ const resourcesSlice = createSlice({
          state.error = payload;
          state.success = initialState.success;
       },
+      deleteContractorRequest(state) {
+         state.loading = true;
+         state.error = initialState.error;
+         state.success = initialState.success;
+      },
+      deleteContractorSuccess(state) {
+         state.loading = false;
+         state.success = true;
+         state.error = initialState.error
+      },
+      deleteContractorFailure(state, action: any) {
+         const { payload } = action
+         state.loading = false;
+         state.error = payload;
+         state.success = initialState.success;
+      },
    },
 });
 
@@ -188,7 +203,10 @@ const {
     getPendingVehiclesFailure,
     editContractorRequest,
     editContractorSuccess,
-    editContractorFailure
+    editContractorFailure,
+    deleteContractorRequest,
+    deleteContractorSuccess,
+    deleteContractorFailure,
 } = resourcesSlice.actions;
 
 
@@ -319,5 +337,20 @@ export const editContractor = (
    }
    catch(error: any){
       dispatch(editContractorFailure(error.response.data)); 
+   }
+}
+
+export const deleteContractor = (id: number, contractorId?: number): AppThunk => async (dispatch) => {
+   dispatch(deleteContractorRequest());
+   try{
+      await Axios.put(`/contractors/${id}`,{
+         active: false
+      });
+      
+      dispatch(deleteContractorSuccess());
+      dispatch(getContractors())
+   }
+   catch(error: any){
+      dispatch(deleteContractorFailure(error.response.data));
    }
 }

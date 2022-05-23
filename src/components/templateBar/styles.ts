@@ -25,6 +25,12 @@ const useStyles = makeStyles((theme: Theme) => ({
     drawer: {
         marginTop: '2.5%',
         width: 250,
+        height: '100%',
+        justifyContent: 'space-between'
+    },
+    textContainer: {
+        textAlign: 'center',
+        padding: '10px',
     },
     salir: {
         textTransform: "none",
@@ -36,5 +42,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     image: {
         width: '100%'
     },
+    text: {
+        textAlign: 'center',
+        color: 'rgb(172 156 156)'
+    }
 }));
 export default useStyles

@@ -70,11 +70,11 @@ const VehicleDetails = () => {
         setOpenVehicleDocumentModal(false)
     }
 
-    const _editVehicle = (vehicle: IVehicle, plate: string, brand: string, model: string, year: number) => {
-            dispatch(editVehicle(vehicle, plate, brand, model, year))
-        setMessageSnackbar('Vehiculo modificado con exito')
+    const _editVehicle = (vehicle: IVehicle, plate: string, type: number, brand: string, model: string, year: number) => {
+            dispatch(editVehicle(vehicle, plate, type, brand, model, year))
+            setMessageSnackbar('Vehiculo modificado con exito')
+            dispatch(getVehicleById(params.id))
     }
-
 
     return (
         <>
@@ -88,8 +88,8 @@ const VehicleDetails = () => {
             <Modal open={openEditVehicleModal} onClose={() => setOpenEditVehicleModal(false)}>
                 <EditVehicleModal 
                     vehicle={vehicle} 
-                    editVehicle={_editVehicle} 
-                    setOpenEditVehicleModal={setOpenEditVehicleModal} 
+                    editVehicle={_editVehicle}
+                    setOpenEditVehicleModal={setOpenEditVehicleModal}
                 />
             </Modal>
             {loading ?
@@ -100,25 +100,35 @@ const VehicleDetails = () => {
                 <Grid container className={classes.container} direction='column' justifyContent='space-between'>
                     <Card className={classes.cardContainer}>
                         <Grid container justifyContent='space-between' direction='row' alignItems={'center'}>
-                                <div className={classes.dataContainer}>
-                                    <text className={classes.dataField}> Marca: </text>
-                                    <text className={classes.data}> {vehicle?.brand} </text>
-                                </div>
-                                <div className={classes.dataContainer}>
-                                    <text className={classes.dataField}> Modelo: </text>
-                                    <text className={classes.data}> {vehicle?.model} </text>
-                                </div>
-                                <div className={classes.dataContainer}>
+                            <Grid container className={classes.dataContainer}>
+                                <Grid item xs={3}>
                                     <text className={classes.dataField}> Patente: </text>
                                     <text className={classes.data}> {vehicle?.plate} </text>
-                                </div>
-                                <div className={classes.dataContainer}>
+                                </Grid>
+                                <Grid item xs={3}>
+                                    <text className={classes.dataField}> Tipo: </text>
+                                    <text className={classes.data}> {vehicle?.type?.name || '-'} </text>
+                                </Grid>
+                                <Grid item xs={5}>
                                     <text className={classes.dataField}> Año: </text>
                                     <text className={classes.data}> {vehicle?.year} </text>
-                                </div>
-                                <Button onClick={() => {setOpenEditVehicleModal(true)}}>
-                                    <EditIcon />
-                                </Button>
+                                </Grid>
+                                <Grid item xs={1}>
+                                    <Button onClick={() => {setOpenEditVehicleModal(true)}}>
+                                        <EditIcon />
+                                    </Button>
+                                </Grid>
+                            </Grid>
+                            <Grid container>
+                                <Grid item xs={3}>
+                                    <text className={classes.dataField}> Marca: </text>
+                                    <text className={classes.data}> {vehicle?.brand} </text>
+                                </Grid> 
+                                <Grid item xs={3}>
+                                    <text className={classes.dataField}> Modelo: </text>
+                                    <text className={classes.data}> {vehicle?.model} </text>
+                                </Grid>
+                            </Grid>
                         </Grid>
                     </Card>
                     <Grid container className={classes.container} direction='row' justifyContent='space-between'>

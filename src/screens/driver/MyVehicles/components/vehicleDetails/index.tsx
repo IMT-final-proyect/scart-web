@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Card, CircularProgress, Grid, Modal, Snackbar, } from '@material-ui/core'
+import { Button, Card, CircularProgress, Grid, Modal, } from '@material-ui/core'
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import useStyles from './styles' 
 import EditIcon from '@mui/icons-material/Edit';
@@ -64,8 +64,8 @@ const VehicleDetails = () => {
         setOpenVehicleDocumentModal(false)
     }
 
-    const _editVehicle = (vehicle: IVehicle, plate: string, brand: string, model: string, year: number) => {
-        dispatch(editVehicle(vehicle, plate, brand, model, year))
+    const _editVehicle = (vehicle: IVehicle, plate: string, type: number, brand: string, model: string, year: number) => {
+        dispatch(editVehicle(vehicle, plate, type, brand, model, year))
         setMessageSnackbar('Vehiculo modificado con exito')
     }
 
@@ -149,7 +149,7 @@ const VehicleDetails = () => {
                             </Grid>
                             <Grid item xs={2} className={classes.headerText}>
                                 <text className={classes.headerText}>
-                                    Severidad
+                                    Importancia
                                 </text>
                             </Grid>
                         </Grid>

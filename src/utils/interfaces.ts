@@ -1,3 +1,5 @@
+import moment from "moment";
+
 export interface IAddress {
    id: number;
    number: number;
@@ -14,6 +16,7 @@ export interface IContractor {
    address: IAddress;
    username: string;
    email: string;
+   is_valid: boolean;
 }
 
 export interface IDriver {
@@ -30,7 +33,13 @@ export interface IDriver {
       name: string;
       cuit: string;
    };
-   address: IAddress
+   address: IAddress;
+   is_valid: boolean;
+}
+
+export interface IVehicleType {
+   id: number;
+   name: string;
 }
 
 export interface IVehicle {
@@ -39,11 +48,13 @@ export interface IVehicle {
    brand: string;
    model: string;
    year: number;
+   type: IVehicleType;
    contractor: {
       id: number;
       name: string;
       cuit: string;
    };
+   is_valid: boolean;
 }
 
 export interface ISecurity {
@@ -73,17 +84,71 @@ export interface IDocumentType {
 
 export interface IException {
    id: number,
-   driverId: number
-   driver: string
-   vehicleId: number
-   vehicle: string
-   securityId: number
-   contractor: string
-   state: number
+   comment: string | null,
+   managerId: number | null,
+   result: number | null,
+   state: number,
+   arrival: {
+      driverId: number
+      driver: string
+      vehicleId: number
+      vehicle: string
+      securityId: number
+      contractor: string
+      state: number
+   }
 }
 
 export interface IMissingDocument {
    id: number,
    name: string,
    severity: number
+}
+
+export interface IDriverInside {
+   id: number;
+   checkIn: moment.Moment
+   driver: {
+      id: number;
+      name: string;
+      surname: string;
+   }
+   vehicle: {
+      id: number;
+      plate: string;
+   }
+   contractor: {
+      id: number;
+      name: string
+   }
+}
+
+export interface IArrival {
+   id: number;
+   arrivalTime: moment.Moment;
+   driverId: number;
+   driver: string;
+   driverPhone: string;
+   vehicleId: number;
+   vehicle: string;
+   vehicleType: string;
+   securityId: number;
+   contractor: string;
+   palletsEntrada: string;
+   palletsSalida: string;
+   result: number | boolean | null;
+   exception?:{
+      id: number;
+      state: number;
+      managerId: number;
+      comment: string;
+      result: number;
+   };
+   exceptionId?: number;
+   destination?: string;
+}
+
+export interface IVehicleType {
+   id: number,
+   name: string
 }

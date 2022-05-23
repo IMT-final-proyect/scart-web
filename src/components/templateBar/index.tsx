@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { AppBar, Button, Drawer, Grid, Hidden, Toolbar, Typography, } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
-
+import { version } from '../../../package.json'
 import logo from '../../assets/images/logo_transparent.png';
 import useStyles from './styles';
 import { useDispatch } from 'react-redux';
@@ -75,16 +75,19 @@ const TemplateBar = (props : Props) => {
               </Toolbar>
           </AppBar>
           <Drawer open={open} onClose={toggleDrawer(false)}>
-            <Grid container className={classes.drawer} direction='row' justifyContent='space-between' onClick={() => setOpen(false)}>
-              <Grid>
+            <Grid container className={classes.drawer} direction='column' onClick={() => setOpen(false)}>
+              <Grid item>
                 <Typography variant="h6" className={classes.title}>
                     {props.title}
                 </Typography>
                 {props.ButtonList}
               </Grid>
-              {/* <Grid>
-                <img src={logo} className={classes.image}/>
-              </Grid> */}
+              <Grid item className={classes.textContainer}>
+                <img src={logo} alt={'Logo'} className={classes.image}/>
+                <Typography className={classes.text}>
+                  Version {version}
+                </Typography>
+              </Grid>
             </Grid>
           </Drawer>
         </Grid>

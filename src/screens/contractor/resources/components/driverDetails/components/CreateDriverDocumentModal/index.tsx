@@ -1,8 +1,9 @@
+/* eslint-disable array-callback-return */
 
 
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import MomentUtils from '@date-io/moment';
-import { Button, Grid, Snackbar, } from '@material-ui/core';
+import { Button, Grid, } from '@material-ui/core';
 import useStyles from './styles';
 import { useEffect, useState } from 'react';
 import moment from 'moment';
@@ -15,7 +16,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getDocumentTypesByEntity } from '../../../../../../../redux/slices/documentTypesSlice';
 import { RootState } from '../../../../../../../redux/rootReducer';
 import globalColors from '../../../../../../../utils/styles/globalColors';
-import { Alert } from '@mui/material';
 import { AllowedRol } from '../../../../../../../utils/constants';
 import CustomSnackbar from '../../../../../../../components/customSnackbar';
 
@@ -35,7 +35,7 @@ const CreateDriverDocumentModal = ({ driverId, addDocument, setOpenDocumentModal
     const contractorId = useSelector((state: RootState) => state.user.userData?.id)
     const error = useSelector((state: RootState) => state.documents.drivers.error)
 
-    const [openFileSelector, { filesContent, loading, errors, plainFiles, clear }] = useFilePicker({
+    const [openFileSelector, { filesContent, loading }] = useFilePicker({
         multiple: true,
         readAs: 'DataURL',
         accept: ['.png', '.pdf', '.jpeg', '.jpg'],
@@ -43,7 +43,7 @@ const CreateDriverDocumentModal = ({ driverId, addDocument, setOpenDocumentModal
     
     useEffect(() => {
         dispatch(getDocumentTypesByEntity(AllowedRol.driver))
-    }, [])
+    }, [dispatch])
 
     const handleExpirationChange = (date: moment.Moment | null) => {
         setExpirationDate(date);
@@ -80,6 +80,7 @@ const CreateDriverDocumentModal = ({ driverId, addDocument, setOpenDocumentModal
                 <KeyboardDatePicker
                     className={classes.datePicker}
                     autoOk
+                    disablePast
                     variant="inline"
                     format="DD/MM/yyyy"
                     id="expiration"

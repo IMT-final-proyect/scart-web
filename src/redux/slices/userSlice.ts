@@ -27,6 +27,7 @@ export interface IUser {
    street: string;
    address: IAddress
    birth_date: string
+   is_valid: boolean
    drivers?: []
    vehicles?: []
    contractor?: IContractor
@@ -164,8 +165,6 @@ export const getDriverData = (id: number | undefined): AppThunk => async (dispat
 
 export const putChangePassword = (newPassword: string, rol: number, id: number): AppThunk => async (dispatch) => {
    dispatch(changePasswordRequest())
-   console.log('aber');
-   
    try{
       await Axios.put(`/users/password`,
       {

@@ -2,8 +2,6 @@ import { makeStyles, Theme } from '@material-ui/core';
 import { headerSize } from '../../../utils/constants';
 import globalColors from '../../../utils/styles/globalColors';
 
-const { innerWidth } = window;
-
 const useStyles = makeStyles((theme: Theme) => ({
     container:{
         paddingTop: headerSize + 50,
@@ -12,20 +10,17 @@ const useStyles = makeStyles((theme: Theme) => ({
         padding: '1%'
     },
     card: {
-        paddingLeft: '2.5%',
-        paddingRight: '2.5%',
-        minWidth: innerWidth * 0.6,
-        paddingTop: '2.5%',
-        paddingBottom: '5%',
+        padding: '5%',
         textAlign: 'center',
-        [theme.breakpoints.down('xs')]: {
-            minWidth: innerWidth * 0.8
-        },
+        marginLeft: '2.5%',
+        marginRight: '2.5%'
     },
     title: {
         fontSize: 24,
         fontWeight: 'bold',
-        marginBottom: '10%'
+        marginBottom: '10%',
+        textAlign: 'left',
+        color: globalColors.lightBlue
     },
     field: {
         fontSize: 20,
@@ -39,6 +34,9 @@ const useStyles = makeStyles((theme: Theme) => ({
         marginTop: '20%',
         color: globalColors.lightBlue
     },
+    dataContainer: {
+        textAlign: 'left'
+    }
 }));
 
 export default useStyles;

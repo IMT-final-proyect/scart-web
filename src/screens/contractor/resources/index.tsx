@@ -1,9 +1,10 @@
+/* eslint-disable array-callback-return */
 import { useEffect, useState } from 'react';
-import { Button, Card, CircularProgress, Grid, Modal, Snackbar, Typography, } from '@material-ui/core';
+import { Button, Card, CircularProgress, Grid, Modal, Typography, } from '@material-ui/core';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import Driver from './components/driverRow';
 import Vehicle from './components/vehicleRow';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { ROUTES } from '../navigation/routes';
 import useStyles from './styles';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,7 +14,6 @@ import moment from 'moment';
 import CreateDriverModal from './components/createDriverModal';
 import CreateVehicleModal from './components/createVehicleModal';
 import { IDriver, IVehicle } from '../../../utils/interfaces';
-import { Alert } from '@mui/material';
 import CustomInput from '../../../components/customInput'
 import DeleteModal from '../../../components/DeleteModal';
 import CustomSnackbar from '../../../components/customSnackbar';
@@ -176,9 +176,9 @@ const Resources = () => {
         setDeleteDriverModal(true)
     }
 
-    const addVehicle = (brand: string, model: string, year: string, plate: string) => {
+    const addVehicle = (brand: string, model: string, year: string, plate: string, type: number) => {
         if(!!contractorId){
-            dispatch(createVehicle(plate, brand, model, year, contractorId))
+            dispatch(createVehicle(plate, brand, model, year, type, contractorId))
             setOpenVehicleModal(false)
             setMessageSnackbar('Vehiculo creado con exito')
         }
@@ -267,7 +267,7 @@ const Resources = () => {
                                 </Grid>
                                 <Grid item xs={3} className={classes.headerText}>
                                     <text className={classes.headerText}>
-                                        Fecha Nacimiento
+                                        Documentación
                                     </text>
                                 </Grid>
                                 <Grid item xs={2} className={classes.headerText}>
@@ -288,7 +288,7 @@ const Resources = () => {
                                             name={driversFiltered[parseInt(key)].name}
                                             surname={driversFiltered[parseInt(key)].surname}
                                             document={driversFiltered[parseInt(key)].cuit}
-                                            birthday={driversFiltered[parseInt(key)].birth_date}
+                                            is_valid={driversFiltered[parseInt(key)].is_valid}
                                             id={driversFiltered[parseInt(key)].id}
                                             handleDeleteDriver={handleDeleteDriverModal}
                                         />
@@ -342,12 +342,12 @@ const Resources = () => {
                                     </Grid>
                                     <Grid item xs={3} className={classes.headerText}>
                                         <text className={classes.headerText}>
-                                            Modelo
+                                            Patente
                                         </text>
                                     </Grid>
                                     <Grid item xs={3} className={classes.headerText}>
                                         <text className={classes.headerText}>
-                                            Patente
+                                            Documentación
                                         </text>
                                     </Grid>
                                     <Grid item xs={2} className={classes.headerText}>
@@ -366,8 +366,8 @@ const Resources = () => {
                                         >  
                                             <Vehicle 
                                                 brand={vehiclesFiltered[parseInt(key)].brand}
-                                                model={vehiclesFiltered[parseInt(key)].model}
                                                 plate={vehiclesFiltered[parseInt(key)].plate}
+                                                is_valid={vehiclesFiltered[parseInt(key)].is_valid}
                                                 id={vehiclesFiltered[parseInt(key)].id}
                                                 handleDeleteVehicle={handleDeleteVehicleModal}
                                             />

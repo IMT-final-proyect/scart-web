@@ -29,7 +29,7 @@ const MyData = () => {
     useEffect(() => {
         setOpenEditDriverSuccess(success)
         dispatch(getDriverById(driverId as number))
-    }, [success, driverId])
+    }, [success, driverId, dispatch])
 
     useEffect(() => {
         setOpenEditDriverError(!!error)
@@ -69,10 +69,7 @@ const MyData = () => {
                 <Grid container className={classes.container} justifyContent="center" alignItems="center">
                     <Card className={classes.card}>
                         <Grid container >
-                            <Grid item xs={2}>
-                                <div className={classes.empty}/>
-                            </Grid>
-                            <Grid item xs={8}>
+                            <Grid item xs={10}>
                                 <Typography className={classes.title}>Mis Datos</Typography>
                             </Grid>
                             <Grid item xs={2}>
@@ -81,33 +78,49 @@ const MyData = () => {
                                 </Button>
                             </Grid>
                         </Grid>
-                        <Grid container direction='row' justifyContent="center" alignItems="center">
-                            <Typography className={classes.field}>Nombre:</Typography>
-                            <Typography className={classes.data}>{data?.name || '-'}</Typography>
-                        </Grid>
-                        <Grid container direction='row' justifyContent="center" alignItems="center">
-                            <Typography className={classes.field}>Apellido:</Typography>
-                            <Typography className={classes.data}>{data?.surname || '-'}</Typography>
-                        </Grid>
-                        <Grid container direction='row' justifyContent="center" alignItems="center">
-                            <Typography className={classes.field}>CUIL:</Typography>
-                            <Typography className={classes.data}>{data?.cuit || '-'}</Typography>
-                        </Grid>
-                        <Grid container direction='row' justifyContent="center" alignItems="center">
-                            <Typography className={classes.field}>Email:</Typography>
-                            <Typography className={classes.data}>{data?.email || '-'}</Typography>
-                        </Grid>
-                        <Grid container direction='row' justifyContent="center" alignItems="center">
-                            <Typography className={classes.field}>Contratista:</Typography>
-                            <Typography className={classes.data}>{data?.contractor?.name || '-'}</Typography>
-                        </Grid>
-                        <Grid container direction='row' justifyContent="center" alignItems="center">
-                            <Typography className={classes.field}>Fecha de Nacimiento:</Typography>
-                            <Typography className={classes.data}>{moment(data?.birth_date).format('DD/MM/YYYY') || '-'}</Typography>
-                        </Grid>
-                        <Grid container direction='row' justifyContent="center" alignItems="center">
-                            <Typography className={classes.field}>Telefono:</Typography>
-                            <Typography className={classes.data}>{data?.phone || '-'}</Typography>
+                        <Grid container className={classes.dataContainer} direction='row' justifyContent="center" alignItems="center">
+                            <Grid item xs={6}>
+                                <Typography className={classes.field}>Nombre:</Typography>
+                            </Grid>
+                            <Grid item xs={6}>
+                                <Typography className={classes.data}>{data?.name || '-'}</Typography>
+                            </Grid>
+                            <Grid item xs={6}>
+                                <Typography className={classes.field}>Apellido:</Typography>
+                            </Grid>
+                            <Grid item xs={6}>
+                                <Typography className={classes.data}>{data?.surname || '-'}</Typography>
+                            </Grid>
+                            <Grid item xs={6}>
+                                <Typography className={classes.field}>CUIL:</Typography>
+                            </Grid>
+                            <Grid item xs={6}>
+                                <Typography className={classes.data}>{data?.cuit || '-'}</Typography>
+                            </Grid>
+                            <Grid item xs={6}>
+                                <Typography className={classes.field}>Email:</Typography>
+                            </Grid>
+                            <Grid item xs={6}>
+                                <Typography className={classes.data}>{data?.email || '-'}</Typography>
+                            </Grid>
+                            <Grid item xs={6}>
+                                <Typography className={classes.field}>Contratista:</Typography>
+                            </Grid>
+                            <Grid item xs={6}>
+                                <Typography className={classes.data}>{data?.contractor?.name || '-'}</Typography>
+                            </Grid>
+                            <Grid item xs={6}>
+                                <Typography className={classes.field}>Fecha de Nacimiento:</Typography>
+                            </Grid>
+                            <Grid item xs={6}>
+                                <Typography className={classes.data}>{moment(data?.birth_date).format('DD/MM/YYYY') || '-'}</Typography>
+                            </Grid>
+                            <Grid item xs={6}>
+                                <Typography className={classes.field}>Telefono:</Typography>
+                            </Grid>
+                            <Grid item xs={6}>
+                                <Typography className={classes.data}>{data?.phone || '-'}</Typography>
+                            </Grid>
                         </Grid>
                     </Card>
                 </Grid>

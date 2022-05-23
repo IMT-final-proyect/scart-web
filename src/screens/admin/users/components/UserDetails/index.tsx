@@ -10,7 +10,6 @@ import { capitalize, getRolNumber } from '../../../../../utils/functions/roles';
 import useStyles from './styles'
 import EditUserModal from '../EditUserModal';
 import { putChangePassword } from '../../../../../redux/slices/userSlice';
-import { AllowedRol } from '../../../../../utils/constants';
 
 const UserDetails = () => {
 	const history = useHistory();
@@ -54,7 +53,7 @@ const _editUser = (
 	phone: string,
 	password?: string) => {
 		dispatch(editSpecialUser(user.id, name, surname,rolNumber, cuit, username, email, phone))
-		if (changePassword && !!password) dispatch(putChangePassword(password, user.rol, user.id))
+		if (changePassword && !!password) dispatch(putChangePassword(password, rolNumber, user.id))
 		setMessageSnackbar('Conductor modificado con exito')
 }
 

@@ -1,7 +1,6 @@
 import { Button, Card, Grid, Typography } from '@material-ui/core';
 import { Divider } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { IVehicle } from '../../../../../utils/interfaces';
 import { ROUTES } from '../../../navigation/routes';
 
 import useStyles from './styles';

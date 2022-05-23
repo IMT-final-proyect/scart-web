@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 
 
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
@@ -34,7 +35,7 @@ const CreateVehicleDocumentModal = ({ addDocument, setOpenVehicleDocumentModal, 
     const documentTypes = useSelector((state: RootState) => state.documentTypes.data)
     const error = useSelector((state: RootState) => state.documents.vehicles.error)
 
-    const [openFileSelector, { filesContent, loading, errors, plainFiles, clear }] = useFilePicker({
+    const [openFileSelector, { filesContent, loading }] = useFilePicker({
         multiple: true,
         readAs: 'DataURL',
         accept: ['.png', '.pdf', '.jpeg', '.jpg'],
@@ -80,6 +81,7 @@ const CreateVehicleDocumentModal = ({ addDocument, setOpenVehicleDocumentModal, 
                 <KeyboardDatePicker
                     className={classes.datePicker}
                     autoOk
+                    disablePast
                     variant="inline"
                     format="DD/MM/yyyy"
                     id="expiration"

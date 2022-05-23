@@ -1,21 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Card, CircularProgress, Grid, } from '@material-ui/core'
+import { Button, Card, CircularProgress, Grid } from '@material-ui/core'
 import useStyles from './styles' 
 import { useParams } from 'react-router-dom';
 import { RootState } from '../../redux/rootReducer';
 import { useDispatch, useSelector } from 'react-redux';
-import Base64Downloader from 'react-base64-downloader';
 import moment from 'moment';
 import PreviewIcon from '@mui/icons-material/Preview';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
 import DownloadIcon from '@mui/icons-material/Download';
 import { getDocumentById } from '../../redux/slices/documentsSlice';
-import globalColors from '../../utils/styles/globalColors';
+import FilePreview from "react-file-preview-latest";
 import { getStateColor, getStateName } from '../../utils/functions/states';
 import { getSeverityName } from '../../utils/functions/severities';
 
 const DocumentDetails = () => {
-    const { activeDocument, loading, error } = useSelector((state: RootState) => state.documents)
+    const { activeDocument, loading } = useSelector((state: RootState) => state.documents)
     const stateName = getStateName(parseInt(activeDocument.state.toString()))
     const color = getStateColor(stateName)
     const classes = useStyles({color});    
@@ -77,16 +76,9 @@ const DocumentDetails = () => {
                                                             <text style={{fontSize: 15}}>Archivo {index+1}</text>
                                                         </Grid>
                                                         <Grid item xs={2}>
-                                                            <Base64Downloader 
-                                                                base64={value}
-                                                                downloadName={`archivo${index+1}`}
-                                                                Tag="a"
-                                                                extraAttributes={{ href: '#' }}
-                                                                className="my-class-name"
-                                                                style={{ color: globalColors.lightBlue }}
-                                                            >
-                                                                    <DownloadIcon style={{fontSize: 30}}/>
-                                                            </Base64Downloader>
+                                                            <a href={value} download={`archivo${index+1}`}>
+                                                                <DownloadIcon style={{fontSize: 30}}/>
+                                                            </a>
                                                         </Grid>
                                                         <Grid item xs={2}>
                                                             <Button size="small" style={{padding: 0}} onClick={() => setImage(value)}>
@@ -111,7 +103,11 @@ const DocumentDetails = () => {
                             </Card>
                         :
                             <Card className={classes.rightCard}>
-                                <img src={image} className={classes.image}/>
+                                <FilePreview
+                                    type={"url"}
+                                    url={image}
+                                    onError={() => {}}
+                                />
                             </Card>
                         }
                     </Grid>

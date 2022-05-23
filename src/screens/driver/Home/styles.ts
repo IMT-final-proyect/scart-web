@@ -11,39 +11,42 @@ const useStyles = makeStyles((theme: Theme) => ({
             paddingTop: headerSize + 20
         },
     },
-    cardLeft: {
-        minWidth: 'auto',
-        textAlign: 'center',
-        cursor:'pointer'
-    },
-    cardRight: {
-        textAlign: 'center',
-        cursor:'pointer'
-    },
     cardContainer: {
-        marginBottom: '5%'
+        marginBottom: '5%',
+        paddingLeft: '5%',
+        paddingRight: '5%'
     },
     status: {
         justifyContent: 'center',
         alignItems: 'center'
     },
     enabled: {
-        marginLeft: '10%',
-        marginRight: '10%',
+        marginLeft: '5%',
+        marginRight: '5%',
         marginBottom: '2.5%',
-        paddingLeft: '2.5%',
-        paddingRight: '2.5%',
-        borderRadius: 10,
+        paddingLeft: '5%',
+        paddingRight: '5%',
         backgroundColor: globalColors.green,
+        paddingTop: '5px',
+        paddingBottom: '5px',
+        borderRadius: 25,
+        textAlign: 'center',
+        display: 'flex',
+        justifyContent: 'space-around',
     },
     disabled: {
-        marginLeft: '10%',
-        marginRight: '10%',
+        marginLeft: '5%',
+        marginRight: '5%',
         marginBottom: '2.5%',
-        paddingLeft: '2.5%',
-        paddingRight: '2.5%',
-        borderRadius: 10,
+        paddingLeft: '5%',
+        paddingRight: '5%',
         backgroundColor: globalColors.red,
+        paddingTop: '5px',
+        paddingBottom: '5px',
+        borderRadius: 25,
+        textAlign: 'center',
+        display: 'flex',
+        justifyContent: 'space-around',
     },
     statusText:{
         color: globalColors.white,
@@ -54,6 +57,19 @@ const useStyles = makeStyles((theme: Theme) => ({
             fontSize: 20,
             fontWeight: 4,
         },
+    },
+    img: {
+        minWidth: '160px',
+        maxWidth: '100%',
+    },
+    card: {
+        borderRadius: '30px',
+        textAlign: 'center',
+        padding: '5px'
+    },
+    text: {
+        fontSize: '15px',
+        fontWeight: 'bold',
     }
 }));
 

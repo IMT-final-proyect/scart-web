@@ -67,18 +67,12 @@ const CreateUserModal = ({ addUser, setOpenUserModal }: Props) => {
 
     const _handleOnClick = () => {
         if(!!username && !!password && !!repeatPassword && !!name && !!surname && !!cuit && !!email){
-            if(cuit.length === 11){
-                if (password === repeatPassword){
-                    addUser(name, surname, getRolNumber(entityType), username, cuit, password, email);
-                    setOpenUserModal(false);
-                }
-                else {
-                    setPasswordNotRepeated(true);
-                }
+            if (password === repeatPassword){
+                addUser(name, surname, getRolNumber(entityType), username, cuit, password, email);
+                setOpenUserModal(false);
             }
-            else{
-                setError(true)
-                setMessage('El cuit debe tener 11 digitos')
+            else {
+                setPasswordNotRepeated(true);
             }
         }
         else{

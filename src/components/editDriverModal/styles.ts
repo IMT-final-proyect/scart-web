@@ -2,7 +2,7 @@
 import { makeStyles, Theme } from '@material-ui/core';
 import globalColors from '../../utils/styles/globalColors';
 
-const { innerWidth, innerHeight } = window;
+const { innerHeight } = window;
 
 const useStyles = makeStyles((theme: Theme) => ({
     textInput: {
@@ -10,18 +10,12 @@ const useStyles = makeStyles((theme: Theme) => ({
         marginTop: '2.5%',
         marginBottom: '5%',
         width: '90%',
-        [theme.breakpoints.down('xs')]: {
-            maxWidth: '50%'
-        },
     },
     lastTextInput: {
         marginBottom: '10%',
         marginTop: '2.5%',
         width: '90%',
         color: globalColors.lightBlue,
-        [theme.breakpoints.down('xs')]: {
-            maxWidth: '50%'
-        },
     },
     modal: {
         position: 'absolute', 
@@ -29,7 +23,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         top: '50%',
         transform: `translate(-50%, -50%)`,
         margin: 0,
-        width: 'auto',
+        width: '80%',
         paddingLeft: '5%',
         paddingRight: '5%',
         paddingBottom: '1%',
@@ -37,9 +31,6 @@ const useStyles = makeStyles((theme: Theme) => ({
         borderRadius: 10,
         borderWidth: 1,
         maxHeight: innerHeight,
-        [theme.breakpoints.down('xs')]: {
-            minWidth: innerWidth * 0.8
-        },
     },
     title: {
         marginTop: '3%',

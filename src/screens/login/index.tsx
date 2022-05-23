@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { Grid, Card, Button, TextField, InputAdornment, IconButton, Hidden, Snackbar } from '@material-ui/core';
+import { Grid, Card, Button, TextField, InputAdornment, IconButton, Hidden } from '@material-ui/core';
 import CardContent from '@material-ui/core/CardContent';
 import ClearIcon from '@material-ui/icons/Clear';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -13,8 +13,10 @@ import { useHistory } from "react-router-dom";
 import { getRolPath } from '../../utils/functions/roles';
 import LogoNutreco from '../../assets/images/logoNutreco.png'
 import { isTokenValid } from '../../utils/functions/validations';
-import { Alert } from '@mui/material';
 import CustomSnackbar from '../../components/customSnackbar';
+import NutrecoImage from '../../assets/images/planta_inicio.jpeg'
+import LoadingSpinner from '../../assets/images/loading_spinner.gif'
+import ScartLogo from '../../assets/images/logo_transparent.png'
 
 
 const Login = () => {
@@ -23,6 +25,7 @@ const Login = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false)
+    const [firstLoading, setFirstLoading] = useState(true)
     const dispatch = useDispatch<AppThunkDispatch>();
     const accountData = useSelector((state: RootState) => state.user.accountData)
     const loading = useSelector((state: RootState) => state.user.loading)
@@ -67,6 +70,10 @@ const Login = () => {
         dispatch(clearError())
     }
 
+    const handleLoadingFinish = () => {
+        setFirstLoading(false)
+    }
+
     return(
             <Grid
                 className={classes.container}
@@ -75,6 +82,15 @@ const Login = () => {
                 justify="center"
                 alignItems="center"
             >
+                {firstLoading &&
+                    (   
+                        <Grid className={classes.spinnerBackground} container alignItems="center" justify="center" direction="column">
+                            <img className={classes.spinnerLogo} alt='spinner' src={LoadingSpinner} />
+                            <img className={classes.scartLogo} alt='scartLogo' src={ScartLogo} />
+                        </Grid>
+                    )
+                }
+                <img className={classes.backgroundImage} alt='planta background' src={NutrecoImage} onLoad={handleLoadingFinish}/>
                 <Hidden only={["xs","sm"]}>
                     <img className={classes.logoNutreco} alt='logo nutreco' src={LogoNutreco}/>
                 </Hidden>
@@ -93,6 +109,7 @@ const Login = () => {
                                     <InputAdornment position="end">
                                         <IconButton
                                             aria-label="Clear username"
+                                            tabIndex={-1}
                                             onClick={_onClearUsername}
                                         >
                                             <ClearIcon/>
@@ -116,6 +133,7 @@ const Login = () => {
                                 <InputAdornment position="end">
                                     <IconButton
                                         aria-label="Show password"
+                                        tabIndex={-1}
                                         onClick={_onShowPassword}
                                     >
                                         {showPassword ? <VisibilityOff /> : <Visibility />}
@@ -135,9 +153,7 @@ const Login = () => {
                             <CircularProgress />
                         :
                             <Button variant="contained" className={classes.button} onClick={_onLogIn} >
-                                <text className={classes.button}>
-                                    Iniciar Sesion
-                                </text>
+                                Iniciar Sesion
                             </Button>
                         }
                         </Grid>
@@ -147,7 +163,7 @@ const Login = () => {
                             alignItems="center"
                         >
                         <Button variant='contained' className={classes.forgotPassword}>
-                            <text> Olvidé mi contraseña </text>
+                            Olvidé mi contraseña
                         </Button>
                         </Grid>
                     </CardContent>

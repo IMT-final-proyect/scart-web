@@ -25,6 +25,9 @@ export const specialEntities = [
     },
     {
         name: 'Seguridad'
+    },
+    {
+        name: 'Expedicion'
     }
 ]
 
@@ -42,11 +45,17 @@ const Users = () => {
     const managers = useSelector((state: RootState) => state.specialUsers.data.managers)
     const auditors = useSelector((state: RootState) => state.specialUsers.data.auditors)
     const securities = useSelector((state: RootState) => state.specialUsers.data.securities)
+    const expeditors = useSelector((state: RootState) => state.specialUsers.data.expeditors)
     const loading = useSelector((state: RootState) => state.specialUsers.loading)
     const success = useSelector((state: RootState) => state.specialUsers.success)
     const error = useSelector((state: RootState) => state.specialUsers.error)
 
+    useEffect(() => {
+      console.log(selectedEntity);
+      
+    }, [selectedEntity])
     
+
     useEffect(() => {
         dispatch(getSpecialUsers())
     }, [dispatch])
@@ -68,15 +77,13 @@ const Users = () => {
         cuit: string,
         password: string,
         email: string) => {
-            console.log('sent: user: ', username, 'cuit:', cuit, 'email: ', email, 'password: ', password)
-            
             dispatch(createSpecialUser(name, surname, rol, username, cuit, password, email))
-            setMessageSnackbar('Conductor creado con exito')
+            setMessageSnackbar('Usuario creado con exito')
         }
 
     const handleDeleteSpecialUser = (id: number, contractorId?: number, rol?: number) => {
         if(!!rol) dispatch(deleteSpecialUser(id, rol))
-        setMessageSnackbar('Conductor eliminado con exito')
+        setMessageSnackbar('Usuario eliminado con exito')
     }
 
     const handleDeleteUserModal = (id: number, rol: number) => {
@@ -272,6 +279,58 @@ const Users = () => {
                                                 <SpecialUserRow
                                                     key={securities[parseInt(key)].id}
                                                     user={securities[parseInt(key)]}
+                                                    handleDeleteSpecialUser={handleDeleteUserModal}
+                                                />
+                                            </Button>
+                                            )}
+                                        </Grid>
+                                    </>
+                                }
+                            </>
+                        }
+                        {selectedEntity === getRolName(AllowedRol.expedition) &&
+                            <>
+                                {expeditors.length === 0 ?
+                                    <text className={classes.textCenter}> No hay personal de expedición registrado</text>
+                                    :
+                                    <>
+                                        <Grid container justifyContent='space-between'>
+                                            <Grid item xs={3} className={classes.headerText}>
+                                                <text className={classes.headerText}>
+                                                    Nombre
+                                                </text>
+                                            </Grid>
+                                            <Grid item xs={3} className={classes.headerText}>
+                                                <text className={classes.headerText}>
+                                                    Usuario
+                                                </text>
+                                            </Grid>
+                                            <Grid item xs={2} className={classes.headerText}>
+                                                <text className={classes.headerText}>
+                                                    Documento
+                                                </text>
+                                            </Grid>
+                                            <Grid item xs={2} className={classes.headerText}>
+                                                <text className={classes.headerText}>
+                                                    Rol
+                                                </text>
+                                            </Grid>
+                                            <Grid item xs={1} className={classes.headerText}>
+                                                <text className={classes.headerText}>
+                                                    Acciones
+                                                </text>
+                                            </Grid>
+                                        </Grid>
+                                        <Grid container direction='column' justifyContent='space-between' >
+                                            {Object.keys(expeditors).map((key: string, i: any) =>
+                                            <Button
+                                                className={classes.button}
+                                                component={Link}
+                                                to={ROUTES.root+ROUTES.expedition+'/'+expeditors[parseInt(key)].id}
+                                            >  
+                                                <SpecialUserRow
+                                                    key={expeditors[parseInt(key)].id}
+                                                    user={expeditors[parseInt(key)]}
                                                     handleDeleteSpecialUser={handleDeleteUserModal}
                                                 />
                                             </Button>

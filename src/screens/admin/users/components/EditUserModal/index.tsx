@@ -3,7 +3,6 @@ import { TextField } from "@mui/material"
 import { useCallback, useState } from "react";
 import CustomSnackbar from "../../../../../components/customSnackbar";
 import { ISpecialUser } from "../../../../../redux/slices/specialUsersSlice";
-import CheckIcon from '@mui/icons-material/Check';
 import useStyles from './styles';
 
 interface Props{
@@ -71,27 +70,19 @@ const EditUserModal = ( {user, changePassword, editUser, setOpenEditUserModal, s
 
       const _handleOnClick = () => {
         if(!!name && !!surname && !!cuit && !!username){
-            console.log(cuit);
-            
-            if(cuit.length === 11){
-                if (changePassword){
-                    if (password === repeatPassword){
-                        editUser(user, name, surname, username, cuit, email, password);
-                        setOpenEditUserModal(false);
-                    }
-                    else {
-                        setError(true)
-                        setMessage('Las contraseñas no coiniciden')
-                    }
-                }
-                else {
-                    editUser(user, name, surname, username, cuit, email, phone);
+            if (changePassword){
+                if (password === repeatPassword){
+                    editUser(user, name, surname, username, cuit, email, phone, password);
                     setOpenEditUserModal(false);
                 }
+                else {
+                    setError(true)
+                    setMessage('Las contraseñas no coiniciden')
+                }
             }
-            else{
-                setError(true)
-                setMessage('El cuit debe tener 11 digitos')
+            else {
+                editUser(user, name, surname, username, cuit, email, phone);
+                setOpenEditUserModal(false);
             }
         }
         else{

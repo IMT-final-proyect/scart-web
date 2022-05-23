@@ -120,6 +120,13 @@ const useStyles = makeStyles<Theme, Props>((theme: Theme) => ({
         marginTop: '20%',
         color: globalColors.lightBlue
     },
+    imageCard: {
+        padding: '2%',
+        position: 'absolute',
+        left: '50%',
+        top: '50%',
+        transform: `translate(-50%, -50%)`,
+    },
 }));
 
 export default useStyles

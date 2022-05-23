@@ -24,7 +24,8 @@ export interface ISpecialUser {
      data: {
          managers: ISpecialUser[],
          auditors: ISpecialUser[],
-         securities: ISpecialUser[]
+         securities: ISpecialUser[],
+         expeditors: ISpecialUser[]
      },
      userDetailed: ISpecialUser,
      loading: boolean,
@@ -36,7 +37,8 @@ const initialState: ISpecialUserState = {
     data: {
         managers: [],
         auditors: [],
-        securities: []
+        securities: [],
+        expeditors: []
     },
     userDetailed: {
       id: -1,
@@ -67,6 +69,7 @@ const specialUsersSlice = createSlice({
         state.data.managers = payload.managersById
         state.data.auditors = payload.auditorsById
         state.data.securities = payload.securitiesById
+        state.data.expeditors = payload.expeditorsById
         state.loading = false;
         state.error = initialState.error
     },
@@ -97,6 +100,13 @@ const specialUsersSlice = createSlice({
     createSecuritySuccess(state, action: any) {
       const { payload } = action
       state.data.securities = ({...state.data.securities, [payload.id]: {...payload}})
+      state.loading = false;
+      state.success = true;
+      state.error = initialState.error
+    },
+    createExpeditorSuccess(state, action: any) {
+      const { payload } = action
+      state.data.expeditors = ({...state.data.expeditors, [payload.id]: {...payload}})
       state.loading = false;
       state.success = true;
       state.error = initialState.error
@@ -170,6 +180,7 @@ const {
   createManagerSuccess,
   createAuditorSuccess,
   createSecuritySuccess,
+  createExpeditorSuccess,
   createSpecialUserFailure,
   deleteSpecialUserRequest,
   deleteSpecialUserSuccess,
@@ -200,17 +211,24 @@ export const getSpecialUsers = (): AppThunk => async (dispatch) => {
         _.assign(auditorsById[key], {rol: AllowedRol.auditor})
         return true
       })
-        const securities: AxiosResponse = await Axios.get(`/securities`);
-        const securitiesById = _.mapKeys(securities.data, 'id')
-        Object.keys(securitiesById).map((key) => {
-          _.assign(securitiesById[key], {rol: AllowedRol.security})
-          return true
+      const securities: AxiosResponse = await Axios.get(`/securities`);
+      const securitiesById = _.mapKeys(securities.data, 'id')
+      Object.keys(securitiesById).map((key) => {
+        _.assign(securitiesById[key], {rol: AllowedRol.security})
+        return true
+      })
+      const expeditor: AxiosResponse = await Axios.get(`/expeditors`);
+      const expeditorsById = await _.mapKeys(expeditor.data, 'id')
+      Object.keys(expeditorsById).map((key) => {
+        _.assign(expeditorsById[key], {rol: AllowedRol.expedition})
+        return true
       })
       
       const data = {
         managersById,
         auditorsById,
-        securitiesById
+        securitiesById,
+        expeditorsById
       }
       dispatch(getSpecialUsersSuccess(data));
    }
@@ -228,8 +246,6 @@ export const createSpecialUser = (
   password: string,
   email: string): AppThunk => async (dispatch) => {
     dispatch(createSpecialUserRequest());
-    console.log('recieved: user: ', username, 'cuit:', cuit, 'email: ', email, 'password: ', password)
-    
     
     try{
       switch(rol){
@@ -275,6 +291,20 @@ export const createSpecialUser = (
           dispatch(createSecuritySuccess(security.data.userData))
           break
         }
+        case AllowedRol.expedition: {
+          const expeditor: AxiosResponse = await Axios.post(`/register/expeditor`, 
+          {
+            name,
+            surname,
+            rol,
+            username,
+            cuit,
+            password,
+            email
+          });
+          dispatch(createExpeditorSuccess(expeditor.data.userData))
+          break
+        }
       }
     }
     catch(error: any){
@@ -300,6 +330,12 @@ export const createSpecialUser = (
         }
         case AllowedRol.security: {
           await Axios.put(`/securities/${id}`,{
+            active: false
+          });
+          break
+        }
+        case AllowedRol.expedition: {
+          await Axios.put(`/expeditors/${id}`,{
             active: false
           });
           break
@@ -332,6 +368,11 @@ export const createSpecialUser = (
           dispatch(getSpecialUserSuccess(response.data))
           break
         }
+        case AllowedRol.expedition: {
+          response = await Axios.get(`/expeditors/${id}`)
+          dispatch(getSpecialUserSuccess(response.data))
+          break
+        }
       }
     }
     catch(error: any){
@@ -359,7 +400,6 @@ export const createSpecialUser = (
         email,
         phone
       }
-      console.log('body:', body);
       switch(rol){
         case AllowedRol.manager: {
           const manager: AxiosResponse = await Axios.put(`/managers/${id}`,body)
@@ -374,6 +414,11 @@ export const createSpecialUser = (
         case AllowedRol.security: {
           const security: AxiosResponse = await Axios.put(`/securities/${id}`,body);
           dispatch(editSpecialUserSuccess(security.data))
+          break
+        }
+        case AllowedRol.expedition: {
+          const expeditor: AxiosResponse = await Axios.put(`/expeditors/${id}`,body);
+          dispatch(editSpecialUserSuccess(expeditor.data))
           break
         }
       }

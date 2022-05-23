@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import Axios, {AxiosResponse} from 'axios';
 import moment from 'moment';
-import { IDriver, ISecurity, IVehicle } from '../../utils/interfaces';
+import { IDriver, IDriverInside, ISecurity, IVehicle } from '../../utils/interfaces';
 import { AppThunk } from '../store';
 import { IUser } from './userSlice';
 var _ = require('lodash');
@@ -13,6 +13,12 @@ interface IError {
 
 interface IDriverData {
    data: IDriver[]
+   driversInside: {
+      data: IDriverInside[]
+      loading: boolean
+      success: boolean
+      error: IError|null
+   }
    loading: boolean
    success: boolean
    error: IError|null
@@ -43,6 +49,12 @@ export interface UserState {
 const initialState: UserState = {
     drivers: {
       data:[],
+      driversInside: {
+         data: [],
+         loading: false,
+         success: false,
+         error: null,
+      },
       loading: false,
       success: false,
       error: null,
@@ -279,6 +291,36 @@ const resourcesSlice = createSlice({
          state.drivers.error = payload;
          state.drivers.success = initialState.drivers.success;
       },
+      DriversInsideRequest(state) {
+         state.drivers.driversInside.loading = true;
+         state.drivers.driversInside.data = initialState.drivers.driversInside.data;
+         state.drivers.driversInside.error = initialState.drivers.driversInside.error;
+         state.drivers.driversInside.success = initialState.drivers.driversInside.success;
+      },
+      DriversInsideSuccess(state, action: any) {
+         const { payload } = action
+         state.drivers.driversInside.data = payload
+         state.drivers.driversInside.loading = false;
+      },
+      DriversInsideFailure(state, action: any) {
+         const { payload } = action
+         state.drivers.driversInside.loading = false;
+         state.drivers.driversInside.data = initialState.drivers.driversInside.data;
+         state.drivers.driversInside.error = payload;
+      },
+      CheckOutRequest(state) {
+         state.drivers.driversInside.error = initialState.drivers.error;
+         state.drivers.success = initialState.drivers.success;
+      },
+      CheckOutSuccess(state) {
+         state.drivers.driversInside.success = true;
+         state.drivers.driversInside.error = initialState.drivers.error
+      },
+      CheckOutFailure(state, action: any) {
+         const { payload } = action
+         state.drivers.driversInside.error = payload;
+         state.drivers.driversInside.success = initialState.drivers.success;
+      },
    },
 });
 
@@ -318,7 +360,13 @@ const {
     editVehicleFailure,
     isDriverUpToDateRequest,
     isDriverUpToDateSuccess,
-    isDriverUpToDateFailure
+    isDriverUpToDateFailure,
+    DriversInsideRequest,
+    DriversInsideSuccess,
+    DriversInsideFailure,
+    CheckOutRequest,
+    CheckOutSuccess,
+    CheckOutFailure
 } = resourcesSlice.actions;
 
 
@@ -351,7 +399,7 @@ export const getDriverById = (id: number): AppThunk => async (dispatch) => {
 
 export const getAllVehicles = (contractorId?: number): AppThunk => async (dispatch) => {
    dispatch(getAllVehiclesRequest());
-   const url = contractorId !== undefined ? `/vehicles?contractor=${contractorId}` : `/vehicles?relations=contractor`
+   const url = contractorId !== undefined ? `/vehicles?contractor=${contractorId}` : `/vehicles?relations=type,contractor`
    try{
       const response: AxiosResponse = await Axios.get(url);
       const vehicle = _.mapKeys(response.data, 'id') 
@@ -365,7 +413,7 @@ export const getAllVehicles = (contractorId?: number): AppThunk => async (dispat
 export const getVehicleById = (id: number): AppThunk => async (dispatch) => {
    dispatch(getVehicleByIdRequest());
    try{
-      const response: AxiosResponse = await Axios.get(`/vehicles/${id}?relations=contractor`);      
+      const response: AxiosResponse = await Axios.get(`/vehicles/${id}?relations=type,contractor`);      
       dispatch(getVehicleByIdSuccess(response.data));
    }
    catch(error: any){
@@ -431,6 +479,7 @@ export const createVehicle = (
    brand: string, 
    model: string, 
    year: string, 
+   type: number,
    contractorId: number): AppThunk => async (dispatch) => {
    dispatch(createVehicleRequest());
    try{
@@ -439,6 +488,7 @@ export const createVehicle = (
          brand,
          model,
          year,
+         type,
          contractorId
       });
       dispatch(createVehicleSuccess(response.data));
@@ -508,7 +558,7 @@ export const editDriver = (
    }
 }
 
-export const editVehicle = (vehicle: IVehicle, plate: string, brand: string, model: string, year: number): AppThunk => async (dispatch) => {
+export const editVehicle = (vehicle: IVehicle, plate: string, type: number, brand: string, model: string, year: number): AppThunk => async (dispatch) => {
    dispatch(editVehicleRequest());
    try{
       const response: AxiosResponse = await Axios.put(`/vehicles/${vehicle.id}`,
@@ -516,6 +566,7 @@ export const editVehicle = (vehicle: IVehicle, plate: string, brand: string, mod
          plate,
          brand,
          model,
+         type,
          "year": year.toString()
       })
 
@@ -535,12 +586,37 @@ export const isDriverUpToDate = (driverId?: number): AppThunk => async (dispatch
          const response = await Axios.get(`documents/visit/validate?driverId=${driverId}`)
          const driver = response.data.driver
          let isValid = true
-         if (!!driver.invalidDocuments && !!driver.missingDocuments) isValid = false  
+         if (!!driver && !!driver.invalidDocuments && !!driver.missingDocuments) isValid = false  
          dispatch(isDriverUpToDateSuccess(isValid))
       }
       else dispatch(isDriverUpToDateFailure({ code: 400, message: "Conductor no encontrado"})); 
    }
    catch(error: any){
-      dispatch(isDriverUpToDateFailure(error.response.data)); 
+      dispatch(isDriverUpToDateFailure(error?.response?.data)); 
    }
 }
+
+export const getDriversInsidePlant = (): AppThunk => async (dispatch) => {
+   dispatch(DriversInsideRequest());
+   try{
+      const response = await Axios.get(`/visits/entities`)
+      dispatch(DriversInsideSuccess(response.data))
+   }
+   catch(error: any){
+      dispatch(DriversInsideFailure(error?.response?.data)); 
+   }
+}
+
+export const putCheckOut = (driverId: number, vehicleId: number): AppThunk => async (dispatch) => {
+   dispatch(CheckOutRequest());
+   try{
+      await Axios.put(`/visits/checkout`, {vehicleId, driverId})
+      dispatch(CheckOutSuccess())
+      dispatch(getDriversInsidePlant())
+   }
+   catch(error: any){
+      dispatch(CheckOutFailure(error?.response?.data)); 
+   }
+}
+
+export const getVehicleTypes = () => Axios.get('/vehicles/types');
