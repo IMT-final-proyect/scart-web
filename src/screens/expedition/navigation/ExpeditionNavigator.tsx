@@ -41,7 +41,7 @@ const ExpeditionNavigator = () => {
                 <div className={classes.icon}>
                     <BusinessIcon/>
                 </div>
-                Anuncios del día
+                Historial de visitas
             </Button>
         </>
     )

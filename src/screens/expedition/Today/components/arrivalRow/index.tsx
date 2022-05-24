@@ -27,28 +27,31 @@ const ArrivalRow = ({ index, arrival, _handleOpenModal }: Props) => {
                 <text> {driver.phone} </text>
             </Grid>
             <Grid item xs={1} className={classes.text}>
-                <text> {vehicle.plate.length > 60 ? vehicle.plate.substring(0, 87)+'...' : vehicle.plate} </text>
+                <text> {vehicle.plate.length > 60 ? vehicle.plate.substring(0, 40)+'...' : vehicle.plate} </text>
             </Grid>
             <Grid item xs={1} className={classes.text}>
                 <text> {vehicle.type || '-'} </text>
             </Grid>
-            <Grid item xs={2} className={classes.text}>
-                <text> {arrival.contractor.length > 60 ? arrival.contractor.substring(0, 87)+'...' : arrival.contractor} </text>
+            <Grid item xs={1} className={classes.text}>
+                <text> {arrival.contractor.length > 60 ? arrival.contractor.substring(0, 40)+'...' : arrival.contractor} </text>
             </Grid>
             <Grid item xs={1} className={classes.text}>
                 <text> {arrival.destiny || '-'} </text>
             </Grid>
             <Grid item xs={1} className={classes.text}>
-                <text> {arrival.palletsEntrada} </text>
-            </Grid>
-            <Grid item xs={1} className={classes.text}>
-                <text> {parseInt(arrival.palletsSalida) > -1 ? arrival.palletsSalida : '-'} </text>
-            </Grid>
-            <Grid item xs={1}>
-                <text> {moment(arrival.arrivalTime).format('DD/MM/yy - HH:mm')} hs</text>
+                <text> Entrada: {arrival.palletsEntrada} / Salida: {parseInt(arrival.palletsSalida) > -1 ? arrival.palletsSalida : '-'} </text>
             </Grid>
             <Grid item xs={1} className={classes.text}>
                 <text className={classes.stateColor} style={{backgroundColor: resultColor}}> {resultName} </text>
+            </Grid>
+            <Grid item xs={1}>
+                <text> {moment(arrival.arrivalTime).format('DD/MM/YY - HH:mm')} hs</text>
+            </Grid>
+            <Grid item xs={1}>
+                <text> {moment(arrival.arrivalTime).format('DD/MM/YY - HH:mm')} hs</text>
+            </Grid>
+            <Grid item xs={1}>
+                <text> {moment(arrival.arrivalTime).format('DD/MM/YY - HH:mm')} hs</text>
             </Grid>
             <Grid item xs={1} className={classes.container}>
                 {arrival.result === 0 ?

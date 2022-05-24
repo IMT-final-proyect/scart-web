@@ -9,10 +9,10 @@ interface Props {
 }
 const EditArrivalModal = ({ setOpenModal, _handleEdit }: Props) => {
   const classes = useStyles()
-  const [palletsOut, setPalletsOut] = useState<number>(0)
+  const [palletsOut, setPalletsOut] = useState('0')
   
   const _handleOnClick = () => {
-    _handleEdit(palletsOut)
+    _handleEdit(parseInt(palletsOut))
   }
 
   return (
@@ -26,7 +26,7 @@ const EditArrivalModal = ({ setOpenModal, _handleEdit }: Props) => {
       <NumericInput value={palletsOut} setValue={setPalletsOut}/>
       <Grid container className={classes.buttons}  direction='row' justifyContent='space-between'>
           <Button variant="contained" className={classes.cancel} onClick={ () => setOpenModal(false)}>Cancelar</Button>
-          <Button variant="contained" color='primary' onClick={_handleOnClick}>Crear</Button>
+          <Button variant="contained" color='primary' onClick={_handleOnClick}>Editar</Button>
       </Grid>
     </Grid>
   )

@@ -85,7 +85,7 @@ const Today = () => {
           <Card className={classes.titleCard}>
               <Grid container className={classes.titleContainer} justifyContent='space-between'>
                   <text className={classes.textTitle}>
-                      Historial de anuncios
+                      Historial de visitas
                   </text>
               </Grid>
               <Typography className={classes.searchTitle}> Filtrar por </Typography>
@@ -136,7 +136,7 @@ const Today = () => {
               :
               <Card className={classes.contentCard}>
                   {arrivalsFiltered.length === 0 ? 
-                      <Typography className={classes.textCenter}>No se ha anunciado ningún conductor</Typography>
+                      <Typography className={classes.textCenter}>No se ha anunciado ningún conductor en esas fechas</Typography>
                   :
                       <>
                           <Grid container justifyContent='space-between'>
@@ -160,7 +160,7 @@ const Today = () => {
                                       Tipo de camión
                                   </text>
                               </Grid>
-                              <Grid item xs={2} className={classes.headerText}>
+                              <Grid item xs={1} className={classes.headerText}>
                                   <text className={classes.headerText}>
                                       Contratista
                                   </text>
@@ -172,12 +172,17 @@ const Today = () => {
                               </Grid>
                               <Grid item xs={1} className={classes.headerText}>
                                   <text className={classes.headerText}>
-                                      Pallets Entrada
+                                      Pallets
                                   </text>
                               </Grid>
                               <Grid item xs={1} className={classes.headerText}>
                                   <text className={classes.headerText}>
-                                      Pallets Salida
+                                      Estado
+                                  </text>
+                              </Grid>
+                              <Grid item xs={1} className={classes.headerText}>
+                                  <text className={classes.headerText}>
+                                      Horario de llegada
                                   </text>
                               </Grid>
                               <Grid item xs={1} className={classes.headerText}>
@@ -187,7 +192,7 @@ const Today = () => {
                               </Grid>
                               <Grid item xs={1} className={classes.headerText}>
                                   <text className={classes.headerText}>
-                                      Estado
+                                      Horario de salida
                                   </text>
                               </Grid>
                               <Grid item xs={1} className={classes.headerText}>
