@@ -6,7 +6,7 @@ import MomentUtils from '@date-io/moment';
 import { useDispatch, useSelector } from 'react-redux'
 import CustomSnackbar from '../../../components/customSnackbar';
 import { RootState } from '../../../redux/rootReducer'
-import { getTodaysArrivals, putEditArrival } from '../../../redux/slices/expeditionsSlice'
+import { getVisits, putEditArrival } from '../../../redux/slices/expeditionsSlice'
 import useStyles from './styles';
 import CustomInput from '../../../components/customInput';
 import { IArrival } from '../../../utils/interfaces';
@@ -30,7 +30,7 @@ const Today = () => {
   const success = useSelector((state: RootState) => state.expeditions.success)
 
   useEffect(() => {
-      dispatch(getTodaysArrivals(!!after ? after.toISOString(true) : undefined, !!before ? before.toISOString(true) : undefined))
+      dispatch(getVisits(!!after ? after.toISOString(true) : undefined, !!before ? before.toISOString(true) : undefined))
   },[dispatch, after, before])
 
   useEffect(() => {

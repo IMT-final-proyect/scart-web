@@ -112,18 +112,18 @@ const expeditionsSlice = createSlice({
         state.authorization.loading = false;
         state.authorization.error = payload;
     },
-    getTodaysArrivalsRequest(state) {
+    getVisitsRequest(state) {
         state.loading = true;
         state.error = initialState.error
         state.authorization = initialState.authorization
     },
-    getTodaysArrivalsSuccess(state, action: any) {
+    getVisitsSuccess(state, action: any) {
         const { payload } = action
         state.data.today = payload
         state.loading = false;
         state.error = initialState.error
     },
-    getTodaysArrivalsFailure(state, action: any) {
+    getVisitsFailure(state, action: any) {
         const { payload } = action
         state.loading = false;
         state.error = payload;
@@ -148,9 +148,9 @@ const {
   markAsReadRequest,
   markAsReadSuccess,
   markAsReadFailure,
-  getTodaysArrivalsRequest,
-  getTodaysArrivalsSuccess,
-  getTodaysArrivalsFailure,
+  getVisitsRequest,
+  getVisitsSuccess,
+  getVisitsFailure,
   cleanSnackbar
 } = expeditionsSlice.actions;
 
@@ -209,10 +209,10 @@ export const getArrivals = (): AppThunk => async (dispatch) => {
     }
  };
 
- export const getTodaysArrivals = (after?: string, before?: string): AppThunk => async (dispatch) => {
-    dispatch(getTodaysArrivalsRequest());
+ export const getVisits = (after?: string, before?: string): AppThunk => async (dispatch) => {
+    dispatch(getVisitsRequest());
     try{
-        let url = `/notifications/arrivals?`
+        let url = `/visits?expand[]=driver&expand[]=vehicle&`
         if (!!after){
             url = url + `after=${after}&`
         }
@@ -221,11 +221,11 @@ export const getArrivals = (): AppThunk => async (dispatch) => {
         }
         const response: AxiosResponse = await Axios.get(url);
         const today: IArrival[] = _.mapKeys(response.data, 'id')
-        dispatch(getTodaysArrivalsSuccess(today));
+        dispatch(getVisitsSuccess(today));
         dispatch(_cleanSnackbar())
     }
     catch(error: any){
-        dispatch(getTodaysArrivalsFailure(error.response.data));
+        dispatch(getVisitsFailure(error.response.data));
     }
  };
 

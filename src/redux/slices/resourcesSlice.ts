@@ -399,7 +399,7 @@ export const getDriverById = (id: number): AppThunk => async (dispatch) => {
 
 export const getAllVehicles = (contractorId?: number): AppThunk => async (dispatch) => {
    dispatch(getAllVehiclesRequest());
-   const url = contractorId !== undefined ? `/vehicles?contractor=${contractorId}` : `/vehicles?relations=type,contractor`
+   const url = contractorId !== undefined ? `/vehicles?contractor=${contractorId}` : `/vehicles?relations=contractor`
    try{
       const response: AxiosResponse = await Axios.get(url);
       const vehicle = _.mapKeys(response.data, 'id') 
