@@ -1,7 +1,7 @@
 /* eslint-disable array-callback-return */
-import { createSlice, current } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import Axios, {AxiosResponse} from 'axios';
-import { IArrival } from '../../utils/interfaces';
+import { IArrival, IVisit } from '../../utils/interfaces';
 import { AppThunk } from '../store';
 var _ = require('lodash');
 
@@ -14,7 +14,7 @@ interface IError {
      data: {
          evaluated: IArrival[],
          nonEvaluated: IArrival[]
-         today: IArrival[]
+         today: IVisit[]
      },
      loading: boolean,
      error: IError | null,
@@ -79,19 +79,19 @@ const expeditionsSlice = createSlice({
         state.authorization.loading = false;
         state.authorization.error = payload;
     },
-    putEditArrivalRequest(state) {
+    putEditVisitRequest(state) {
         state.loading = true;
         state.success = initialState.success
         state.error = initialState.error
     },
-    putEditArrivalSuccess(state, action) {
+    putEditVisitSuccess(state, action) {
         const { payload } = action
         state.loading = false;
         state.data.today = ({...state.data.today, [payload.id]: {...payload}})
         state.success = true
         state.error = initialState.error
     },
-    putEditArrivalFailure(state, action: any) {
+    putEditVisitFailure(state, action: any) {
         const { payload } = action
         state.authorization.loading = false;
         state.authorization.error = payload;
@@ -142,9 +142,9 @@ const {
   evaluateAccessRequest,
   evaluateAccessSuccess,
   evaluateAccessFailure,
-  putEditArrivalRequest,
-  putEditArrivalSuccess,
-  putEditArrivalFailure,
+  putEditVisitRequest,
+  putEditVisitSuccess,
+  putEditVisitFailure,
   markAsReadRequest,
   markAsReadSuccess,
   markAsReadFailure,
@@ -220,12 +220,12 @@ export const getArrivals = (): AppThunk => async (dispatch) => {
             url = url + `before=${before}&`
         }
         const response: AxiosResponse = await Axios.get(url);
-        const today: IArrival[] = _.mapKeys(response.data, 'id')
+        const today: IVisit[] = _.mapKeys(response.data, 'id')
         dispatch(getVisitsSuccess(today));
         dispatch(_cleanSnackbar())
     }
     catch(error: any){
-        dispatch(getVisitsFailure(error.response.data));
+        dispatch(getVisitsFailure(error?.response?.data));
     }
  };
 
@@ -253,15 +253,15 @@ export const getArrivals = (): AppThunk => async (dispatch) => {
     }
  };
 
- export const putEditArrival = (id: number, palletsSalida: number): AppThunk => async (dispatch) => {
-    dispatch(putEditArrivalRequest());
+ export const putEditVisit = (id: number, palletsSalida: number): AppThunk => async (dispatch) => {
+    dispatch(putEditVisitRequest());
     try{
-        const response = await Axios.put(`/notifications/arrivals/${id}`, {palletsSalida});
-        dispatch(putEditArrivalSuccess(response.data));
+        const response = await Axios.put(`/visits/${id}`, {palletsSalida});
+        dispatch(putEditVisitSuccess(response.data));
         dispatch(_cleanSnackbar())
     }
     catch(error: any){
-        dispatch(putEditArrivalFailure(error.response.data));
+        dispatch(putEditVisitFailure(error.response.data));
     }
  };
 

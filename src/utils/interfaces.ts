@@ -152,3 +152,22 @@ export interface IVehicleType {
    id: number,
    name: string
 }
+
+export interface IVisit {
+   id: number
+   vehicleId: number
+   driverId: number
+   securityId: number
+   checkIn: string
+   checkOut: string
+   created_at: string
+   updated_at: string
+   arrival_at: string
+   palletsEntrada: number
+   palletsSalida: any
+   destiny: string
+   active: boolean
+   exception: any
+   driver: IDriver
+   vehicle: IVehicle
+ }

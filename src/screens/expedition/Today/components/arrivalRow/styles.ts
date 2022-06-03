@@ -34,7 +34,8 @@ const useStyles = makeStyles<Theme>((theme: Theme) => ({
         paddingLeft: '8%',
         paddingRight: '8%',
         paddingTop: '2%',
-        paddingBottom: '2%'
+        paddingBottom: '2%',
+        backgroundColor: globalColors.green
     },
 }));
 
