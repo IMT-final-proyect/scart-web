@@ -87,7 +87,7 @@ const expeditionsSlice = createSlice({
     putEditVisitSuccess(state, action) {
         const { payload } = action
         state.loading = false;
-        state.data.today = ({...state.data.today, [payload.id]: {...payload}})
+        state.data.today[payload.id].palletsSalida = payload.palletsSalida
         state.success = true
         state.error = initialState.error
     },
