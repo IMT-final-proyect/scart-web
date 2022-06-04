@@ -28,7 +28,7 @@ const ArrivalRow = ({ index, visit, _handleOpenModal }: Props) => {
                 <text> {visit.vehicle.type.name || '-'} </text>
             </Grid>
             <Grid item xs={1} className={classes.text}>
-                {/* <text> {visit?.contractor.length > 60 ? visit?.contractor.substring(0, 40)+'...' : visit?.contractor} </text> */}
+                <text> {visit?.driver?.contractor?.name?.length > 60 ? visit?.driver?.contractor?.name?.substring(0, 40)+'...' : visit?.driver?.contractor?.name} </text>
             </Grid>
             <Grid item xs={1} className={classes.text}>
                 <text> {visit.destiny || '-'} </text>

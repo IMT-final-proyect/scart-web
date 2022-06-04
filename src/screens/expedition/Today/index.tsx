@@ -43,24 +43,24 @@ const Today = () => {
     })
   }, [visits])
 
-//   useEffect(() => {
-//       setLoadingFilter(true)
-//       let visitsAux: IVisit[] = []
-//       if(searchContractor !== ''){
-//           Object.keys(visits).map((key: string, i: any) => {
-//               const contractorName = visits[parseInt(key)].contractor?.toUpperCase()
-//               if (contractorName?.includes(searchContractor.toUpperCase()))
-//                   visitsAux.push(visits[parseInt(key)])
-//           })
-//       }
-//       else{
-//           Object.keys(visits).map((key: string, i: any) => {
-//               visitsAux.push(visits[parseInt(key)])
-//           })
-//       }
-//       setVisitsFiltered(visitsAux)
-//       setLoadingFilter(false)
-//   }, [visits, searchContractor])
+  useEffect(() => {
+      setLoadingFilter(true)
+      let visitsAux: IVisit[] = []
+      if(searchContractor !== ''){
+          Object.keys(visits).map((key: string, i: any) => {
+              const contractorName = visits[parseInt(key)].driver?.contractor?.name?.toUpperCase()
+              if (contractorName?.includes(searchContractor.toUpperCase()))
+                  visitsAux.push(visits[parseInt(key)])
+          })
+      }
+      else{
+          Object.keys(visits).map((key: string, i: any) => {
+              visitsAux.push(visits[parseInt(key)])
+          })
+      }
+      setVisitsFiltered(visitsAux)
+      setLoadingFilter(false)
+  }, [visits, searchContractor])
 
   useEffect(() => {
     setOpenSuccess(success)
@@ -202,11 +202,11 @@ const Today = () => {
                               </Grid>
                           </Grid>
                           <Grid container direction='column' justifyContent='space-between' >
-                              {Object.keys(visits).map((key: string, i: any) =>
+                              {Object.keys(visitsFiltered).map((key: string, i: any) =>
                                   <ArrivalRow 
-                                      key={visits[parseInt(key)].id}
+                                      key={visitsFiltered[parseInt(key)].id}
                                       index={i}
-                                      visit={visits[parseInt(key)]}
+                                      visit={visitsFiltered[parseInt(key)]}
                                       _handleOpenModal={_handleOpenModal}
                                   />
                               )}

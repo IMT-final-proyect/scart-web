@@ -1,6 +1,6 @@
 {
   "name": "scart-web-new",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "private": true,
   "dependencies": {
     "@date-io/moment": "1.x",
