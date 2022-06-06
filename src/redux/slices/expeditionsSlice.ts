@@ -256,7 +256,7 @@ export const getArrivals = (): AppThunk => async (dispatch) => {
  export const putEditVisit = (id: number, palletsSalida: number): AppThunk => async (dispatch) => {
     dispatch(putEditVisitRequest());
     try{
-        const response = await Axios.put(`/visits/${id}`, {palletsSalida});
+        const response = await Axios.put(`/visits/update/${id}`, {palletsSalida});
         dispatch(putEditVisitSuccess(response.data));
         dispatch(_cleanSnackbar())
     }

@@ -46,7 +46,7 @@ const ArrivalRow = ({ index, visit, _handleOpenModal }: Props) => {
                 <text> {moment(visit.checkIn).format('DD/MM/YY - HH:mm')} hs</text>
             </Grid>
             <Grid item xs={1}>
-                <text> {moment(visit.checkOut).format('DD/MM/YY - HH:mm')} hs</text>
+                <text> { visit.checkOut ? moment(visit.checkOut).format('DD/MM/YY - HH:mm') + 'hs' : '-' } </text>
             </Grid>
             <Grid item xs={1} className={classes.container}>
                 <Button className={classes.button} onClick={() => _handleOpenModal(visit.id)} > 
