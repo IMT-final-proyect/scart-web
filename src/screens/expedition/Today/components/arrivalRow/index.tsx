@@ -40,13 +40,22 @@ const ArrivalRow = ({ index, visit, _handleOpenModal }: Props) => {
                 <text className={classes.stateColor}> Aprobado </text>
             </Grid>
             <Grid item xs={1}>
-                <text> {moment(visit?.arrival_at).format('DD/MM/YY - HH:mm')} hs</text>
+                <text> {moment(visit?.arrival_at).format('DD/MM/YY')}</text>
+                <text> {moment(visit?.arrival_at).format('HH:mm')}hs</text>
             </Grid>
             <Grid item xs={1}>
-                <text> {moment(visit?.checkIn).format('DD/MM/YY - HH:mm')} hs</text>
+                <text> {moment(visit?.checkIn).format('DD/MM/YY')}</text>
+                <text> {moment(visit?.checkIn).format('HH:mm')}hs</text>
             </Grid>
             <Grid item xs={1}>
-                <text> { visit?.checkOut ? moment(visit?.checkOut).format('DD/MM/YY - HH:mm') + 'hs' : '-' } </text>
+                { visit?.checkOut ? 
+                    <>
+                        <text>{moment(visit?.checkOut).format('DD/MM/YY')}</text>
+                        <text> {moment(visit?.checkOut).format('HH:mm') + 'hs'} </text>
+                    </>
+                : 
+                    <text> '-' </text>
+                }
             </Grid>
             <Grid item xs={1} className={classes.container}>
                 <Button className={classes.button} onClick={() => _handleOpenModal(visit?.id)} > 
