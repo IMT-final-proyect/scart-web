@@ -16,40 +16,40 @@ const ArrivalRow = ({ index, visit, _handleOpenModal }: Props) => {
     return(
         <Grid container className={classes.container} style={{backgroundColor: (index % 2) == 0 ? globalColors.grey : globalColors.white}} direction="row" justifyContent='space-between'>
             <Grid item xs={1} className={classes.text}>
-                <text> {visit.driver.name.length > 60 ? visit.driver.name.substring(0, 40)+'...' : visit.driver.name} </text>
+                <text> {visit?.driver?.name.length > 60 ? visit?.driver?.name.substring(0, 40)+'...' : visit?.driver?.name} </text>
             </Grid>
             <Grid item xs={1} className={classes.text}>
-                <text> {visit.driver.phone} </text>
+                <text> {visit?.driver?.phone} </text>
             </Grid>
             <Grid item xs={1} className={classes.text}>
-                <text> {visit.vehicle.plate.length > 60 ? visit.vehicle.plate.substring(0, 40)+'...' : visit.vehicle.plate} </text>
+                <text> {visit?.vehicle?.plate.length > 60 ? visit?.vehicle?.plate.substring(0, 40)+'...' : visit?.vehicle?.plate} </text>
             </Grid>
             <Grid item xs={1} className={classes.text}>
-                <text> {visit.vehicle.type.name || '-'} </text>
+                <text> {visit?.vehicle?.type?.name || '-'} </text>
             </Grid>
             <Grid item xs={1} className={classes.text}>
                 <text> {visit?.driver?.contractor?.name?.length > 60 ? visit?.driver?.contractor?.name?.substring(0, 40)+'...' : visit?.driver?.contractor?.name} </text>
             </Grid>
             <Grid item xs={1} className={classes.text}>
-                <text> {visit.destiny || '-'} </text>
+                <text> {visit?.destiny || '-'} </text>
             </Grid>
             <Grid item xs={1} className={classes.text}>
-                <text> Entrada: {visit.palletsEntrada > 0 ? visit.palletsEntrada : '-'} / Salida: {parseInt(visit.palletsSalida) > -1 ? visit.palletsSalida : '-'} </text>
+                <text> Entrada: {visit?.palletsEntrada > 0 ? visit?.palletsEntrada : '-'} / Salida: {parseInt(visit?.palletsSalida) > -1 ? visit?.palletsSalida : '-'} </text>
             </Grid>
             <Grid item xs={1} className={classes.text}>
                 <text className={classes.stateColor}> Aprobado </text>
             </Grid>
             <Grid item xs={1}>
-                <text> {moment(visit.arrival_at).format('DD/MM/YY - HH:mm')} hs</text>
+                <text> {moment(visit?.arrival_at).format('DD/MM/YY - HH:mm')} hs</text>
             </Grid>
             <Grid item xs={1}>
-                <text> {moment(visit.checkIn).format('DD/MM/YY - HH:mm')} hs</text>
+                <text> {moment(visit?.checkIn).format('DD/MM/YY - HH:mm')} hs</text>
             </Grid>
             <Grid item xs={1}>
-                <text> { visit.checkOut ? moment(visit.checkOut).format('DD/MM/YY - HH:mm') + 'hs' : '-' } </text>
+                <text> { visit?.checkOut ? moment(visit?.checkOut).format('DD/MM/YY - HH:mm') + 'hs' : '-' } </text>
             </Grid>
             <Grid item xs={1} className={classes.container}>
-                <Button className={classes.button} onClick={() => _handleOpenModal(visit.id)} > 
+                <Button className={classes.button} onClick={() => _handleOpenModal(visit?.id)} > 
                     Modificar
                 </Button>    
             </Grid>
