@@ -1,65 +1,57 @@
 import React from 'react';
 import { Button, Grid, } from '@material-ui/core';
 import useStyles from './styles';
-import { IArrival } from '../../../../../utils/interfaces';
+import { IVisit } from '../../../../../utils/interfaces';
 import moment from 'moment';
 import globalColors from '../../../../../utils/styles/globalColors';
 import { getResultColor, getResultName } from '../../../../../utils/functions/results';
 
 interface Props{
     index: number
-    arrival: IArrival
+    visit: IVisit
     _handleOpenModal: (id: number) => void
 }
-const ArrivalRow = ({ index, arrival, _handleOpenModal }: Props) => {
+const ArrivalRow = ({ index, visit, _handleOpenModal }: Props) => {
     const classes = useStyles();
-    const driver = JSON.parse(arrival.driver)
-    const vehicle = JSON.parse(arrival.vehicle)
-    const resultName = getResultName(arrival.result)
-    const resultColor = getResultColor(arrival.result)
-
     return(
         <Grid container className={classes.container} style={{backgroundColor: (index % 2) == 0 ? globalColors.grey : globalColors.white}} direction="row" justifyContent='space-between'>
             <Grid item xs={1} className={classes.text}>
-                <text> {driver.name.length > 60 ? driver.name.substring(0, 40)+'...' : driver.name} </text>
+                <text> {visit?.driver?.name.length > 60 ? visit?.driver?.name.substring(0, 40)+'...' : visit?.driver?.name} </text>
             </Grid>
             <Grid item xs={1} className={classes.text}>
-                <text> {driver.phone} </text>
+                <text> {visit?.driver?.phone} </text>
             </Grid>
             <Grid item xs={1} className={classes.text}>
-                <text> {vehicle.plate.length > 60 ? vehicle.plate.substring(0, 87)+'...' : vehicle.plate} </text>
+                <text> {visit?.vehicle?.plate.length > 60 ? visit?.vehicle?.plate.substring(0, 40)+'...' : visit?.vehicle?.plate} </text>
             </Grid>
             <Grid item xs={1} className={classes.text}>
-                <text> {vehicle.type || '-'} </text>
-            </Grid>
-            <Grid item xs={2} className={classes.text}>
-                <text> {arrival.contractor.length > 60 ? arrival.contractor.substring(0, 87)+'...' : arrival.contractor} </text>
+                <text> {visit?.vehicle?.type?.name || '-'} </text>
             </Grid>
             <Grid item xs={1} className={classes.text}>
-                <text> {arrival.destiny || '-'} </text>
+                <text> {visit?.driver?.contractor?.name?.length > 60 ? visit?.driver?.contractor?.name?.substring(0, 40)+'...' : visit?.driver?.contractor?.name} </text>
             </Grid>
             <Grid item xs={1} className={classes.text}>
-                <text> {arrival.palletsEntrada} </text>
+                <text> {visit?.destiny || '-'} </text>
             </Grid>
             <Grid item xs={1} className={classes.text}>
-                <text> {parseInt(arrival.palletsSalida) > -1 ? arrival.palletsSalida : '-'} </text>
+                <text> Entrada: {visit?.palletsEntrada > 0 ? visit?.palletsEntrada : '-'} / Salida: {parseInt(visit?.palletsSalida) > -1 ? visit?.palletsSalida : '-'} </text>
+            </Grid>
+            <Grid item xs={1} className={classes.text}>
+                <text className={classes.stateColor}> Aprobado </text>
             </Grid>
             <Grid item xs={1}>
-                <text> {moment(arrival.arrivalTime).format('DD/MM/yy - HH:mm')} hs</text>
+                <text> {moment(visit?.arrival_at).format('DD/MM/YY - HH:mm')} hs</text>
             </Grid>
-            <Grid item xs={1} className={classes.text}>
-                <text className={classes.stateColor} style={{backgroundColor: resultColor}}> {resultName} </text>
+            <Grid item xs={1}>
+                <text> {moment(visit?.checkIn).format('DD/MM/YY - HH:mm')} hs</text>
+            </Grid>
+            <Grid item xs={1}>
+                <text> { visit?.checkOut ? moment(visit?.checkOut).format('DD/MM/YY - HH:mm') + 'hs' : '-' } </text>
             </Grid>
             <Grid item xs={1} className={classes.container}>
-                {arrival.result === 0 ?
-                    <Button className={classes.button} onClick={() => _handleOpenModal(arrival.id)} > 
-                        Modificar
-                    </Button>    
-                :
-                <Button className={classes.noActions} onClick={() => {}} > 
-                    -
+                <Button className={classes.button} onClick={() => _handleOpenModal(visit?.id)} > 
+                    Modificar
                 </Button>    
-                }
             </Grid>
         </Grid>
     )

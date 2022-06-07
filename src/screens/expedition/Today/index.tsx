@@ -6,10 +6,10 @@ import MomentUtils from '@date-io/moment';
 import { useDispatch, useSelector } from 'react-redux'
 import CustomSnackbar from '../../../components/customSnackbar';
 import { RootState } from '../../../redux/rootReducer'
-import { getTodaysArrivals, putEditArrival } from '../../../redux/slices/expeditionsSlice'
+import { getVisits, putEditVisit } from '../../../redux/slices/expeditionsSlice'
 import useStyles from './styles';
 import CustomInput from '../../../components/customInput';
-import { IArrival } from '../../../utils/interfaces';
+import { IVisit } from '../../../utils/interfaces';
 import ArrivalRow from './components/arrivalRow';
 import moment from 'moment';
 import EditArrivalModal from './components/EditArrivalModal';
@@ -20,47 +20,47 @@ const Today = () => {
   const [openSuccess, setOpenSuccess] = useState(false)
   const [searchContractor, setSearchContractor] = useState('')
   const [loadingFilter, setLoadingFilter] = useState(false)
-  const [arrivalsFiltered, setArrivalsFiltered] = useState<IArrival[]>([])
+  const [visitsFiltered, setVisitsFiltered] = useState<IVisit[]>([])
   const [before, setBefore] = useState<moment.Moment | null>(null);
   const [after, setAfter] = useState<moment.Moment | null>(moment().utcOffset(-3).set({hour:0,minute:0,second:0,millisecond:0}));
   const [selectedId, setSelectedId] = useState(-1)
   const [openModal, setOpenModal] = useState(false)
-  const arrivals = useSelector((state: RootState) => state.expeditions.data.today)
+  const visits = useSelector((state: RootState) => state.expeditions.data.today)
   const loading = useSelector((state: RootState) => state.expeditions.loading)
   const success = useSelector((state: RootState) => state.expeditions.success)
 
   useEffect(() => {
-      dispatch(getTodaysArrivals(!!after ? after.toISOString(true) : undefined, !!before ? before.toISOString(true) : undefined))
+      dispatch(getVisits(!!after ? after.toISOString(true) : undefined, !!before ? before.toISOString(true) : undefined))
   },[dispatch, after, before])
 
   useEffect(() => {
-    setArrivalsFiltered(() => {
-        let arrivalsAux: IArrival[] = []
-        Object.keys(arrivals).map((key: string, i: any) => {
-            arrivalsAux.push(arrivals[parseInt(key)])
+    setVisitsFiltered(() => {
+        let visitsAux: IVisit[] = []
+        Object.keys(visits).map((key: string, i: any) => {
+            visitsAux.push(visits[parseInt(key)])
         })
-        return arrivalsAux
+        return visitsAux
     })
-  }, [arrivals])
+  }, [visits])
 
   useEffect(() => {
       setLoadingFilter(true)
-      let arrivalsAux: IArrival[] = []
+      let visitsAux: IVisit[] = []
       if(searchContractor !== ''){
-          Object.keys(arrivals).map((key: string, i: any) => {
-              const contractorName = arrivals[parseInt(key)].contractor?.toUpperCase()
+          Object.keys(visits).map((key: string, i: any) => {
+              const contractorName = visits[parseInt(key)].driver?.contractor?.name?.toUpperCase()
               if (contractorName?.includes(searchContractor.toUpperCase()))
-                  arrivalsAux.push(arrivals[parseInt(key)])
+                  visitsAux.push(visits[parseInt(key)])
           })
       }
       else{
-          Object.keys(arrivals).map((key: string, i: any) => {
-              arrivalsAux.push(arrivals[parseInt(key)])
+          Object.keys(visits).map((key: string, i: any) => {
+              visitsAux.push(visits[parseInt(key)])
           })
       }
-      setArrivalsFiltered(arrivalsAux)
+      setVisitsFiltered(visitsAux)
       setLoadingFilter(false)
-  }, [arrivals, searchContractor])
+  }, [visits, searchContractor])
 
   useEffect(() => {
     setOpenSuccess(success)
@@ -72,7 +72,7 @@ const Today = () => {
   }
 
   const _handleEdit = (palletsSalida: number) => {
-    dispatch(putEditArrival(selectedId, palletsSalida))
+    dispatch(putEditVisit(selectedId, palletsSalida))
     setOpenModal(false)
   }
 
@@ -85,7 +85,7 @@ const Today = () => {
           <Card className={classes.titleCard}>
               <Grid container className={classes.titleContainer} justifyContent='space-between'>
                   <text className={classes.textTitle}>
-                      Historial de anuncios
+                      Historial de visitas
                   </text>
               </Grid>
               <Typography className={classes.searchTitle}> Filtrar por </Typography>
@@ -135,8 +135,8 @@ const Today = () => {
               </Grid>
               :
               <Card className={classes.contentCard}>
-                  {arrivalsFiltered.length === 0 ? 
-                      <Typography className={classes.textCenter}>No se ha anunciado ningún conductor</Typography>
+                  {visitsFiltered.length === 0 ? 
+                      <Typography className={classes.textCenter}>No se ha anunciado ningún conductor en esas fechas</Typography>
                   :
                       <>
                           <Grid container justifyContent='space-between'>
@@ -160,7 +160,7 @@ const Today = () => {
                                       Tipo de camión
                                   </text>
                               </Grid>
-                              <Grid item xs={2} className={classes.headerText}>
+                              <Grid item xs={1} className={classes.headerText}>
                                   <text className={classes.headerText}>
                                       Contratista
                                   </text>
@@ -172,17 +172,7 @@ const Today = () => {
                               </Grid>
                               <Grid item xs={1} className={classes.headerText}>
                                   <text className={classes.headerText}>
-                                      Pallets Entrada
-                                  </text>
-                              </Grid>
-                              <Grid item xs={1} className={classes.headerText}>
-                                  <text className={classes.headerText}>
-                                      Pallets Salida
-                                  </text>
-                              </Grid>
-                              <Grid item xs={1} className={classes.headerText}>
-                                  <text className={classes.headerText}>
-                                      Horario de ingreso
+                                      Pallets
                                   </text>
                               </Grid>
                               <Grid item xs={1} className={classes.headerText}>
@@ -192,16 +182,31 @@ const Today = () => {
                               </Grid>
                               <Grid item xs={1} className={classes.headerText}>
                                   <text className={classes.headerText}>
+                                      Horario de llegada
+                                  </text>
+                              </Grid>
+                              <Grid item xs={1} className={classes.headerText}>
+                                  <text className={classes.headerText}>
+                                      Horario de ingreso
+                                  </text>
+                              </Grid>
+                              <Grid item xs={1} className={classes.headerText}>
+                                  <text className={classes.headerText}>
+                                      Horario de salida
+                                  </text>
+                              </Grid>
+                              <Grid item xs={1} className={classes.headerText}>
+                                  <text className={classes.headerText}>
                                       Acciones
                                   </text>
                               </Grid>
                           </Grid>
                           <Grid container direction='column' justifyContent='space-between' >
-                              {Object.keys(arrivalsFiltered).map((key: string, i: any) =>
+                              {Object.keys(visitsFiltered).map((key: string, i: any) =>
                                   <ArrivalRow 
-                                      key={arrivalsFiltered[parseInt(key)].id}
+                                      key={visitsFiltered[parseInt(key)].id}
                                       index={i}
-                                      arrival={arrivalsFiltered[parseInt(key)]}
+                                      visit={visitsFiltered[parseInt(key)]}
                                       _handleOpenModal={_handleOpenModal}
                                   />
                               )}
@@ -211,7 +216,7 @@ const Today = () => {
               </Card>
           }
       </Grid>
-      <CustomSnackbar open={openSuccess} message='Arrivalo modificado con éxito' type='success' onClose={() => setOpenSuccess(false)} />
+      <CustomSnackbar open={openSuccess} message='Visita modificada con éxito' type='success' onClose={() => setOpenSuccess(false)} />
     </>
   )
 }

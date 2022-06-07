@@ -34,6 +34,12 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   text: {
     fontSize: 18
+  },
+  numericInput: {
+    fontSize: 18,
+    MozAppearance: 'textfield',
+    WebkitAppearance: 'none',
+    margin: 0
   }
 }));
 
